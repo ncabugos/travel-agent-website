@@ -248,9 +248,9 @@ export function HeroSlider({ slides, autoPlayMs = 6000, showBadge = false }: Her
         >
           <Image
             src={EDEN.condeNast2026}
-            alt="Condé Nast Traveler Top Travel Specialists 2026"
-            width={110}
-            height={110}
+            alt="Condé Nast Traveler Top Travel Specialists 2025-2026"
+            width={127}
+            height={127}
             style={{
               objectFit: 'contain',
               filter: 'drop-shadow(0 2px 12px rgba(0,0,0,0.5))',
