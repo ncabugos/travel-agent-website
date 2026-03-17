@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { useSwipe } from '@/hooks/useSwipe'
 
 interface Testimonial {
   quote: string
@@ -39,21 +40,24 @@ export function TestimonialsCarousel() {
   const [current, setCurrent] = useState(0)
   const [fading, setFading] = useState(false)
 
-  const goTo = (i: number) => {
+  const goTo = useCallback((i: number) => {
     if (i === current) return
     setFading(true)
     setTimeout(() => {
       setCurrent(i)
       setFading(false)
     }, 450)
-  }
+  }, [current])
+
+  const next = useCallback(() => goTo((current + 1) % TESTIMONIALS.length), [current, goTo])
+  const prev = useCallback(() => goTo((current - 1 + TESTIMONIALS.length) % TESTIMONIALS.length), [current, goTo])
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      goTo((current + 1) % TESTIMONIALS.length)
-    }, 7000)
+    const interval = setInterval(next, 7000)
     return () => clearInterval(interval)
-  }, [current]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [next])
+
+  const swipeHandlers = useSwipe(next, prev)
 
   const t = TESTIMONIALS[current]
   const serif = 'var(--font-serif)'
@@ -61,9 +65,11 @@ export function TestimonialsCarousel() {
 
   return (
     <section
+      {...swipeHandlers}
       style={{
         background: '#F5F3F0',
         padding: '120px 24px',
+        touchAction: 'pan-y',
       }}
     >
       <div style={{ maxWidth: '920px', margin: '0 auto', textAlign: 'center' }}>

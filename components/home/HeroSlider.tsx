@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { EDEN } from '@/lib/media-library'
+import { useSwipe } from '@/hooks/useSwipe'
 
 export interface HeroSlide {
   src: string
@@ -47,10 +48,13 @@ export function HeroSlider({ slides, autoPlayMs = 6000, showBadge = false }: Her
     return () => clearInterval(id)
   }, [next, autoPlayMs])
 
+  const swipeHandlers = useSwipe(next, prev)
+
   const slide = slides[current]
 
   return (
     <div
+      {...swipeHandlers}
       style={{
         position: 'relative',
         width: '100%',
@@ -58,6 +62,7 @@ export function HeroSlider({ slides, autoPlayMs = 6000, showBadge = false }: Her
         minHeight: '600px',
         overflow: 'hidden',
         background: 'var(--charcoal)',
+        touchAction: 'pan-y',
       }}
     >
       {/* Background image with Ken Burns */}
