@@ -238,6 +238,7 @@ export function HeroSlider({ slides, autoPlayMs = 6000, showBadge = false }: Her
            credential without competing with the centred headline or CTA. */}
       {showBadge && (
         <div
+          className="cnt-badge"
           style={{
             position: 'absolute',
             bottom: '48px',
@@ -260,6 +261,19 @@ export function HeroSlider({ slides, autoPlayMs = 6000, showBadge = false }: Her
           />
         </div>
       )}
+
+      <style>{`
+        @media (max-width: 768px) {
+          .cnt-badge {
+            bottom: 52px !important;
+            left: 16px !important;
+          }
+          .cnt-badge img {
+            width: 88px !important;
+            height: 88px !important;
+          }
+        }
+      `}</style>
 
       {/* Dot indicators */}
       <div
