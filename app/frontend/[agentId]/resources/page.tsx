@@ -276,14 +276,24 @@ export default async function ResourcesPage({ params }: PageProps) {
       </section>
 
       {/* ── CTA Band ────────────────────────────────────────────── */}
-      <section style={{ background: 'var(--charcoal)', padding: '80px 24px', textAlign: 'center' }}>
-        <p style={{ fontFamily: sans, fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '16px' }}>
-          Ready to Experience the Difference?
-        </p>
-        <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.8rem, 3vw, 2.8rem)', fontWeight: 300, color: '#FFFFFF', marginBottom: '32px' }}>
-          Book through us and unlock every benefit.
-        </h2>
-        <Link href={`/frontend/${agentId}/contact`} className="btn-gold">Start Planning</Link>
+      <section style={{ position: 'relative', minHeight: '380px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+        <Image
+          src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=2000&q=80"
+          alt="Luxury hotel"
+          fill
+          sizes="100vw"
+          style={{ objectFit: 'cover', objectPosition: 'center 40%' }}
+        />
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(20,18,16,0.72)' }} />
+        <div style={{ position: 'relative', textAlign: 'center', padding: '80px 24px' }}>
+          <p style={{ fontFamily: sans, fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '16px' }}>
+            Ready to Experience the Difference?
+          </p>
+          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.8rem, 3vw, 2.8rem)', fontWeight: 300, color: '#FFFFFF', marginBottom: '32px' }}>
+            Book through us and unlock every benefit.
+          </h2>
+          <Link href={`/frontend/${agentId}/contact`} className="btn-gold">Start Planning</Link>
+        </div>
       </section>
 
     </main>

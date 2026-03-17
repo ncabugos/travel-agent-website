@@ -282,7 +282,7 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
         overflow: 'hidden',
       }}>
         <Image
-          src="https://images.unsplash.com/photo-1512100356356-de1b84283e18?w=2000&q=80"
+          src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=2000&q=80"
           alt="Book your stay"
           fill
           sizes="100vw"
