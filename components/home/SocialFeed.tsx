@@ -220,7 +220,7 @@ export function SocialFeed({
             grid-template-columns: 1fr !important;
           }
           .ig-cells {
-            grid-template-rows: repeat(3, 1fr) !important;
+            grid-template-rows: auto !important;
           }
           .social-copy-panel {
             padding: 64px 32px !important;

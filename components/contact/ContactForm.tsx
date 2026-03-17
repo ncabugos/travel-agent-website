@@ -23,8 +23,11 @@ const VACATION_TYPES = [
 const ADVISOR_PREFS = [
   'No preference',
   'John Oberacker',
-  'Sophie Laurent',
-  'Marcus Chen',
+  'Kasra Esteghamat',
+  'Jill Robbins',
+  'Dianna Cooper',
+  'Kim Diaz',
+  'Erin Ross',
 ]
 
 const initialState: ContactFormState = {}
