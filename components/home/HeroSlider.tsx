@@ -109,20 +109,6 @@ export function HeroSlider({ slides, autoPlayMs = 6000, showBadge = false }: Her
           transition: 'opacity 0.6s ease',
         }}
       >
-        {/* Overline */}
-        <p
-          style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: '10px',
-            letterSpacing: '0.35em',
-            textTransform: 'uppercase',
-            color: 'var(--gold)',
-            marginBottom: '24px',
-            animation: 'fadeUp 1s ease 0.2s both',
-          }}
-        >
-          Luxury Travel
-        </p>
 
         {/* Headline */}
         <h1
