@@ -33,7 +33,7 @@ export function SocialFeed({
   agentId,
 }: SocialFeedProps) {
   const [posts, setPosts] = useState<BeholdPost[]>([])
-  const resolvedFeedId = feedId ?? process.env.NEXT_PUBLIC_BEHOLD_FEED_ID ?? ''
+  const resolvedFeedId = feedId ?? process.env.NEXT_PUBLIC_BEHOLD_FEED_ID ?? 'GqPHxF9OJRx0nsJlqM0T'
 
   useEffect(() => {
     if (!resolvedFeedId) return
