@@ -202,9 +202,9 @@ export default async function ResourcesPage({ params }: PageProps) {
                   { label: 'LGBTI', href: 'https://travel.state.gov/content/travel/en/international-travel/before-you-go/travelers-with-special-considerations/lgbti.html' },
                 ].map(({ label, href }) => (
                   <li key={label} style={{ marginBottom: '10px' }}>
-                    <a href={href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: sans, fontSize: '14px', color: 'var(--warm-gray)', textDecoration: 'none', borderBottom: '1px solid transparent', transition: 'color 0.2s, border-color 0.2s' }}
-                      onMouseEnter={e => { (e.target as HTMLAnchorElement).style.color = 'var(--gold)'; (e.target as HTMLAnchorElement).style.borderBottomColor = 'var(--gold)' }}
-                      onMouseLeave={e => { (e.target as HTMLAnchorElement).style.color = 'var(--warm-gray)'; (e.target as HTMLAnchorElement).style.borderBottomColor = 'transparent' }}
+                    <a href={href} target="_blank" rel="noopener noreferrer"
+                      className="hover-gold"
+                      style={{ fontFamily: sans, fontSize: '14px', color: 'var(--warm-gray)', textDecoration: 'none', borderBottom: '1px solid transparent', transition: 'color 0.2s, border-color 0.2s' }}
                     >{label}</a>
                   </li>
                 ))}
@@ -222,9 +222,9 @@ export default async function ResourcesPage({ params }: PageProps) {
                   { label: 'CDC Health Alerts', href: 'https://wwwnc.cdc.gov/travel' },
                 ].map(({ label, href }) => (
                   <li key={label} style={{ marginBottom: '10px' }}>
-                    <a href={href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: sans, fontSize: '14px', color: 'var(--warm-gray)', textDecoration: 'none', borderBottom: '1px solid transparent', transition: 'color 0.2s, border-color 0.2s' }}
-                      onMouseEnter={e => { (e.target as HTMLAnchorElement).style.color = 'var(--gold)'; (e.target as HTMLAnchorElement).style.borderBottomColor = 'var(--gold)' }}
-                      onMouseLeave={e => { (e.target as HTMLAnchorElement).style.color = 'var(--warm-gray)'; (e.target as HTMLAnchorElement).style.borderBottomColor = 'transparent' }}
+                    <a href={href} target="_blank" rel="noopener noreferrer"
+                      className="hover-gold"
+                      style={{ fontFamily: sans, fontSize: '14px', color: 'var(--warm-gray)', textDecoration: 'none', borderBottom: '1px solid transparent', transition: 'color 0.2s, border-color 0.2s' }}
                     >{label}</a>
                   </li>
                 ))}
@@ -243,9 +243,9 @@ export default async function ResourcesPage({ params }: PageProps) {
                   { label: 'Weather', href: 'https://weather.com' },
                 ].map(({ label, href }) => (
                   <li key={label} style={{ marginBottom: '10px' }}>
-                    <a href={href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: sans, fontSize: '14px', color: 'var(--warm-gray)', textDecoration: 'none', borderBottom: '1px solid transparent', transition: 'color 0.2s, border-color 0.2s' }}
-                      onMouseEnter={e => { (e.target as HTMLAnchorElement).style.color = 'var(--gold)'; (e.target as HTMLAnchorElement).style.borderBottomColor = 'var(--gold)' }}
-                      onMouseLeave={e => { (e.target as HTMLAnchorElement).style.color = 'var(--warm-gray)'; (e.target as HTMLAnchorElement).style.borderBottomColor = 'transparent' }}
+                    <a href={href} target="_blank" rel="noopener noreferrer"
+                      className="hover-gold"
+                      style={{ fontFamily: sans, fontSize: '14px', color: 'var(--warm-gray)', textDecoration: 'none', borderBottom: '1px solid transparent', transition: 'color 0.2s, border-color 0.2s' }}
                     >{label}</a>
                   </li>
                 ))}
@@ -262,9 +262,9 @@ export default async function ResourcesPage({ params }: PageProps) {
                   { label: 'Visas', href: 'https://cibtvisas.com/?login=montecitovillagetravel' },
                 ].map(({ label, href }) => (
                   <li key={label} style={{ marginBottom: '10px' }}>
-                    <a href={href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: sans, fontSize: '14px', color: 'var(--warm-gray)', textDecoration: 'none', borderBottom: '1px solid transparent', transition: 'color 0.2s, border-color 0.2s' }}
-                      onMouseEnter={e => { (e.target as HTMLAnchorElement).style.color = 'var(--gold)'; (e.target as HTMLAnchorElement).style.borderBottomColor = 'var(--gold)' }}
-                      onMouseLeave={e => { (e.target as HTMLAnchorElement).style.color = 'var(--warm-gray)'; (e.target as HTMLAnchorElement).style.borderBottomColor = 'transparent' }}
+                    <a href={href} target="_blank" rel="noopener noreferrer"
+                      className="hover-gold"
+                      style={{ fontFamily: sans, fontSize: '14px', color: 'var(--warm-gray)', textDecoration: 'none', borderBottom: '1px solid transparent', transition: 'color 0.2s, border-color 0.2s' }}
                     >{label}</a>
                   </li>
                 ))}
