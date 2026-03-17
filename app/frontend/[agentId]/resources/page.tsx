@@ -63,9 +63,6 @@ export default async function ResourcesPage({ params }: PageProps) {
         />
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(20,18,16,0.55)' }} />
         <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' }}>
-          <p style={{ fontFamily: sans, fontSize: '10px', letterSpacing: '0.35em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '16px' }}>
-            Preferred Partner Benefits
-          </p>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 300, color: '#FFFFFF', lineHeight: 1.1, marginBottom: '20px' }}>
             Exclusive Hotel Programs
           </h1>

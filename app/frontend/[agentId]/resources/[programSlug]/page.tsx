@@ -140,18 +140,7 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
               />
             </div>
           )}
-          {categoryMeta && (
-            <p style={{
-              fontFamily: sans,
-              fontSize: '9px',
-              letterSpacing: '0.35em',
-              textTransform: 'uppercase',
-              color: 'var(--gold)',
-              marginBottom: '16px',
-            }}>
-              {categoryMeta.label}
-            </p>
-          )}
+
           <h1 style={{
             fontFamily: serif,
             fontSize: 'clamp(2rem, 5vw, 4.5rem)',
