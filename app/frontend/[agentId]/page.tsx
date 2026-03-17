@@ -32,23 +32,22 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 // ── Hero Slides ─────────────────────────────────────────────────────────────
-// Existing brand slides + Eden-themed additions
-const HERO_SLIDES = [
+const getHeroSlides = (base: string) => [
   {
     src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000&q=85',
     alt: 'Mountain reflected in alpine lake',
     headline: 'Where the World\nBecomes Extraordinary',
     subheadline: 'Bespoke journeys crafted for the discerning traveller.',
-    ctaLabel: 'Begin Your Journey',
-    ctaHref: '#contact',
+    ctaLabel: 'Start Planning',
+    ctaHref: `${base}/contact`,
   },
   {
     src: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=2000&q=85',
     alt: 'Hot air balloons over landscape',
     headline: 'Every Detail.\nPerfectly Curated.',
     subheadline: 'From overwater villas to private safari concessions.',
-    ctaLabel: 'Explore Properties',
-    ctaHref: '#properties',
+    ctaLabel: 'Explore Programs',
+    ctaHref: `${base}/resources`,
   },
   {
     src: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=2000&q=85',
@@ -56,7 +55,7 @@ const HERO_SLIDES = [
     headline: 'Life is Short.\nTravel Beautifully.',
     subheadline: 'As a Virtuoso member, we unlock exclusive benefits at the world\'s finest hotels.',
     ctaLabel: 'Start Planning',
-    ctaHref: '#contact',
+    ctaHref: `${base}/contact`,
   },
   // Eden-specific slides
   {
@@ -65,15 +64,15 @@ const HERO_SLIDES = [
     headline: 'A Virtuoso\nTravel Agency',
     subheadline: 'Preferred access, exclusive amenities, and a team that\'s been where you want to go.',
     ctaLabel: 'Meet The Team',
-    ctaHref: '#team',
+    ctaHref: `${base}/about`,
   },
   {
     src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=2000&q=85',
     alt: 'Scenic mountain pass at dusk',
     headline: 'We\'ve been to\nover 90 countries',
     subheadline: 'Condé Nast Traveler Top Travel Specialists — for good reason.',
-    ctaLabel: 'Discover More',
-    ctaHref: '#about',
+    ctaLabel: 'Learn About Us',
+    ctaHref: `${base}/about`,
   },
 ]
 
@@ -100,7 +99,7 @@ export default async function AgentHomePage({ params }: PageProps) {
           1. HERO SLIDER — full-viewport cinematic slider
              CNT badge: bottom-left (luxury editorial standard)
           ───────────────────────────────────────────────────────────────────── */}
-      <HeroSlider slides={HERO_SLIDES} showBadge={true} />
+      <HeroSlider slides={getHeroSlides(base)} showBadge={true} />
 
       {/* ─────────────────────────────────────────────────────────────────────
           2. TEAM INTRO BAND — warm gold section with portrait + tagline
