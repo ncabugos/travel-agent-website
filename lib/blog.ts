@@ -3,18 +3,18 @@
  * Blog data layer — queries Supabase blog_posts table.
  */
 import type { BlogPost } from '@/types/index'
-import { createClient } from '@/lib/supabase/server'
+import { createServiceClient } from '@/lib/supabase/service'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const hasSupabase = () =>
-  !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+  !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY)
 
 // ─── Data functions ───────────────────────────────────────────────────────────
 
 export async function getBlogPosts(agentId?: string): Promise<BlogPost[]> {
   if (!hasSupabase()) return []
-  const supabase = await createClient()
+  const supabase = createServiceClient()
 
   let query = supabase
     .from('blog_posts')
@@ -41,7 +41,7 @@ export async function getBlogPost(
   agentId?: string
 ): Promise<BlogPost | null> {
   if (!hasSupabase()) return null
-  const supabase = await createClient()
+  const supabase = createServiceClient()
 
   let query = supabase
     .from('blog_posts')
