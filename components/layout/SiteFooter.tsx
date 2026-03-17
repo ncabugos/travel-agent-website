@@ -19,7 +19,7 @@ const NAV_LINKS = [
   { label: 'Home',      path: '' },
   { label: 'About',     path: '/about' },
   { label: 'Media',     path: '/media' },
-  { label: 'Blog',      path: '/blog' },
+  { label: 'Journal',   path: '/blog' },
   { label: 'Resources', path: '/resources' },
   { label: 'Contact',   path: '/contact' },
 ]
@@ -163,17 +163,19 @@ export function SiteFooter({
           <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.12em', color: '#4A4845' }}>
             A Virtuoso Member Agency
           </span>
-          <Link href={`${base}/terms`} style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.12em', color: '#4A4845', textDecoration: 'none' }}
-            onMouseEnter={e => (e.currentTarget.style.color = 'var(--warm-gray)')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#4A4845')}
+          <Link href={`${base}/terms`}
+            style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.12em', color: '#6A6560', textDecoration: 'none', borderBottom: '1px solid #2E2C29', paddingBottom: '1px' }}
+            onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+            onMouseLeave={e => (e.currentTarget.style.color = '#6A6560')}
           >
-            Terms
+            Terms of Service
           </Link>
-          <Link href={`${base}/privacy`} style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.12em', color: '#4A4845', textDecoration: 'none' }}
-            onMouseEnter={e => (e.currentTarget.style.color = 'var(--warm-gray)')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#4A4845')}
+          <Link href={`${base}/privacy`}
+            style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.12em', color: '#6A6560', textDecoration: 'none', borderBottom: '1px solid #2E2C29', paddingBottom: '1px' }}
+            onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+            onMouseLeave={e => (e.currentTarget.style.color = '#6A6560')}
           >
-            Privacy
+            Privacy Policy
           </Link>
         </div>
       </div>

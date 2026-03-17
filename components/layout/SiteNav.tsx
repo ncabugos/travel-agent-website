@@ -14,16 +14,15 @@ const DESKTOP_NAV = [
   { label: 'Home',      path: '' },
   { label: 'About',     path: '/about' },
   { label: 'Media',     path: '/media' },
-  { label: 'Blog',      path: '/blog' },
+  { label: 'Journal',   path: '/blog' },
   { label: 'Resources', path: '/resources' },
   { label: 'Contact',   path: '/contact' },
 ]
 
-// Mobile omits Home (you're already there) 
 const MOBILE_NAV = [
   { label: 'About',     path: '/about' },
   { label: 'Media',     path: '/media' },
-  { label: 'Blog',      path: '/blog' },
+  { label: 'Journal',   path: '/blog' },
   { label: 'Resources', path: '/resources' },
   { label: 'Contact',   path: '/contact' },
 ]

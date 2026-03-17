@@ -92,7 +92,7 @@ export default async function ResourcesPage({ params }: PageProps) {
           </h2>
           <div style={{ width: '40px', height: '1px', background: 'var(--gold)', margin: '0 auto 28px' }} />
           <p style={{ fontFamily: sans, fontSize: '15px', color: 'var(--warm-gray)', lineHeight: '1.9', marginBottom: '60px' }}>
-            Our preferred partner status with 19 of the world's most prestigious hotel consortia means your clients receive complimentary breakfast, resort credits, room upgrades, VIP recognition, and personalised service — automatically included at no extra cost when booking through us.
+            Our preferred partner status with the world's most prestigious Exclusive Hotel Programs means your clients receive complimentary breakfast, resort credits, room upgrades, VIP recognition, and personalised service — automatically included at no extra cost when booking through us.
           </p>
 
           {/* Three pillars */}
