@@ -71,7 +71,7 @@ export function TeamIntroBand({
                 alt={agencyName ?? 'Our team'}
                 fill
                 sizes="220px"
-                style={{ objectFit: 'cover', filter: 'grayscale(30%)' }}
+                style={{ objectFit: 'cover', filter: 'grayscale(100%)' }}
               />
             ) : (
               /* Elegant fallback monogram */
