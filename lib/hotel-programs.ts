@@ -1,4 +1,5 @@
 import { HOTEL_LOGOS } from '@/lib/media-library'
+import { createServiceClient } from '@/lib/supabase/service'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -479,8 +480,7 @@ export async function getHotelPrograms(): Promise<HotelProgram[]> {
   if (isDemo()) return MOCK_HOTEL_PROGRAMS
 
   try {
-    const { createClient } = await import('@/lib/supabase/server')
-    const supabase = await createClient()
+    const supabase = createServiceClient()
 
     const { data, error } = await supabase
       .from('hotel_programs')
@@ -507,8 +507,7 @@ export async function getHotelProgram(slug: string): Promise<HotelProgram | null
   }
 
   try {
-    const { createClient } = await import('@/lib/supabase/server')
-    const supabase = await createClient()
+    const supabase = createServiceClient()
 
     const { data, error } = await supabase
       .from('hotel_programs')

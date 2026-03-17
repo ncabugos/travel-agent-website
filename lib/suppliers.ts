@@ -1,4 +1,5 @@
 import { MOCK_AGENT, MOCK_SUPPLIERS, type DisplaySupplier, type MockAgent } from '@/lib/mock-data'
+import { createServiceClient } from '@/lib/supabase/service'
 
 const DEMO_ID = 'demo-agent'
 const isDemo = (agentId: string) =>
@@ -10,8 +11,7 @@ export async function getAgentProfile(agentId: string): Promise<MockAgent | null
   if (isDemo(agentId)) return MOCK_AGENT
 
   try {
-    const { createClient } = await import('@/lib/supabase/server')
-    const supabase = await createClient()
+    const supabase = createServiceClient()
 
     const { data, error } = await supabase
       .from('agents')
@@ -43,8 +43,7 @@ export async function getAgentSuppliers(agentId: string): Promise<DisplaySupplie
   if (isDemo(agentId)) return MOCK_SUPPLIERS
 
   try {
-    const { createClient } = await import('@/lib/supabase/server')
-    const supabase = await createClient()
+    const supabase = createServiceClient()
 
     const { data, error } = await supabase
       .from('agent_supplier_selections')
