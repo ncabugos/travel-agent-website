@@ -60,13 +60,12 @@ export function SiteFooter({
 
   return (
     <footer style={{ background: 'var(--dark-footer)', color: '#9A9590' }}>
-      {/* Main columns */}
-      <div
-        className="max-w-7xl mx-auto px-8 py-20"
-        style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '60px' }}
-      >
+
+      {/* ── Main columns ─────────────────────────────────────────────── */}
+      <div className="footer-main max-w-7xl mx-auto px-8 py-20">
+
         {/* Col 1: Brand */}
-        <div>
+        <div className="footer-brand">
           <span
             style={{
               fontFamily: 'var(--font-serif)',
@@ -74,7 +73,7 @@ export function SiteFooter({
               letterSpacing: '0.12em',
               color: 'var(--gold)',
               display: 'block',
-              marginBottom: '16px',
+              marginBottom: '12px',
               fontWeight: 300,
             }}
           >
@@ -84,48 +83,51 @@ export function SiteFooter({
             Curating the world&apos;s most extraordinary journeys — with precision, passion, and white-glove care.
           </p>
           {/* Social icons */}
-          <div className="flex gap-4 mt-6">
+          <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
             <FooterSocialLink href={instagram ?? '#'} label="Instagram" type="instagram" />
-            <FooterSocialLink href={facebook ?? '#'} label="Facebook" type="facebook" />
-            <FooterSocialLink href={youtube ?? '#'} label="YouTube" type="youtube" />
+            <FooterSocialLink href={facebook ?? '#'}  label="Facebook"  type="facebook"  />
+            <FooterSocialLink href={youtube ?? '#'}   label="YouTube"   type="youtube"   />
           </div>
-
           {/* Virtuoso affiliation */}
-          <div style={{ marginTop: '32px' }}>
+          <div style={{ marginTop: '28px' }}>
             <Image
               src="/assets/virtuoso-footer.png"
               alt="Virtuoso"
-              width={140}
-              height={48}
+              width={120}
+              height={40}
               style={{ objectFit: 'contain', objectPosition: 'left', opacity: 0.85 }}
             />
-            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.08em', color: '#4A4845', lineHeight: '1.6', marginTop: '10px', maxWidth: '220px' }}>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.08em', color: '#4A4845', lineHeight: '1.6', marginTop: '8px', maxWidth: '220px' }}>
               An Affiliate of Montecito Village Travel, A Virtuoso Agency.
             </p>
           </div>
         </div>
 
         {/* Col 2: Nav */}
-        <div>
+        <div className="footer-nav">
           <span style={labelStyle}>Navigation</span>
-          {NAV_LINKS.map(({ label, path }) => (
-            <Link
-              key={label}
-              href={`${base}${path}`}
-              style={linkStyle}
-              onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
-              onMouseLeave={e => (e.currentTarget.style.color = '#9A9590')}
-            >
-              {label}
-            </Link>
-          ))}
+          <div className="footer-nav-links">
+            {NAV_LINKS.map(({ label, path }) => (
+              <Link
+                key={label}
+                href={`${base}${path}`}
+                style={linkStyle}
+                onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+                onMouseLeave={e => (e.currentTarget.style.color = '#9A9590')}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
         </div>
 
         {/* Col 3: Contact */}
-        <div>
+        <div className="footer-contact">
           <span style={labelStyle}>Contact</span>
           {phone && (
-            <a href={`tel:${phone.replace(/\D/g, '')}`} style={{ ...linkStyle, marginBottom: '4px' }}
+            <a
+              href={`tel:${phone.replace(/\D/g, '')}`}
+              style={{ ...linkStyle, whiteSpace: 'nowrap' }}
               onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
               onMouseLeave={e => (e.currentTarget.style.color = '#9A9590')}
             >
@@ -133,44 +135,44 @@ export function SiteFooter({
             </a>
           )}
           {email && (
-            <a href={`mailto:${email}`} style={linkStyle}
+            <a
+              href={`mailto:${email}`}
+              style={linkStyle}
               onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
               onMouseLeave={e => (e.currentTarget.style.color = '#9A9590')}
             >
               {email}
             </a>
           )}
-          {address && (
-            <p style={{ ...linkStyle, cursor: 'default' }}>{address}</p>
-          )}
-          {!address && (
-            <p style={{ ...linkStyle, cursor: 'default' }}>Long Beach, CA 90803</p>
-          )}
+          <p style={{ ...linkStyle, cursor: 'default' }}>
+            {address ?? 'Long Beach, CA 90803'}
+          </p>
         </div>
       </div>
 
-      {/* Bottom bar */}
+      {/* ── Bottom bar ─────────────────────────────────────────────────── */}
       <div
-        className="max-w-7xl mx-auto px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3"
+        className="footer-bottom max-w-7xl mx-auto px-8 py-5"
         style={{ borderTop: '1px solid #1F1D1A' }}
       >
-        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.15em', color: '#4A4845' }}>
+        <p className="footer-copy" style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.15em', color: '#4A4845' }}>
           © {new Date().getFullYear()} {agencyName}. All Rights Reserved.
-          {cstNumber && ` | CST # ${cstNumber}`}
-          {!cstNumber && ' | CST # 2097184-40'}
+          {cstNumber ? ` | CST # ${cstNumber}` : ' | CST # 2097184-40'}
         </p>
-        <div className="flex items-center gap-6">
+        <div className="footer-legal">
           <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.12em', color: '#4A4845' }}>
             A Virtuoso Member Agency
           </span>
-          <Link href={`${base}/terms`}
+          <Link
+            href={`${base}/terms`}
             style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.12em', color: '#6A6560', textDecoration: 'none', borderBottom: '1px solid #2E2C29', paddingBottom: '1px' }}
             onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
             onMouseLeave={e => (e.currentTarget.style.color = '#6A6560')}
           >
             Terms of Service
           </Link>
-          <Link href={`${base}/privacy`}
+          <Link
+            href={`${base}/privacy`}
             style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.12em', color: '#6A6560', textDecoration: 'none', borderBottom: '1px solid #2E2C29', paddingBottom: '1px' }}
             onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
             onMouseLeave={e => (e.currentTarget.style.color = '#6A6560')}
@@ -179,6 +181,95 @@ export function SiteFooter({
           </Link>
         </div>
       </div>
+
+      {/* ── Scoped responsive styles ───────────────────────────────────── */}
+      <style>{`
+        /* Desktop: 3-col grid */
+        .footer-main {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 60px;
+          align-items: start;
+        }
+        .footer-nav-links {
+          display: flex;
+          flex-direction: column;
+        }
+        .footer-bottom {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+        }
+        .footer-legal {
+          display: flex;
+          align-items: center;
+          gap: 24px;
+        }
+
+        /* Mobile: clean single-column stacked layout */
+        @media (max-width: 768px) {
+          .footer-main {
+            grid-template-columns: 1fr !important;
+            gap: 0 !important;
+            padding: 48px 24px !important;
+          }
+
+          /* Brand section — centered, full-width */
+          .footer-brand {
+            text-align: center;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #1F1D1A;
+          }
+          .footer-brand p { max-width: 100% !important; }
+          .footer-brand > div:first-of-type { justify-content: center; }
+
+          /* Nav — horizontal 2-col pill grid */
+          .footer-nav {
+            padding: 36px 0 32px;
+            border-bottom: 1px solid #1F1D1A;
+          }
+          .footer-nav > span {
+            text-align: center;
+            display: block;
+            margin-bottom: 20px !important;
+          }
+          .footer-nav-links {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 0;
+            text-align: center;
+          }
+          .footer-nav-links a {
+            padding: 8px 0 !important;
+            line-height: 1.4 !important;
+          }
+
+          /* Contact — centered */
+          .footer-contact {
+            padding: 36px 0 0;
+            text-align: center;
+          }
+          .footer-contact > span { display: block; text-align: center; }
+          .footer-contact a,
+          .footer-contact p { text-align: center !important; }
+
+          /* Bottom bar — stack vertically */
+          .footer-bottom {
+            flex-direction: column !important;
+            text-align: center;
+            gap: 16px !important;
+            padding: 24px !important;
+          }
+          .footer-legal {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px !important;
+          }
+          .footer-copy { text-align: center; }
+        }
+      `}</style>
     </footer>
   )
 }
