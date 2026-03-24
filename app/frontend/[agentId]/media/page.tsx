@@ -42,8 +42,14 @@ export default async function MediaPage({ params }: PageProps) {
       {/* Featured Award */}
       <section style={{ padding: '100px 24px', textAlign: 'center', borderBottom: '1px solid var(--divider)' }}>
         <div style={{ maxWidth: '700px', margin: '0 auto' }}>
-          <p style={{ fontFamily: sans, fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '24px' }}>Featured Recognition</p>
           <div style={{ border: '1px solid var(--divider)', padding: '60px 48px', marginBottom: '40px' }}>
+            <Image
+              src="/assets/eden/2025-2026_CONDE-NAST_CONDE-NAST-TRAVELER_TOP-TRAVEL-SPECIALISTS_LOGO_RGB.png"
+              alt="Condé Nast Traveler Top Travel Specialists 2025–2026"
+              width={220}
+              height={120}
+              style={{ objectFit: 'contain', margin: '0 auto 28px', display: 'block' }}
+            />
             <p style={{ fontFamily: serif, fontSize: '13px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--warm-gray)', marginBottom: '24px' }}>Condé Nast Traveler</p>
             <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.8rem, 3.5vw, 3rem)', fontWeight: 300, fontStyle: 'italic', color: 'var(--charcoal)', lineHeight: 1.2, marginBottom: '20px' }}>
               Top Travel Specialists 2025
