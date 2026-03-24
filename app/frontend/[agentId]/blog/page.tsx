@@ -2,7 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getBlogPosts } from '@/lib/blog'
 import { getAgentProfile } from '@/lib/suppliers'
+import { getChannelVideos } from '@/lib/youtube'
 import { notFound } from 'next/navigation'
+import { VideoGrid } from '@/components/journal/VideoGrid'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -11,7 +13,7 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps) {
   const { agentId } = await params
   const agent = await getAgentProfile(agentId)
-  return { title: `Journal — ${agent?.agency_name ?? 'Luxury Travel'}` }
+  return { title: `Journal — ${agent?.agency_name ?? 'Eden For Your World'}` }
 }
 
 const serif = 'var(--font-serif)'
@@ -22,8 +24,12 @@ export default async function BlogPage({ params }: PageProps) {
   const agent = await getAgentProfile(agentId)
   if (!agent) notFound()
 
-  const posts = await getBlogPosts(agentId)
-  const base  = `/frontend/${agentId}`
+  const [posts, videos] = await Promise.all([
+    getBlogPosts(agentId),
+    getChannelVideos('edenforyourworld', 9),
+  ])
+
+  const base = `/frontend/${agentId}`
 
   return (
     <main style={{ background: 'var(--cream)' }}>
@@ -44,18 +50,43 @@ export default async function BlogPage({ params }: PageProps) {
           display: 'flex', flexDirection: 'column',
           alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px',
         }}>
-          <p style={{ fontFamily: sans, fontSize: '10px', letterSpacing: '0.35em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '16px' }}>
-            Stories &amp; Inspiration
-          </p>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 300, color: '#FFFFFF', lineHeight: 1.1 }}>
             The Journal
           </h1>
         </div>
       </div>
 
-      {/* Posts Grid */}
+      {/* ── Video Section ── */}
+      <VideoGrid videos={videos} />
+
+      {/* ── Posts Grid ── */}
       <section style={{ padding: '100px 24px' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+
+          {/* Section header */}
+          <div style={{ marginBottom: '56px' }}>
+            <p style={{
+              fontFamily: sans,
+              fontSize: '10px',
+              letterSpacing: '0.35em',
+              textTransform: 'uppercase',
+              color: 'var(--gold)',
+              marginBottom: '14px',
+            }}>
+              Stories &amp; Inspiration
+            </p>
+            <h2 style={{
+              fontFamily: serif,
+              fontSize: 'clamp(1.8rem, 3vw, 2.8rem)',
+              fontWeight: 300,
+              color: 'var(--charcoal)',
+              marginBottom: '20px',
+            }}>
+              Latest Posts
+            </h2>
+            <div style={{ width: '40px', height: '1px', background: 'var(--gold)' }} />
+          </div>
+
           {posts.length === 0 ? (
             <p style={{ fontFamily: sans, fontSize: '16px', color: 'var(--warm-gray)', textAlign: 'center' }}>
               No posts yet — check back soon.
@@ -69,7 +100,6 @@ export default async function BlogPage({ params }: PageProps) {
                   style={{ textDecoration: 'none', display: 'block' }}
                 >
                   <article className="group">
-                    {/* Image */}
                     {post.cover_image_url && (
                       <div style={{ position: 'relative', paddingBottom: '65%', overflow: 'hidden', marginBottom: '24px' }}>
                         <Image
@@ -82,7 +112,6 @@ export default async function BlogPage({ params }: PageProps) {
                         />
                       </div>
                     )}
-                    {/* Meta */}
                     <p style={{ fontFamily: sans, fontSize: '9px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '10px' }}>
                       {new Date(post.published_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                     </p>
