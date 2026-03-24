@@ -22,6 +22,9 @@ const PLACEHOLDER: BlogPost[] = [
     categories: [],
     tags: [],
     status: 'published',
+    is_broadcast: false,
+    target_agent_ids: [],
+    gallery_images: [],
   },
   {
     id: 'p2',
@@ -35,6 +38,9 @@ const PLACEHOLDER: BlogPost[] = [
     categories: [],
     tags: [],
     status: 'published',
+    is_broadcast: false,
+    target_agent_ids: [],
+    gallery_images: [],
   },
   {
     id: 'p3',
@@ -48,6 +54,9 @@ const PLACEHOLDER: BlogPost[] = [
     categories: [],
     tags: [],
     status: 'published',
+    is_broadcast: false,
+    target_agent_ids: [],
+    gallery_images: [],
   },
 ]
 

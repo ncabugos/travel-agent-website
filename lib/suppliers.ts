@@ -1,6 +1,9 @@
 import { MOCK_AGENT, MOCK_SUPPLIERS, type DisplaySupplier, type MockAgent } from '@/lib/mock-data'
 import { createServiceClient } from '@/lib/supabase/service'
 
+// Re-export for use in lib/blog.ts and other modules
+export type AgentProfile = MockAgent
+
 const DEMO_ID = 'demo-agent'
 const isDemo = (agentId: string) =>
   agentId === DEMO_ID || !process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -30,7 +33,8 @@ export async function getAgentProfile(agentId: string): Promise<MockAgent | null
       custom_domain: row.custom_domain ?? null,
       avatar_url: row.avatar_url ?? null,
       tagline: 'Curating the world\'s most extraordinary stays',
-      email: '',
+      email: row.email ?? '',
+      phone: row.phone ?? '',
     }
   } catch {
     return null

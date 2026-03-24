@@ -1,4 +1,9 @@
 // ─── Blog Post (Supabase) ────────────────────────────────────────────────────
+export interface GalleryImage {
+  url: string
+  caption?: string
+}
+
 export interface BlogPost {
   id: string
   agent_id: string
@@ -11,6 +16,9 @@ export interface BlogPost {
   categories: string[]
   tags: string[]
   status: 'draft' | 'published'
+  is_broadcast: boolean
+  target_agent_ids: string[]
+  gallery_images: GalleryImage[]
 }
 
 // ─── Destination ───────────────────────────────────────────────────────────
