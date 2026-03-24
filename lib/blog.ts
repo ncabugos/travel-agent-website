@@ -25,10 +25,19 @@ export function renderShortcodes(html: string, agent: AgentProfile): string {
     '{{agent_phone}}':  agent.phone        ?? '',
     '{{agent_email}}':  agent.email        ?? '',
   }
-  return Object.entries(tokens).reduce(
-    (out, [token, value]) => out.replaceAll(token, value),
+  let out = Object.entries(tokens).reduce(
+    (acc, [token, value]) => acc.replaceAll(token, value),
     html,
   )
+
+  // Strip ALL WPBakery / Visual Composer shortcode tags (vc_row, vc_empty_space,
+  // vc_video, vc_gallery, vc_single_image, etc.) but keep inner content intact.
+  out = out.replace(/\[\/?\s*vc_\w+[^\]]*\]/g, '')
+
+  // Strip WordPress [gallery] shortcodes
+  out = out.replace(/\[\/?\s*gallery[^\]]*\]/g, '')
+
+  return out
 }
 
 // ─── Data functions ───────────────────────────────────────────────────────────
