@@ -57,7 +57,7 @@ export default async function AgentFrontendLayout({ children, params }: LayoutPr
         agentId={agentId}
         agencyName={agent?.agency_name ?? 'Luxury Travel'}
         phone={agent?.phone ?? '+1 (562) 856-8603'}
-        email={agent?.email ?? ''}
+        email={agent?.email ?? 'info@edenfyw.com'}
         address={agent?.address}
         cstNumber={agent?.cst_number}
         instagram={social.instagram}

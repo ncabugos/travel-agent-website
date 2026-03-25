@@ -22,7 +22,7 @@ export default async function ContactPage({ params }: PageProps) {
   if (!agent) notFound()
 
   const phone   = agent.phone ?? '+1 (562) 856-8603'
-  const email   = agent.email ?? 'info@edenforyourworld.com'
+  const email   = agent.email ?? 'info@edenfyw.com'
   const address = agent.address ?? '5318 E. 2nd St. #520, Long Beach, CA 90803'
 
   return (
@@ -55,7 +55,7 @@ export default async function ContactPage({ params }: PageProps) {
               <InfoItem label="Email">
                 <a href={`mailto:${email}`} style={{ fontFamily: sans, fontSize: '15px', color: 'var(--charcoal)', textDecoration: 'none' }}>{email}</a>
               </InfoItem>
-              <InfoItem label="Office">
+              <InfoItem label="Mailing Address">
                 <p style={{ fontFamily: sans, fontSize: '14px', color: 'var(--charcoal)', lineHeight: '1.6', margin: 0 }}>{address}</p>
               </InfoItem>
               <InfoItem label="Hours">

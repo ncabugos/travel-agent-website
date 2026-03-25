@@ -135,18 +135,17 @@ export function SiteFooter({
               {phone}
             </a>
           )}
-          {email && (
-            <a
-              href={`mailto:${email}`}
-              style={linkStyle}
-              onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
-              onMouseLeave={e => (e.currentTarget.style.color = '#9A9590')}
-            >
-              {email}
-            </a>
-          )}
-          <p style={{ ...linkStyle, cursor: 'default' }}>
-            {address ?? 'Long Beach, CA 90803'}
+          <a
+            href={`mailto:${email || 'info@edenfyw.com'}`}
+            style={linkStyle}
+            onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+            onMouseLeave={e => (e.currentTarget.style.color = '#9A9590')}
+          >
+            {email || 'info@edenfyw.com'}
+          </a>
+          <p style={{ ...linkStyle, cursor: 'default', lineHeight: '1.6' }}>
+            <span style={{ fontSize: '9px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#6A6560', display: 'block', marginBottom: '4px' }}>Mailing Address</span>
+            {address ?? '5318 E. 2nd St. #520, Long Beach, CA 90803'}
           </p>
         </div>
       </div>
