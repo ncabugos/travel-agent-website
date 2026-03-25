@@ -30,7 +30,7 @@ export default async function ContactPage({ params }: PageProps) {
 
       {/* Page Banner */}
       <div style={{ position: 'relative', height: '50vh', minHeight: '340px', overflow: 'hidden' }}>
-        <Image src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=2000&q=80" alt="Travel planning" fill priority sizes="100vw" style={{ objectFit: 'cover', objectPosition: 'center 50%' }} />
+        <Image src="/media/hero images/four-seasons-CapFerrat_garden-hero.jpg" alt="Travel planning" fill priority sizes="100vw" style={{ objectFit: 'cover', objectPosition: 'center 50%' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(20,18,16,0.6)' }} />
         <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' }}>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 300, color: '#FFFFFF', lineHeight: 1.1 }}>Plan Your Journey</h1>

@@ -236,8 +236,8 @@ export function HeroSlider({ slides, autoPlayMs = 6000, showBadge = false }: Her
           <Image
             src={EDEN.condeNast2026}
             alt="Condé Nast Traveler Top Travel Specialists 2025-2026"
-            width={127}
-            height={127}
+            width={180}
+            height={180}
             style={{
               objectFit: 'contain',
               filter: 'drop-shadow(0 2px 12px rgba(0,0,0,0.5))',
@@ -251,15 +251,17 @@ export function HeroSlider({ slides, autoPlayMs = 6000, showBadge = false }: Her
       <style>{`
         @media (max-width: 768px) {
           .cnt-badge {
-            bottom: 52px !important;
-            left: 16px !important;
+            bottom: 56px !important;
+            left: 50% !important;
+            transform: translateX(-50%);
           }
           .cnt-badge img {
-            width: 88px !important;
-            height: 88px !important;
+            width: 120px !important;
+            height: 120px !important;
           }
         }
-      `}</style>
+      `}
+      </style>
 
       {/* Dot indicators */}
       <div
