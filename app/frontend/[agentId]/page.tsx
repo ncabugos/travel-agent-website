@@ -34,24 +34,24 @@ export async function generateMetadata({ params }: PageProps) {
 // ── Hero Slides ─────────────────────────────────────────────────────────────
 const getHeroSlides = (base: string) => [
   {
-    src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000&q=85',
-    alt: 'Mountain reflected in alpine lake',
+    src: '/media/hero images/four-seasons-CapFerrat-pool-hero.jpg',
+    alt: 'Four Seasons Cap Ferrat pool',
     headline: 'Where the World\nBecomes Extraordinary',
     subheadline: 'Bespoke journeys crafted for the discerning traveller.',
     ctaLabel: 'Start Planning',
     ctaHref: `${base}/contact`,
   },
   {
-    src: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=2000&q=85',
-    alt: 'Hot air balloons over landscape',
+    src: '/media/hero images/four-seasons-taormina-pool-hero.jpg',
+    alt: 'Four Seasons Taormina pool overlooking the sea',
     headline: 'Every Detail.\nPerfectly Curated.',
     subheadline: 'From overwater villas to private safari concessions.',
     ctaLabel: 'Explore Programs',
     ctaHref: `${base}/resources`,
   },
   {
-    src: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=2000&q=85',
-    alt: 'Tropical overwater bungalows at sunset',
+    src: '/media/hero images/four-seasons-sayan-hero.jpg',
+    alt: 'Four Seasons Sayan resort',
     headline: 'Life is Short.\nTravel Beautifully.',
     subheadline: 'As a Virtuoso member, we unlock exclusive benefits at the world\'s finest hotels.',
     ctaLabel: 'Start Planning',
@@ -67,8 +67,8 @@ const getHeroSlides = (base: string) => [
     ctaHref: `${base}/about`,
   },
   {
-    src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=2000&q=85',
-    alt: 'Scenic mountain pass at dusk',
+    src: '/media/hero images/four-seasons-yacht-hero.jpg',
+    alt: 'Four Seasons yacht at sea',
     headline: 'We\'ve been to\nover 90 countries',
     subheadline: 'Condé Nast Traveler Top Travel Specialists — for good reason.',
     ctaLabel: 'Learn About Us',
@@ -116,10 +116,10 @@ export default async function AgentHomePage({ params }: PageProps) {
           3. BRAND STORY — 2-col: stacked images left, editorial copy right  
           ───────────────────────────────────────────────────────────────────── */}
       <BrandStory
-        image1Src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=900&q=85"
-        image1Alt="Scenic travel landscape"
-        image2Src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=900&q=85"
-        image2Alt="Luxury villa interior"
+        image1Src="/media/hotel-programs/four-seasons/fs-slush-pool.jpg"
+        image1Alt="Four Seasons pool"
+        image2Src="/media/hotel-programs/four-seasons/fs-taormina-pool-couple-1080x1350.jpg"
+        image2Alt="Four Seasons Taormina pool couple"
       />
 
       {/* ─────────────────────────────────────────────────────────────────────
