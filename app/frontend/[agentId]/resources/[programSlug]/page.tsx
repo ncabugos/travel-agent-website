@@ -134,7 +134,7 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
                   maxWidth: '220px',
                   maxHeight: '80px',
                   objectFit: 'contain',
-                  filter: 'brightness(0) invert(1)',
+                  filter: 'drop-shadow(0 1px 4px rgba(0,0,0,0.3))',
                   opacity: 0.92,
                 }}
               />
