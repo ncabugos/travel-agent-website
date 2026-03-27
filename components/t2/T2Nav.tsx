@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 interface T2NavProps {
   agentId: string
   agencyName: string
+  tagline?: string
   logoUrl?: string
   logoUrlDark?: string
   navLinks?: { label: string; href: string }[]
@@ -21,7 +22,7 @@ const NAV_LINKS = [
   { label: 'About',          href: '/about' },
 ]
 
-export function T2Nav({ agentId, agencyName, logoUrl, logoUrlDark, navLinks }: T2NavProps) {
+export function T2Nav({ agentId, agencyName, tagline, logoUrl, logoUrlDark, navLinks }: T2NavProps) {
   const [scrolled, setScrolled]   = useState(false)
   const [menuOpen, setMenuOpen]   = useState(false)
   const [mounted, setMounted]     = useState(false)
@@ -254,7 +255,7 @@ export function T2Nav({ agentId, agencyName, logoUrl, logoUrlDark, navLinks }: T
             transform: menuOpen ? 'translateY(0)' : 'translateY(12px)',
             transition: 'opacity 0.4s ease 0.18s, transform 0.4s ease 0.18s',
           }}>
-            Spokane&rsquo;s most experienced travel advisors — delivering VIP access, exclusive Virtuoso perks, and journeys that transform.
+            {tagline ?? 'Curating the world\'s most extraordinary journeys — with precision, passion, and white-glove care.'}
           </p>
 
           {/* Social icons */}

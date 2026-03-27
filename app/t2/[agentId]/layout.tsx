@@ -51,6 +51,7 @@ export default async function T2Layout({ children, params }: LayoutProps) {
       <T2Nav
         agentId={agentId}
         agencyName={agent?.agency_name ?? 'Luxury Travel Co'}
+        tagline={agent?.tagline ?? undefined}
         logoUrl={agent?.logo_url ?? undefined}
         logoUrlDark={agent?.logo_url_dark ?? undefined}
         navLinks={agent?.nav_links}
