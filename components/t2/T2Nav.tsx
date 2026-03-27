@@ -8,6 +8,7 @@ interface T2NavProps {
   agentId: string
   agencyName: string
   logoUrl?: string
+  logoUrlDark?: string
   navLinks?: { label: string; href: string }[]
 }
 
@@ -20,7 +21,7 @@ const NAV_LINKS = [
   { label: 'About',          href: '/about' },
 ]
 
-export function T2Nav({ agentId, agencyName, logoUrl, navLinks }: T2NavProps) {
+export function T2Nav({ agentId, agencyName, logoUrl, logoUrlDark, navLinks }: T2NavProps) {
   const [scrolled, setScrolled]   = useState(false)
   const [menuOpen, setMenuOpen]   = useState(false)
   const [mounted, setMounted]     = useState(false)
@@ -137,15 +138,14 @@ export function T2Nav({ agentId, agencyName, logoUrl, navLinks }: T2NavProps) {
           >
             {logoUrl ? (
               <Image
-                src={logoUrl}
+                src={(scrolled && !menuOpen && logoUrlDark) ? logoUrlDark : logoUrl}
                 alt={agencyName}
                 width={220}
                 height={60}
                 style={{
                   objectFit: 'contain',
                   maxHeight: 54,
-                  filter: (menuOpen || !scrolled) ? 'brightness(0) invert(1)' : 'none',
-                  transition: 'filter 0.3s ease',
+                  transition: 'opacity 0.3s ease',
                 }}
                 unoptimized
               />
