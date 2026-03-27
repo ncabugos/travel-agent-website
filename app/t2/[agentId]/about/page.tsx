@@ -79,7 +79,7 @@ export default async function AboutPage({ params }: { params: Promise<{ agentId:
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section style={{ position: 'relative', height: 520, overflow: 'hidden' }}>
+      <section style={{ position: 'relative', height: 650, overflow: 'hidden' }}>
         <Image
           src="/media/hero images/four-seasons-CapFerrat-pool-hero.jpg"
           alt="About Eden Travel"

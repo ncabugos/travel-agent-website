@@ -44,7 +44,7 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
       <section
         style={{
           position: 'relative',
-          height: 520,
+          height: 650,
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',

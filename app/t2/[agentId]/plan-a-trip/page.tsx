@@ -9,7 +9,7 @@ export default async function PlanATripPage() {
   return (
     <>
       {/* Hero */}
-      <section style={{ position: 'relative', height: 480, overflow: 'hidden' }}>
+      <section style={{ position: 'relative', height: 650, overflow: 'hidden' }}>
         <Image
           src="/media/hero images/four-seasons-sayan-hero.jpg"
           alt="Plan a trip"

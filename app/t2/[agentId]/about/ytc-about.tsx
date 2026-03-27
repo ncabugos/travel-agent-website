@@ -298,7 +298,7 @@ export default function YTCAboutPage({ params }: PageProps) {
       </section>
 
       {/* ── Philosophy Quote ──────────────────────────────────────────────── */}
-      <section style={{ position: 'relative', height: 440, overflow: 'hidden' }}>
+      <section style={{ position: 'relative', height: 650, overflow: 'hidden' }}>
         <Image
           src="/media/hotel-programs/aman/aman-hero-2000.jpg"
           alt="Our philosophy"

@@ -13,7 +13,7 @@ export default async function FindCruisePage({ params }: PageProps) {
   return (
     <>
       {/* Hero */}
-      <section style={{ position: 'relative', height: 480, overflow: 'hidden' }}>
+      <section style={{ position: 'relative', height: 650, overflow: 'hidden' }}>
         <Image
           src="/media/cruises/regent-seven-seas/Regent-hero-Tahiti-2500.jpg"
           alt="Find a Cruise"
