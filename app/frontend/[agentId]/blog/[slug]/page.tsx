@@ -44,13 +44,11 @@ export default async function BlogPostPage({ params }: PageProps) {
       {/* Featured image */}
       {post.cover_image_url && (
         <div style={{ position: 'relative', height: '65vh', minHeight: '400px', overflow: 'hidden' }}>
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={post.cover_image_url}
             alt={post.title}
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover' }}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
           />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 40%, rgba(250,250,245,1) 100%)' }} />
         </div>
@@ -147,7 +145,8 @@ export default async function BlogPostPage({ params }: PageProps) {
                 >
                   {p.cover_image_url && (
                     <div style={{ position: 'relative', width: '72px', height: '72px', flexShrink: 0, overflow: 'hidden' }}>
-                      <Image src={p.cover_image_url} alt={p.title} fill sizes="72px" style={{ objectFit: 'cover' }} />
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={p.cover_image_url} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </div>
                   )}
                   <div>

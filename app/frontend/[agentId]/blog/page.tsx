@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/image' // used for hero banner only
 import Link from 'next/link'
 import { getBlogPosts } from '@/lib/blog'
 import { getAgentProfile } from '@/lib/suppliers'
@@ -102,12 +102,11 @@ export default async function BlogPage({ params }: PageProps) {
                   <article className="group">
                     {post.cover_image_url && (
                       <div style={{ position: 'relative', paddingBottom: '65%', overflow: 'hidden', marginBottom: '24px' }}>
-                        <Image
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
                           src={post.cover_image_url}
                           alt={post.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                          style={{ objectFit: 'cover', transition: 'transform 0.9s ease' }}
+                          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.9s ease' }}
                           className="group-hover:scale-[1.04]"
                         />
                       </div>

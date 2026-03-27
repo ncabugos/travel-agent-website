@@ -40,6 +40,26 @@ export const MOCK_AGENT: MockAgent = {
   avatar_url: null,
 }
 
+/**
+ * Placeholder agent for the Template 2 demo route (/t2/demo).
+ * All contact info is generic — no real agent data.
+ */
+export const DEMO_T2_AGENT: MockAgent = {
+  id: 't2-demo',
+  full_name: 'Your Travel Advisor',
+  agency_name: 'Luxury Travel Co.',
+  tagline: 'Curating the world\'s most extraordinary journeys — with precision, passion, and white-glove care.',
+  email: 'hello@luxurytravelco.com',
+  phone: '+1 (800) 555-0100',
+  address: '123 Grand Avenue, Suite 400, Beverly Hills, CA 90210',
+  cst_number: 'XXXXXXXX-XX',
+  instagram_url: '#',
+  facebook_url: '#',
+  youtube_url: undefined,
+  custom_domain: null,
+  avatar_url: null,
+}
+
 // ─── Suppliers ────────────────────────────────────────────────────────────────
 
 export interface DisplaySupplier {

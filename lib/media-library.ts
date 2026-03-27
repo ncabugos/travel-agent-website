@@ -29,32 +29,57 @@ const m = (path: string) => `${BASE}${path}`
 // ─── Hotel Program Logos ──────────────────────────────────────────────────────
 
 export const HOTEL_LOGOS = {
-  // Invitation-only programmes
-  belmondBelliniClub:     m('/media/hotel-programs/logos/belmond-bellini-club.jpg'),
-  dorchesterDiamondClub:  m('/media/hotel-programs/logos/dorchester-diamond-club.jpg'),
-  fourSeasonsPreferred:   m('/media/hotel-programs/logos/four-seasons-preferred-partner.jpg'),
-  hyattPrive:             m('/media/hotel-programs/logos/hyatt-prive.jpg'),
-  hyattPriveWhite:        m('/media/hotel-programs/logos/hyatt-prive-white.png'),
-  mandarinFanClub:        m('/media/hotel-programs/logos/mandarin-oriental-fan-club.jpg'),
-  peninsulaPenClub:       m('/media/hotel-programs/logos/peninsula-pen-club.jpg'),
-  ritzCarltonStars:       m('/media/hotel-programs/logos/ritz-carlton-stars.jpg'),
-  roccoForte:             m('/media/hotel-programs/logos/rocco-forte-hotels.jpg'),
-  rosewoodElite:          m('/media/hotel-programs/logos/rosewood-elite.jpg'),
-  shangriLaLuxuryCircle:  m('/media/hotel-programs/logos/shangri-la-luxury-circle.jpg'),
-  kempinskiClub1897:      m('/media/hotel-programs/logos/kempinski-club1897.jpg'),
-  oetkerPearl:            m('/media/hotel-programs/logos/oetker-pearl.jpg'),
+  // Invitation-only programmes (colour logos)
+  belmondBelliniClub:         m('/media/hotel-programs/logos/belmond-bellini-club.jpg'),
+  dorchesterDiamondClub:      m('/media/hotel-programs/logos/dorchester-diamond-club.jpg'),
+  fourSeasonsPreferred:       m('/media/hotel-programs/logos/four-seasons-preferred-partner.jpg'),
+  hyattPrive:                 m('/media/hotel-programs/logos/hyatt-prive.jpg'),
+  hyattPriveWhite:            m('/media/hotel-programs/logos/hyatt-prive-white.png'),
+  mandarinFanClub:            m('/media/hotel-programs/logos/mandarin-oriental-fan-club.jpg'),
+  peninsulaPenClub:           m('/media/hotel-programs/logos/peninsula-pen-club.jpg'),
+  ritzCarltonStars:           m('/media/hotel-programs/logos/ritz-carlton-stars.jpg'),
+  roccoForte:                 m('/media/hotel-programs/logos/rocco-forte-hotels.jpg'),
+  rosewoodElite:              m('/media/hotel-programs/logos/rosewood-elite.jpg'),
+  shangriLaLuxuryCircle:      m('/media/hotel-programs/logos/shangri-la-luxury-circle.jpg'),
+  kempinskiClub1897:          m('/media/hotel-programs/logos/kempinski-club1897.jpg'),
+  oetkerPearl:                m('/media/hotel-programs/logos/oetker-pearl.jpg'),
 
-  // Brand programmes
-  aman:                   m('/media/hotel-programs/logos/aman.jpg'),
-  aubergeResorts:         m('/media/hotel-programs/logos/auberge-resorts.jpg'),
-  comoHotels:             m('/media/hotel-programs/logos/como-hotels.jpg'),
-  montage:                m('/media/hotel-programs/logos/montage-hotels.jpg'),
-  oneAndOnly:             m('/media/hotel-programs/logos/one-and-only.jpg'),
+  // Brand programmes (colour logos)
+  aman:                       m('/media/hotel-programs/logos/aman.jpg'),
+  aubergeResorts:             m('/media/hotel-programs/logos/auberge-resorts.jpg'),
+  comoHotels:                 m('/media/hotel-programs/logos/como-hotels.jpg'),
+  montage:                    m('/media/hotel-programs/logos/montage-hotels.jpg'),
+  oneAndOnly:                 m('/media/hotel-programs/logos/one-and-only.jpg'),
 
-  // Global networks
-  accorHera:              m('/media/hotel-programs/logos/accor-hera.jpg'),
-  marriottLuminous:       m('/media/hotel-programs/logos/marriott-luminous.jpg'),
-  leadingHotels:          m('/media/suppliers/logos/leading-hotels-black-600.jpg'),
+  // Global networks (colour logos)
+  accorHera:                  m('/media/hotel-programs/logos/accor-hera.jpg'),
+  marriottLuminous:           m('/media/hotel-programs/logos/marriott-luminous.jpg'),
+  leadingHotels:              m('/media/suppliers/logos/leading-hotels-black-600.jpg'),
+
+  // ── White transparent logos (for dark hero backgrounds) ──────────────────────
+  belmondBelliniClubWhite:    m('/assets/supplier logos/white transparent/belmond-bellini_club.webp'),
+  dorchesterDiamondClubWhite: m('/assets/supplier logos/white transparent/dorchester-logo-white.webp'),
+  fourSeasonsPreferredWhite:  m('/assets/supplier logos/white transparent/FS_preferred-600.webp'),
+  hyattPriveTransparent:      m('/assets/supplier logos/white transparent/HyattPrive_white-transparent.webp'),
+  mandarinFanClubWhite:       m('/assets/supplier logos/white transparent/mandarin-oriental-fan-club-Mandarin-white-600.webp'),
+  peninsulaPenClubWhite:      m('/assets/supplier logos/white transparent/Peninsula_PenClub-white-600.webp'),
+  ritzCarltonStarsWhite:      m('/assets/supplier logos/white transparent/ritz-carlton-stars-white.png'),
+  roccoForteWhite:            m('/assets/supplier logos/white transparent/Rocco_Forte-White-600.webp'),
+  rosewoodEliteWhite:         m('/assets/supplier logos/white transparent/rosewood-elite-white.webp'),
+  shangriLaLuxuryCircleWhite: m('/assets/supplier logos/white transparent/ShangriLa-white-600.webp'),
+  kempinskiClub1897White:     m('/assets/supplier logos/white transparent/Kempinski-Club1897-white-600.webp'),
+  oetkerPearlWhite:           m('/assets/supplier logos/white transparent/oetker-pearl-white-600.webp'),
+  amanWhite:                  m('/assets/supplier logos/white transparent/Aman-white-600.png'),
+  aubergeResortsWhite:        m('/assets/supplier logos/white transparent/auberge-logo-white-600.webp'),
+  comoHotelsWhite:            m('/assets/supplier logos/white transparent/como-hotels-white.png'),
+  oneAndOnlyWhite:            m('/assets/supplier logos/white transparent/one&only-white-600.webp'),
+  accorHeraWhite:             m('/assets/supplier logos/white transparent/accor-hera-white.png'),
+  marriottLuminousWhite:      m('/assets/supplier logos/white transparent/marriott-stars_luminous.webp'),
+  leadingHotelsWhite:         m('/assets/supplier logos/white transparent/leading_hotels-white-600.png'),
+  jumeirahWhite:              m('/assets/supplier logos/white transparent/jumeirah-passport-logo-white-600.webp'),
+  sixSensesWhite:             m('/assets/supplier logos/white transparent/SixSenses-logo-white-600.webp'),
+  montageWhite:               m('/assets/supplier logos/white transparent/montage-white-600.webp'),
+  coutureWhite:               m('/assets/supplier logos/white transparent/couture-logo-white-600.webp'),
 } as const
 
 export type HotelLogoKey = keyof typeof HOTEL_LOGOS

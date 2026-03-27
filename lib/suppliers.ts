@@ -1,16 +1,19 @@
-import { MOCK_AGENT, MOCK_SUPPLIERS, type DisplaySupplier, type MockAgent } from '@/lib/mock-data'
+import { MOCK_AGENT, DEMO_T2_AGENT, MOCK_SUPPLIERS, type DisplaySupplier, type MockAgent } from '@/lib/mock-data'
 import { createServiceClient } from '@/lib/supabase/service'
 
 // Re-export for use in lib/blog.ts and other modules
 export type AgentProfile = MockAgent
 
 const DEMO_ID = 'demo-agent'
+const T2_DEMO_ID = 't2-demo'
 const isDemo = (agentId: string) =>
   agentId === DEMO_ID || !process.env.NEXT_PUBLIC_SUPABASE_URL
+const isT2Demo = (agentId: string) => agentId === T2_DEMO_ID
 
 // ─── Agent Profile ────────────────────────────────────────────────────────────
 
 export async function getAgentProfile(agentId: string): Promise<MockAgent | null> {
+  if (isT2Demo(agentId)) return DEMO_T2_AGENT
   if (isDemo(agentId)) return MOCK_AGENT
 
   try {

@@ -1,13 +1,13 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { useDragScroll } from '@/hooks/useDragScroll'
 
 interface GallerySliderProps {
   images: { src: string; alt?: string }[]
 }
 
 export function GallerySlider({ images }: GallerySliderProps) {
-  const trackRef     = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const [isMobile, setIsMobile]       = useState(false)
 
@@ -57,76 +57,8 @@ export function GallerySlider({ images }: GallerySliderProps) {
     [activeIndex, images.length, cols, scrollTo]
   )
 
-  // ── Drag-to-scroll with momentum ─────────────────────────────────────────
-  const isDragging   = useRef(false)
-  const didDrag      = useRef(false)   // true once the pointer moved ≥4 px
-  const dragStartX   = useRef(0)
-  const dragScrollL  = useRef(0)
-  const velocity     = useRef(0)
-  const lastX        = useRef(0)
-  const lastTime     = useRef(0)
-  const rafId        = useRef<number | null>(null)
+  const { ref: trackRef, handlers: dragHandlers } = useDragScroll()
 
-  const stopMomentum = () => {
-    if (rafId.current !== null) cancelAnimationFrame(rafId.current)
-    rafId.current = null
-  }
-
-  const applyMomentum = () => {
-    const track = trackRef.current
-    if (!track || Math.abs(velocity.current) < 0.3) {
-      // Snap to nearest slide
-      if (track) {
-        track.style.scrollSnapType = ''   // re-enable snap before snapping
-        const itemW   = track.scrollWidth / images.length
-        const nearest = Math.round(track.scrollLeft / itemW)
-        track.scrollTo({ left: itemW * nearest, behavior: 'smooth' })
-      }
-      return
-    }
-    velocity.current *= 0.94            // friction (higher = glides longer)
-    track.scrollLeft += velocity.current
-    rafId.current = requestAnimationFrame(applyMomentum)
-  }
-
-  const onMouseDown = (e: React.MouseEvent) => {
-    // Ignore clicks on the arrow buttons themselves
-    if ((e.target as HTMLElement).closest('.gs-arrow')) return
-    stopMomentum()
-    isDragging.current  = true
-    didDrag.current     = false
-    dragStartX.current  = e.clientX
-    dragScrollL.current = trackRef.current?.scrollLeft ?? 0
-    velocity.current    = 0
-    lastX.current       = e.clientX
-    lastTime.current    = performance.now()
-    if (trackRef.current) trackRef.current.style.scrollSnapType = 'none'
-  }
-
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging.current || !trackRef.current) return
-    const dx = e.clientX - dragStartX.current
-    if (Math.abs(dx) > 4) didDrag.current = true
-    if (!didDrag.current) return
-    e.preventDefault()
-    trackRef.current.scrollLeft = dragScrollL.current - dx
-
-    const now = performance.now()
-    const dt  = now - lastTime.current
-    if (dt > 0) velocity.current = (lastX.current - e.clientX) / dt * 16
-    lastX.current    = e.clientX
-    lastTime.current = now
-  }
-
-  const onMouseUp = () => {
-    if (!isDragging.current) return
-    isDragging.current = false
-    rafId.current = requestAnimationFrame(applyMomentum)
-  }
-
-  const onMouseLeave = () => {
-    if (isDragging.current) onMouseUp()
-  }
 
   // ── Dots ─────────────────────────────────────────────────────────────────
   const pageCount = Math.max(0, images.length - cols + 1)
@@ -229,10 +161,7 @@ export function GallerySlider({ images }: GallerySliderProps) {
 
       <div
         className="gs-wrap"
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseLeave}
+        {...dragHandlers}
       >
         {/* Prev */}
         <button
@@ -248,7 +177,6 @@ export function GallerySlider({ images }: GallerySliderProps) {
         <div
           ref={trackRef}
           className="gs-track"
-          onTouchStart={() => stopMomentum()}
         >
           {images.map((img, i) => (
             <div key={i} className="gs-cell">
