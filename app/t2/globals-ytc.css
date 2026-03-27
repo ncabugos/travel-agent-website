@@ -1,0 +1,20 @@
+/* =============================================================================
+   Demo 3 — Your Travel Center (YTC) Theme
+   Imports the T2 base design system and overrides the brand variables.
+   ============================================================================= */
+
+@import './globals-t2.css';
+
+:root {
+  /* ── YTC Brand Palette — elevated crimson & warm navy ─────────────────────── */
+  --t2-bg:            #F8F6F3;         /* warm off-white */
+  --t2-bg-alt:        #EDE9E4;         /* warm parchment */
+  --t2-text:          #1A1A24;         /* deep navy-black */
+  --t2-text-muted:    #6B6770;         /* muted plum-gray */
+  --t2-accent:        #B8292A;         /* elevated YTC crimson red */
+  --t2-accent-hover:  #D4403F;         /* lighter crimson on hover */
+  --t2-divider:       #D8D4CE;         /* warm divider */
+  --t2-dark-bg:       #12121A;         /* deep navy dark */
+  --t2-dark-text:     #F5F2EE;         /* warm ivory on dark */
+  --t2-overlay:       rgba(18, 18, 26, 0.48);
+}

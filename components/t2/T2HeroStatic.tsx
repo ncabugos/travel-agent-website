@@ -7,7 +7,7 @@ interface T2HeroStaticProps {
   h1: string
   h2: string
   cta1: { label: string; href: string }
-  cta2: { label: string; href: string }
+  cta2?: { label: string; href: string }
 }
 
 export function T2HeroStatic({ agentId, image, h1, h2, cta1, cta2 }: T2HeroStaticProps) {
@@ -100,29 +100,31 @@ export function T2HeroStatic({ agentId, image, h1, h2, cta1, cta2 }: T2HeroStati
           <Link href={`${base}${cta1.href}`} className="t2-btn t2-btn-accent">
             {cta1.label}
           </Link>
-          <Link
-            href={`${base}${cta2.href}`}
-            style={{
-              fontFamily: 'var(--t2-font-sans)',
-              fontSize: 10,
-              fontWeight: 500,
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.75)',
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              transition: 'color 0.3s ease',
-            }}
-            className="t2-hero-link"
-          >
-            {cta2.label}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-              <path d="M5 12h14M15 6l6 6-6 6" />
-            </svg>
-          </Link>
+          {cta2 && (
+            <Link
+              href={`${base}${cta2.href}`}
+              style={{
+                fontFamily: 'var(--t2-font-sans)',
+                fontSize: 10,
+                fontWeight: 500,
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.75)',
+                textDecoration: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                transition: 'color 0.3s ease',
+              }}
+              className="t2-hero-link"
+            >
+              {cta2.label}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                <path d="M5 12h14M15 6l6 6-6 6" />
+              </svg>
+            </Link>
+          )}
         </div>
       </div>
 

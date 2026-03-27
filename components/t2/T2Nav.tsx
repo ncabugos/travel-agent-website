@@ -8,6 +8,7 @@ interface T2NavProps {
   agentId: string
   agencyName: string
   logoUrl?: string
+  navLinks?: { label: string; href: string }[]
 }
 
 const NAV_LINKS = [
@@ -19,11 +20,12 @@ const NAV_LINKS = [
   { label: 'About',          href: '/about' },
 ]
 
-export function T2Nav({ agentId, agencyName, logoUrl }: T2NavProps) {
+export function T2Nav({ agentId, agencyName, logoUrl, navLinks }: T2NavProps) {
   const [scrolled, setScrolled]   = useState(false)
   const [menuOpen, setMenuOpen]   = useState(false)
   const [mounted, setMounted]     = useState(false)
   const base = `/t2/${agentId}`
+  const LINKS = navLinks ?? NAV_LINKS
 
   useEffect(() => {
     setMounted(true)
@@ -137,11 +139,11 @@ export function T2Nav({ agentId, agencyName, logoUrl }: T2NavProps) {
               <Image
                 src={logoUrl}
                 alt={agencyName}
-                width={160}
-                height={44}
+                width={220}
+                height={60}
                 style={{
                   objectFit: 'contain',
-                  maxHeight: 40,
+                  maxHeight: 54,
                   filter: (menuOpen || !scrolled) ? 'brightness(0) invert(1)' : 'none',
                   transition: 'filter 0.3s ease',
                 }}
@@ -190,37 +192,100 @@ export function T2Nav({ agentId, agencyName, logoUrl }: T2NavProps) {
         </div>
       </nav>
 
-      {/* ── Full-screen overlay menu ── */}
       <div
         aria-hidden={!menuOpen}
         style={{
           position: 'fixed',
           inset: 0,
           zIndex: 999,
-          background: 'rgba(28, 25, 23, 0.97)',
+          background: 'rgba(14, 12, 11, 0.97)',
           backdropFilter: 'blur(2px)',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
           pointerEvents: menuOpen ? 'all' : 'none',
           opacity: menuOpen ? 1 : 0,
           transition: 'opacity 0.4s ease',
         }}
       >
-        <nav aria-label="Full-screen menu">
-          <ul
-            style={{
-              listStyle: 'none',
-              margin: 0,
-              padding: 0,
-              textAlign: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 0,
-            }}
-          >
-            {NAV_LINKS.map((link, i) => (
+        {/* Left panel — branding */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          padding: '80px 64px',
+          borderRight: '1px solid rgba(255,255,255,0.08)',
+        }}>
+          {logoUrl ? (
+            <Image
+              src={logoUrl}
+              alt={agencyName}
+              width={280}
+              height={88}
+              style={{
+                objectFit: 'contain',
+                objectPosition: 'left center',
+                maxHeight: 80,
+                marginBottom: 40,
+                filter: 'brightness(0) invert(1)',
+                opacity: menuOpen ? 1 : 0,
+                transform: menuOpen ? 'translateY(0)' : 'translateY(12px)',
+                transition: 'opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s',
+              }}
+              unoptimized
+            />
+          ) : (
+            <span style={{
+              fontFamily: 'var(--t2-font-serif)',
+              fontSize: 36,
+              fontWeight: 300,
+              color: '#ffffff',
+              display: 'block',
+              marginBottom: 40,
+            }}>{agencyName}</span>
+          )}
+          <p style={{
+            fontFamily: 'var(--t2-font-sans)',
+            fontSize: 14,
+            lineHeight: 1.9,
+            color: 'rgba(255,255,255,0.5)',
+            maxWidth: 340,
+            fontWeight: 300,
+            opacity: menuOpen ? 1 : 0,
+            transform: menuOpen ? 'translateY(0)' : 'translateY(12px)',
+            transition: 'opacity 0.4s ease 0.18s, transform 0.4s ease 0.18s',
+          }}>
+            Spokane&rsquo;s most experienced travel advisors — delivering VIP access, exclusive Virtuoso perks, and journeys that transform.
+          </p>
+
+          {/* Social icons */}
+          <div style={{
+            display: 'flex',
+            gap: 20,
+            marginTop: 48,
+            opacity: menuOpen ? 1 : 0,
+            transition: `opacity 0.4s ease ${LINKS.length * 60 + 60}ms`,
+          }}>
+            <a href="#" aria-label="Facebook" className="t2-social-icon" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.2s ease', lineHeight: 0 }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" className="t2-social-icon" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.2s ease', lineHeight: 0 }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube" className="t2-social-icon" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.2s ease', lineHeight: 0 }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#0e0c0b"/></svg>
+            </a>
+          </div>
+        </div>
+
+        {/* Right panel — nav links */}
+        <nav aria-label="Full-screen menu" style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          padding: '80px 64px',
+        }}>
+          <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 0 }}>
+            {LINKS.map((link, i) => (
               <li key={link.label}>
                 <Link
                   href={`${base}${link.href}`}
@@ -229,12 +294,12 @@ export function T2Nav({ agentId, agencyName, logoUrl }: T2NavProps) {
                   style={{
                     display: 'block',
                     fontFamily: 'var(--t2-font-serif)',
-                    fontSize: 'clamp(32px, 5vw, 56px)',
+                    fontSize: 'clamp(32px, 4vw, 52px)',
                     fontWeight: 300,
                     letterSpacing: '0.02em',
                     color: 'rgba(255,255,255,0.88)',
                     textDecoration: 'none',
-                    padding: '14px 0',
+                    padding: '12px 0',
                     transition: `color 0.2s ease, opacity 0.3s ease ${i * 60}ms, transform 0.4s ease ${i * 60}ms`,
                     opacity: menuOpen ? 1 : 0,
                     transform: menuOpen ? 'translateY(0)' : 'translateY(16px)',
@@ -246,47 +311,32 @@ export function T2Nav({ agentId, agencyName, logoUrl }: T2NavProps) {
             ))}
           </ul>
 
-          {/* Divider + secondary links */}
-          <div
-            style={{
-              marginTop: 40,
-              paddingTop: 32,
-              borderTop: '1px solid rgba(255,255,255,0.12)',
-              display: 'flex',
-              gap: 28,
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-              transition: `opacity 0.4s ease ${NAV_LINKS.length * 60 + 60}ms`,
-              opacity: menuOpen ? 1 : 0,
-            }}
-          >
-            {/* Facebook */}
-            <a href="#" aria-label="Facebook" className="t2-social-icon" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s ease', lineHeight: 0 }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-              </svg>
-            </a>
-            {/* Instagram */}
-            <a href="#" aria-label="Instagram" className="t2-social-icon" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s ease', lineHeight: 0 }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                <circle cx="12" cy="12" r="4"/>
-                <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
-              </svg>
-            </a>
-            {/* YouTube */}
-            <a href="#" aria-label="YouTube" className="t2-social-icon" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s ease', lineHeight: 0 }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
-                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#1c1917"/>
-              </svg>
-            </a>
-            {/* X / Twitter */}
-            <a href="#" aria-label="X" className="t2-social-icon" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s ease', lineHeight: 0 }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-            </a>
+          <div style={{
+            marginTop: 48,
+            paddingTop: 32,
+            borderTop: '1px solid rgba(255,255,255,0.1)',
+            opacity: menuOpen ? 1 : 0,
+            transition: `opacity 0.4s ease ${LINKS.length * 60 + 60}ms`,
+          }}>
+            <Link
+              href={`${base}/contact`}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                fontFamily: 'var(--t2-font-sans)',
+                fontSize: 10,
+                fontWeight: 500,
+                letterSpacing: '0.22em',
+                textTransform: 'uppercase',
+                color: '#ffffff',
+                textDecoration: 'none',
+                padding: '13px 32px',
+                border: '1px solid rgba(255,255,255,0.3)',
+                display: 'inline-block',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              Begin Planning
+            </Link>
           </div>
         </nav>
       </div>

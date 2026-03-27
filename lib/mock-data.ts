@@ -22,6 +22,9 @@ export interface MockAgent {
   youtube_url?: string
   custom_domain: string | null
   avatar_url: string | null
+  logo_url?: string | null          // white/light version (nav on hero, overlay)
+  logo_url_dark?: string | null     // dark version (footer on light bg)
+  nav_links?: { label: string; href: string }[]
 }
 
 export const MOCK_AGENT: MockAgent = {
@@ -58,6 +61,35 @@ export const DEMO_T2_AGENT: MockAgent = {
   youtube_url: undefined,
   custom_domain: null,
   avatar_url: null,
+}
+
+/**
+ * Demo agent for Your Travel Center (YTC) Spokane — Demo 3.
+ * Replicates the real YTC agency identity using the T2 template with YTC branding.
+ */
+export const DEMO_YTC_AGENT: MockAgent = {
+  id: 'ytc-demo',
+  full_name: 'Your Travel Center',
+  agency_name: 'Your Travel Center',
+  tagline: 'Full-service global experiences — crafted by Spokane\'s most trusted travel experts.',
+  email: 'spokane@ytc.com',
+  phone: '(509) 327-9585',
+  address: '27 E Augusta Ave. Spokane, WA 99207',
+  cst_number: undefined,
+  instagram_url: '#',
+  facebook_url: '#',
+  youtube_url: undefined,
+  custom_domain: null,
+  avatar_url: null,
+  logo_url: '/assets/ytc/ytc-white-800.png',
+  logo_url_dark: '/assets/ytc/ytc-black-800.png',
+  nav_links: [
+    { label: 'About',    href: '/about' },
+    { label: 'Cruises', href: '/find-cruise' },
+    { label: 'Hotels',  href: '/book-hotel' },
+    { label: 'Villas',  href: '/book-villa' },
+    { label: 'Contact', href: '/contact' },
+  ],
 }
 
 // ─── Suppliers ────────────────────────────────────────────────────────────────

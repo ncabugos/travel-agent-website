@@ -31,9 +31,28 @@ export default async function T2Layout({ children, params }: LayoutProps) {
 
   return (
     <div className={`${playfair.variable} ${inter.variable} t2-page`}>
+      {/* Inject YTC theme override if this is the YTC demo */}
+      {agentId === 'ytc-demo' && (
+        <style>{`
+          :root {
+            --t2-bg:           #F8F6F3;
+            --t2-bg-alt:       #EDE9E4;
+            --t2-text:         #1A1A24;
+            --t2-text-muted:   #6B6770;
+            --t2-accent:       #B8292A;
+            --t2-accent-hover: #D4403F;
+            --t2-divider:      #D8D4CE;
+            --t2-dark-bg:      #12121A;
+            --t2-dark-text:    #F5F2EE;
+            --t2-overlay:      rgba(18,18,26,0.48);
+          }
+        `}</style>
+      )}
       <T2Nav
         agentId={agentId}
         agencyName={agent?.agency_name ?? 'Luxury Travel Co'}
+        logoUrl={agent?.logo_url ?? undefined}
+        navLinks={agent?.nav_links}
       />
       <main>{children}</main>
       <T2Footer
@@ -43,7 +62,9 @@ export default async function T2Layout({ children, params }: LayoutProps) {
         email={agent?.email ?? 'hello@luxurytravelco.com'}
         address={agent?.address}
         cstNumber={agent?.cst_number}
+        logoUrl={agent?.logo_url ?? undefined}
       />
     </div>
   )
 }
+

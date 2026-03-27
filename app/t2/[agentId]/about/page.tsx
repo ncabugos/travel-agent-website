@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import YTCAboutPage from './ytc-about'
 
 // ─── Inline data ──────────────────────────────────────────────────────────────
 
@@ -68,7 +69,13 @@ const ACCOLADES = [
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
-export default function AboutPage({ params }: { params: { agentId: string } }) {
+export default async function AboutPage({ params }: { params: Promise<{ agentId: string }> }) {
+  const { agentId } = await params
+
+  if (agentId === 'ytc-demo') {
+    return <YTCAboutPage params={{ agentId }} />
+  }
+
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────────────────── */}

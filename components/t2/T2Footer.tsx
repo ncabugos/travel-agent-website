@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface T2FooterProps {
   agentId: string
@@ -8,6 +9,7 @@ interface T2FooterProps {
   address?: string
   cstNumber?: string
   bio?: string
+  logoUrl?: string
 }
 
 export function T2Footer({
@@ -18,6 +20,7 @@ export function T2Footer({
   address,
   cstNumber,
   bio,
+  logoUrl,
 }: T2FooterProps) {
   const year = new Date().getFullYear()
   const base = `/t2/${agentId}`
@@ -47,18 +50,26 @@ export function T2Footer({
         <div>
           <Link
             href={base}
-            style={{
-              fontFamily: 'var(--t2-font-serif)',
-              fontSize: 26,
-              fontWeight: 300,
-              letterSpacing: '0.04em',
-              color: 'var(--t2-dark-text)',
-              textDecoration: 'none',
-              display: 'block',
-              marginBottom: 20,
-            }}
+            style={{ textDecoration: 'none', display: 'inline-block', marginBottom: 20 }}
           >
-            {agencyName}
+            {logoUrl ? (
+              <Image
+                src={logoUrl}
+                alt={agencyName}
+                width={200}
+                height={60}
+                style={{ objectFit: 'contain', maxHeight: 56, opacity: 0.9 }}
+                unoptimized
+              />
+            ) : (
+              <span style={{
+                fontFamily: 'var(--t2-font-serif)',
+                fontSize: 26, fontWeight: 300, letterSpacing: '0.04em',
+                color: 'var(--t2-dark-text)',
+              }}>
+                {agencyName}
+              </span>
+            )}
           </Link>
           <p
             style={{

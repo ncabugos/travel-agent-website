@@ -8,6 +8,7 @@ import { T2LeadForm } from '@/components/t2/T2LeadForm'
 import { getAgentProfile } from '@/lib/suppliers'
 import { getPropertiesDestinations, getExclusiveExperiences, getFeaturedPartners } from '@/lib/collections'
 import Link from 'next/link'
+import YTCHomePage from './ytc-home'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -15,6 +16,12 @@ interface PageProps {
 
 export default async function T2HomePage({ params }: PageProps) {
   const { agentId } = await params
+
+  // Route to YTC-specific homepage for Demo 3
+  if (agentId === 'ytc-demo') {
+    return <YTCHomePage params={params} />
+  }
+
   const agent = await getAgentProfile(agentId)
   const [properties, experiences, partners] = await Promise.all([
     getPropertiesDestinations(),
@@ -24,6 +31,7 @@ export default async function T2HomePage({ params }: PageProps) {
 
   const agencyName = agent?.agency_name ?? 'Luxury Travel'
   const base = `/t2/${agentId}`
+
 
   return (
     <>
