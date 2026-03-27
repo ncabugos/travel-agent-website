@@ -59,10 +59,10 @@ export function YTCPartnerTabs({ base }: Props) {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(5, 1fr)',
-            gap: '48px 40px',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '56px 48px',
             alignItems: 'center',
-            maxWidth: 1100,
+            maxWidth: 1200,
             margin: '0 auto',
           }}
           className="ytc-partner-grid"
@@ -75,7 +75,7 @@ export function YTCPartnerTabs({ base }: Props) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: 72,
+                height: 110,
                 textDecoration: 'none',
               }}
               className="ytc-partner-cell"
@@ -89,7 +89,7 @@ export function YTCPartnerTabs({ base }: Props) {
                   style={{
                     objectFit: 'contain',
                     maxWidth: '100%',
-                    maxHeight: 68,
+                    maxHeight: 100,
                     opacity: 0.55,
                     filter: 'grayscale(100%)',
                     transition: 'opacity 0.3s ease, filter 0.3s ease',
@@ -116,9 +116,9 @@ export function YTCPartnerTabs({ base }: Props) {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '48px 64px',
+            gap: '56px 80px',
             alignItems: 'center',
-            maxWidth: 860,
+            maxWidth: 1000,
             margin: '0 auto',
           }}
           className="ytc-partner-grid"
@@ -131,7 +131,7 @@ export function YTCPartnerTabs({ base }: Props) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: 90,
+                height: 130,
                 textDecoration: 'none',
               }}
               className="ytc-partner-cell"
@@ -144,7 +144,7 @@ export function YTCPartnerTabs({ base }: Props) {
                 style={{
                   objectFit: 'contain',
                   maxWidth: '100%',
-                  maxHeight: 83,
+                  maxHeight: 120,
                   opacity: 0.55,
                   filter: 'grayscale(100%)',
                   transition: 'opacity 0.3s ease, filter 0.3s ease',
