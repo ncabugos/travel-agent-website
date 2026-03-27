@@ -84,12 +84,12 @@ export function YTCPartnerTabs({ base }: Props) {
                 <Image
                   src={p.logo_url}
                   alt={p.name}
-                  width={180}
-                  height={60}
+                  width={234}
+                  height={78}
                   style={{
                     objectFit: 'contain',
                     maxWidth: '100%',
-                    maxHeight: 52,
+                    maxHeight: 68,
                     opacity: 0.55,
                     filter: 'grayscale(100%)',
                     transition: 'opacity 0.3s ease, filter 0.3s ease',
@@ -139,12 +139,12 @@ export function YTCPartnerTabs({ base }: Props) {
               <Image
                 src={c.logo}
                 alt={c.name}
-                width={220}
-                height={80}
+                width={286}
+                height={104}
                 style={{
                   objectFit: 'contain',
                   maxWidth: '100%',
-                  maxHeight: 64,
+                  maxHeight: 83,
                   opacity: 0.55,
                   filter: 'grayscale(100%)',
                   transition: 'opacity 0.3s ease, filter 0.3s ease',

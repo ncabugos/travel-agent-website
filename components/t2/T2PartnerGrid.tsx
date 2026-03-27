@@ -139,12 +139,12 @@ export function T2PartnerGrid({ partners, agentId }: T2PartnerGridProps) {
                 <Image
                   src={partner.logo_url}
                   alt={partner.name}
-                  width={isHotelTab ? 180 : 220}
-                  height={isHotelTab ? 60 : 80}
+                  width={isHotelTab ? 234 : 286}
+                  height={isHotelTab ? 78 : 104}
                   style={{
                     objectFit: 'contain',
                     maxWidth: '100%',
-                    maxHeight: isHotelTab ? 52 : 64,
+                    maxHeight: isHotelTab ? 68 : 83,
                     opacity: 0.55,
                     filter: 'grayscale(100%)',
                     transition: 'opacity 0.3s ease, filter 0.3s ease',
