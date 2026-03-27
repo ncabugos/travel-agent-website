@@ -45,10 +45,9 @@ const FALLBACK_PARTNERS = [...FALLBACK_HOTELS, ...FALLBACK_CRUISES]
 export function T2PartnerGrid({ partners, agentId }: T2PartnerGridProps) {
   const [activeTab, setActiveTab] = useState('hotel')
 
-  // Use DB data if available, otherwise canonical fallback
-  const source = partners.length > 0 ? partners : FALLBACK_PARTNERS
-
-  const filtered = source.filter(p => p.category === activeTab)
+  // Always use the canonical program list — never the DB featured_partners table
+  // (DB table has stale/partial data that causes missing rows and broken slugs)
+  const filtered = FALLBACK_PARTNERS.filter(p => p.category === activeTab)
 
   const base = `/t2/${agentId}`
 
