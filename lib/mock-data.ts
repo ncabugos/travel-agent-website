@@ -92,6 +92,26 @@ export const DEMO_YTC_AGENT: MockAgent = {
   ],
 }
 
+/**
+ * Demo agent for Template 3 — "Modern Editorial" (Belmond-inspired).
+ * Sans-serif design system, generous whitespace, warm ivory + bronze palette.
+ */
+export const DEMO_T3_AGENT: MockAgent = {
+  id: 't3-demo',
+  full_name: 'Your Travel Advisor',
+  agency_name: 'Meridian & Company',
+  tagline: 'Quietly extraordinary journeys, considered down to the last detail.',
+  email: 'hello@meridianandco.com',
+  phone: '+1 (800) 555-0103',
+  address: '1 Beacon Street, Suite 1800, Boston, MA 02108',
+  cst_number: 'XXXXXXXX-XX',
+  instagram_url: '#',
+  facebook_url: '#',
+  youtube_url: undefined,
+  custom_domain: null,
+  avatar_url: null,
+}
+
 // ─── Suppliers ────────────────────────────────────────────────────────────────
 
 export interface DisplaySupplier {
