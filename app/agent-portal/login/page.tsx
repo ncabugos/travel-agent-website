@@ -1,46 +1,39 @@
 'use client'
-import { useState, FormEvent, Suspense } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useState, FormEvent } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
-export default function AdminLoginPage() {
-  return (
-    <Suspense>
-      <AdminLoginForm />
-    </Suspense>
-  )
-}
-
-function AdminLoginForm() {
+export default function AgentLoginPage() {
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
 
-  const authError = searchParams.get('error')
-
-  async function handleSubmit(e: FormEvent) {
+  const handleLogin = async (e: FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError('')
-
-    const supabase = createClient()
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-
-    if (signInError) {
-      setError(signInError.message)
+    setMessage('')
+    
+    if (!email) {
+      setError('Please enter your email.')
       setLoading(false)
       return
     }
 
-    const from = searchParams.get('from') || '/admin'
-    router.push(from)
-    router.refresh()
+    const supabase = createClient()
+    const { error: authError } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: `${location.origin}/api/agent-portal/auth-callback`,
+      },
+    })
+
+    if (authError) {
+      setError(authError.message)
+    } else {
+      setMessage('Check your email for the login link!')
+    }
+    setLoading(false)
   }
 
   return (
@@ -78,78 +71,65 @@ function AdminLoginForm() {
             EliteAdvisorHub
           </h1>
           <p style={{ margin: '6px 0 0', fontSize: '13px', color: '#6b7280' }}>
-            Platform Administration
+            Advisor Portal — Sign in to manage your website
           </p>
         </div>
 
-        {/* Errors */}
-        {(error || authError) && (
+        {message ? (
           <div style={{
-            padding: '12px 14px', backgroundColor: '#fef2f2', color: '#991b1b',
-            borderRadius: '8px', fontSize: '13px', marginBottom: '20px',
-            border: '1px solid #fee2e2',
+            padding: '16px', backgroundColor: '#f0fdf4', color: '#166534',
+            borderRadius: '8px', fontSize: '14px', fontWeight: 500,
+            border: '1px solid #bbf7d0', textAlign: 'center',
           }}>
-            {error || (authError === 'unauthorized' ? 'You do not have admin access.' : 'Authentication error.')}
+            ✓ {message}
           </div>
+        ) : (
+          <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, color: '#374151', marginBottom: '6px' }}>
+                Email Address
+              </label>
+              <input 
+                type="email" 
+                required
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                placeholder="agent@example.com" 
+                autoFocus
+                style={{
+                  width: '100%', padding: '10px 14px', border: '1px solid #d1d5db',
+                  borderRadius: '8px', fontSize: '14px', outline: 'none',
+                  boxSizing: 'border-box', transition: 'border-color 0.15s',
+                }}
+                onFocus={e => (e.target.style.borderColor = '#111')}
+                onBlur={e => (e.target.style.borderColor = '#d1d5db')}
+              />
+            </div>
+            
+            {error && (
+              <div style={{
+                padding: '10px 12px', backgroundColor: '#fef2f2', color: '#991b1b',
+                borderRadius: '8px', fontSize: '13px', border: '1px solid #fee2e2',
+              }}>
+                {error}
+              </div>
+            )}
+            
+            <button 
+              type="submit" 
+              disabled={loading}
+              style={{
+                width: '100%', padding: '12px', backgroundColor: '#111',
+                color: '#fff', border: 'none', borderRadius: '8px',
+                fontSize: '14px', fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer',
+                opacity: loading ? 0.7 : 1, transition: 'background-color 0.15s',
+                marginTop: '4px',
+              }}
+            >
+              {loading ? 'Sending link…' : 'Send Magic Link'}
+            </button>
+          </form>
         )}
-
-        {/* Login Form */}
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <div>
-            <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, color: '#374151', marginBottom: '6px' }}>
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              placeholder="admin@example.com"
-              required
-              autoFocus
-              style={{
-                width: '100%', padding: '10px 14px', border: '1px solid #d1d5db',
-                borderRadius: '8px', fontSize: '14px', outline: 'none',
-                boxSizing: 'border-box', transition: 'border-color 0.15s',
-              }}
-              onFocus={e => (e.target.style.borderColor = '#111')}
-              onBlur={e => (e.target.style.borderColor = '#d1d5db')}
-            />
-          </div>
-
-          <div>
-            <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, color: '#374151', marginBottom: '6px' }}>
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              required
-              style={{
-                width: '100%', padding: '10px 14px', border: '1px solid #d1d5db',
-                borderRadius: '8px', fontSize: '14px', outline: 'none',
-                boxSizing: 'border-box', transition: 'border-color 0.15s',
-              }}
-              onFocus={e => (e.target.style.borderColor = '#111')}
-              onBlur={e => (e.target.style.borderColor = '#d1d5db')}
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              width: '100%', padding: '12px', backgroundColor: '#111',
-              color: '#fff', border: 'none', borderRadius: '8px',
-              fontSize: '14px', fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer',
-              opacity: loading ? 0.7 : 1, transition: 'background-color 0.15s',
-              marginTop: '4px',
-            }}
-          >
-            {loading ? 'Signing in…' : 'Sign in'}
-          </button>
-        </form>
 
         {/* Divider */}
         <div style={{

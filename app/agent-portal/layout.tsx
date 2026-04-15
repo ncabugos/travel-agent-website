@@ -6,41 +6,36 @@ import { createClient } from '@/lib/supabase/client'
 import { Icons } from '@/components/dashboard/Icons'
 
 const navItems: SidebarItem[] = [
-  { href: '/admin', label: 'Dashboard', icon: Icons.dashboard },
-  { href: '/admin/agents', label: 'Agents', icon: Icons.users },
-  { href: '/admin/blog', label: 'Journal Posts', icon: Icons.edit },
-  { href: '/admin/categories', label: 'Categories', icon: Icons.tag },
-  { href: '/admin/requests', label: 'Edit Requests', icon: Icons.inbox },
+  { href: '/agent-portal', label: 'Dashboard', icon: Icons.dashboard },
+  { href: '/agent-portal/blog', label: 'My Journal', icon: Icons.edit },
+  { href: '/agent-portal/blog-settings', label: 'Blog Settings', icon: Icons.folder },
+  { href: '/agent-portal/requests', label: 'Edit Requests', icon: Icons.inbox },
+  { href: '/agent-portal/profile', label: 'Profile', icon: Icons.user },
+  { href: '/agent-portal/billing', label: 'Billing', icon: Icons.creditCard },
 ]
 
-const bottomItems: SidebarItem[] = [
-  { href: '/admin/settings', label: 'Settings', icon: Icons.settings },
-]
-
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AgentPortalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
 
-  // Don't wrap login page in the dashboard shell
-  if (pathname === '/admin/login') {
+  // Don't wrap login or onboarding pages in the dashboard shell
+  if (pathname === '/agent-portal/login' || pathname === '/agent-portal/onboarding') {
     return <>{children}</>
   }
 
   const handleLogout = async () => {
     const supabase = createClient()
     await supabase.auth.signOut()
-    router.push('/admin/login')
+    router.push('/agent-portal/login')
   }
 
   return (
     <DashboardShell>
       <Sidebar
         brand="EliteAdvisorHub"
-        brandSub="Admin Console"
+        brandSub="Advisor Portal"
         items={navItems}
-        bottomItems={bottomItems}
         currentPath={pathname}
-        avatar={{ name: 'Admin', email: 'cabugosb3@gmail.com' }}
         onLogout={handleLogout}
       />
       <DashboardContent>
