@@ -11,7 +11,8 @@ import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Link from '@tiptap/extension-link'
 import TiptapImage from '@tiptap/extension-image'
-import type { BlogPost, GalleryImage } from '@/types/index'
+import type { BlogPost, GalleryImage, BlogCategory } from '@/types/index'
+import { Lightbulb } from 'lucide-react'
 
 // ── Available shortcode tokens ─────────────────────────────────────────────
 const TOKENS = [
@@ -27,18 +28,29 @@ interface AgentOption { id: string; agency_name: string; name: string }
 interface Props {
   post?: BlogPost
   agents: AgentOption[]
+  categories?: BlogCategory[]
   isNew?: boolean
+  /**
+   * 'admin' (default): full editor, hits /api/admin/posts, allows broadcast
+   * and agent-as selection, back-link to /admin/blog.
+   * 'agent': agent-portal mode, hits /api/agent-portal/blog, hides
+   * broadcast and "publish as" controls, back-link to /agent-portal/blog.
+   */
+  mode?: 'admin' | 'agent'
 }
 
-export function PostEditor({ post, agents, isNew = false }: Props) {
+export function PostEditor({ post, agents, categories = [], isNew = false, mode = 'admin' }: Props) {
   const router = useRouter()
+  const isAgent = mode === 'agent'
+  const listPath = isAgent ? '/agent-portal/blog' : '/admin/blog'
 
   /* ── Form state ── */
   const [title, setTitle]             = useState(post?.title ?? '')
   const [excerpt, setExcerpt]         = useState(post?.excerpt ?? '')
   const [coverUrl, setCoverUrl]       = useState(post?.cover_image_url ?? '')
   const [gallery, setGallery]         = useState<GalleryImage[]>(post?.gallery_images ?? [])
-  const [categories, setCategories]   = useState(post?.categories?.join(', ') ?? '')
+  const [freeTextCategories, setFreeTextCategories] = useState(post?.categories?.join(', ') ?? '')
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>(post?.category_ids ?? [])
   const [tags, setTags]               = useState(post?.tags?.join(', ') ?? '')
   const [status, setStatus]           = useState<'published'|'draft'>(post?.status ?? 'draft')
   const [isBroadcast, setIsBroadcast] = useState(post?.is_broadcast ?? false)
@@ -95,7 +107,8 @@ export function PostEditor({ post, agents, isNew = false }: Props) {
       excerpt: excerpt || null,
       body_html,
       cover_image_url: coverUrl || null,
-      categories: categories.split(',').map(s => s.trim()).filter(Boolean),
+      categories: freeTextCategories.split(',').map(s => s.trim()).filter(Boolean),
+      category_ids: selectedCategoryIds,
       tags: tags.split(',').map(s => s.trim()).filter(Boolean),
       status: finalStatus,
       is_broadcast: isBroadcast,
@@ -106,7 +119,8 @@ export function PostEditor({ post, agents, isNew = false }: Props) {
         : selectedAgent,
     }
 
-    const url  = isNew ? '/api/admin/posts' : `/api/admin/posts/${post!.id}`
+    const apiBase = isAgent ? '/api/agent-portal/blog' : '/api/admin/posts'
+    const url  = isNew ? apiBase : `${apiBase}/${post!.id}`
     const method = isNew ? 'POST' : 'PUT'
     const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
 
@@ -114,7 +128,7 @@ export function PostEditor({ post, agents, isNew = false }: Props) {
     if (res.ok) {
       const saved = await res.json()
       setSaveMsg('Saved ✓')
-      if (isNew) router.push(`/admin/blog/${saved.id}`)
+      if (isNew) router.push(`${listPath}/${saved.id}`)
     } else {
       const err = await res.json()
       setSaveMsg(`Error: ${err.error ?? 'Save failed'}`)
@@ -127,7 +141,7 @@ export function PostEditor({ post, agents, isNew = false }: Props) {
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <a href="/admin/blog" style={{ color: '#6b7280', textDecoration: 'none', fontSize: '13px' }}>← Journal Posts</a>
+          <a href={listPath} style={{ color: '#6b7280', textDecoration: 'none', fontSize: '13px' }}>← Journal Posts</a>
           <span style={{ color: '#d1d5db' }}>/</span>
           <h1 style={{ margin: 0, fontSize: '18px', fontWeight: 600, color: '#1a1a1a' }}>
             {isNew ? 'Add journal post' : 'Edit post'}
@@ -276,58 +290,81 @@ export function PostEditor({ post, agents, isNew = false }: Props) {
 
           {/* Organization */}
           <Card label="Organization">
-            <FieldLabel>Categories (comma-separated)</FieldLabel>
-            <input value={categories} onChange={e => setCategories(e.target.value)} placeholder="e.g. hotels, destinations" style={{ ...fieldStyle, marginBottom: '12px' }} />
+            {categories.length > 0 && (
+              <div style={{ marginBottom: '16px' }}>
+                <FieldLabel>Categories (Opt-in)</FieldLabel>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', maxHeight: '140px', overflowY: 'auto', padding: '8px', border: '1px solid #e5e7eb', borderRadius: '6px' }}>
+                  {categories.filter(c => c.is_active || selectedCategoryIds.includes(c.id)).map(cat => (
+                    <label key={cat.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', cursor: 'pointer', color: '#374151' }}>
+                      <input 
+                        type="checkbox" 
+                        checked={selectedCategoryIds.includes(cat.id)}
+                        onChange={(e) => {
+                          if (e.target.checked) setSelectedCategoryIds([...selectedCategoryIds, cat.id])
+                          else setSelectedCategoryIds(selectedCategoryIds.filter(id => id !== cat.id))
+                        }}
+                      />
+                      {cat.label}
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            <FieldLabel>Legacy Categories (comma-separated)</FieldLabel>
+            <input value={freeTextCategories} onChange={e => setFreeTextCategories(e.target.value)} placeholder="e.g. hotels, destinations" style={{ ...fieldStyle, marginBottom: '12px' }} />
             <FieldLabel>Tags (comma-separated)</FieldLabel>
             <input value={tags} onChange={e => setTags(e.target.value)} placeholder="e.g. paris, luxury, aman" style={fieldStyle} />
           </Card>
 
-          {/* Publish To */}
-          <Card label="Publish To">
-            <Radio
-              label="Specific agent"
-              checked={targetMode === 'agent'}
-              onChange={() => { setTargetMode('agent'); setIsBroadcast(false) }}
-            />
-            {targetMode === 'agent' && (
-              <select value={selectedAgent} onChange={e => setSelectedAgent(e.target.value)} style={{ ...fieldStyle, marginTop: '8px', marginBottom: '4px' }}>
-                {agents.map(a => (
-                  <option key={a.id} value={a.id}>{a.agency_name} — {a.name}</option>
-                ))}
-              </select>
-            )}
-            <Radio
-              label="All agents (broadcast)"
-              checked={targetMode === 'all'}
-              onChange={() => { setTargetMode('all'); setIsBroadcast(true) }}
-            />
-            <Radio
-              label="Select agents"
-              checked={targetMode === 'select'}
-              onChange={() => { setTargetMode('select'); setIsBroadcast(true) }}
-            />
-            {targetMode === 'select' && (
-              <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                {agents.map(a => (
-                  <label key={a.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', cursor: 'pointer' }}>
-                    <input
-                      type="checkbox"
-                      checked={selectedAgents.includes(a.id)}
-                      onChange={e => setSelectedAgents(prev =>
-                        e.target.checked ? [...prev, a.id] : prev.filter(id => id !== a.id)
-                      )}
-                    />
-                    {a.agency_name}
-                  </label>
-                ))}
-              </div>
-            )}
-            {(targetMode === 'all' || targetMode === 'select') && (
-              <div style={{ marginTop: '10px', padding: '8px 10px', background: '#fef3c7', borderRadius: '6px', fontSize: '12px', color: '#92400e' }}>
-                💡 Use <code style={{ fontFamily: 'monospace' }}>{'{{agency_name}}'}</code> in the body to personalize for each agent.
-              </div>
-            )}
-          </Card>
+          {/* Publish To — admin only. Agents are always publishing to themselves. */}
+          {!isAgent && (
+            <Card label="Publish To">
+              <Radio
+                label="Specific agent"
+                checked={targetMode === 'agent'}
+                onChange={() => { setTargetMode('agent'); setIsBroadcast(false) }}
+              />
+              {targetMode === 'agent' && (
+                <select value={selectedAgent} onChange={e => setSelectedAgent(e.target.value)} style={{ ...fieldStyle, marginTop: '8px', marginBottom: '4px' }}>
+                  {agents.map(a => (
+                    <option key={a.id} value={a.id}>{a.agency_name} — {a.name}</option>
+                  ))}
+                </select>
+              )}
+              <Radio
+                label="All agents (broadcast)"
+                checked={targetMode === 'all'}
+                onChange={() => { setTargetMode('all'); setIsBroadcast(true) }}
+              />
+              <Radio
+                label="Select agents"
+                checked={targetMode === 'select'}
+                onChange={() => { setTargetMode('select'); setIsBroadcast(true) }}
+              />
+              {targetMode === 'select' && (
+                <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  {agents.map(a => (
+                    <label key={a.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', cursor: 'pointer' }}>
+                      <input
+                        type="checkbox"
+                        checked={selectedAgents.includes(a.id)}
+                        onChange={e => setSelectedAgents(prev =>
+                          e.target.checked ? [...prev, a.id] : prev.filter(id => id !== a.id)
+                        )}
+                      />
+                      {a.agency_name}
+                    </label>
+                  ))}
+                </div>
+              )}
+              {(targetMode === 'all' || targetMode === 'select') && (
+                <div style={{ marginTop: '10px', padding: '8px 10px', background: '#fef3c7', borderRadius: '6px', fontSize: '12px', color: '#92400e', display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
+                  <Lightbulb size={14} strokeWidth={1.5} style={{ flexShrink: 0, marginTop: '1px' }} /> Use <code style={{ fontFamily: 'monospace' }}>{'{{agency_name}}'}</code> in the body to personalize for each agent.
+                </div>
+              )}
+            </Card>
+          )}
 
         </div>
       </div>
