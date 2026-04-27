@@ -18,7 +18,7 @@ interface SiteFooterProps {
 const NAV_LINKS = [
   { label: 'Home',      path: '' },
   { label: 'About',     path: '/about' },
-  { label: 'Media',     path: '/media' },
+  { label: 'Press',     path: '/media' },
   { label: 'Journal',   path: '/blog' },
   { label: 'Resources', path: '/resources' },
   { label: 'Contact',   path: '/contact' },

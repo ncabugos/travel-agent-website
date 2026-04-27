@@ -18,7 +18,24 @@ export interface BlogPost {
   status: 'draft' | 'published'
   is_broadcast: boolean
   target_agent_ids: string[]
+  target_demo_slugs: string[]
   gallery_images: GalleryImage[]
+  category_ids?: string[] // Optional for backward compatibility, loaded via join
+  supplier_tags: string[] // Prefixed slugs: 'hotel:<slug>' or 'cruise:<slug>'
+  /** Optional per-post override of the <title> tag. Empty/null → falls back to `title`. */
+  seo_title?: string | null
+  /** Optional per-post override of the meta description. Empty/null → falls back to `excerpt`. */
+  seo_description?: string | null
+}
+
+export interface BlogCategory {
+  id: string
+  slug: string
+  label: string
+  description: string | null
+  sort_order: number
+  is_active: boolean
+  created_at: string
 }
 
 // ─── Destination ───────────────────────────────────────────────────────────

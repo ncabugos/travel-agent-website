@@ -14,7 +14,7 @@ import { SocialFeed } from '@/components/home/SocialFeed'
 import { ContactSection } from '@/components/home/ContactSection'
 import { getBlogPosts } from '@/lib/blog'
 import { ProgramLogoGrid } from '@/components/hotel-programs/ProgramLogoGrid'
-import { getHotelPrograms } from '@/lib/hotel-programs'
+import { getAgentHotelPrograms } from '@/lib/hotel-programs'
 import { EDEN } from '@/lib/media-library'
 
 interface PageProps {
@@ -34,8 +34,8 @@ export async function generateMetadata({ params }: PageProps) {
 // ── Hero Slides ─────────────────────────────────────────────────────────────
 const getHeroSlides = (base: string) => [
   {
-    src: '/media/hero images/four-seasons-CapFerrat-pool-hero.jpg',
-    alt: 'Four Seasons Cap Ferrat pool',
+    src: '/assets/eden/overwater-bungalow-hero.jpg',
+    alt: 'Overwater bungalow at sunset',
     headline: 'Where the World\nBecomes Extraordinary',
     subheadline: 'Bespoke journeys crafted for the discerning traveller.',
     ctaLabel: 'Start Planning',
@@ -83,7 +83,7 @@ export default async function AgentHomePage({ params }: PageProps) {
     getAgentProfile(agentId),
     getAgentSuppliers(agentId),
     getBlogPosts(agentId),
-    getHotelPrograms(),
+    getAgentHotelPrograms(agentId),
   ])
 
   if (!agent) notFound()
@@ -113,7 +113,7 @@ export default async function AgentHomePage({ params }: PageProps) {
       />
 
       {/* ─────────────────────────────────────────────────────────────────────
-          3. BRAND STORY — 2-col: stacked images left, editorial copy right  
+          3. BRAND STORY — 2-col: stacked images left, editorial copy right
           ───────────────────────────────────────────────────────────────────── */}
       <BrandStory
         image1Src="/media/hotel-programs/four-seasons/fs-slush-pool.jpg"

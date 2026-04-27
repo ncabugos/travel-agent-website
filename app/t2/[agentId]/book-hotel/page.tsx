@@ -1,6 +1,9 @@
 import { T2LeadForm } from '@/components/t2/T2LeadForm'
 import { FindHotelClient } from '@/components/t2/FindHotelClient'
+import { T2HotelProgramsGrid } from '@/components/t2/T2HotelProgramsGrid'
 import { getHotelFilterOptions } from '@/lib/hotels'
+import { getAgentHotelPrograms } from '@/lib/hotel-programs'
+import { getAgentProfile } from '@/lib/suppliers'
 import Image from 'next/image'
 
 interface PageProps {
@@ -14,6 +17,62 @@ export const metadata = {
 
 export default async function BookHotelPage({ params }: PageProps) {
   const { agentId } = await params
+
+  // Tier-aware split:
+  //   Starter → curated T2HotelProgramsGrid (non-searchable, partner-programs
+  //             landing with brand-detail pages as the call to action).
+  //   Growth+ → full searchable directory via FindHotelClient.
+  const agent = await getAgentProfile(agentId)
+  const isStarter = agent?.tier === 'starter'
+
+  if (isStarter) {
+    const programs = await getAgentHotelPrograms(agentId)
+    return (
+      <>
+        {/* Hero */}
+        <section style={{ position: 'relative', height: 650, overflow: 'hidden' }}>
+          <Image
+            src="/media/hero images/four-seasons-CapFerrat-pool-hero.jpg"
+            alt="Our Hotel Programs"
+            fill
+            priority
+            style={{ objectFit: 'cover' }}
+            sizes="100vw"
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6))' }} />
+          <div style={{
+            position: 'relative', zIndex: 2, height: '100%',
+            display: 'flex', flexDirection: 'column', justifyContent: 'center',
+            alignItems: 'center', textAlign: 'center', padding: '0 24px',
+          }}>
+            <p className="t2-label" style={{ marginBottom: 12, color: 'var(--t2-accent)' }}>Exclusive Access</p>
+            <h1 className="t2-heading t2-heading-xl" style={{ color: '#FFFFFF' }}>Our Hotel Programs</h1>
+            <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 16, color: 'rgba(255,255,255,0.8)', maxWidth: 520, marginTop: 16 }}>
+              A curated set of Virtuoso and preferred-partner programs — each with
+              complimentary breakfasts, upgrades, and on-property recognition.
+            </p>
+          </div>
+        </section>
+
+        {/* Curated programs grid */}
+        <T2HotelProgramsGrid
+          agentId={agentId}
+          programs={programs}
+          eyebrow="Hotel Programs"
+          heading="Our preferred hotel programs."
+          subheading="Every program below unlocks preferred benefits — room upgrades on arrival, daily breakfast, early check-in or late check-out, and a personalised welcome — bookable only through a Virtuoso-affiliated advisor."
+        />
+
+        {/* Lead Form */}
+        <T2LeadForm
+          heading="Plan Your Hotel Stay"
+          subheading="Let us match you with the ideal property — exclusive rates, preferred amenities, and a personalised welcome."
+        />
+      </>
+    )
+  }
+
+  // Growth / Custom / Agency — searchable directory.
   const { countries, vibes, brands } = await getHotelFilterOptions()
 
   return (

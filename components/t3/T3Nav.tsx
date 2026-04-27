@@ -12,11 +12,9 @@ interface T3NavProps {
 }
 
 const DEFAULT_LINKS = [
-  { label: 'About',       href: '/about' },
-  { label: 'Experiences', href: '/experiences' },
-  { label: 'Hotels',      href: '/book-hotel' },
-  { label: 'Villas',      href: '/book-villa' },
-  { label: 'Voyages',     href: '/find-cruise' },
+  { label: 'About',   href: '/about' },
+  { label: 'Hotels',  href: '/book-hotel' },
+  { label: 'Voyages', href: '/find-cruise' },
 ]
 
 export function T3Nav({ agentId, agencyName, logoUrl, navLinks }: T3NavProps) {

@@ -17,8 +17,12 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'www.edenforyourworld.com' },
       { protocol: 'http',  hostname: 'edenforyourworld.com' },
       { protocol: 'https', hostname: 'edenforyourworld.com' },
-      // Virtuoso hotel database cover images
+      // Virtuoso hotel database cover images (legacy — being phased out in
+      // favour of mirrored Supabase Storage copies; see scripts/mirror_hotel_images.js)
       { protocol: 'https', hostname: 'media.virtuoso.com' },
+      // Supabase Storage — mirrored hotel cover images (bucket: hotel-covers)
+      { protocol: 'https', hostname: '*.supabase.co' },
+      { protocol: 'https', hostname: '*.supabase.in' },
     ],
   },
 }

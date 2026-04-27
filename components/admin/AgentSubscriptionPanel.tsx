@@ -21,6 +21,7 @@ const TIER_OPTIONS = [
   { value: 'starter', label: 'Starter — $79/mo' },
   { value: 'growth', label: 'Growth — $149/mo' },
   { value: 'custom', label: 'Custom — $299/mo' },
+  { value: 'agency', label: 'Agency — Custom pricing' },
 ] as const
 
 export function AgentSubscriptionPanel({

@@ -59,8 +59,8 @@ export function YTCPartnerTabs({ base }: Props) {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '56px 48px',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '72px 64px',
             alignItems: 'center',
             maxWidth: 1200,
             margin: '0 auto',
@@ -75,7 +75,7 @@ export function YTCPartnerTabs({ base }: Props) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: 110,
+                height: 170,
                 textDecoration: 'none',
               }}
               className="ytc-partner-cell"
@@ -84,12 +84,12 @@ export function YTCPartnerTabs({ base }: Props) {
                 <Image
                   src={p.logo_url}
                   alt={p.name}
-                  width={234}
-                  height={78}
+                  width={360}
+                  height={120}
                   style={{
                     objectFit: 'contain',
                     maxWidth: '100%',
-                    maxHeight: 100,
+                    maxHeight: 150,
                     opacity: 0.55,
                     filter: 'grayscale(100%)',
                     transition: 'opacity 0.3s ease, filter 0.3s ease',

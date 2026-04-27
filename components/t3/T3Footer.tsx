@@ -91,10 +91,8 @@ export function T3Footer({
         >
           <FooterCol title="Explore">
             <FooterLink href={`${base}/about`} label="About" />
-            <FooterLink href={`${base}/experiences`} label="Experiences" />
             <FooterLink href={`${base}/book-hotel`} label="Hotels" />
             <FooterLink href={`${base}/find-cruise`} label="Cruises" />
-            <FooterLink href={`${base}/book-villa`} label="Villas" />
           </FooterCol>
 
           <FooterCol title="Services">

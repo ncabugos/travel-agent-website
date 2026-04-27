@@ -127,23 +127,10 @@ export function T2VirtuosoBand({ agencyName, hostAgency = 'Montecito Village Tra
         </div>
 
 
-        {/* 3 Perk Columns — simplified */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 0,
-          }}
-        >
+        {/* 3 Perk Columns — desktop 3-up, mobile stacked */}
+        <div className="t2-virtuoso-grid">
           {PERKS.map((col, i) => (
-            <div
-              key={i}
-              style={{
-                padding: '40px 40px 48px',
-                textAlign: 'left',
-                borderLeft: i > 0 ? '1px solid rgba(180,154,90,0.15)' : undefined,
-              }}
-            >
+            <div key={i} className="t2-virtuoso-cell" data-index={i}>
               {/* Bare icon — no ring */}
               <div style={{ marginBottom: 20, opacity: 0.9 }}>
                 {col.icon}
@@ -164,8 +151,8 @@ export function T2VirtuosoBand({ agencyName, hostAgency = 'Montecito Village Tra
                 {col.title}
               </h3>
 
-              {/* Perks — clean stacked lines, no dividers */}
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {/* Perks — clean stacked lines */}
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {col.perks.map((perk, j) => (
                   <li key={j}>
                     <span
@@ -173,8 +160,8 @@ export function T2VirtuosoBand({ agencyName, hostAgency = 'Montecito Village Tra
                         fontFamily: 'var(--t2-font-sans)',
                         fontSize: 14,
                         fontWeight: 300,
-                        lineHeight: 1.65,
-                        color: 'rgba(255,255,255,0.55)',
+                        lineHeight: 1.55,
+                        color: 'rgba(255,255,255,0.65)',
                         letterSpacing: '0.01em',
                       }}
                     >
@@ -191,11 +178,45 @@ export function T2VirtuosoBand({ agencyName, hostAgency = 'Montecito Village Tra
 
       </div>
 
-      {/* Mobile responsiveness */}
+      {/* Responsive grid — desktop 3-up with vertical dividers,
+         mobile stacked with horizontal dividers + tighter padding. */}
       <style>{`
-        @media (max-width: 768px) {
+        .t2-virtuoso-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0;
+        }
+        .t2-virtuoso-cell {
+          padding: 40px 40px 48px;
+          text-align: left;
+        }
+        .t2-virtuoso-cell[data-index="1"],
+        .t2-virtuoso-cell[data-index="2"] {
+          border-left: 1px solid rgba(180,154,90,0.15);
+        }
+
+        @media (max-width: 900px) {
           .t2-virtuoso-grid {
-            grid-template-columns: 1fr !important;
+            grid-template-columns: 1fr;
+            max-width: 420px;
+            margin: 0 auto;
+          }
+          .t2-virtuoso-cell {
+            padding: 32px 8px;
+            text-align: center;
+          }
+          .t2-virtuoso-cell > div:first-child {
+            display: flex;
+            justify-content: center;
+          }
+          .t2-virtuoso-cell ul {
+            align-items: center;
+          }
+          /* Swap vertical dividers for horizontal between rows. */
+          .t2-virtuoso-cell[data-index="1"],
+          .t2-virtuoso-cell[data-index="2"] {
+            border-left: none;
+            border-top: 1px solid rgba(180,154,90,0.18);
           }
         }
       `}</style>

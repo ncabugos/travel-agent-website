@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Globe, FileText, Building2, Paintbrush, Lock, TrendingUp } from 'lucide-react'
 import { CheckoutButton } from '@/components/stripe/CheckoutButton'
+import { MarketingNav } from '@/components/marketing/MarketingNav'
 
 export const metadata = {
   title: 'EliteAdvisorHub — Websites for Elite Travel Advisors',
@@ -16,6 +17,95 @@ interface DemoCard {
   href: string
   thumbnail: string
 }
+
+interface PricingTier {
+  name: string
+  tier: 'starter' | 'growth' | 'custom' | 'agency'
+  price: string
+  setup: string | null
+  priceMode: 'money' | 'quote'
+  popular: boolean
+  blurb: string
+  features: string[]
+  cta: 'checkout' | 'consultation'
+}
+
+const PRICING_TIERS: PricingTier[] = [
+  {
+    name: 'Starter',
+    tier: 'starter',
+    price: '$79',
+    setup: '$299',
+    priceMode: 'money',
+    popular: false,
+    blurb: 'A polished, branded website with curated editorial and your preferred hotel programs. For advisors who want to launch fast.',
+    features: [
+      'Branded Vista or Meridian template',
+      'Curated editorial & journal',
+      'Advisor portal access',
+      'Custom domain',
+      'Hotel programs (Aman, Four Seasons, Belmond, etc.)',
+      'Preferred Cruise Partners overview',
+      'Email support',
+    ],
+    cta: 'checkout',
+  },
+  {
+    name: 'Growth',
+    tier: 'growth',
+    price: '$149',
+    setup: '$499',
+    priceMode: 'money',
+    popular: true,
+    blurb: 'Everything in Starter, plus searchable hotel & cruise directories and an Instagram feed. For advisors with an established book.',
+    features: [
+      'Everything in Starter',
+      'Searchable hotel directory (1,795+ properties)',
+      'Searchable cruise directory',
+      'Experiences directory',
+      'Instagram feed integration',
+      'Advanced analytics',
+      'Priority support',
+    ],
+    cta: 'checkout',
+  },
+  {
+    name: 'Custom',
+    tier: 'custom',
+    price: '$299',
+    setup: '$1,500',
+    priceMode: 'money',
+    popular: false,
+    blurb: 'A fully custom-designed site with additional pages, CRM integration, and white-label options. For established advisors with a distinct brand.',
+    features: [
+      'Everything in Growth',
+      'Custom-designed template',
+      'Additional custom pages',
+      'CRM integration',
+      'White-label options',
+    ],
+    cta: 'consultation',
+  },
+  {
+    name: 'Agency',
+    tier: 'agency',
+    price: 'Contact for quote',
+    setup: null,
+    priceMode: 'quote',
+    popular: false,
+    blurb: 'Multi-advisor agencies get individual advisor pages, unified branding, lead routing, and centralized billing. Priced per seat.',
+    features: [
+      'Everything in Custom',
+      'Individual advisor pages',
+      'Agency-wide lead routing',
+      'Unified agency billing',
+      'Agency admin dashboard',
+      'Shared content library',
+      'Team onboarding & training',
+    ],
+    cta: 'consultation',
+  },
+]
 
 const DEMOS: DemoCard[] = [
   {
@@ -50,6 +140,14 @@ const DEMOS: DemoCard[] = [
     href: '/t2/ytc-demo',
     thumbnail: '/demos/ytc.png',
   },
+  {
+    slug: 'casa-solis',
+    name: 'Casa Solis',
+    kind: 'Custom',
+    tagline: 'Quiet-luxury editorial for the Custom tier — warm ivory, burnt ochre, Italian-atelier feel.',
+    href: '/t4/casa-solis',
+    thumbnail: '/demos/casa_solis.jpg',
+  },
 ]
 
 export default function EliteAdvisorHubHomePage() {
@@ -59,46 +157,7 @@ export default function EliteAdvisorHubHomePage() {
       color: '#111',
     }}>
       {/* Navigation */}
-      <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
-        backgroundColor: 'rgba(255,255,255,0.95)',
-        backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid rgba(0,0,0,0.06)',
-        padding: '0 40px',
-      }}>
-        <div style={{
-          maxWidth: '1200px', margin: '0 auto',
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          height: '64px',
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{
-              width: '32px', height: '32px', borderRadius: '8px',
-              background: 'linear-gradient(135deg, #111 0%, #374151 100%)',
-              display: 'flex', alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              <span style={{ color: '#fff', fontSize: '16px', fontWeight: 700, letterSpacing: '-0.02em' }}>E</span>
-            </div>
-            <span style={{ fontSize: '16px', fontWeight: 700, letterSpacing: '-0.02em' }}>EliteAdvisorHub</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-            <a href="#features" style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}>Features</a>
-            <a href="#pricing" style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}>Pricing</a>
-            <a href="#demos" style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}>Demos</a>
-            <Link
-              href="/agent-portal/login"
-              style={{
-                padding: '8px 20px', backgroundColor: '#111', color: '#fff',
-                borderRadius: '8px', fontSize: '13px', fontWeight: 600,
-                textDecoration: 'none',
-              }}
-            >
-              Agent Login
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <MarketingNav />
 
       {/* Hero */}
       <section style={{
@@ -238,7 +297,7 @@ export default function EliteAdvisorHubHomePage() {
       <section id="pricing" style={{
         padding: '100px 24px', backgroundColor: '#fafafa',
       }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <h2 style={{
             fontSize: '36px', fontWeight: 700, textAlign: 'center',
             letterSpacing: '-0.02em', margin: '0 0 12px',
@@ -252,28 +311,17 @@ export default function EliteAdvisorHubHomePage() {
             Choose the plan that fits your business.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }} className="eah-pricing-grid">
-            {[
-              {
-                name: 'Starter', tier: 'starter' as const, price: '$79', setup: '$299', popular: false,
-                features: ['Branded Vista template', 'Curated blog content', 'Supplier showcase', 'Advisor portal access', 'Email support'],
-              },
-              {
-                name: 'Growth', tier: 'growth' as const, price: '$149', setup: '$499', popular: true,
-                features: ['Everything in Starter', 'Vista or Meridian template', 'Custom domain', 'Priority support', 'Advanced analytics', 'Journal authoring tools'],
-              },
-              {
-                name: 'Custom', tier: 'custom' as const, price: '$299', setup: '$1,500', popular: false,
-                features: ['Everything in Growth', 'Custom-designed template', 'Dedicated account manager', 'API integrations', 'White-label options', 'Custom supplier pages'],
-              },
-            ].map((plan) => (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }} className="eah-pricing-grid">
+            {PRICING_TIERS.map((plan) => (
               <div key={plan.name} style={{
-                padding: '40px 32px',
+                padding: '36px 28px',
                 borderRadius: '16px',
                 backgroundColor: '#fff',
                 border: plan.popular ? '2px solid #111' : '1px solid #e5e7eb',
                 position: 'relative',
                 boxShadow: plan.popular ? '0 8px 30px rgba(0,0,0,0.08)' : 'none',
+                display: 'flex',
+                flexDirection: 'column',
               }}>
                 {plan.popular && (
                   <div style={{
@@ -287,24 +335,57 @@ export default function EliteAdvisorHubHomePage() {
                 )}
                 <h3 style={{ margin: '0 0 8px', fontSize: '20px', fontWeight: 600 }}>{plan.name}</h3>
                 <div style={{ marginBottom: '8px' }}>
-                  <span style={{ fontSize: '40px', fontWeight: 800, letterSpacing: '-0.03em' }}>{plan.price}</span>
-                  <span style={{ fontSize: '14px', color: '#6b7280' }}>/month</span>
+                  {plan.priceMode === 'money' ? (
+                    <>
+                      <span style={{ fontSize: '36px', fontWeight: 800, letterSpacing: '-0.03em' }}>{plan.price}</span>
+                      <span style={{ fontSize: '14px', color: '#6b7280' }}>/month</span>
+                    </>
+                  ) : (
+                    <span style={{ fontSize: '18px', fontWeight: 700, letterSpacing: '-0.01em', color: '#111' }}>
+                      {plan.price}
+                    </span>
+                  )}
                 </div>
-                <p style={{ fontSize: '13px', color: '#9ca3af', margin: '0 0 24px' }}>
-                  + {plan.setup} one-time setup
+                <p style={{ fontSize: '13px', color: '#9ca3af', margin: '0 0 24px', minHeight: '20px' }}>
+                  {plan.setup ? `+ ${plan.setup} one-time setup` : '\u00A0'}
                 </p>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '32px' }}>
+                <p style={{ fontSize: '13px', color: '#6b7280', lineHeight: 1.55, margin: '0 0 20px' }}>
+                  {plan.blurb}
+                </p>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '28px', flex: 1 }}>
                   {plan.features.map((f) => (
-                    <div key={f} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#374151' }}>
-                      <span style={{ color: '#16a34a', fontWeight: 700 }}>✓</span> {f}
+                    <div key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '13px', color: '#374151', lineHeight: 1.45 }}>
+                      <span style={{ color: '#16a34a', fontWeight: 700, flexShrink: 0, marginTop: '1px' }}>✓</span> {f}
                     </div>
                   ))}
                 </div>
 
-                <CheckoutButton tier={plan.tier} popular={plan.popular}>
-                  Get Started
-                </CheckoutButton>
+                {plan.cta === 'checkout' ? (
+                  <CheckoutButton tier={plan.tier as 'starter' | 'growth'} popular={plan.popular}>
+                    Get Started
+                  </CheckoutButton>
+                ) : (
+                  <Link
+                    href={`/schedule-consultation?tier=${plan.tier}`}
+                    style={{
+                      display: 'block',
+                      textAlign: 'center',
+                      padding: '12px 20px',
+                      borderRadius: '10px',
+                      backgroundColor: plan.popular ? '#111' : '#fff',
+                      color: plan.popular ? '#fff' : '#111',
+                      border: plan.popular ? '1px solid #111' : '1px solid #111',
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      textDecoration: 'none',
+                      transition: 'background 0.15s, color 0.15s',
+                    }}
+                  >
+                    Schedule a Consultation
+                  </Link>
+                )}
               </div>
             ))}
           </div>
@@ -464,10 +545,19 @@ export default function EliteAdvisorHubHomePage() {
         .eah-demo-card:hover .eah-demo-thumb {
           transform: scale(1.04);
         }
+        @media (max-width: 1200px) {
+          .eah-pricing-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
         @media (max-width: 900px) {
           .eah-features-grid,
-          .eah-pricing-grid,
           .eah-demos-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .eah-pricing-grid {
             grid-template-columns: 1fr !important;
           }
         }

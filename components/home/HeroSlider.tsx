@@ -249,15 +249,18 @@ export function HeroSlider({ slides, autoPlayMs = 6000, showBadge = false }: Her
       )}
 
       <style>{`
+        /* Smooth size/position changes when crossing the breakpoint instead of snapping. */
+        .cnt-badge { transition: bottom 0.25s ease, left 0.25s ease; }
+        .cnt-badge img { transition: width 0.25s ease, height 0.25s ease; }
+
         @media (max-width: 768px) {
           .cnt-badge {
-            bottom: 56px !important;
-            left: 50% !important;
-            transform: translateX(-50%);
+            bottom: 64px !important;
+            left: 20px !important;
           }
           .cnt-badge img {
-            width: 120px !important;
-            height: 120px !important;
+            width: 110px !important;
+            height: 110px !important;
           }
         }
       `}

@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import Image from 'next/image'
 import type { LuxuryHotel } from '@/lib/hotels'
+import { HotelCardImage } from '@/components/t2/HotelCardImage'
 
 const PAGE_SIZE = 9
 
@@ -149,25 +149,14 @@ export function FindHotelClient({ agentId, countries, vibes, brands }: FindHotel
               className="t2-card"
               style={{ overflow: 'hidden', height: '100%', backgroundColor: '#FFFFFF', borderRadius: 0, display: 'flex', flexDirection: 'column' }}
             >
-              {/* Hero image */}
+              {/* Hero image (with graceful fallback for stale Virtuoso URLs) */}
               <div style={{ position: 'relative', aspectRatio: '16/9', overflow: 'hidden', background: '#EDE8E1' }}>
-                {hotel.cover_image_url ? (
-                  <Image
-                    src={hotel.cover_image_url}
-                    alt={hotel.name}
-                    fill
-                    className="t2-card-image"
-                    style={{ objectFit: 'cover' }}
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    unoptimized
-                  />
-                ) : (
-                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span style={{ fontFamily: 'var(--t2-font-serif)', color: 'var(--t2-text-muted)', fontSize: 14 }}>
-                      {hotel.name}
-                    </span>
-                  </div>
-                )}
+                <HotelCardImage
+                  src={hotel.cover_image_url}
+                  alt={hotel.name}
+                  fallbackLabel={hotel.name}
+                />
+
                 {/* Vibe badge */}
                 {hotel.vibe && (
                   <span style={{

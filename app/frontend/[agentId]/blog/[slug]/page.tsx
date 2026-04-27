@@ -12,7 +12,11 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps) {
   const { slug, agentId } = await params
   const post = await getBlogPost(slug, agentId)
-  return post ? { title: post.title, description: post.excerpt } : {}
+  if (!post) return {}
+  // SEO overrides win over the post's own title/excerpt.
+  const title = post.seo_title?.trim() || post.title
+  const description = post.seo_description?.trim() || post.excerpt || undefined
+  return { title, description }
 }
 
 const serif = 'var(--font-serif)'
@@ -31,10 +35,25 @@ export default async function BlogPostPage({ params }: PageProps) {
   const base = `/frontend/${agentId}`
   const otherPosts = recentPosts.filter(p => p.id !== post.id).slice(0, 4)
 
+  // ── Auto-paragraph: convert \n\n → <p> blocks (like WP's wpautop) ────────
+  function autop(html: string): string {
+    if (!html) return ''
+    // If content already has <p> tags, don't double-wrap
+    if (/<p[\s>]/i.test(html)) return html
+    // Split on double-newlines to get paragraphs
+    return html
+      .split(/\n{2,}/)
+      .map(block => block.trim())
+      .filter(Boolean)
+      .map(block => `<p>${block.replace(/\n/g, '<br />')}</p>`)
+      .join('\n')
+  }
+
   // Render shortcodes — replace {{tokens}} with real agent data
-  const renderedBody = agent
+  const rawBody = agent
     ? renderShortcodes(post.body_html, agent)
     : post.body_html
+  const renderedBody = autop(rawBody)
 
   const gallery: GalleryImage[] = post.gallery_images ?? []
 
@@ -50,12 +69,12 @@ export default async function BlogPostPage({ params }: PageProps) {
             alt={post.title}
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
           />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 40%, rgba(250,250,245,1) 100%)' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 70%, rgba(250,250,245,1) 100%)' }} />
         </div>
       )}
 
       {/* Article + Sidebar */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '60px 24px 100px', display: 'grid', gridTemplateColumns: '1fr 320px', gap: '80px', alignItems: 'start' }}>
+      <div className="post-layout" style={{ maxWidth: '1200px', margin: '0 auto' }}>
 
         {/* Article */}
         <article>
@@ -131,7 +150,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         </article>
 
         {/* Sidebar */}
-        <aside style={{ position: 'sticky', top: '120px' }}>
+        <aside className="post-sidebar">
           <div>
             <p style={{ fontFamily: sans, fontSize: '9px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '20px' }}>
               Recent Articles
@@ -166,11 +185,35 @@ export default async function BlogPostPage({ params }: PageProps) {
       </div>
 
       <style>{`
+        .post-layout {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) 320px;
+          gap: 80px;
+          align-items: start;
+          padding: 60px 24px 100px;
+        }
+        .post-sidebar { position: sticky; top: 120px; }
+
+        @media (max-width: 900px) {
+          .post-layout {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 56px;
+            padding: 40px 20px 64px;
+          }
+          .post-sidebar { position: static; top: auto; }
+        }
+
+        .post-layout article { min-width: 0; }
+        .post-layout h1 { overflow-wrap: anywhere; }
+
         .blog-body p { margin-bottom: 20px; }
+        .blog-body ul { list-style-type: disc; padding-left: 28px; margin-bottom: 20px; }
+        .blog-body ol { list-style-type: decimal; padding-left: 28px; margin-bottom: 20px; }
+        .blog-body li { margin-bottom: 2px; line-height: 1.5; }
         .blog-body img { max-width: 100%; height: auto; margin: 24px 0; }
         .blog-body h2, .blog-body h3 { margin-top: 32px; margin-bottom: 16px; font-family: ${serif}; color: var(--charcoal); }
         .blog-body a { color: var(--gold); text-decoration: underline; }
-        .blog-body blockquote { border-left: 3px solid var(--gold); padding-left: 20px; margin: 24px 0; font-style: italic; color: var(--warm-gray); }
+        .blog-body blockquote { border-left: none; padding: 32px 0; margin: 40px 0; font-family: ${serif}; font-style: italic; font-size: 1.35em; line-height: 1.6; color: var(--charcoal); text-align: center; }
       `}</style>
     </main>
   )

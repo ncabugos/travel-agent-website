@@ -1,11 +1,13 @@
 import { getCruiseLine, getAllCruiseLineSlugs } from '@/lib/cruise-lines'
 import { getSupplierPromo } from '@/lib/supplier-promos'
+import { getBlogPostsBySupplier } from '@/lib/blog'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { T2HotelGallery } from '@/components/t2/T2HotelGallery'
 import { T2BenefitsGrid } from '@/components/t2/T2BenefitsGrid'
 import { T2PromoBanner } from '@/components/t2/T2PromoBanner'
+import { T2RelatedArticles } from '@/components/t2/T2RelatedArticles'
 
 interface PageProps {
   params: Promise<{ agentId: string; cruiseSlug: string }>
@@ -18,9 +20,10 @@ export async function generateStaticParams() {
 
 export default async function CruiseDetailPage({ params }: PageProps) {
   const { agentId, cruiseSlug } = await params
-  const [cruise, promo] = await Promise.all([
+  const [cruise, promo, relatedPosts] = await Promise.all([
     getCruiseLine(cruiseSlug),
     getSupplierPromo('cruise_line', cruiseSlug),
+    getBlogPostsBySupplier(`cruise:${cruiseSlug}`, agentId),
   ])
   if (!cruise) notFound()
 
@@ -194,6 +197,13 @@ export default async function CruiseDetailPage({ params }: PageProps) {
           </div>
         </section>
       )}
+
+      {/* ── Related Articles ── */}
+      <T2RelatedArticles
+        posts={relatedPosts}
+        heading={`${cruise.name} Stories`}
+        basePath={base}
+      />
 
       {/* ── CTA ── */}
       <section

@@ -411,14 +411,14 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'Club 1897 — Kempinski',
     logo_url: HOTEL_LOGOS.kempinskiClub1897,
     logo_url_white: HOTEL_LOGOS.kempinskiClub1897White,
-    image_url: '/media/hotel-programs/kempinski/kempinski-hero-scaled.jpg',
+    image_url: '/media/hotel-programs/kempinski-1897/kempinski-hero-scaled.jpg',
     slider_images: [
-      '/media/hotel-programs/kempinski/kempinski-slider-1-1500.jpg',
-      '/media/hotel-programs/kempinski/kempinski-slider-2-1500.jpg',
-      '/media/hotel-programs/kempinski/kempinski-slider-3-1500.jpg',
-      '/media/hotel-programs/kempinski/kempinski-istanbul-1500.jpg',
-      '/media/hotel-programs/kempinski/kempinski-munich-1500.jpg',
-      '/media/hotel-programs/kempinski/kempinski-cancun-1500.jpg',
+      '/media/hotel-programs/kempinski-1897/kempinski-slider-1-1500.jpg',
+      '/media/hotel-programs/kempinski-1897/kempinski-slider-2-1500.jpg',
+      '/media/hotel-programs/kempinski-1897/kempinski-slider-3-1500.jpg',
+      '/media/hotel-programs/kempinski-1897/kempinski-istanbul-1500.jpg',
+      '/media/hotel-programs/kempinski-1897/kempinski-munich-1500.jpg',
+      '/media/hotel-programs/kempinski-1897/kempinski-cancun-1500.jpg',
     ],
     tagline: 'A passport to a world of curated privileges at Europe\'s oldest luxury hotel group.',
     description: 'Club 1897 is Kempinski Hotels\' preferred partner programme, named after the year the brand was founded. It grants access to curated privileges across Kempinski\'s extraordinary portfolio spanning over 35 countries, from palace hotels to resort retreats.',
@@ -662,8 +662,10 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
 // ─── Data Fetchers ────────────────────────────────────────────────────────────
 
 const DEMO_ID = 'demo-agent'
+const DEMO_AGENT_IDS = new Set(['demo-agent', 't2-demo', 't3-demo', 'ytc-demo', 'wwt-demo'])
 const isDemo = (agentId?: string) =>
   !agentId || agentId === DEMO_ID || !process.env.NEXT_PUBLIC_SUPABASE_URL
+const isAnyDemoAgent = (agentId?: string) => !!agentId && DEMO_AGENT_IDS.has(agentId)
 
 /** Fetch all active hotel programs ordered by sort_order */
 export async function getHotelPrograms(): Promise<HotelProgram[]> {
@@ -723,4 +725,120 @@ export async function getHotelProgram(slug: string): Promise<HotelProgram | null
 export async function getAllHotelProgramSlugs(): Promise<string[]> {
   const programs = await getHotelPrograms()
   return programs.map(p => p.slug)
+}
+
+// ─── Per-Agent Selections ─────────────────────────────────────────────────────
+
+/**
+ * Fetch the curated set of Hotel Programs configured for a specific agent.
+ *
+ * Behavior:
+ *   - If the agent has zero rows in agent_hotel_program_selections (or the
+ *     agent is a demo), falls back to the full global active set.
+ *   - Otherwise returns only the enabled selections, ordered by the agent's
+ *     per-row sort_order (ascending), then by the program's global sort_order.
+ *
+ * The fallback behavior means a brand-new agent record automatically shows
+ * the full catalogue — admins only need to touch this when curating.
+ */
+export async function getAgentHotelPrograms(agentId?: string): Promise<HotelProgram[]> {
+  // Demo agents always see the full mock catalogue.
+  if (isDemo(agentId) || isAnyDemoAgent(agentId)) {
+    return MOCK_HOTEL_PROGRAMS
+  }
+
+  try {
+    const supabase = createServiceClient()
+
+    const { data: selections, error: selErr } = await supabase
+      .from('agent_hotel_program_selections')
+      .select('program_id, sort_order')
+      .eq('agent_id', agentId!)
+      .eq('is_enabled', true)
+      .order('sort_order', { ascending: true })
+
+    if (selErr) return getHotelPrograms()
+    if (!selections || selections.length === 0) return getHotelPrograms()
+
+    // Preserve the agent's custom ordering.
+    const selectedIds = selections.map((s) => s.program_id)
+    const { data: programs, error: progErr } = await supabase
+      .from('hotel_programs')
+      .select('*')
+      .in('id', selectedIds)
+      .eq('is_active', true)
+
+    if (progErr || !programs) return getHotelPrograms()
+
+    const orderIndex = new Map(selectedIds.map((id, i) => [id, i]))
+    const sorted = [...programs].sort(
+      (a, b) => (orderIndex.get(a.id) ?? 0) - (orderIndex.get(b.id) ?? 0)
+    )
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return sorted.map((row: any) => ({
+      ...row,
+      benefits: (row.benefits ?? []) as HotelProgramBenefit[],
+    }))
+  } catch {
+    return getHotelPrograms()
+  }
+}
+
+/**
+ * Fetch the raw set of program IDs the agent has selected (enabled or not).
+ * Used by the admin + agent-portal UI to render checkbox state.
+ */
+export async function getAgentHotelProgramSelections(
+  agentId: string
+): Promise<Array<{ program_id: string; is_enabled: boolean; sort_order: number }>> {
+  if (isDemo(agentId) || isAnyDemoAgent(agentId)) return []
+  try {
+    const supabase = createServiceClient()
+    const { data, error } = await supabase
+      .from('agent_hotel_program_selections')
+      .select('program_id, is_enabled, sort_order')
+      .eq('agent_id', agentId)
+      .order('sort_order', { ascending: true })
+
+    if (error || !data) return []
+    return data
+  } catch {
+    return []
+  }
+}
+
+/**
+ * Replace an agent's entire Hotel Programs selection set in one transaction.
+ * Expects the caller (an API route) to use a service-role client when called
+ * for admin-scoped writes. For agent-self writes, the caller should pass the
+ * user-scoped client and rely on RLS to enforce `auth.uid() = agent_id`.
+ */
+export async function replaceAgentHotelProgramSelections(
+  agentId: string,
+  enabledProgramIds: string[],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  client?: any
+) {
+  const supabase = client ?? createServiceClient()
+
+  const { error: delErr } = await supabase
+    .from('agent_hotel_program_selections')
+    .delete()
+    .eq('agent_id', agentId)
+  if (delErr) throw delErr
+
+  if (enabledProgramIds.length === 0) return
+
+  const rows = enabledProgramIds.map((program_id, i) => ({
+    agent_id: agentId,
+    program_id,
+    is_enabled: true,
+    sort_order: i,
+  }))
+
+  const { error: insErr } = await supabase
+    .from('agent_hotel_program_selections')
+    .insert(rows)
+  if (insErr) throw insErr
 }

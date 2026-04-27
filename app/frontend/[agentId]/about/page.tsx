@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { getAgentProfile } from '@/lib/suppliers'
-import { getHotelPrograms } from '@/lib/hotel-programs'
+import { getAgentHotelPrograms } from '@/lib/hotel-programs'
 import { ProgramLogoGrid } from '@/components/hotel-programs/ProgramLogoGrid'
 import { VideoEmbed } from '@/components/ui/VideoEmbed'
 import { notFound } from 'next/navigation'
@@ -129,7 +129,7 @@ export default async function AboutPage({ params }: PageProps) {
 
   const [agent, programs] = await Promise.all([
     getAgentProfile(agentId),
-    getHotelPrograms(),
+    getAgentHotelPrograms(agentId),
   ])
 
   if (!agent) notFound()

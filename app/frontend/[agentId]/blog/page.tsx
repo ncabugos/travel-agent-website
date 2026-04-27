@@ -97,17 +97,17 @@ export default async function BlogPage({ params }: PageProps) {
                 <Link
                   key={post.id}
                   href={`${base}/blog/${post.slug}`}
+                  className="journal-card"
                   style={{ textDecoration: 'none', display: 'block' }}
                 >
-                  <article className="group">
+                  <article>
                     {post.cover_image_url && (
-                      <div style={{ position: 'relative', paddingBottom: '65%', overflow: 'hidden', marginBottom: '24px' }}>
+                      <div className="journal-card-img" style={{ position: 'relative', paddingBottom: '65%', overflow: 'hidden', marginBottom: '24px' }}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={post.cover_image_url}
                           alt={post.title}
-                          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.9s ease' }}
-                          className="group-hover:scale-[1.04]"
+                          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
                         />
                       </div>
                     )}
@@ -136,6 +136,16 @@ export default async function BlogPage({ params }: PageProps) {
           )}
         </div>
       </section>
+
+      <style>{`
+        .journal-card-img img {
+          transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          will-change: transform;
+        }
+        .journal-card:hover .journal-card-img img {
+          transform: scale(1.05);
+        }
+      `}</style>
 
     </main>
   )

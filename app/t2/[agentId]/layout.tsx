@@ -48,6 +48,51 @@ export default async function T2Layout({ children, params }: LayoutProps) {
           }
         `}</style>
       )}
+      {/* Inject Wine & Wellness Travel theme — Aethos-inspired cream + wine palette */}
+      {agentId === 'wwt-demo' && (
+        <style>{`
+          :root {
+            --t2-bg:           #F4F1E9;
+            --t2-bg-alt:       #E9E3D3;
+            --t2-text:         #1F1D18;
+            --t2-text-muted:   #6E6757;
+            --t2-accent:       #7A3C2F;
+            --t2-accent-hover: #9B5447;
+            --t2-divider:      #D4CCB9;
+            --t2-dark-bg:      #16140E;
+            --t2-dark-text:    #F1EAD5;
+            --t2-overlay:      rgba(22,20,14,0.55);
+            --t2-section-pad:  clamp(120px, 14vw, 180px);
+          }
+          .t2-page {
+            letter-spacing: 0.002em;
+          }
+          .t2-heading {
+            font-weight: 300;
+            letter-spacing: -0.018em;
+          }
+          .t2-label {
+            font-size: 11px;
+            letter-spacing: 0.32em;
+            color: var(--t2-text-muted) !important;
+            font-weight: 500;
+          }
+          /* Aethos-style link underline for anchor links */
+          .wwt-link {
+            color: var(--t2-text);
+            text-decoration: none;
+            border-bottom: 1px solid var(--t2-text);
+            padding-bottom: 2px;
+            font-family: var(--t2-font-sans);
+            font-size: 12px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: opacity 240ms var(--t2-ease);
+          }
+          .wwt-link:hover { opacity: 0.55; }
+        `}</style>
+      )}
       <T2Nav
         agentId={agentId}
         agencyName={agent?.agency_name ?? 'Luxury Travel Co'}

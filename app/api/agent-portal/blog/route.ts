@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabase/server'
 import { createServiceClient } from '@/lib/supabase/service'
+import { checkBlogPostWarnings } from '@/lib/blog-warnings'
 import type { BlogPost } from '@/types/index'
 
 const ALL_COLUMNS =
@@ -85,6 +86,8 @@ export async function POST(request: Request) {
       slug,
       published_at:     body.published_at ?? new Date().toISOString(),
       excerpt:          body.excerpt ?? null,
+      seo_title:        body.seo_title ?? null,
+      seo_description:  body.seo_description ?? null,
       body_html:        body.body_html ?? '',
       cover_image_url:  body.cover_image_url ?? null,
       categories:       body.categories ?? [],
@@ -94,7 +97,7 @@ export async function POST(request: Request) {
       target_agent_ids: [],                  // forced empty
       gallery_images:   body.gallery_images ?? [],
     })
-    .select(ALL_COLUMNS)
+    .select('*')
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 })
@@ -107,8 +110,14 @@ export async function POST(request: Request) {
     await admin.from('blog_post_categories').insert(records)
   }
 
+  const warnings = await checkBlogPostWarnings({
+    bodyHtml: data.body_html ?? '',
+    agentId: data.agent_id,
+    isBroadcast: false, // agents never broadcast
+  })
+
   return NextResponse.json(
-    { ...data, category_ids: body.category_ids ?? [] },
+    { ...data, category_ids: body.category_ids ?? [], warnings },
     { status: 201 }
   )
 }

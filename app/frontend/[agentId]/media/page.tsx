@@ -13,10 +13,38 @@ export async function generateMetadata({ params }: PageProps) {
   return { title: `Media — ${agent?.agency_name ?? 'Luxury Travel'}` }
 }
 
-const PRESS_ITEMS = [
-  { outlet: 'Condé Nast Traveler', logo: 'CNT', headline: 'Top Travel Specialists 2025', excerpt: 'Named among the world\'s leading luxury travel advisors for the second consecutive year.', date: 'October 2025', href: '#' },
-  { outlet: 'Travel + Leisure', logo: 'T+L', headline: 'Best Luxury Travel Agencies in America', excerpt: 'Recognised for exceptional client service and access to the world\'s finest properties.', date: 'June 2025', href: '#' },
-  { outlet: 'Forbes Travel Guide', logo: 'FTG', headline: 'Virtuoso Partner of the Year', excerpt: 'Selected from over 1,700 Virtuoso member agencies for outstanding expertise and client satisfaction.', date: 'March 2025', href: '#' },
+const ACCOLADES: { source: string; title: string; detail: string; href?: string }[] = [
+  {
+    source: 'Virtuoso',
+    title: 'Most Innovative Advisor Award',
+    detail: 'John Oberacker of Eden For Your World recognised by Virtuoso for outstanding innovation in luxury travel advising.',
+    href: 'https://edenforyourworld.com/2018/08/john-oberacker-of-eden-for-your-world-wins-virtuoso-2018-most-innovative-advisor-award/',
+  },
+  {
+    source: 'Luxury Travel Advisor Magazine',
+    title: 'Featured Advisor',
+    detail: 'Recognised by one of the industry\'s leading trade publications for excellence in luxury travel.',
+  },
+  {
+    source: 'Montecito Village Travel',
+    title: 'Overall Top Producer 2025',
+    detail: 'Awarded the top producer distinction across all advisors for outstanding sales performance.',
+  },
+  {
+    source: 'Montecito Village Travel',
+    title: 'President\'s Club Ultra — 2024, 2025 & 2026',
+    detail: 'Three consecutive years at the highest tier of achievement within the Montecito Village Travel network.',
+  },
+  {
+    source: 'Hawai\'i Visitors & Convention Bureau',
+    title: 'Certified Hawaiian Destination Specialist',
+    detail: 'Advanced certification demonstrating deep expertise in Hawaiian travel, culture, and logistics.',
+  },
+  {
+    source: 'Tahiti Tourisme',
+    title: 'Certified Tahiti Specialist',
+    detail: 'Specialist certification for expert knowledge of French Polynesia, its islands, resorts, and over-water experiences.',
+  },
 ]
 
 const serif = 'var(--font-serif)'
@@ -62,23 +90,45 @@ export default async function MediaPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* Press List */}
+      {/* Accolades & Certifications */}
       <section style={{ padding: '100px 24px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <p style={{ fontFamily: sans, fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '20px' }}>Press</p>
-          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.8rem, 3vw, 2.8rem)', fontWeight: 300, color: 'var(--charcoal)', marginBottom: '56px' }}>As Featured In</h2>
+          <p style={{ fontFamily: sans, fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '20px' }}>Recognition</p>
+          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.8rem, 3vw, 2.8rem)', fontWeight: 300, color: 'var(--charcoal)', marginBottom: '56px' }}>Accolades &amp; Certifications</h2>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {PRESS_ITEMS.map(item => (
-              <Link key={item.outlet} href={item.href} target="_blank" rel="noopener noreferrer" className="hover-gold"
-                style={{ textDecoration: 'none', display: 'grid', gridTemplateColumns: '120px 1fr auto', gap: '40px', alignItems: 'center', padding: '40px 0', borderTop: '1px solid var(--divider)', color: 'inherit' }}>
-                <span style={{ fontFamily: serif, fontSize: '22px', fontStyle: 'italic', fontWeight: 300, color: 'var(--warm-gray)', letterSpacing: '0.04em' }}>{item.logo}</span>
-                <div>
-                  <h3 style={{ fontFamily: serif, fontSize: '20px', fontWeight: 400, color: 'var(--charcoal)', marginBottom: '6px' }}>{item.headline}</h3>
-                  <p style={{ fontFamily: sans, fontSize: '13px', color: 'var(--warm-gray)', lineHeight: '1.6' }}>{item.excerpt}</p>
+            {ACCOLADES.map((item, i) => {
+              const inner = (
+                <>
+                  <span style={{ fontFamily: serif, fontSize: '13px', letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 400, color: 'var(--warm-gray)' }}>{item.source}</span>
+                  <div>
+                    <h3 style={{ fontFamily: serif, fontSize: '20px', fontWeight: 400, color: 'var(--charcoal)', marginBottom: '6px' }}>{item.title}</h3>
+                    <p style={{ fontFamily: sans, fontSize: '13px', color: 'var(--warm-gray)', lineHeight: '1.6' }}>{item.detail}</p>
+                  </div>
+                  {item.href && (
+                    <p style={{ fontFamily: sans, fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold)', whiteSpace: 'nowrap', alignSelf: 'center' }}>Read →</p>
+                  )}
+                </>
+              )
+              const gridStyle: React.CSSProperties = {
+                textDecoration: 'none',
+                display: 'grid',
+                gridTemplateColumns: item.href ? '180px 1fr auto' : '180px 1fr',
+                gap: '40px',
+                alignItems: 'start',
+                padding: '40px 0',
+                borderTop: '1px solid var(--divider)',
+                color: 'inherit',
+              }
+              return item.href ? (
+                <Link key={`${item.source}-${i}`} href={item.href} target="_blank" rel="noopener noreferrer" className="hover-gold" style={gridStyle}>
+                  {inner}
+                </Link>
+              ) : (
+                <div key={`${item.source}-${i}`} style={gridStyle}>
+                  {inner}
                 </div>
-                <p style={{ fontFamily: sans, fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold)', whiteSpace: 'nowrap' }}>{item.date}</p>
-              </Link>
-            ))}
+              )
+            })}
             <div style={{ borderTop: '1px solid var(--divider)' }} />
           </div>
         </div>

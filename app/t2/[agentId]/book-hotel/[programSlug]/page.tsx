@@ -1,6 +1,7 @@
 import { getHotelProgram, getHotelPrograms } from '@/lib/hotel-programs'
 import { getFeaturedHotels } from '@/lib/featured-hotels'
 import { getSupplierPromo } from '@/lib/supplier-promos'
+import { getBlogPostsBySupplier } from '@/lib/blog'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -8,6 +9,7 @@ import { T2HotelGallery } from '@/components/t2/T2HotelGallery'
 import { T2FeaturedProperties } from '@/components/t2/T2FeaturedProperties'
 import { T2BenefitsGrid } from '@/components/t2/T2BenefitsGrid'
 import { T2PromoBanner } from '@/components/t2/T2PromoBanner'
+import { T2RelatedArticles } from '@/components/t2/T2RelatedArticles'
 
 interface PageProps {
   params: Promise<{ agentId: string; programSlug: string }>
@@ -20,9 +22,10 @@ export async function generateStaticParams() {
 
 export default async function HotelProgramDetailPage({ params }: PageProps) {
   const { agentId, programSlug } = await params
-  const [program, promo] = await Promise.all([
+  const [program, promo, relatedPosts] = await Promise.all([
     getHotelProgram(programSlug),
     getSupplierPromo('hotel_program', programSlug),
+    getBlogPostsBySupplier(`hotel:${programSlug}`, agentId),
   ])
   if (!program) notFound()
 
@@ -150,6 +153,13 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
         hotels={featuredHotels}
         programName={program.name}
         agentId={agentId}
+      />
+
+      {/* ── Related Articles ── */}
+      <T2RelatedArticles
+        posts={relatedPosts}
+        heading={`${program.name} Stories`}
+        basePath={base}
       />
 
       {/* ── CTA ── */}

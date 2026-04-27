@@ -1,0 +1,1 @@
+- [User role — operator + advisor](user_role.md) — User operates this platform and is the advisor behind Wine & Wellness Travel (wineandwellnesstravel.com)

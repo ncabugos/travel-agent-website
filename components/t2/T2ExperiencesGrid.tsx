@@ -10,6 +10,14 @@ import { T2EnquiryDrawer } from '@/components/t2/T2EnquiryDrawer'
 interface T2ExperiencesGridProps {
   products: SupplierProduct[]
   agentId?: string
+  /**
+   * Show the All/Cruises/Hotels/Experiences filter tabs. Defaults to true.
+   * Set to false on pages that are scoped to a single category (e.g. the
+   * Hotel Programs page on WWT) where the tabs would be meaningless.
+   */
+  showCategoryTabs?: boolean
+  /** Override the "All Partners" section label. */
+  restLabel?: string
 }
 
 const TABS: { label: string; value: SupplierProduct['category'] | 'all' }[] = [
@@ -94,43 +102,54 @@ function getProductHref(product: SupplierProduct, base: string): string | null {
   return null
 }
 
-export function T2ExperiencesGrid({ products, agentId = 't2-demo' }: T2ExperiencesGridProps) {
+export function T2ExperiencesGrid({
+  products,
+  agentId = 't2-demo',
+  showCategoryTabs = true,
+  restLabel = 'All Partners',
+}: T2ExperiencesGridProps) {
   const [activeTab, setActiveTab] = useState<'all' | SupplierProduct['category']>('all')
   const [enquiryProduct, setEnquiryProduct] = useState<SupplierProduct | null>(null)
 
   const base = `/t2/${agentId}`
-  const filtered = activeTab === 'all' ? products : products.filter(p => p.category === activeTab)
+  const filtered = !showCategoryTabs
+    ? products
+    : activeTab === 'all'
+      ? products
+      : products.filter(p => p.category === activeTab)
   const featured = filtered.filter(p => p.is_featured)
   const rest = filtered.filter(p => !p.is_featured)
 
   return (
     <div>
       {/* ── Tab bar ── */}
-      <div
-        style={{
-          display: 'flex', justifyContent: 'center', gap: 0,
-          borderBottom: '1px solid var(--t2-divider)',
-          marginBottom: 64,
-        }}
-      >
-        {TABS.map(tab => (
-          <button
-            key={tab.value}
-            onClick={() => setActiveTab(tab.value)}
-            style={{
-              fontFamily: 'var(--t2-font-sans)', fontSize: 10, fontWeight: 500,
-              letterSpacing: '0.2em', textTransform: 'uppercase',
-              padding: '14px 32px',
-              color: activeTab === tab.value ? 'var(--t2-text)' : 'var(--t2-text-muted)',
-              border: 'none', background: 'none', cursor: 'pointer',
-              borderBottom: activeTab === tab.value ? '1px solid var(--t2-text)' : '1px solid transparent',
-              marginBottom: -1, transition: 'color 0.2s ease, border-color 0.2s ease',
-            }}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+      {showCategoryTabs && (
+        <div
+          style={{
+            display: 'flex', justifyContent: 'center', gap: 0,
+            borderBottom: '1px solid var(--t2-divider)',
+            marginBottom: 64,
+          }}
+        >
+          {TABS.map(tab => (
+            <button
+              key={tab.value}
+              onClick={() => setActiveTab(tab.value)}
+              style={{
+                fontFamily: 'var(--t2-font-sans)', fontSize: 10, fontWeight: 500,
+                letterSpacing: '0.2em', textTransform: 'uppercase',
+                padding: '14px 32px',
+                color: activeTab === tab.value ? 'var(--t2-text)' : 'var(--t2-text-muted)',
+                border: 'none', background: 'none', cursor: 'pointer',
+                borderBottom: activeTab === tab.value ? '1px solid var(--t2-text)' : '1px solid transparent',
+                marginBottom: -1, transition: 'color 0.2s ease, border-color 0.2s ease',
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* ── Featured products — large 2-up ── */}
       {featured.length > 0 && (
@@ -147,6 +166,7 @@ export function T2ExperiencesGrid({ products, agentId = 't2-demo' }: T2Experienc
                 featured
                 href={getProductHref(product, base)}
                 onEnquire={setEnquiryProduct}
+                showCategoryBadge={showCategoryTabs}
               />
             ))}
           </div>
@@ -157,7 +177,7 @@ export function T2ExperiencesGrid({ products, agentId = 't2-demo' }: T2Experienc
       {rest.length > 0 && (
         <div>
           {featured.length > 0 && (
-            <p className="t2-label" style={{ marginBottom: 28, letterSpacing: '0.2em' }}>All Partners</p>
+            <p className="t2-label" style={{ marginBottom: 28, letterSpacing: '0.2em' }}>{restLabel}</p>
           )}
           <div
             className="t2-exp-grid"
@@ -170,6 +190,7 @@ export function T2ExperiencesGrid({ products, agentId = 't2-demo' }: T2Experienc
                 featured={false}
                 href={getProductHref(product, base)}
                 onEnquire={setEnquiryProduct}
+                showCategoryBadge={showCategoryTabs}
               />
             ))}
           </div>
@@ -210,11 +231,13 @@ function ProductCard({
   featured,
   href,
   onEnquire,
+  showCategoryBadge = true,
 }: {
   product: SupplierProduct
   featured: boolean
   href: string | null          // null → enquire modal (experiences); string → navigation link
   onEnquire: (p: SupplierProduct) => void
+  showCategoryBadge?: boolean
 }) {
   const imageHeight = featured ? 340 : 220
 
@@ -229,24 +252,25 @@ function ProductCard({
         className="t2-exp-img"
         unoptimized
       />
-      {/* Category badge */}
-      <div style={{
-        position: 'absolute', top: 16, left: 16,
-        display: 'flex', alignItems: 'center', gap: 6,
-        background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(6px)',
-        padding: '6px 12px',
-      }}>
-        <span style={{ color: 'var(--t2-text-muted)', display: 'flex', alignItems: 'center' }}>
-          {CATEGORY_ICONS[product.category]}
-        </span>
-        <span style={{
-          fontFamily: 'var(--t2-font-sans)', fontSize: 9,
-          letterSpacing: '0.18em', textTransform: 'uppercase',
-          color: 'var(--t2-text-muted)', fontWeight: 500,
+      {showCategoryBadge && (
+        <div style={{
+          position: 'absolute', top: 16, left: 16,
+          display: 'flex', alignItems: 'center', gap: 6,
+          background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(6px)',
+          padding: '6px 12px',
         }}>
-          {product.subcategory ?? product.category}
-        </span>
-      </div>
+          <span style={{ color: 'var(--t2-text-muted)', display: 'flex', alignItems: 'center' }}>
+            {CATEGORY_ICONS[product.category]}
+          </span>
+          <span style={{
+            fontFamily: 'var(--t2-font-sans)', fontSize: 9,
+            letterSpacing: '0.18em', textTransform: 'uppercase',
+            color: 'var(--t2-text-muted)', fontWeight: 500,
+          }}>
+            {product.subcategory ?? product.category}
+          </span>
+        </div>
+      )}
     </div>
   )
 

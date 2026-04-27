@@ -2,8 +2,14 @@ import { T2HeroStatic } from '@/components/t2/T2HeroStatic'
 import { T2ServiceCards } from '@/components/t2/T2ServiceCards'
 import { T2VirtuosoBand } from '@/components/t2/T2VirtuosoBand'
 import { T2LeadForm } from '@/components/t2/T2LeadForm'
+import { T2AdvisorsDirectory } from '@/components/t2/T2AdvisorsDirectory'
+import { T2TestimonialsGrid } from '@/components/t2/T2TestimonialsGrid'
+import { T2JournalTeaser } from '@/components/t2/T2JournalTeaser'
+import { T2InstagramFeed } from '@/components/t2/T2InstagramFeed'
 import { YTCPartnerTabs } from '@/components/t2/YTCPartnerTabs'
 import { getAgentProfile } from '@/lib/suppliers'
+import { getAgencyAdvisors } from '@/lib/agency-advisors'
+import { getBlogPosts } from '@/lib/blog'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -42,25 +48,60 @@ const VALUES = [
   },
 ]
 
+const YTC_TESTIMONIALS = [
+  {
+    quote:
+      "The attention to detail was impeccable — from the moment our flights were booked to the private transfers and hotel amenities. YTC genuinely cares about making every trip extraordinary.",
+    author: 'Alexander Wilson',
+    context: 'Client since 2018',
+  },
+  {
+    quote:
+      "We've worked with three different advisors at YTC over the years and every one has been a specialist in something we needed. It is how a good agency is supposed to feel.",
+    author: 'Catherine & Paul M.',
+    context: 'Japan, Safari, Amalfi — 2021–2024',
+  },
+  {
+    quote:
+      "Yuki planned the most extraordinary two weeks in Kyoto and Osaka. Private temple tours, tea ceremonies at a private home, a kaiseki dinner I still think about. Worth every penny.",
+    author: 'Daniel R.',
+    context: 'Japan, Spring 2024',
+  },
+]
+
 export default async function YTCHomePage({ params }: PageProps) {
   const { agentId } = await params
-  const agent = await getAgentProfile(agentId)
+  const [agent, advisors, posts] = await Promise.all([
+    getAgentProfile(agentId),
+    getAgencyAdvisors(agentId),
+    getBlogPosts(agentId),
+  ])
 
   const agencyName = agent?.agency_name ?? 'Your Travel Center'
   const base = `/t2/${agentId}`
+  const igHandle = (() => {
+    const raw = agent?.instagram_url?.trim() ?? ''
+    const stripped = raw
+      .replace(/^https?:\/\/(www\.)?instagram\.com\//i, '')
+      .replace(/^@/, '')
+      .replace(/\/+$/, '')
+      .trim()
+    return /^[a-zA-Z0-9._]{1,30}$/.test(stripped) ? stripped : 'yourtravelcenter'
+  })()
 
   return (
     <>
-      {/* ── Section 1: Hero ───────────────────────────────────────────────── */}
+      {/* ── 01 · Hero ───────────────────────────────────────────────────── */}
       <T2HeroStatic
         agentId={agentId}
         image="/media/hotel-programs/aman/aman-hero-2000.jpg"
         h1="Travel Differently with YTC"
         h2="Spokane's most experienced travel advisors — delivering VIP access, exclusive Virtuoso perks, and journeys that transform."
-        cta1={{ label: 'Plan Your Trip', href: '/contact' }}
+        cta1={{ label: 'Meet Our Advisors', href: '/advisors' }}
+        cta2={{ label: 'Plan Your Trip', href: '/contact' }}
       />
 
-      {/* ── Section 2: Core Values ────────────────────────────────────────── */}
+      {/* ── 02 · Core values ────────────────────────────────────────────── */}
       <section style={{ background: '#ffffff', padding: 'var(--t2-section-pad) 48px' }}>
         <div style={{ maxWidth: 'var(--t2-content-max)', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 64 }}>
@@ -92,7 +133,7 @@ export default async function YTCHomePage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* ── Section 3: Services Grid ──────────────────────────────────────── */}
+      {/* ── 03 · Services grid ──────────────────────────────────────────── */}
       <T2ServiceCards
         agentId={agentId}
         heading="Extraordinary travel experiences curated for you"
@@ -125,10 +166,20 @@ export default async function YTCHomePage({ params }: PageProps) {
         ]}
       />
 
-      {/* ── Section 4: Virtuoso & Network Band ───────────────────────────── */}
+      {/* ── 04 · Advisors team (Agency tier) ────────────────────────────── */}
+      <T2AdvisorsDirectory
+        agentId={agentId}
+        advisors={advisors}
+        eyebrow="Meet Our Advisors"
+        heading="A specialist for every kind of trip."
+        subheading="Six advisors, each with a region or product they know better than anyone. You'll be matched with the right one from your first call."
+        teaser
+      />
+
+      {/* ── 05 · Virtuoso band ──────────────────────────────────────────── */}
       <T2VirtuosoBand agencyName={agencyName} hostAgency="Montecito Village Travel" />
 
-      {/* ── Section 5: Partner Programs (client component for tab interactivity) */}
+      {/* ── 06 · Partner programs ───────────────────────────────────────── */}
       <section style={{ background: '#ffffff', padding: 'var(--t2-section-pad) 48px' }}>
         <div style={{ maxWidth: 'var(--t2-content-max)', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
@@ -146,34 +197,20 @@ export default async function YTCHomePage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* ── Section 6: Testimonial ────────────────────────────────────────── */}
-      <section style={{ background: 'var(--t2-bg-alt)', padding: 'var(--t2-section-pad) 48px' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
-          <svg style={{ marginBottom: 32, opacity: 0.3 }} width="40" height="28" viewBox="0 0 40 28" fill="var(--t2-text)">
-            <path d="M0 28V17.067C0 7.68 6.267 2.027 18.8 0l1.6 3.2C13.6 4.8 9.867 7.76 9.067 12.267H16V28H0zm24 0V17.067C24 7.68 30.267 2.027 42.8 0l1.6 3.2C37.6 4.8 33.867 7.76 33.067 12.267H40V28H24z"/>
-          </svg>
-          <blockquote style={{
-            fontFamily: 'var(--t2-font-serif)',
-            fontSize: 'clamp(1.3rem, 2.5vw, 1.8rem)',
-            fontWeight: 300,
-            fontStyle: 'italic',
-            lineHeight: 1.6,
-            color: 'var(--t2-text)',
-            marginBottom: 32,
-          }}>
-            &ldquo;The attention to detail was impeccable — from the moment our flights were booked to the private transfers and hotel amenities. YTC genuinely cares about making every trip extraordinary.&rdquo;
-          </blockquote>
-          <p style={{
-            fontFamily: 'var(--t2-font-sans)',
-            fontSize: 11,
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color: 'var(--t2-text-muted)',
-          }}>— Alexander Wilson, Client since 2018</p>
-        </div>
-      </section>
+      {/* ── 07 · Testimonials ───────────────────────────────────────────── */}
+      <T2TestimonialsGrid
+        eyebrow="What Our Clients Say"
+        heading="In their words."
+        testimonials={YTC_TESTIMONIALS}
+      />
 
-      {/* ── Section 7: Lead Capture Form ──────────────────────────────────── */}
+      {/* ── 08 · Journal teaser ─────────────────────────────────────────── */}
+      <T2JournalTeaser agentId={agentId} posts={posts} />
+
+      {/* ── 09 · Instagram feed ─────────────────────────────────────────── */}
+      <T2InstagramFeed handle={igHandle} />
+
+      {/* ── 10 · Lead capture ──────────────────────────────────────────── */}
       <T2LeadForm
         heading="Ready to Begin?"
         subheading="Tell us where you want to go and we'll design the trip of a lifetime — with exclusive VIP access only available through YTC."

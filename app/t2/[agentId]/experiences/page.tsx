@@ -10,13 +10,39 @@ export default async function ExperiencesPage({ params }: PageProps) {
   const { agentId } = await params
   const products = await getSupplierProducts()
 
+  // Wine & Wellness Travel: this page represents exclusive Hotel Programs
+  // (invite-only agency programs like Four Seasons Preferred Partner, Aman,
+  // Rosewood Elite, etc.) — NOT the hotels themselves and NOT a mixed
+  // cruise/hotel/experience list. Filter to hotel category and hide the
+  // category tabs.
+  const isWWT = agentId === 'wwt-demo'
+  const visibleProducts = isWWT
+    ? products.filter((p) => p.category === 'hotel')
+    : products
+
+  const hero = isWWT
+    ? {
+        image: '/media/hotel-programs/four-seasons/fs-MAU_1261_original.jpg',
+        eyebrow: 'Hotel Programs',
+        heading: 'Exclusive programs. Invite-only privilege.',
+        body:
+          'Every hotel in the Virtuoso database belongs to a brand program — but only a small number of those programs open their invite-only perks to advisors. These are the programs we are accepted into. When you book through us, you receive their Preferred, Elite, and Club benefits on top of every stay.',
+      }
+    : {
+        image: '/media/hotel-programs/four-seasons/fs-MAU_1261_original.jpg',
+        eyebrow: 'Supplier Partners',
+        heading: 'Curated Experiences',
+        body:
+          'Explore our hand-selected portfolio of luxury cruise voyages, hotel programs, and bespoke travel experiences — all bookable through your advisor.',
+      }
+
   return (
     <>
       {/* ── Hero ── */}
       <section style={{ position: 'relative', height: 850, overflow: 'hidden' }}>
         <Image
-          src="/media/hotel-programs/four-seasons/fs-MAU_1261_original.jpg"
-          alt="Luxury Experiences"
+          src={hero.image}
+          alt={hero.heading}
           fill
           priority
           style={{ objectFit: 'cover', objectPosition: 'center 40%' }}
@@ -29,16 +55,16 @@ export default async function ExperiencesPage({ params }: PageProps) {
           justifyContent: 'center', alignItems: 'center', textAlign: 'center',
           padding: '0 24px',
         }}>
-          <p className="t2-label" style={{ marginBottom: 14, color: 'var(--t2-accent)' }}>Supplier Partners</p>
-          <h1 className="t2-heading t2-heading-xl" style={{ color: '#ffffff', maxWidth: 700 }}>
-            Curated Experiences
+          <p className="t2-label" style={{ marginBottom: 14, color: 'var(--t2-accent)' }}>{hero.eyebrow}</p>
+          <h1 className="t2-heading t2-heading-xl" style={{ color: '#ffffff', maxWidth: 860 }}>
+            {hero.heading}
           </h1>
           <p style={{
             fontFamily: 'var(--t2-font-sans)', fontSize: 16, fontWeight: 300,
-            lineHeight: 1.8, color: 'rgba(255,255,255,0.75)',
-            maxWidth: 540, marginTop: 20,
+            lineHeight: 1.8, color: 'rgba(255,255,255,0.8)',
+            maxWidth: 620, marginTop: 20,
           }}>
-            Explore our hand-selected portfolio of luxury cruise voyages, hotel programs, and bespoke travel experiences — all bookable through your advisor.
+            {hero.body}
           </p>
         </div>
       </section>
@@ -46,7 +72,12 @@ export default async function ExperiencesPage({ params }: PageProps) {
       {/* ── Grid section ── */}
       <section style={{ background: 'var(--t2-bg)', padding: '80px 48px' }}>
         <div style={{ maxWidth: 'var(--t2-content-max, 1280px)', margin: '0 auto' }}>
-          <T2ExperiencesGrid products={products} agentId={agentId} />
+          <T2ExperiencesGrid
+            products={visibleProducts}
+            agentId={agentId}
+            showCategoryTabs={!isWWT}
+            restLabel={isWWT ? 'More Hotel Programs' : 'All Partners'}
+          />
         </div>
       </section>
 

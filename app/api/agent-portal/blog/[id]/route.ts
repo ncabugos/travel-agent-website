@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabase/server'
 import { createServiceClient } from '@/lib/supabase/service'
+import { checkBlogPostWarnings } from '@/lib/blog-warnings'
 import type { BlogPost } from '@/types/index'
 
 const ALL_COLUMNS =
@@ -110,6 +111,8 @@ export async function PUT(
       slug:            body.slug,
       published_at:    body.published_at,
       excerpt:         body.excerpt,
+      seo_title:       body.seo_title ?? null,
+      seo_description: body.seo_description ?? null,
       body_html:       body.body_html,
       cover_image_url: body.cover_image_url,
       categories:      body.categories,
@@ -121,7 +124,7 @@ export async function PUT(
     })
     .eq('id', id)
     .eq('agent_id', agent.id) // belt-and-braces scoping
-    .select(ALL_COLUMNS)
+    .select('*')
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 })
@@ -137,7 +140,13 @@ export async function PUT(
     }
   }
 
-  return NextResponse.json({ ...data, category_ids: body.category_ids ?? [] })
+  const warnings = await checkBlogPostWarnings({
+    bodyHtml: data.body_html ?? '',
+    agentId: data.agent_id,
+    isBroadcast: false, // agents never broadcast
+  })
+
+  return NextResponse.json({ ...data, category_ids: body.category_ids ?? [], warnings })
 }
 
 export async function DELETE(

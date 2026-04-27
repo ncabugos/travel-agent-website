@@ -5,31 +5,45 @@
  *   Left: title + rich text + excerpt + SEO
  *   Right: visibility, cover image, gallery, categories, tags, broadcast targeting
  */
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Link from '@tiptap/extension-link'
 import TiptapImage from '@tiptap/extension-image'
 import type { BlogPost, GalleryImage, BlogCategory } from '@/types/index'
-import { Lightbulb } from 'lucide-react'
+import type { SupplierTagOption } from '@/lib/supplier-tags'
+import { DEMO_AGENTS } from '@/lib/demo-agents'
+import { Lightbulb, Code2 } from 'lucide-react'
+import { ImageUpload } from '@/components/admin/ImageUpload'
+
+// ── SEO field limits ───────────────────────────────────────────────────────
+// Match the recommended ranges Shopify uses; Google truncates near these too.
+const SEO_TITLE_MAX = 70
+const SEO_DESCRIPTION_MAX = 160
 
 // ── Available shortcode tokens ─────────────────────────────────────────────
+// Keep in sync with renderShortcodes() in lib/blog.ts.
 const TOKENS = [
-  { label: 'Agency Name',   value: '{{agency_name}}' },
-  { label: 'Agent Name',    value: '{{agent_name}}' },
-  { label: 'Agent Phone',   value: '{{agent_phone}}' },
-  { label: 'Agent Email',   value: '{{agent_email}}' },
-  { label: 'Agent City',    value: '{{agent_city}}' },
+  { label: 'Advisor First Name', value: '{{advisor_first_name}}' },
+  { label: 'Agency Name',        value: '{{agency_name}}' },
+  { label: 'Agent Name',         value: '{{agent_name}}' },
+  { label: 'Agent Phone',        value: '{{agent_phone}}' },
+  { label: 'Agent Email',        value: '{{agent_email}}' },
+  { label: 'Plan-a-trip URL',    value: '{{plan_a_trip_url}}' },
+  { label: 'Contact URL',        value: '{{contact_url}}' },
 ]
 
-interface AgentOption { id: string; agency_name: string; name: string }
+interface AgentOption { id: string; agency_name: string; full_name: string }
 
 interface Props {
   post?: BlogPost
   agents: AgentOption[]
   categories?: BlogCategory[]
+  suppliers?: SupplierTagOption[]
   isNew?: boolean
+  /** Pre-select this agent on new posts (from ?agent_id= query param). */
+  defaultAgentId?: string
   /**
    * 'admin' (default): full editor, hits /api/admin/posts, allows broadcast
    * and agent-as selection, back-link to /admin/blog.
@@ -39,7 +53,7 @@ interface Props {
   mode?: 'admin' | 'agent'
 }
 
-export function PostEditor({ post, agents, categories = [], isNew = false, mode = 'admin' }: Props) {
+export function PostEditor({ post, agents, categories = [], suppliers = [], isNew = false, defaultAgentId, mode = 'admin' }: Props) {
   const router = useRouter()
   const isAgent = mode === 'agent'
   const listPath = isAgent ? '/agent-portal/blog' : '/admin/blog'
@@ -47,6 +61,8 @@ export function PostEditor({ post, agents, categories = [], isNew = false, mode 
   /* ── Form state ── */
   const [title, setTitle]             = useState(post?.title ?? '')
   const [excerpt, setExcerpt]         = useState(post?.excerpt ?? '')
+  const [seoTitle, setSeoTitle]       = useState(post?.seo_title ?? '')
+  const [seoDescription, setSeoDescription] = useState(post?.seo_description ?? '')
   const [coverUrl, setCoverUrl]       = useState(post?.cover_image_url ?? '')
   const [gallery, setGallery]         = useState<GalleryImage[]>(post?.gallery_images ?? [])
   const [freeTextCategories, setFreeTextCategories] = useState(post?.categories?.join(', ') ?? '')
@@ -54,15 +70,26 @@ export function PostEditor({ post, agents, categories = [], isNew = false, mode 
   const [tags, setTags]               = useState(post?.tags?.join(', ') ?? '')
   const [status, setStatus]           = useState<'published'|'draft'>(post?.status ?? 'draft')
   const [isBroadcast, setIsBroadcast] = useState(post?.is_broadcast ?? false)
-  const [targetMode, setTargetMode]   = useState<'agent'|'all'|'select'>(
-    post?.is_broadcast ? (post.target_agent_ids.length ? 'select' : 'all') : 'agent'
-  )
-  const [selectedAgent, setSelectedAgent]   = useState(post?.agent_id ?? (agents[0]?.id ?? ''))
+  const [targetMode, setTargetMode]   = useState<'agent'|'all'|'select'>(() => {
+    if (!post?.is_broadcast) return 'agent'
+    const hasTargets = (post.target_agent_ids?.length ?? 0) + (post.target_demo_slugs?.length ?? 0) > 0
+    return hasTargets ? 'select' : 'all'
+  })
+  const [selectedAgent, setSelectedAgent]   = useState(post?.agent_id ?? defaultAgentId ?? (agents[0]?.id ?? ''))
   const [selectedAgents, setSelectedAgents] = useState<string[]>(post?.target_agent_ids ?? [])
+  const [selectedDemos, setSelectedDemos]   = useState<string[]>(post?.target_demo_slugs ?? [])
   const [saving, setSaving]   = useState(false)
   const [saveMsg, setSaveMsg] = useState('')
+  const [warnings, setWarnings] = useState<string[]>([])
+
+  /* ── HTML source-mode toggle (Shopify-style) ── */
+  const [sourceMode, setSourceMode] = useState(false)
+  const [sourceHtml, setSourceHtml] = useState('')
+  const sourceRef = useRef<HTMLTextAreaElement | null>(null)
   const [galleryInput, setGalleryInput] = useState('')
   const [showTokens, setShowTokens] = useState(false)
+  const [supplierTags, setSupplierTags] = useState<string[]>(post?.supplier_tags ?? [])
+  const [supplierSearch, setSupplierSearch] = useState('')
 
   /* ── Tiptap editor ── */
   const editor = useEditor({
@@ -72,6 +99,7 @@ export function PostEditor({ post, agents, categories = [], isNew = false, mode 
       TiptapImage,
     ],
     content: post?.body_html ?? '',
+    immediatelyRender: false,
     editorProps: {
       attributes: {
         style: 'outline:none; min-height:320px; padding:12px; font-size:15px; line-height:1.8; color:#1a1a1a;',
@@ -81,9 +109,41 @@ export function PostEditor({ post, agents, categories = [], isNew = false, mode 
 
   /* ── Insert token at cursor ── */
   const insertToken = useCallback((token: string) => {
-    editor?.chain().focus().insertContent(token).run()
+    if (sourceMode) {
+      const ta = sourceRef.current
+      if (!ta) return
+      const start = ta.selectionStart ?? sourceHtml.length
+      const end = ta.selectionEnd ?? sourceHtml.length
+      const next = sourceHtml.slice(0, start) + token + sourceHtml.slice(end)
+      setSourceHtml(next)
+      // Restore caret position after React re-renders.
+      requestAnimationFrame(() => {
+        const node = sourceRef.current
+        if (!node) return
+        const pos = start + token.length
+        node.focus()
+        node.setSelectionRange(pos, pos)
+      })
+    } else {
+      editor?.chain().focus().insertContent(token).run()
+    }
     setShowTokens(false)
-  }, [editor])
+  }, [editor, sourceMode, sourceHtml])
+
+  /* ── Toggle between rich-text and HTML source mode ── */
+  const toggleSourceMode = useCallback(() => {
+    if (!editor) return
+    if (sourceMode) {
+      // Source → rich-text: parse the textarea HTML back into Tiptap.
+      // Tiptap will sanitize anything outside its schema; that's expected.
+      editor.commands.setContent(sourceHtml || '<p></p>', { emitUpdate: true })
+      setSourceMode(false)
+    } else {
+      // Rich-text → source: snapshot current HTML for editing.
+      setSourceHtml(editor.getHTML())
+      setSourceMode(true)
+    }
+  }, [editor, sourceMode, sourceHtml])
 
   /* ── Gallery helpers ── */
   const addGalleryImage = () => {
@@ -101,10 +161,12 @@ export function PostEditor({ post, agents, categories = [], isNew = false, mode 
     const finalStatus = saveStatus ?? status
     setSaving(true); setSaveMsg('')
 
-    const body_html = editor?.getHTML() ?? ''
+    const body_html = sourceMode ? sourceHtml : (editor?.getHTML() ?? '')
     const payload: Partial<BlogPost> = {
       title,
       excerpt: excerpt || null,
+      seo_title: seoTitle.trim() || null,
+      seo_description: seoDescription.trim() || null,
       body_html,
       cover_image_url: coverUrl || null,
       categories: freeTextCategories.split(',').map(s => s.trim()).filter(Boolean),
@@ -113,7 +175,9 @@ export function PostEditor({ post, agents, categories = [], isNew = false, mode 
       status: finalStatus,
       is_broadcast: isBroadcast,
       target_agent_ids: isBroadcast && targetMode === 'select' ? selectedAgents : [],
+      target_demo_slugs: isBroadcast && targetMode === 'select' ? selectedDemos : [],
       gallery_images: gallery,
+      supplier_tags: supplierTags,
       agent_id: isBroadcast
         ? (agents[0]?.id ?? '')  // use first agent as owner for broadcast posts
         : selectedAgent,
@@ -128,10 +192,12 @@ export function PostEditor({ post, agents, categories = [], isNew = false, mode 
     if (res.ok) {
       const saved = await res.json()
       setSaveMsg('Saved ✓')
+      setWarnings(Array.isArray(saved.warnings) ? saved.warnings : [])
       if (isNew) router.push(`${listPath}/${saved.id}`)
     } else {
       const err = await res.json()
       setSaveMsg(`Error: ${err.error ?? 'Save failed'}`)
+      setWarnings([])
     }
   }
 
@@ -158,6 +224,30 @@ export function PostEditor({ post, agents, categories = [], isNew = false, mode 
         </div>
       </div>
 
+      {/* Personalization warnings — non-blocking */}
+      {warnings.length > 0 && (
+        <div style={{
+          marginBottom: '20px',
+          padding: '12px 16px',
+          background: '#fffbeb',
+          border: '1px solid #fde68a',
+          borderRadius: '8px',
+          fontSize: '13px',
+          color: '#92400e',
+          display: 'flex',
+          gap: '10px',
+          alignItems: 'flex-start',
+        }}>
+          <Lightbulb size={16} strokeWidth={1.5} style={{ flexShrink: 0, marginTop: '1px' }} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <strong style={{ fontWeight: 600 }}>Personalization notes</strong>
+            <ul style={{ margin: 0, paddingLeft: '18px' }}>
+              {warnings.map((w, i) => <li key={i}>{w}</li>)}
+            </ul>
+          </div>
+        </div>
+      )}
+
       {/* Two-column layout */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '20px', alignItems: 'start' }}>
 
@@ -178,12 +268,12 @@ export function PostEditor({ post, agents, categories = [], isNew = false, mode 
           <Card label="Content">
             {/* Toolbar */}
             <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', padding: '8px 12px', borderBottom: '1px solid #f3f4f6', alignItems: 'center' }}>
-              <ToolBtn label="B" title="Bold" onClick={() => editor?.chain().focus().toggleBold().run()} active={editor?.isActive('bold')} />
-              <ToolBtn label="I" title="Italic" onClick={() => editor?.chain().focus().toggleItalic().run()} active={editor?.isActive('italic')} />
-              <ToolBtn label="H2" title="Heading 2" onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()} active={editor?.isActive('heading', { level: 2 })} />
-              <ToolBtn label="H3" title="Heading 3" onClick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()} active={editor?.isActive('heading', { level: 3 })} />
-              <ToolBtn label="❝" title="Blockquote" onClick={() => editor?.chain().focus().toggleBlockquote().run()} active={editor?.isActive('blockquote')} />
-              <ToolBtn label="• List" title="Bullet list" onClick={() => editor?.chain().focus().toggleBulletList().run()} active={editor?.isActive('bulletList')} />
+              <ToolBtn label="B" title="Bold" onClick={() => editor?.chain().focus().toggleBold().run()} active={editor?.isActive('bold')} disabled={sourceMode} />
+              <ToolBtn label="I" title="Italic" onClick={() => editor?.chain().focus().toggleItalic().run()} active={editor?.isActive('italic')} disabled={sourceMode} />
+              <ToolBtn label="H2" title="Heading 2" onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()} active={editor?.isActive('heading', { level: 2 })} disabled={sourceMode} />
+              <ToolBtn label="H3" title="Heading 3" onClick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()} active={editor?.isActive('heading', { level: 3 })} disabled={sourceMode} />
+              <ToolBtn label="❝" title="Blockquote" onClick={() => editor?.chain().focus().toggleBlockquote().run()} active={editor?.isActive('blockquote')} disabled={sourceMode} />
+              <ToolBtn label="• List" title="Bullet list" onClick={() => editor?.chain().focus().toggleBulletList().run()} active={editor?.isActive('bulletList')} disabled={sourceMode} />
               <Sep />
               {/* Token insert */}
               <div style={{ position: 'relative' }}>
@@ -203,11 +293,55 @@ export function PostEditor({ post, agents, categories = [], isNew = false, mode 
                   </div>
                 )}
               </div>
+              {/* HTML source toggle — pinned right */}
+              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <button
+                  onClick={toggleSourceMode}
+                  title={sourceMode ? 'Switch back to rich text' : 'Edit HTML source'}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '6px',
+                    padding: '5px 10px',
+                    border: '1px solid ' + (sourceMode ? '#1a1a1a' : '#e5e7eb'),
+                    background: sourceMode ? '#1a1a1a' : 'transparent',
+                    color: sourceMode ? '#fff' : '#374151',
+                    borderRadius: '6px', cursor: 'pointer',
+                    fontSize: '12px', fontWeight: 500,
+                  }}
+                >
+                  <Code2 size={13} strokeWidth={1.75} />
+                  {sourceMode ? 'Editing HTML' : 'Source'}
+                </button>
+              </div>
             </div>
-            {/* Editor area */}
-            <div style={{ border: '1px solid transparent' }}>
-              <EditorContent editor={editor} />
-            </div>
+            {/* Editor area — rich-text or HTML source */}
+            {sourceMode ? (
+              <textarea
+                ref={sourceRef}
+                value={sourceHtml}
+                onChange={e => setSourceHtml(e.target.value)}
+                spellCheck={false}
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  minHeight: '320px',
+                  resize: 'vertical',
+                  border: 'none',
+                  outline: 'none',
+                  padding: '12px',
+                  fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
+                  fontSize: '13px',
+                  lineHeight: 1.55,
+                  color: '#111827',
+                  background: '#fafafa',
+                  boxSizing: 'border-box',
+                  whiteSpace: 'pre-wrap',
+                }}
+              />
+            ) : (
+              <div style={{ border: '1px solid transparent' }}>
+                <EditorContent editor={editor} />
+              </div>
+            )}
             <style>{`
               .tiptap { outline: none; }
               .tiptap p { margin: 0 0 12px; }
@@ -230,6 +364,54 @@ export function PostEditor({ post, agents, categories = [], isNew = false, mode 
             />
           </Card>
 
+          {/* Search engine listing — Shopify-style SEO overrides */}
+          <Card label="Search engine listing">
+            <p style={{ fontSize: '12px', color: '#6b7280', margin: '0 0 14px' }}>
+              Add a page title and meta description to see how this post might appear in a search engine listing. Leave blank to use the post title and excerpt.
+            </p>
+
+            {/* Page title */}
+            <div style={{ marginBottom: '16px' }}>
+              <FieldLabel>Page title</FieldLabel>
+              <input
+                value={seoTitle}
+                onChange={e => setSeoTitle(e.target.value)}
+                placeholder={title || 'Suggested: post title'}
+                maxLength={SEO_TITLE_MAX + 20}  // soft cap; counter still shows over-limit warning
+                style={fieldStyle}
+              />
+              <CharCounter value={seoTitle} max={SEO_TITLE_MAX} fallbackValue={title} />
+            </div>
+
+            {/* Meta description */}
+            <div>
+              <FieldLabel>Meta description</FieldLabel>
+              <textarea
+                value={seoDescription}
+                onChange={e => setSeoDescription(e.target.value)}
+                rows={3}
+                placeholder={excerpt || 'Suggested: post excerpt'}
+                maxLength={SEO_DESCRIPTION_MAX + 40}
+                style={{ ...fieldStyle, resize: 'vertical', fontFamily: 'inherit', lineHeight: 1.5 }}
+              />
+              <CharCounter value={seoDescription} max={SEO_DESCRIPTION_MAX} fallbackValue={excerpt} />
+            </div>
+
+            {/* Search engine preview (compact) */}
+            <div style={{ marginTop: '18px', padding: '14px 16px', background: '#fafafa', borderRadius: '6px', border: '1px solid #f3f4f6' }}>
+              <div style={{ fontSize: '11px', color: '#9ca3af', marginBottom: '6px', letterSpacing: '0.04em' }}>Search engine preview</div>
+              <div style={{ color: '#1a0dab', fontSize: '16px', lineHeight: 1.3, fontFamily: 'arial, sans-serif', marginBottom: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {(seoTitle.trim() || title || 'Post title')}
+              </div>
+              <div style={{ color: '#006621', fontSize: '12px', fontFamily: 'arial, sans-serif', marginBottom: '4px' }}>
+                eliteadvisorhub.com › blog › {post?.slug ?? 'post-slug'}
+              </div>
+              <div style={{ color: '#545454', fontSize: '13px', lineHeight: 1.5, fontFamily: 'arial, sans-serif' }}>
+                {(seoDescription.trim() || excerpt || 'Add a meta description to control what appears here.')}
+              </div>
+            </div>
+          </Card>
+
         </div>
 
         {/* ── Right column ── */}
@@ -243,49 +425,37 @@ export function PostEditor({ post, agents, categories = [], isNew = false, mode 
 
           {/* Cover Image */}
           <Card label="Cover Image">
-            {coverUrl && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={coverUrl} alt="cover" style={{ width: '100%', height: '140px', objectFit: 'cover', borderRadius: '6px', marginBottom: '10px' }} />
-            )}
-            <input
-              value={coverUrl}
-              onChange={e => setCoverUrl(e.target.value)}
-              placeholder="Paste image URL…"
-              style={fieldStyle}
-            />
-            <p style={{ fontSize: '11px', color: '#9ca3af', margin: '6px 0 0' }}>
-              Paste a URL or upload via Supabase Storage
-            </p>
+            <ImageUpload value={coverUrl} onChange={setCoverUrl} />
           </Card>
 
           {/* Image Gallery */}
           <Card label="Image Gallery">
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
-              <input
-                value={galleryInput}
-                onChange={e => setGalleryInput(e.target.value)}
-                placeholder="Image URL…"
-                style={{ ...fieldStyle, flex: 1 }}
-                onKeyDown={e => e.key === 'Enter' && addGalleryImage()}
-              />
-              <button onClick={addGalleryImage} style={btnStyle('secondary')}>Add</button>
-            </div>
-            {gallery.map((img, i) => (
-              <div key={i} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', marginBottom: '10px', background: '#f9fafb', borderRadius: '6px', padding: '8px' }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={img.url} alt="" style={{ width: '48px', height: '48px', objectFit: 'cover', borderRadius: '4px', flexShrink: 0 }} onError={e => { e.currentTarget.style.display='none' }} />
-                <div style={{ flex: 1 }}>
-                  <input
-                    value={img.caption ?? ''}
-                    onChange={e => updateCaption(i, e.target.value)}
-                    placeholder="Caption (optional)"
-                    style={{ ...fieldStyle, fontSize: '12px', marginBottom: '4px' }}
-                  />
-                  <button onClick={() => removeGalleryImage(i)} style={{ fontSize: '11px', color: '#dc2626', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>Remove</button>
-                </div>
+            <ImageUpload
+              value=""
+              onChange={(url) => { if (url) setGallery(g => [...g, { url, caption: '' }]) }}
+              showPreview={false}
+              label="Add gallery image"
+            />
+            {gallery.length > 0 && (
+              <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {gallery.map((img, i) => (
+                  <div key={i} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', background: '#f9fafb', borderRadius: '6px', padding: '8px' }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={img.url} alt="" style={{ width: '48px', height: '48px', objectFit: 'cover', borderRadius: '4px', flexShrink: 0 }} onError={e => { e.currentTarget.style.display='none' }} />
+                    <div style={{ flex: 1 }}>
+                      <input
+                        value={img.caption ?? ''}
+                        onChange={e => updateCaption(i, e.target.value)}
+                        placeholder="Caption (optional)"
+                        style={{ ...fieldStyle, fontSize: '12px', marginBottom: '4px' }}
+                      />
+                      <button onClick={() => removeGalleryImage(i)} style={{ fontSize: '11px', color: '#dc2626', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>Remove</button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-            {gallery.length === 0 && <p style={{ fontSize: '12px', color: '#9ca3af' }}>No gallery images yet.</p>}
+            )}
+            {gallery.length === 0 && <p style={{ fontSize: '12px', color: '#9ca3af', marginTop: '8px' }}>No gallery images yet.</p>}
           </Card>
 
           {/* Organization */}
@@ -317,6 +487,59 @@ export function PostEditor({ post, agents, categories = [], isNew = false, mode 
             <input value={tags} onChange={e => setTags(e.target.value)} placeholder="e.g. paris, luxury, aman" style={fieldStyle} />
           </Card>
 
+          {/* Supplier Tags */}
+          {suppliers.length > 0 && (
+            <Card label="Supplier Tags">
+              <p style={{ fontSize: '11px', color: '#9ca3af', margin: '0 0 8px' }}>Tag this post with cruise lines or hotel programs so it appears on their landing pages.</p>
+              <input
+                value={supplierSearch}
+                onChange={e => setSupplierSearch(e.target.value)}
+                placeholder="Search suppliers…"
+                style={{ ...fieldStyle, marginBottom: '8px', fontSize: '12px' }}
+              />
+              {(['Cruise Lines', 'Hotel Programs'] as const).map(group => {
+                const items = suppliers.filter(s => s.group === group && (supplierSearch === '' || s.name.toLowerCase().includes(supplierSearch.toLowerCase())))
+                if (items.length === 0) return null
+                return (
+                  <div key={group} style={{ marginBottom: '10px' }}>
+                    <div style={{ fontSize: '11px', fontWeight: 600, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px' }}>{group}</div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', maxHeight: '120px', overflowY: 'auto', padding: '4px 8px', border: '1px solid #f3f4f6', borderRadius: '6px' }}>
+                      {items.map(s => (
+                        <label key={s.tag} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer', color: '#374151' }}>
+                          <input
+                            type="checkbox"
+                            checked={supplierTags.includes(s.tag)}
+                            onChange={e => {
+                              if (e.target.checked) setSupplierTags(prev => [...prev, s.tag])
+                              else setSupplierTags(prev => prev.filter(t => t !== s.tag))
+                            }}
+                          />
+                          {s.name}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })}
+              {supplierTags.length > 0 && (
+                <div style={{ marginTop: '6px', display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+                  {supplierTags.map(tag => {
+                    const found = suppliers.find(s => s.tag === tag)
+                    return (
+                      <span key={tag} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '11px', background: '#f3f4f6', padding: '3px 8px', borderRadius: '12px', color: '#374151' }}>
+                        {found?.name ?? tag}
+                        <button
+                          onClick={() => setSupplierTags(prev => prev.filter(t => t !== tag))}
+                          style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: '13px', color: '#9ca3af', padding: 0, lineHeight: 1 }}
+                        >×</button>
+                      </span>
+                    )
+                  })}
+                </div>
+              )}
+            </Card>
+          )}
+
           {/* Publish To — admin only. Agents are always publishing to themselves. */}
           {!isAgent && (
             <Card label="Publish To">
@@ -328,7 +551,7 @@ export function PostEditor({ post, agents, categories = [], isNew = false, mode 
               {targetMode === 'agent' && (
                 <select value={selectedAgent} onChange={e => setSelectedAgent(e.target.value)} style={{ ...fieldStyle, marginTop: '8px', marginBottom: '4px' }}>
                   {agents.map(a => (
-                    <option key={a.id} value={a.id}>{a.agency_name} — {a.name}</option>
+                    <option key={a.id} value={a.id}>{a.agency_name} — {a.full_name}</option>
                   ))}
                 </select>
               )}
@@ -343,24 +566,50 @@ export function PostEditor({ post, agents, categories = [], isNew = false, mode 
                 onChange={() => { setTargetMode('select'); setIsBroadcast(true) }}
               />
               {targetMode === 'select' && (
-                <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  {agents.map(a => (
-                    <label key={a.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', cursor: 'pointer' }}>
-                      <input
-                        type="checkbox"
-                        checked={selectedAgents.includes(a.id)}
-                        onChange={e => setSelectedAgents(prev =>
-                          e.target.checked ? [...prev, a.id] : prev.filter(id => id !== a.id)
-                        )}
-                      />
-                      {a.agency_name}
-                    </label>
-                  ))}
+                <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {DEMO_AGENTS.length > 0 && (
+                    <div>
+                      <div style={{ fontSize: '10px', fontWeight: 600, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '6px' }}>Demo sites</div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        {DEMO_AGENTS.map(d => (
+                          <label key={d.slug} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', cursor: 'pointer' }}>
+                            <input
+                              type="checkbox"
+                              checked={selectedDemos.includes(d.slug)}
+                              onChange={e => setSelectedDemos(prev =>
+                                e.target.checked ? [...prev, d.slug] : prev.filter(slug => slug !== d.slug)
+                              )}
+                            />
+                            {d.label}
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {agents.length > 0 && (
+                    <div>
+                      <div style={{ fontSize: '10px', fontWeight: 600, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '6px' }}>Agents</div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        {agents.map(a => (
+                          <label key={a.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', cursor: 'pointer' }}>
+                            <input
+                              type="checkbox"
+                              checked={selectedAgents.includes(a.id)}
+                              onChange={e => setSelectedAgents(prev =>
+                                e.target.checked ? [...prev, a.id] : prev.filter(id => id !== a.id)
+                              )}
+                            />
+                            {a.agency_name}
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
               {(targetMode === 'all' || targetMode === 'select') && (
                 <div style={{ marginTop: '10px', padding: '8px 10px', background: '#fef3c7', borderRadius: '6px', fontSize: '12px', color: '#92400e', display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
-                  <Lightbulb size={14} strokeWidth={1.5} style={{ flexShrink: 0, marginTop: '1px' }} /> Use <code style={{ fontFamily: 'monospace' }}>{'{{agency_name}}'}</code> in the body to personalize for each agent.
+                  <Lightbulb size={14} strokeWidth={1.5} style={{ flexShrink: 0, marginTop: '1px' }} /> Use <code style={{ fontFamily: 'monospace' }}>{'{{advisor_first_name}}'}</code> or <code style={{ fontFamily: 'monospace' }}>{'{{agency_name}}'}</code> in the body to personalize for each agent. Advisors without a first name set will see “your advisor” instead.
                 </div>
               )}
             </Card>
@@ -398,9 +647,48 @@ function FieldLabel({ children }: { children: React.ReactNode }) {
   return <div style={{ fontSize: '12px', fontWeight: 500, color: '#6b7280', marginBottom: '4px' }}>{children}</div>
 }
 
-function ToolBtn({ label, title, onClick, active }: { label: string; title: string; onClick: () => void; active?: boolean }) {
+/**
+ * Character counter for SEO fields. Mirrors Shopify's behaviour:
+ * - Counts the *effective* value (the override, or the fallback when override is empty)
+ * - Neutral grey while in range; amber near limit; red over limit
+ */
+function CharCounter({ value, max, fallbackValue }: { value: string; max: number; fallbackValue?: string | null }) {
+  const usingFallback = value.trim().length === 0
+  const effective = usingFallback ? (fallbackValue ?? '') : value
+  const len = effective.length
+  const over = len > max
+  const near = !over && len >= max - 10
+  const color = over ? '#dc2626' : near ? '#b45309' : '#9ca3af'
   return (
-    <button title={title} onClick={onClick} style={{ padding: '4px 8px', border: 'none', background: active ? '#f3f4f6' : 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '13px', fontWeight: active ? 700 : 400, color: active ? '#1a1a1a' : '#374151' }}>
+    <div style={{ marginTop: '4px', fontSize: '11px', color, display: 'flex', justifyContent: 'space-between', gap: '8px' }}>
+      <span>
+        {usingFallback && (fallbackValue ?? '').length > 0
+          ? `Using fallback — ${len} of ${max} characters`
+          : `${len} of ${max} characters used`}
+      </span>
+      {over && <span style={{ fontWeight: 600 }}>Over limit by {len - max}</span>}
+    </div>
+  )
+}
+
+function ToolBtn({ label, title, onClick, active, disabled }: { label: string; title: string; onClick: () => void; active?: boolean; disabled?: boolean }) {
+  return (
+    <button
+      title={title}
+      onClick={onClick}
+      disabled={disabled}
+      style={{
+        padding: '4px 8px',
+        border: 'none',
+        background: active && !disabled ? '#f3f4f6' : 'none',
+        borderRadius: '4px',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        fontSize: '13px',
+        fontWeight: active ? 700 : 400,
+        color: disabled ? '#cbd5e1' : (active ? '#1a1a1a' : '#374151'),
+        opacity: disabled ? 0.6 : 1,
+      }}
+    >
       {label}
     </button>
   )

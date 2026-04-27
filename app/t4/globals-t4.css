@@ -1,0 +1,318 @@
+/* ─────────────────────────────────────────────────────────────────────────
+ * Template 4 — "Casa Solis" design system
+ * Inspired by Brunello Cucinelli's quiet-luxury editorial aesthetic.
+ * ──────────────────────────────────────────────────────────────────────── */
+
+.t4-page {
+  /* Warm neutral palette */
+  --t4-bg:            #FBF8F1;   /* warm ivory */
+  --t4-bg-alt:        #F2EEE2;   /* soft beige */
+  --t4-bg-deeper:     #E8E1CE;   /* dusty stone */
+  --t4-text:          #2B2620;   /* warm espresso */
+  --t4-text-muted:    #7C7168;   /* warm taupe */
+  --t4-text-soft:     #A89B8A;   /* washed taupe */
+  --t4-accent:        #9B7641;   /* burnt ochre */
+  --t4-accent-soft:   #C0A373;   /* sienna */
+  --t4-divider:       #D4C9B5;   /* warm hairline */
+  --t4-divider-soft:  #E4DCCB;   /* softer hairline */
+  --t4-dark-bg:       #2B2620;   /* dark espresso (inverse sections) */
+  --t4-dark-text:     #FBF8F1;
+
+  /* Typography */
+  --t4-font-display: var(--font-cormorant, 'Cormorant Garamond', Georgia, serif);
+  --t4-font-body:    var(--font-dm-sans, 'DM Sans', system-ui, -apple-system, sans-serif);
+
+  /* Motion */
+  --t4-ease:      cubic-bezier(0.32, 0.72, 0, 1);
+  --t4-ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout */
+  --t4-content-max:    1240px;
+  --t4-content-wide:   1560px;
+  --t4-section-pad:    clamp(96px, 12vw, 160px);
+
+  font-family: var(--t4-font-body);
+  background: var(--t4-bg);
+  color: var(--t4-text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Sections ─────────────────────────────────────────────────────────── */
+
+.t4-section {
+  padding: var(--t4-section-pad) 48px;
+  max-width: var(--t4-content-max);
+  margin: 0 auto;
+}
+
+.t4-section-wide {
+  padding: var(--t4-section-pad) 48px;
+  max-width: var(--t4-content-wide);
+  margin: 0 auto;
+}
+
+.t4-section-alt {
+  background: var(--t4-bg-alt);
+}
+
+.t4-section-deeper {
+  background: var(--t4-bg-deeper);
+}
+
+.t4-section-dark {
+  background: var(--t4-dark-bg);
+  color: var(--t4-dark-text);
+}
+
+/* ─── Typographic scale ───────────────────────────────────────────────── */
+
+.t4-eyebrow {
+  font-family: var(--t4-font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--t4-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.t4-eyebrow::before,
+.t4-eyebrow-center::after {
+  content: '';
+  display: inline-block;
+  height: 1px;
+  width: 24px;
+  background: var(--t4-accent);
+  opacity: 0.6;
+}
+
+.t4-eyebrow-center {
+  justify-content: center;
+}
+
+.t4-eyebrow-center::before {
+  content: '';
+  display: inline-block;
+  height: 1px;
+  width: 24px;
+  background: var(--t4-accent);
+  opacity: 0.6;
+}
+
+/* Display headlines — editorial serif, extra-light, generous tracking */
+.t4-headline-xl {
+  font-family: var(--t4-font-display);
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.005em;
+  margin: 0;
+  color: inherit;
+}
+
+.t4-headline-lg {
+  font-family: var(--t4-font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300;
+  line-height: 1.12;
+  letter-spacing: -0.005em;
+  margin: 0;
+  color: inherit;
+}
+
+.t4-headline-md {
+  font-family: var(--t4-font-display);
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.003em;
+  margin: 0;
+  color: inherit;
+}
+
+.t4-italic-line {
+  font-family: var(--t4-font-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--t4-accent);
+}
+
+.t4-body {
+  font-family: var(--t4-font-body);
+  font-size: 15px;
+  line-height: 1.78;
+  color: var(--t4-text-muted);
+  font-weight: 300;
+}
+
+.t4-body-lg {
+  font-size: 17px;
+  line-height: 1.78;
+}
+
+.t4-body-dark {
+  color: rgba(251, 248, 241, 0.78);
+}
+
+.t4-caption {
+  font-family: var(--t4-font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--t4-text-muted);
+}
+
+/* ─── Buttons & links ─────────────────────────────────────────────────── */
+
+.t4-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 32px;
+  font-family: var(--t4-font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--t4-text);
+  background: transparent;
+  color: var(--t4-text);
+  transition: background 0.3s var(--t4-ease), color 0.3s var(--t4-ease), border-color 0.3s var(--t4-ease);
+}
+
+.t4-btn:hover { background: var(--t4-text); color: var(--t4-bg); }
+
+.t4-btn-solid {
+  border-color: var(--t4-text);
+  background: var(--t4-text);
+  color: var(--t4-bg);
+}
+
+.t4-btn-solid:hover { background: var(--t4-accent); border-color: var(--t4-accent); color: var(--t4-bg); }
+
+.t4-btn-ghost-light {
+  border-color: rgba(251, 248, 241, 0.72);
+  background: transparent;
+  color: var(--t4-bg);
+}
+
+.t4-btn-ghost-light:hover {
+  background: rgba(251, 248, 241, 0.12);
+  border-color: var(--t4-bg);
+}
+
+.t4-btn-solid-light {
+  background: var(--t4-bg);
+  color: var(--t4-text);
+  border-color: var(--t4-bg);
+}
+
+.t4-btn-solid-light:hover {
+  background: var(--t4-accent);
+  color: var(--t4-bg);
+  border-color: var(--t4-accent);
+}
+
+/* Inline arrow link */
+.t4-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--t4-font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--t4-text);
+  text-decoration: none;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--t4-text);
+  transition: border-color 0.25s var(--t4-ease), color 0.25s var(--t4-ease), gap 0.25s var(--t4-ease);
+}
+
+.t4-link:hover {
+  color: var(--t4-accent);
+  border-color: var(--t4-accent);
+  gap: 14px;
+}
+
+.t4-link .t4-arrow {
+  display: inline-block;
+  transition: transform 0.25s var(--t4-ease);
+}
+
+.t4-link:hover .t4-arrow { transform: translateX(4px); }
+
+/* Nav link */
+.t4-nav-link {
+  position: relative;
+  font-family: var(--t4-font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: inherit;
+  text-decoration: none;
+  padding: 4px 0;
+  transition: color 0.25s var(--t4-ease);
+}
+
+.t4-nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s var(--t4-ease);
+}
+
+.t4-nav-link:hover::after { transform: scaleX(1); }
+
+/* ─── Decorative rule ─────────────────────────────────────────────────── */
+
+.t4-rule {
+  height: 1px;
+  background: var(--t4-divider);
+  border: none;
+  margin: 0;
+}
+
+.t4-ornament {
+  display: inline-block;
+  width: 48px;
+  height: 1px;
+  background: var(--t4-accent);
+  opacity: 0.72;
+}
+
+/* ─── Animations ──────────────────────────────────────────────────────── */
+
+@keyframes t4FadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes t4Fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── Responsive breakpoints ──────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .t4-section,
+  .t4-section-wide {
+    padding: clamp(72px, 14vw, 120px) 24px;
+  }
+}

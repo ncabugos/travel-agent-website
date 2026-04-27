@@ -8,6 +8,7 @@ import { Icons } from '@/components/dashboard/Icons'
 const navItems: SidebarItem[] = [
   { href: '/admin', label: 'Dashboard', icon: Icons.dashboard },
   { href: '/admin/agents', label: 'Agents', icon: Icons.users },
+  { href: '/admin/consultations', label: 'Consultations', icon: Icons.inbox },
   { href: '/admin/blog', label: 'Journal Posts', icon: Icons.edit },
   { href: '/admin/categories', label: 'Categories', icon: Icons.tag },
   { href: '/admin/requests', label: 'Edit Requests', icon: Icons.inbox },

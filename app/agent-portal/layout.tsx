@@ -9,6 +9,7 @@ const navItems: SidebarItem[] = [
   { href: '/agent-portal', label: 'Dashboard', icon: Icons.dashboard },
   { href: '/agent-portal/blog', label: 'My Journal', icon: Icons.edit },
   { href: '/agent-portal/blog-settings', label: 'Blog Settings', icon: Icons.folder },
+  { href: '/agent-portal/site-settings', label: 'Site Settings', icon: Icons.settings },
   { href: '/agent-portal/requests', label: 'Edit Requests', icon: Icons.inbox },
   { href: '/agent-portal/profile', label: 'Profile', icon: Icons.user },
   { href: '/agent-portal/billing', label: 'Billing', icon: Icons.creditCard },

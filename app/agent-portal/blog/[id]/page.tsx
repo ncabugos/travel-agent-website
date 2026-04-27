@@ -24,7 +24,7 @@ export default async function AgentEditPostPage({ params }: { params: Promise<{ 
   if (!agent) return notFound()
 
   // Provide their own specific options to the editor
-  const agentOption = { id: agent.id, name: agent.full_name, agency_name: agent.agency_name }
+  const agentOption = { id: agent.id, full_name: agent.full_name, agency_name: agent.agency_name }
   const categories = await getAllCategories()
 
   if (id === 'new') {

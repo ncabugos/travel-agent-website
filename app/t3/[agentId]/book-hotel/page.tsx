@@ -1,21 +1,21 @@
 import Link from 'next/link'
-import { getSupplierProducts } from '@/lib/collections'
+import Image from 'next/image'
+import { getAgentHotelPrograms } from '@/lib/hotel-programs'
 import { T3PageHero } from '@/components/t3/T3PageHero'
-import { T3ProductGrid } from '@/components/t3/T3ProductGrid'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
 }
 
 export const metadata = {
-  title: 'Hotels & Resorts | Meridian & Company',
+  title: 'Hotel Programs | Meridian & Company',
   description:
-    'Preferred-partner access at the world\'s most selective hotels — with amenities arranged directly by your advisor.',
+    'Our preferred hotel programs — preferred-partner access with amenities arranged by your advisor on every stay.',
 }
 
 export default async function T3BookHotelPage({ params }: PageProps) {
   const { agentId } = await params
-  const hotels = await getSupplierProducts('hotel')
+  const programs = await getAgentHotelPrograms(agentId)
   const base = `/t3/${agentId}`
 
   return (
@@ -23,7 +23,7 @@ export default async function T3BookHotelPage({ params }: PageProps) {
       <T3PageHero
         image="/media/hero images/four-seasons-CapFerrat-pool-hero.jpg"
         imageAlt="Hotels & Resorts"
-        eyebrow="Hotels"
+        eyebrow="Hotel Programs"
         title="A quieter list."
         body="We do not work with every hotel brand. The ones below are the ones where our relationships still matter — where we can pick up the phone, ask for a favour, and have it happen."
         imageCaption="Four Seasons Grand-Hôtel du Cap-Ferrat"
@@ -91,15 +91,126 @@ export default async function T3BookHotelPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* Hotel programs grid */}
+      {/* Programs grid */}
       <div className="t3-section-alt">
-        <T3ProductGrid
-          agentId={agentId}
-          products={hotels}
-          eyebrow="The Collection"
-          headline="Our preferred hotel programs."
-          subheading="Each of the collections below is a program we are on a first-name basis with. Every booking we place comes with direct amenities — arranged by us, on your behalf."
-        />
+        <section className="t3-section">
+          <div style={{ maxWidth: 720, marginBottom: 72 }}>
+            <span className="t3-eyebrow">The Collection</span>
+            <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
+              Our preferred hotel programs.
+            </h2>
+            <p className="t3-body t3-body-lg" style={{ marginTop: 24 }}>
+              Each of the programs below is one we are on a first-name basis with.
+              Every booking we place arrives with amenities — arranged by us, on your behalf.
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: 32,
+              rowGap: 48,
+            }}
+            className="t3-programs-grid"
+          >
+            {programs.map((program) => (
+              <Link
+                key={program.slug}
+                href={`${base}/book-hotel/${program.slug}`}
+                className="t3-program-card"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  background: '#fff',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  border: '1px solid var(--t3-divider)',
+                  overflow: 'hidden',
+                  transition: 'border-color 0.3s var(--t3-ease), transform 0.4s var(--t3-ease)',
+                }}
+              >
+                {program.image_url && (
+                  <div
+                    style={{
+                      position: 'relative',
+                      aspectRatio: '16 / 10',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={program.image_url}
+                      alt={program.name}
+                      className="t3-program-card-img"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        transition: 'transform 0.9s var(--t3-ease-out)',
+                      }}
+                    />
+                  </div>
+                )}
+                <div style={{ padding: '32px 32px 28px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  {program.logo_url && (
+                    <div style={{ height: 44, marginBottom: 18, display: 'flex', alignItems: 'center' }}>
+                      <Image
+                        src={program.logo_url}
+                        alt={program.name}
+                        width={180}
+                        height={44}
+                        style={{ objectFit: 'contain', maxHeight: 44, width: 'auto' }}
+                        unoptimized
+                      />
+                    </div>
+                  )}
+                  <h3 className="t3-headline-md" style={{ marginBottom: 10, fontSize: 'clamp(18px, 1.6vw, 22px)' }}>
+                    {program.name}
+                  </h3>
+                  {program.tagline && (
+                    <p
+                      style={{
+                        fontFamily: 'var(--t3-font-display)',
+                        fontStyle: 'italic',
+                        fontSize: 15,
+                        color: 'var(--t3-accent)',
+                        lineHeight: 1.5,
+                        marginBottom: 16,
+                      }}
+                    >
+                      {program.tagline}
+                    </p>
+                  )}
+                  <div
+                    style={{
+                      marginTop: 'auto',
+                      paddingTop: 18,
+                      borderTop: '1px solid var(--t3-divider)',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      fontSize: 11,
+                      letterSpacing: '0.2em',
+                      textTransform: 'uppercase',
+                      color: 'var(--t3-text-muted)',
+                      fontWeight: 500,
+                    }}
+                  >
+                    <span>
+                      {program.property_count
+                        ? `${program.property_count}+ properties`
+                        : 'Invitation only'}
+                    </span>
+                    <span style={{ color: 'var(--t3-accent)' }}>
+                      View Program →
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
       </div>
 
       {/* CTA */}
@@ -122,9 +233,12 @@ export default async function T3BookHotelPage({ params }: PageProps) {
       </section>
 
       <style>{`
+        .t3-program-card:hover { border-color: var(--t3-accent) !important; }
+        .t3-program-card:hover .t3-program-card-img { transform: scale(1.04); }
         @media (max-width: 900px) {
           .t3-hotel-intro { grid-template-columns: 1fr !important; gap: 40px !important; }
           .t3-hotel-perks { grid-template-columns: 1fr !important; }
+          .t3-programs-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </>

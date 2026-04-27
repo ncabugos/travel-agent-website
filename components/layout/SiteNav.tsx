@@ -13,7 +13,7 @@ interface SiteNavProps {
 const DESKTOP_NAV = [
   { label: 'Home',      path: '' },
   { label: 'About',     path: '/about' },
-  { label: 'Media',     path: '/media' },
+  { label: 'Press',     path: '/media' },
   { label: 'Journal',   path: '/blog' },
   { label: 'Resources', path: '/resources' },
   { label: 'Contact',   path: '/contact' },
@@ -21,7 +21,7 @@ const DESKTOP_NAV = [
 
 const MOBILE_NAV = [
   { label: 'About',     path: '/about' },
-  { label: 'Media',     path: '/media' },
+  { label: 'Press',     path: '/media' },
   { label: 'Journal',   path: '/blog' },
   { label: 'Resources', path: '/resources' },
   { label: 'Contact',   path: '/contact' },
