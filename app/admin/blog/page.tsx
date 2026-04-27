@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { Suspense, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import type { BlogPost } from '@/types/index'
@@ -11,7 +11,18 @@ interface AgentOption {
   full_name: string | null
 }
 
+// useSearchParams() bails out of static generation unless wrapped in Suspense.
+// Default export below provides the boundary; the inner component holds the
+// actual hook + body so prerendering works without bailing the whole page.
 export default function AdminBlogListPage() {
+  return (
+    <Suspense fallback={<div style={{ padding: '24px 32px', color: '#9ca3af', fontSize: 14 }}>Loading…</div>}>
+      <AdminBlogList />
+    </Suspense>
+  )
+}
+
+function AdminBlogList() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const selectedAgentId = searchParams.get('agent_id') ?? ''

@@ -24,7 +24,9 @@ const PLACEHOLDER: BlogPost[] = [
     status: 'published',
     is_broadcast: false,
     target_agent_ids: [],
+    target_demo_slugs: [],
     gallery_images: [],
+    supplier_tags: [],
   },
   {
     id: 'p2',
@@ -40,7 +42,9 @@ const PLACEHOLDER: BlogPost[] = [
     status: 'published',
     is_broadcast: false,
     target_agent_ids: [],
+    target_demo_slugs: [],
     gallery_images: [],
+    supplier_tags: [],
   },
   {
     id: 'p3',
@@ -56,7 +60,9 @@ const PLACEHOLDER: BlogPost[] = [
     status: 'published',
     is_broadcast: false,
     target_agent_ids: [],
+    target_demo_slugs: [],
     gallery_images: [],
+    supplier_tags: [],
   },
 ]
 
