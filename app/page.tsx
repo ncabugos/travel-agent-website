@@ -529,6 +529,7 @@ export default function EliteAdvisorHubHomePage() {
             <a href="https://eliteadvisorhub.com" style={{ color: '#9ca3af', textDecoration: 'none' }}>eliteadvisorhub.com</a>
           </p>
           <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+            <Link href="/support" style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'none' }}>Support</Link>
             <Link href="/privacy" style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'none' }}>Privacy</Link>
             <Link href="/terms" style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'none' }}>Terms</Link>
             <Link href="/admin/login" style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'none' }}>Admin</Link>
