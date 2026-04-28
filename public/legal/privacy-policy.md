@@ -147,7 +147,7 @@ Subject to verification, you have the right to:
 
 ### 9.4 How to Exercise Your Rights
 
-Submit a request by emailing **[PRIVACY CONTACT EMAIL, e.g., privacy@eliteadvisorhub.com]** with the subject line "California Privacy Request." We may need to verify your identity, including by asking you to confirm information already on file. We will respond within the timeframes required by law (generally 45 days, with one 45-day extension where reasonably necessary).
+Submit a request by emailing **privacy@eliteadvisorhub.com** with the subject line "California Privacy Request." We may need to verify your identity, including by asking you to confirm information already on file. We will respond within the timeframes required by law (generally 45 days, with one 45-day extension where reasonably necessary).
 
 You may use an authorized agent to submit a request on your behalf. The agent must provide proof of authorization, and we may require you to verify your identity directly.
 
@@ -187,7 +187,7 @@ If you have questions or concerns about this Privacy Policy or our privacy pract
 
 **Elite Advisor Hub, LLC**
 Attn: Privacy
-[MAILING ADDRESS LINE 1]
-[CITY, STATE ZIP]
-Email: **[PRIVACY CONTACT EMAIL]**
+1016 Cliff Drive
+Santa Barbara, CA 93109
+Email: **privacy@eliteadvisorhub.com**
 Website: https://www.eliteadvisorhub.com

@@ -41,7 +41,7 @@ Payments are processed by **Stripe, Inc.** ("Stripe"). By subscribing, you agree
 
 ### 3.4 Cancellation
 
-You may cancel your subscription at any time through your account settings or by contacting **[BILLING CONTACT EMAIL, e.g., billing@eliteadvisorhub.com]**. Cancellation takes effect at the end of the current billing period, and you will retain access to paid features until that date.
+You may cancel your subscription at any time through your account settings or by contacting **billing@eliteadvisorhub.com**. Cancellation takes effect at the end of the current billing period, and you will retain access to paid features until that date.
 
 ### 3.5 Refunds
 
@@ -200,7 +200,7 @@ These Terms and any dispute arising out of or related to them or the Services ar
 
 ### 14.1 Informal Resolution
 
-Before initiating any formal proceeding, the parties agree to try in good faith to resolve any dispute through informal negotiation. Send written notice of the dispute to **[LEGAL CONTACT EMAIL, e.g., legal@eliteadvisorhub.com]** describing the nature and basis of the claim and the relief sought. The parties will have 60 days to resolve the dispute informally before either party may initiate arbitration.
+Before initiating any formal proceeding, the parties agree to try in good faith to resolve any dispute through informal negotiation. Send written notice of the dispute to **legal@eliteadvisorhub.com** describing the nature and basis of the claim and the relief sought. The parties will have 60 days to resolve the dispute informally before either party may initiate arbitration.
 
 ### 14.2 Binding Arbitration
 
@@ -216,7 +216,7 @@ Either party may (a) bring an individual claim in small-claims court if it quali
 
 ### 14.5 Opt-Out
 
-You may opt out of this Section 14 by sending written notice to **[LEGAL CONTACT EMAIL]** within 30 days after first accepting these Terms, stating clearly that you are opting out of arbitration. Opt-out does not affect any other provision of these Terms.
+You may opt out of this Section 14 by sending written notice to **legal@eliteadvisorhub.com** within 30 days after first accepting these Terms, stating clearly that you are opting out of arbitration. Opt-out does not affect any other provision of these Terms.
 
 ### 14.6 Time Limitation
 
@@ -252,7 +252,7 @@ We will not be liable for any delay or failure to perform resulting from causes 
 
 ### 15.7 Notices
 
-We may provide notices to you by email to the address associated with your account, by posting on the Services, or by other reasonable means. You must provide notices to us at **[LEGAL CONTACT EMAIL]** or by mail to the address below.
+We may provide notices to you by email to the address associated with your account, by posting on the Services, or by other reasonable means. You must provide notices to us at **legal@eliteadvisorhub.com** or by mail to the address below.
 
 ### 15.8 Export Compliance
 
@@ -268,7 +268,7 @@ The Services and related documentation are "Commercial Items" as defined in 48 C
 
 **Elite Advisor Hub, LLC**
 Attn: Legal
-[MAILING ADDRESS LINE 1]
-[CITY, STATE ZIP]
-Email: **[LEGAL CONTACT EMAIL]**
+1016 Cliff Drive
+Santa Barbara, CA 93109
+Email: **legal@eliteadvisorhub.com**
 Website: https://www.eliteadvisorhub.com
