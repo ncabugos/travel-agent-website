@@ -525,10 +525,12 @@ export default function EliteAdvisorHubHomePage() {
             <span style={{ fontSize: '14px', fontWeight: 600, color: '#374151' }}>EliteAdvisorHub</span>
           </div>
           <p style={{ margin: 0, fontSize: '13px', color: '#9ca3af' }}>
-            © {new Date().getFullYear()} EliteAdvisorHub. All rights reserved. ·{' '}
+            © {new Date().getFullYear()} Elite Advisor Hub, LLC. All rights reserved. ·{' '}
             <a href="https://eliteadvisorhub.com" style={{ color: '#9ca3af', textDecoration: 'none' }}>eliteadvisorhub.com</a>
           </p>
-          <div style={{ display: 'flex', gap: '24px' }}>
+          <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+            <Link href="/privacy" style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'none' }}>Privacy</Link>
+            <Link href="/terms" style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'none' }}>Terms</Link>
             <Link href="/admin/login" style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'none' }}>Admin</Link>
             <Link href="/agent-portal/login" style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'none' }}>Agent Login</Link>
           </div>
