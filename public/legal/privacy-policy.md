@@ -3,7 +3,7 @@
 **Effective Date:** April 27, 2026
 **Last Updated:** April 27, 2026
 
-This Privacy Policy describes how **Elite Advisor Hub, LLC** ("Elite Advisor Hub," "we," "our," or "us"), a **[STATE OF FORMATION]** limited liability company, collects, uses, discloses, and protects information about you when you visit or use the website located at https://www.eliteadvisorhub.com and any related subdomains, applications, or services (collectively, the "Services").
+This Privacy Policy describes how **Elite Advisor Hub, LLC** ("Elite Advisor Hub," "we," "our," or "us"), a **California** limited liability company, collects, uses, discloses, and protects information about you when you visit or use the website located at https://www.eliteadvisorhub.com and any related subdomains, applications, or services (collectively, the "Services").
 
 By accessing or using the Services, you agree to this Privacy Policy. If you do not agree, please do not use the Services.
 

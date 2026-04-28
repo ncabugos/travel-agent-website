@@ -3,7 +3,7 @@
 **Effective Date:** April 27, 2026
 **Last Updated:** April 27, 2026
 
-These Terms of Service ("**Terms**") form a binding legal agreement between you ("**you**," "**Advisor**," or "**Customer**") and **Elite Advisor Hub, LLC**, a **[STATE OF FORMATION]** limited liability company ("**Elite Advisor Hub**," "**we**," "**our**," or "**us**"), governing your access to and use of the website located at https://www.eliteadvisorhub.com, any related subdomains, our software-as-a-service platform, content, and related services (collectively, the "**Services**").
+These Terms of Service ("**Terms**") form a binding legal agreement between you ("**you**," "**Advisor**," or "**Customer**") and **Elite Advisor Hub, LLC**, a **California** limited liability company ("**Elite Advisor Hub**," "**we**," "**our**," or "**us**"), governing your access to and use of the website located at https://www.eliteadvisorhub.com, any related subdomains, our software-as-a-service platform, content, and related services (collectively, the "**Services**").
 
 **Please read these Terms carefully. They include important provisions concerning subscriptions, automatic renewal, disclaimers, limitations of liability, an arbitration clause, and a class action waiver.** By creating an account, accessing, or using the Services, you agree to be bound by these Terms. If you do not agree, do not use the Services.
 
@@ -190,7 +190,7 @@ Upon termination, your license to use the Services ends and we may delete your C
 
 ## 13. Governing Law
 
-These Terms and any dispute arising out of or related to them or the Services are governed by and construed in accordance with the laws of the **State of [STATE OF FORMATION]**, without regard to its conflict-of-laws principles. The United Nations Convention on Contracts for the International Sale of Goods does not apply.
+These Terms and any dispute arising out of or related to them or the Services are governed by and construed in accordance with the laws of the **State of California**, without regard to its conflict-of-laws principles. The United Nations Convention on Contracts for the International Sale of Goods does not apply.
 
 ---
 
@@ -204,7 +204,7 @@ Before initiating any formal proceeding, the parties agree to try in good faith 
 
 ### 14.2 Binding Arbitration
 
-If the dispute is not resolved informally, you and we agree that any dispute, claim, or controversy arising out of or relating to these Terms or the Services (including the formation, breach, termination, validity, or enforceability of these Terms) will be resolved by **binding individual arbitration** administered by JAMS under its Streamlined Arbitration Rules (or, for claims of $250,000 or more, the Comprehensive Arbitration Rules), unless the parties mutually agree otherwise. The arbitration will be conducted in **[CITY, STATE OF FORMATION]** or another mutually agreed location, or by video where reasonable. The arbitrator's award is final and binding and may be entered as a judgment in any court of competent jurisdiction.
+If the dispute is not resolved informally, you and we agree that any dispute, claim, or controversy arising out of or relating to these Terms or the Services (including the formation, breach, termination, validity, or enforceability of these Terms) will be resolved by **binding individual arbitration** administered by JAMS under its Streamlined Arbitration Rules (or, for claims of $250,000 or more, the Comprehensive Arbitration Rules), unless the parties mutually agree otherwise. The arbitration will be conducted in **Santa Barbara, California** or another mutually agreed location, or by video where reasonable. The arbitrator's award is final and binding and may be entered as a judgment in any court of competent jurisdiction.
 
 ### 14.3 Class Action Waiver
 
@@ -212,7 +212,7 @@ If the dispute is not resolved informally, you and we agree that any dispute, cl
 
 ### 14.4 Exceptions
 
-Either party may (a) bring an individual claim in small-claims court if it qualifies, and (b) seek injunctive or equitable relief in a court of competent jurisdiction to protect intellectual property or confidential information. Disputes excluded from arbitration are subject to the exclusive jurisdiction of the state and federal courts located in **[COUNTY, STATE OF FORMATION]**, and each party consents to that jurisdiction and venue.
+Either party may (a) bring an individual claim in small-claims court if it qualifies, and (b) seek injunctive or equitable relief in a court of competent jurisdiction to protect intellectual property or confidential information. Disputes excluded from arbitration are subject to the exclusive jurisdiction of the state and federal courts located in **Santa Barbara County, California**, and each party consents to that jurisdiction and venue.
 
 ### 14.5 Opt-Out
 
