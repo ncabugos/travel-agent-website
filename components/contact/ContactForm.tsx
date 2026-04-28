@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useState } from 'react'
 import { submitContactForm, type ContactFormState } from '@/lib/actions/contact'
 
 const serif = 'var(--font-serif)'
@@ -34,6 +34,9 @@ const initialState: ContactFormState = {}
 
 export function ContactForm({ agentId }: { agentId: string }) {
   const [state, formAction, isPending] = useActionState(submitContactForm, initialState)
+  // Captured once on mount; the server checks elapsed time vs this stamp to
+  // reject sub-second submissions (form-fill bots).
+  const [renderedAt] = useState<number>(() => Date.now())
 
   if (state.success) {
     return (
@@ -52,6 +55,25 @@ export function ContactForm({ agentId }: { agentId: string }) {
   return (
     <form action={formAction}>
       <input type="hidden" name="agent_id" value={agentId} />
+      <input type="hidden" name="_rendered_at" value={String(renderedAt)} />
+
+      {/* Honeypot — visually hidden but in the DOM. Real users never see or
+          fill this; spam bots that blindly populate every input do, and the
+          server rejects any submission with this field non-empty. */}
+      <div
+        aria-hidden="true"
+        style={{ position: 'absolute', left: '-10000px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}
+      >
+        <label htmlFor="website_url_hp">Website (leave blank)</label>
+        <input
+          type="text"
+          name="website_url"
+          id="website_url_hp"
+          tabIndex={-1}
+          autoComplete="off"
+          defaultValue=""
+        />
+      </div>
 
       {state.error && (
         <div style={{ padding: '14px 20px', marginBottom: '24px', background: '#FEF3CD', border: '1px solid #F5C842' }}>
