@@ -19,11 +19,11 @@ const PLATFORM_LINKS = [
 ]
 
 const DEMO_LINKS = [
-  { label: 'Eden — Custom',                 href: '/frontend/demo-agent' },
-  { label: 'Vista — Standard',              href: '/t2/t2-demo' },
-  { label: 'Meridian — Standard',           href: '/t3/t3-demo' },
-  { label: 'Your Travel Center — Agency',   href: '/t2/ytc-demo' },
-  { label: 'Casa Solis — Custom',           href: '/t4/casa-solis' },
+  { label: 'Eden',                 href: '/frontend/demo-agent' },
+  { label: 'Vista',                href: '/t2/t2-demo' },
+  { label: 'Meridian',             href: '/t3/t3-demo' },
+  { label: 'Your Travel Center',   href: '/t2/ytc-demo' },
+  { label: 'Casa Solis',           href: '/t4/casa-solis' },
 ]
 
 const COMPANY_LINKS = [
