@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, FormEvent } from 'react'
+import { useState, useEffect, useRef, useMemo, FormEvent } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { TopBar } from '@/components/dashboard/TopBar'
 import { Card } from '@/components/dashboard/Card'
@@ -23,12 +23,32 @@ interface AgentProfile {
   website_url: string | null
 }
 
+const NULLABLE_KEYS: readonly (keyof AgentProfile)[] = [
+  'phone', 'tagline', 'bio', 'avatar_url', 'instagram_url',
+  'facebook_url', 'youtube_url', 'tiktok_url', 'website_url',
+]
+
+// Normalize null↔'' so an empty optional field doesn't read as dirty after
+// React converts undefined/null inputs to empty strings.
+function snapshot(p: AgentProfile): string {
+  const norm: Record<string, unknown> = { ...p }
+  for (const k of NULLABLE_KEYS) norm[k] = (p[k] as string | null) ?? ''
+  return JSON.stringify(norm)
+}
+
 export default function AgentProfilePage() {
   const [profile, setProfile] = useState<AgentProfile | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
+  const initialProfileRef = useRef<AgentProfile | null>(null)
+  const [initial, setInitial] = useState<string>('')
+
+  const isDirty = useMemo(
+    () => !!profile && !!initial && snapshot(profile) !== initial,
+    [profile, initial]
+  )
 
   useEffect(() => {
     async function load() {
@@ -42,15 +62,31 @@ export default function AgentProfilePage() {
         .eq('email', session.user.email ?? '')
         .single()
 
-      if (data) setProfile(data as unknown as AgentProfile)
+      if (data) {
+        const p = data as unknown as AgentProfile
+        setProfile(p)
+        initialProfileRef.current = p
+        setInitial(snapshot(p))
+      }
       setLoading(false)
     }
     load()
   }, [])
 
-  const handleSave = async (e: FormEvent) => {
-    e.preventDefault()
-    if (!profile) return
+  // Warn before tab close / navigation while there are unsaved changes.
+  useEffect(() => {
+    if (!isDirty) return
+    const handler = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = ''
+    }
+    window.addEventListener('beforeunload', handler)
+    return () => window.removeEventListener('beforeunload', handler)
+  }, [isDirty])
+
+  const handleSave = async (e?: FormEvent) => {
+    if (e) e.preventDefault()
+    if (!profile || !isDirty) return
 
     setSaving(true)
     setError('')
@@ -77,10 +113,19 @@ export default function AgentProfilePage() {
     if (updateError) {
       setError(updateError.message)
     } else {
+      initialProfileRef.current = profile
+      setInitial(snapshot(profile))
       setSuccess(true)
       setTimeout(() => setSuccess(false), 3000)
     }
     setSaving(false)
+  }
+
+  const handleDiscard = () => {
+    if (!initialProfileRef.current) return
+    setProfile(initialProfileRef.current)
+    setError('')
+    setSuccess(false)
   }
 
   const update = (field: keyof AgentProfile, value: string) => {
@@ -88,6 +133,7 @@ export default function AgentProfilePage() {
     // first_name is a NOT NULL column with empty-string default — never write null.
     const next = field === 'first_name' ? value : (value || null)
     setProfile({ ...profile, [field]: next })
+    if (error) setError('')
   }
 
   if (loading) {
@@ -112,6 +158,9 @@ export default function AgentProfilePage() {
     )
   }
 
+  const showBar = isDirty || success || !!error
+  const saveDisabled = !isDirty || saving
+
   return (
     <>
       <TopBar
@@ -119,10 +168,14 @@ export default function AgentProfilePage() {
         subtitle="Manage your contact information and social media"
         actions={
           <button
-            onClick={handleSave}
-            disabled={saving}
+            onClick={() => handleSave()}
+            disabled={saveDisabled}
+            title={!isDirty ? 'No changes to save' : undefined}
             style={{
               ...buttonStyles.primary,
+              backgroundColor: saveDisabled ? '#e5e7eb' : '#111',
+              color: saveDisabled ? '#9ca3af' : '#fff',
+              cursor: saving ? 'wait' : !isDirty ? 'not-allowed' : 'pointer',
               opacity: saving ? 0.7 : 1,
             }}
           >
@@ -131,25 +184,6 @@ export default function AgentProfilePage() {
         }
       />
       <PageContent>
-        {success && (
-          <div style={{
-            padding: '12px 16px', backgroundColor: '#f0fdf4', color: '#166534',
-            borderRadius: '8px', fontSize: '13px', fontWeight: 500,
-            border: '1px solid #bbf7d0', marginBottom: '24px',
-          }}>
-            ✓ Profile updated successfully.
-          </div>
-        )}
-        {error && (
-          <div style={{
-            padding: '12px 16px', backgroundColor: '#fef2f2', color: '#991b1b',
-            borderRadius: '8px', fontSize: '13px', fontWeight: 500,
-            border: '1px solid #fee2e2', marginBottom: '24px',
-          }}>
-            {error}
-          </div>
-        )}
-
         <form onSubmit={handleSave}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
             {/* Contact Info */}
@@ -302,7 +336,98 @@ export default function AgentProfilePage() {
               </FormField>
             </Card>
           </div>
+
+          {/* Padding so the sticky bar never covers the last field */}
+          {showBar && <div style={{ height: 80 }} aria-hidden />}
         </form>
+
+        {showBar && (
+          <div
+            role="region"
+            aria-label="Unsaved changes"
+            style={{
+              position: 'fixed',
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: 'rgba(255,255,255,0.96)',
+              backdropFilter: 'blur(6px)',
+              borderTop: '1px solid #e5e7eb',
+              padding: '14px 28px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 16,
+              zIndex: 50,
+              boxShadow: '0 -4px 12px rgba(0,0,0,0.04)',
+              animation: 'profileBarSlideUp 180ms ease-out',
+            }}
+          >
+            <style>{`@keyframes profileBarSlideUp{from{opacity:0}to{opacity:1}}`}</style>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, flex: 1 }}>
+              {isDirty && (
+                <>
+                  <span
+                    aria-hidden
+                    style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: 999,
+                      background: '#f59e0b',
+                      boxShadow: '0 0 0 3px rgba(245,158,11,0.18)',
+                    }}
+                  />
+                  <span style={{ fontSize: 13, fontWeight: 500, color: '#374151' }}>
+                    You have unsaved changes
+                  </span>
+                </>
+              )}
+              {!isDirty && success && (
+                <span style={{ fontSize: 13, fontWeight: 500, color: '#16a34a' }}>
+                  ✓ Profile saved
+                </span>
+              )}
+              {!isDirty && error && (
+                <span style={{ fontSize: 13, fontWeight: 500, color: '#dc2626' }}>
+                  {error}
+                </span>
+              )}
+              {isDirty && error && (
+                <span style={{ fontSize: 13, fontWeight: 500, color: '#dc2626', marginLeft: 8 }}>
+                  {error}
+                </span>
+              )}
+            </div>
+
+            <button
+              type="button"
+              onClick={handleDiscard}
+              disabled={!isDirty || saving}
+              style={{
+                ...buttonStyles.secondary,
+                color: isDirty ? '#374151' : '#9ca3af',
+                cursor: !isDirty || saving ? 'not-allowed' : 'pointer',
+              }}
+            >
+              Discard
+            </button>
+            <button
+              type="button"
+              onClick={() => handleSave()}
+              disabled={saveDisabled}
+              title={!isDirty ? 'No changes to save' : undefined}
+              style={{
+                ...buttonStyles.primary,
+                backgroundColor: saveDisabled ? '#e5e7eb' : '#111',
+                color: saveDisabled ? '#9ca3af' : '#fff',
+                cursor: saving ? 'wait' : !isDirty ? 'not-allowed' : 'pointer',
+                opacity: saving ? 0.7 : 1,
+              }}
+            >
+              {saving ? 'Saving…' : 'Save Changes'}
+            </button>
+          </div>
+        )}
       </PageContent>
     </>
   )

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import { Card } from '@/components/dashboard/Card'
 
 type AgentRow = {
@@ -27,6 +27,25 @@ type AgentRow = {
   travel_types: string[] | null
 }
 
+const STRING_KEYS: readonly (keyof AgentRow)[] = [
+  'full_name', 'agency_name', 'email', 'phone', 'tagline', 'bio',
+  'avatar_url', 'instagram_url', 'facebook_url', 'youtube_url',
+  'tiktok_url', 'website_url', 'subscription_status', 'template',
+]
+const ARRAY_KEYS: readonly (keyof AgentRow)[] = [
+  'travel_specialties', 'destination_specialties',
+  'preferred_suppliers', 'travel_types',
+]
+
+// Normalize null↔'' and null↔[] before serializing so that "untouched" forms
+// don't read as dirty just because empty fields canonicalize differently.
+function snapshot(a: AgentRow): string {
+  const norm: Record<string, unknown> = { ...a }
+  for (const k of STRING_KEYS) norm[k] = (a[k] as string | null) ?? ''
+  for (const k of ARRAY_KEYS) norm[k] = (a[k] as string[] | null) ?? []
+  return JSON.stringify(norm)
+}
+
 /**
  * Admin-scoped agent profile editor. All fields PATCH to
  * /api/admin/agents/[agentId] which uses a service-role client, bypassing
@@ -36,15 +55,41 @@ export function AgentProfileEditor({ agent }: { agent: AgentRow }) {
   const [form, setForm] = useState(agent)
   const [saving, setSaving] = useState(false)
   const [msg, setMsg] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null)
+  const initialFormRef = useRef(agent)
+  const [initial, setInitial] = useState(() => snapshot(agent))
+  const isDirty = useMemo(() => snapshot(form) !== initial, [form, initial])
+
+  // Warn before tab close / navigation while there are unsaved changes.
+  useEffect(() => {
+    if (!isDirty) return
+    const handler = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = ''
+    }
+    window.addEventListener('beforeunload', handler)
+    return () => window.removeEventListener('beforeunload', handler)
+  }, [isDirty])
+
+  // Auto-dismiss the success toast after a few seconds.
+  useEffect(() => {
+    if (msg?.kind !== 'ok') return
+    const t = setTimeout(() => setMsg(null), 2500)
+    return () => clearTimeout(t)
+  }, [msg])
 
   const set = <K extends keyof AgentRow>(k: K, v: AgentRow[K]) => {
     setForm((prev) => ({ ...prev, [k]: v }))
-    setMsg(null)
+    if (msg?.kind === 'err') setMsg(null)
   }
 
   const setList = (k: keyof AgentRow, raw: string) => {
     const items = raw.split(',').map((s) => s.trim()).filter(Boolean)
     setForm((prev) => ({ ...prev, [k]: items }))
+    if (msg?.kind === 'err') setMsg(null)
+  }
+
+  const discard = () => {
+    setForm(initialFormRef.current)
     setMsg(null)
   }
 
@@ -77,13 +122,18 @@ export function AgentProfileEditor({ agent }: { agent: AgentRow }) {
         travel_types: form.travel_types ?? [],
       }),
     })
-    if (res.ok) setMsg({ kind: 'ok', text: 'Saved.' })
-    else {
+    if (res.ok) {
+      initialFormRef.current = form
+      setInitial(snapshot(form))
+      setMsg({ kind: 'ok', text: 'Saved.' })
+    } else {
       const { error } = await res.json().catch(() => ({ error: 'Save failed' }))
       setMsg({ kind: 'err', text: error ?? 'Save failed' })
     }
     setSaving(false)
   }
+
+  const showBar = isDirty || !!msg
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -168,53 +218,107 @@ export function AgentProfileEditor({ agent }: { agent: AgentRow }) {
         </div>
       </Card>
 
-      <div
-        style={{
-          position: 'sticky',
-          bottom: 0,
-          background: 'rgba(255,255,255,0.96)',
-          backdropFilter: 'blur(6px)',
-          borderTop: '1px solid #e5e7eb',
-          padding: '14px 20px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          gap: 16,
-          zIndex: 5,
-          marginLeft: -24,
-          marginRight: -24,
-          marginBottom: -24,
-        }}
-      >
-        {msg && (
-          <span
-            style={{
-              fontSize: 13,
-              fontWeight: 500,
-              color: msg.kind === 'ok' ? '#16a34a' : '#dc2626',
-            }}
-          >
-            {msg.text}
-          </span>
-        )}
-        <button
-          onClick={save}
-          disabled={saving}
+      {/* Padding so the fixed bar never covers the last field. */}
+      {showBar && <div style={{ height: 80 }} aria-hidden />}
+
+      {showBar && (
+        <div
+          role="region"
+          aria-label="Unsaved changes"
           style={{
-            padding: '10px 22px',
-            background: '#111',
-            color: '#fff',
-            border: 'none',
-            borderRadius: 8,
-            fontSize: 13,
-            fontWeight: 600,
-            cursor: saving ? 'wait' : 'pointer',
-            opacity: saving ? 0.7 : 1,
+            position: 'fixed',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(255,255,255,0.96)',
+            backdropFilter: 'blur(6px)',
+            borderTop: '1px solid #e5e7eb',
+            padding: '14px 28px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 16,
+            zIndex: 50,
+            boxShadow: '0 -4px 12px rgba(0,0,0,0.04)',
+            animation: 'agentEditorBarSlideUp 180ms ease-out',
           }}
         >
-          {saving ? 'Saving…' : 'Save Changes'}
-        </button>
-      </div>
+          <style>{`@keyframes agentEditorBarSlideUp{from{opacity:0}to{opacity:1}}`}</style>
+
+          {/* Status text — left side */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flex: 1 }}>
+            {isDirty && (
+              <>
+                <span
+                  aria-hidden
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: 999,
+                    background: '#f59e0b',
+                    boxShadow: '0 0 0 3px rgba(245,158,11,0.18)',
+                  }}
+                />
+                <span style={{ fontSize: 13, fontWeight: 500, color: '#374151' }}>
+                  You have unsaved changes
+                </span>
+              </>
+            )}
+            {!isDirty && msg && (
+              <span
+                style={{
+                  fontSize: 13,
+                  fontWeight: 500,
+                  color: msg.kind === 'ok' ? '#16a34a' : '#dc2626',
+                }}
+              >
+                {msg.kind === 'ok' ? '✓ ' : ''}{msg.text}
+              </span>
+            )}
+            {isDirty && msg?.kind === 'err' && (
+              <span style={{ fontSize: 13, fontWeight: 500, color: '#dc2626' }}>
+                {msg.text}
+              </span>
+            )}
+          </div>
+
+          {/* Action buttons — right side */}
+          <button
+            onClick={discard}
+            disabled={!isDirty || saving}
+            style={{
+              padding: '10px 18px',
+              background: '#fff',
+              color: isDirty ? '#374151' : '#9ca3af',
+              border: '1px solid #e5e7eb',
+              borderRadius: 8,
+              fontSize: 13,
+              fontWeight: 600,
+              cursor: !isDirty || saving ? 'not-allowed' : 'pointer',
+            }}
+          >
+            Discard
+          </button>
+          <button
+            onClick={save}
+            disabled={!isDirty || saving}
+            title={!isDirty ? 'No changes to save' : undefined}
+            style={{
+              padding: '10px 22px',
+              background: !isDirty ? '#e5e7eb' : '#111',
+              color: !isDirty ? '#9ca3af' : '#fff',
+              border: 'none',
+              borderRadius: 8,
+              fontSize: 13,
+              fontWeight: 600,
+              cursor: saving ? 'wait' : !isDirty ? 'not-allowed' : 'pointer',
+              opacity: saving ? 0.7 : 1,
+              transition: 'background 150ms ease, color 150ms ease',
+            }}
+          >
+            {saving ? 'Saving…' : 'Save Changes'}
+          </button>
+        </div>
+      )}
     </div>
   )
 }

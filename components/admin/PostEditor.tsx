@@ -5,7 +5,7 @@
  *   Left: title + rich text + excerpt + SEO
  *   Right: visibility, cover image, gallery, categories, tags, broadcast targeting
  */
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -91,6 +91,9 @@ export function PostEditor({ post, agents, categories = [], suppliers = [], isNe
   const [supplierTags, setSupplierTags] = useState<string[]>(post?.supplier_tags ?? [])
   const [supplierSearch, setSupplierSearch] = useState('')
 
+  // Mirror Tiptap's body so React can detect dirty changes.
+  const [bodyHtml, setBodyHtml] = useState(post?.body_html ?? '')
+
   /* ── Tiptap editor ── */
   const editor = useEditor({
     extensions: [
@@ -100,6 +103,7 @@ export function PostEditor({ post, agents, categories = [], suppliers = [], isNe
     ],
     content: post?.body_html ?? '',
     immediatelyRender: false,
+    onUpdate: ({ editor }) => setBodyHtml(editor.getHTML()),
     editorProps: {
       attributes: {
         style: 'outline:none; min-height:320px; padding:12px; font-size:15px; line-height:1.8; color:#1a1a1a;',
@@ -193,12 +197,99 @@ export function PostEditor({ post, agents, categories = [], suppliers = [], isNe
       const saved = await res.json()
       setSaveMsg('Saved ✓')
       setWarnings(Array.isArray(saved.warnings) ? saved.warnings : [])
+      // Bake the just-saved values into the "initial" snapshot so the form
+      // returns to a pristine state. Pull the body from whichever editor is
+      // active to stay consistent with what the API actually persisted.
+      const savedBody = sourceMode ? sourceHtml : (editor?.getHTML() ?? bodyHtml)
+      initialFormRef.current = {
+        title, excerpt, seoTitle, seoDescription, coverUrl,
+        gallery, freeTextCategories, selectedCategoryIds, tags,
+        status: finalStatus, isBroadcast, targetMode, selectedAgent,
+        selectedAgents, selectedDemos, bodyHtml: savedBody, supplierTags,
+      }
+      setInitialKey(snapshotForm(initialFormRef.current))
       if (isNew) router.push(`${listPath}/${saved.id}`)
     } else {
       const err = await res.json()
       setSaveMsg(`Error: ${err.error ?? 'Save failed'}`)
       setWarnings([])
     }
+  }
+
+  /* ── Dirty-state tracking ────────────────────────────────────────────────
+   * snapshotForm() canonicalises the entire form into a string. The initial
+   * snapshot is captured once on mount; any subsequent divergence flips the
+   * sticky save bar on, enables the disabled-when-pristine buttons, and
+   * arms the beforeunload guard. */
+  const initialFormRef = useRef({
+    title, excerpt, seoTitle, seoDescription, coverUrl,
+    gallery, freeTextCategories, selectedCategoryIds, tags, status,
+    isBroadcast, targetMode, selectedAgent, selectedAgents, selectedDemos,
+    bodyHtml, supplierTags,
+  })
+  const [initialKey, setInitialKey] = useState(() =>
+    snapshotForm(initialFormRef.current)
+  )
+  const currentKey = useMemo(() => snapshotForm({
+    title, excerpt, seoTitle, seoDescription, coverUrl,
+    gallery, freeTextCategories, selectedCategoryIds, tags, status,
+    isBroadcast, targetMode, selectedAgent, selectedAgents, selectedDemos,
+    // Use the live source-mode buffer when active so unsynced HTML edits
+    // still register as dirty.
+    bodyHtml: sourceMode ? sourceHtml : bodyHtml,
+    supplierTags,
+  }), [
+    title, excerpt, seoTitle, seoDescription, coverUrl, gallery,
+    freeTextCategories, selectedCategoryIds, tags, status, isBroadcast,
+    targetMode, selectedAgent, selectedAgents, selectedDemos,
+    bodyHtml, sourceHtml, sourceMode, supplierTags,
+  ])
+  const isDirty = currentKey !== initialKey
+
+  // Warn before tab close / nav while there are unsaved changes.
+  useEffect(() => {
+    if (!isDirty) return
+    const handler = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = ''
+    }
+    window.addEventListener('beforeunload', handler)
+    return () => window.removeEventListener('beforeunload', handler)
+  }, [isDirty])
+
+  // Auto-dismiss the success toast after a few seconds. Don't auto-dismiss
+  // errors — those need acknowledgement.
+  useEffect(() => {
+    if (!saveMsg.startsWith('Saved')) return
+    const t = setTimeout(() => setSaveMsg(''), 2500)
+    return () => clearTimeout(t)
+  }, [saveMsg])
+
+  // Restore every field to its baseline. For Tiptap, push the HTML back into
+  // the editor (which fires onUpdate → setBodyHtml, keeping state in sync).
+  const discard = () => {
+    const i = initialFormRef.current
+    setTitle(i.title)
+    setExcerpt(i.excerpt)
+    setSeoTitle(i.seoTitle)
+    setSeoDescription(i.seoDescription)
+    setCoverUrl(i.coverUrl)
+    setGallery(i.gallery)
+    setFreeTextCategories(i.freeTextCategories)
+    setSelectedCategoryIds(i.selectedCategoryIds)
+    setTags(i.tags)
+    setStatus(i.status)
+    setIsBroadcast(i.isBroadcast)
+    setTargetMode(i.targetMode)
+    setSelectedAgent(i.selectedAgent)
+    setSelectedAgents(i.selectedAgents)
+    setSelectedDemos(i.selectedDemos)
+    setSupplierTags(i.supplierTags)
+    setBodyHtml(i.bodyHtml)
+    if (sourceMode) setSourceHtml(i.bodyHtml)
+    editor?.commands.setContent(i.bodyHtml || '<p></p>', { emitUpdate: false })
+    setSaveMsg('')
+    setWarnings([])
   }
 
   /* ── UI ── */
@@ -215,10 +306,20 @@ export function PostEditor({ post, agents, categories = [], suppliers = [], isNe
         </div>
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
           {saveMsg && <span style={{ fontSize: '13px', color: saveMsg.startsWith('Error') ? '#dc2626' : '#059669' }}>{saveMsg}</span>}
-          <button onClick={() => save('draft')} disabled={saving} style={btnStyle('secondary')}>
+          <button
+            onClick={() => save('draft')}
+            disabled={saving || !isDirty}
+            title={!isDirty ? 'No changes to save' : undefined}
+            style={btnStyle('secondary', !isDirty || saving)}
+          >
             Save draft
           </button>
-          <button onClick={() => save('published')} disabled={saving} style={btnStyle('primary')}>
+          <button
+            onClick={() => save('published')}
+            disabled={saving || !isDirty}
+            title={!isDirty ? 'No changes to save' : undefined}
+            style={btnStyle('primary', !isDirty || saving)}
+          >
             {saving ? 'Saving…' : status === 'published' ? 'Update' : 'Publish'}
           </button>
         </div>
@@ -617,6 +718,60 @@ export function PostEditor({ post, agents, categories = [], suppliers = [], isNe
 
         </div>
       </div>
+
+      {/* Pad below the content so the fixed bar never covers the last field. */}
+      {isDirty && <div style={{ height: 80 }} aria-hidden />}
+
+      {isDirty && (
+        <div
+          role="region"
+          aria-label="Unsaved changes"
+          style={{
+            position: 'fixed',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(255,255,255,0.96)',
+            backdropFilter: 'blur(6px)',
+            borderTop: '1px solid #e5e7eb',
+            padding: '14px 28px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 16,
+            zIndex: 50,
+            boxShadow: '0 -4px 12px rgba(0,0,0,0.04)',
+            animation: 'postEditorBarSlideUp 180ms ease-out',
+          }}
+        >
+          <style>{`@keyframes postEditorBarSlideUp{from{opacity:0}to{opacity:1}}`}</style>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flex: 1 }}>
+            <span
+              aria-hidden
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: 999,
+                background: '#f59e0b',
+                boxShadow: '0 0 0 3px rgba(245,158,11,0.18)',
+              }}
+            />
+            <span style={{ fontSize: 13, fontWeight: 500, color: '#374151' }}>
+              You have unsaved changes
+            </span>
+            {saveMsg.startsWith('Error') && (
+              <span style={{ fontSize: 13, fontWeight: 500, color: '#dc2626', marginLeft: 8 }}>
+                {saveMsg}
+              </span>
+            )}
+          </div>
+          <button type="button" onClick={discard} disabled={saving} style={btnStyle('secondary', saving)}>
+            Discard
+          </button>
+          <button type="button" onClick={() => save()} disabled={saving} style={btnStyle('primary', saving)}>
+            {saving ? 'Saving…' : 'Save changes'}
+          </button>
+        </div>
+      )}
     </div>
   )
 }
@@ -703,8 +858,73 @@ const fieldStyle: React.CSSProperties = {
   fontSize: '13px', outline: 'none', boxSizing: 'border-box', color: '#374151',
 }
 
-function btnStyle(variant: 'primary' | 'secondary'): React.CSSProperties {
-  return variant === 'primary'
-    ? { padding: '8px 18px', background: '#1a1a1a', color: '#fff', border: 'none', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }
-    : { padding: '8px 18px', background: '#fff', color: '#374151', border: '1px solid #d1d5db', borderRadius: '8px', fontSize: '13px', fontWeight: 500, cursor: 'pointer' }
+function btnStyle(variant: 'primary' | 'secondary', disabled?: boolean): React.CSSProperties {
+  if (variant === 'primary') {
+    return {
+      padding: '8px 18px',
+      background: disabled ? '#e5e7eb' : '#1a1a1a',
+      color: disabled ? '#9ca3af' : '#fff',
+      border: 'none',
+      borderRadius: '8px',
+      fontSize: '13px',
+      fontWeight: 600,
+      cursor: disabled ? 'not-allowed' : 'pointer',
+      transition: 'background 150ms ease, color 150ms ease',
+    }
+  }
+  return {
+    padding: '8px 18px',
+    background: '#fff',
+    color: disabled ? '#9ca3af' : '#374151',
+    border: '1px solid ' + (disabled ? '#e5e7eb' : '#d1d5db'),
+    borderRadius: '8px',
+    fontSize: '13px',
+    fontWeight: 500,
+    cursor: disabled ? 'not-allowed' : 'pointer',
+  }
+}
+
+/**
+ * Canonical string representation of every field that should mark the form
+ * as dirty when it changes. Order of keys matters for stable comparison.
+ */
+type PostFormSnapshot = {
+  title: string
+  excerpt: string
+  seoTitle: string
+  seoDescription: string
+  coverUrl: string
+  gallery: GalleryImage[]
+  freeTextCategories: string
+  selectedCategoryIds: string[]
+  tags: string
+  status: 'published' | 'draft'
+  isBroadcast: boolean
+  targetMode: 'agent' | 'all' | 'select'
+  selectedAgent: string
+  selectedAgents: string[]
+  selectedDemos: string[]
+  bodyHtml: string
+  supplierTags: string[]
+}
+function snapshotForm(f: PostFormSnapshot): string {
+  return JSON.stringify({
+    title: f.title,
+    excerpt: f.excerpt,
+    seoTitle: f.seoTitle,
+    seoDescription: f.seoDescription,
+    coverUrl: f.coverUrl,
+    gallery: f.gallery,
+    freeTextCategories: f.freeTextCategories,
+    selectedCategoryIds: [...f.selectedCategoryIds].sort(),
+    tags: f.tags,
+    status: f.status,
+    isBroadcast: f.isBroadcast,
+    targetMode: f.targetMode,
+    selectedAgent: f.selectedAgent,
+    selectedAgents: [...f.selectedAgents].sort(),
+    selectedDemos: [...f.selectedDemos].sort(),
+    bodyHtml: f.bodyHtml,
+    supplierTags: [...f.supplierTags].sort(),
+  })
 }
