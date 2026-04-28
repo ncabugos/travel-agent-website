@@ -12,10 +12,23 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps) {
   const { agentId } = await params
   const agent = await getAgentProfile(agentId)
-  return {
-    title: `Exclusive Hotel Programs — ${agent?.agency_name ?? 'Luxury Travel'}`,
-    description: 'Unlock VIP benefits at the world\'s finest hotels — daily breakfast, room upgrades, spa credits, and more — exclusively through our preferred partner programmes.',
-  }
+  if (!agent) return { title: 'Exclusive Hotel Programs' }
+  const { buildMetadata } = await import('@/lib/seo')
+  const isEden = agent.id === '2e18df43-171a-4565-b840-aade259cab69'
+  return buildMetadata({
+    agent,
+    title: 'Exclusive Hotel Programs',
+    description: isEden
+      ? 'Four Seasons Preferred, Belmond Bellini, Rosewood Elite, Aman, Mandarin Fan Club & more — invitation-only luxury hotel benefits through Eden For Your World.'
+      : `Unlock VIP benefits at the world's finest hotels — upgrades, breakfast, resort credits — through ${agent.agency_name}.`,
+    path: 'resources',
+    ogTitle: isEden
+      ? '18 Invitation-Only Luxury Hotel Programs | Eden For Your World'
+      : `Exclusive Hotel Programs | ${agent.agency_name}`,
+    ogDescription: isEden
+      ? 'Access exclusive benefits at Four Seasons, Belmond, Dorchester, Rosewood, Mandarin Oriental, Peninsula, Aman, Rocco Forte and more — only through Virtuoso.'
+      : undefined,
+  })
 }
 
 /* ── SVG line icons (24×24, stroke-only, luxury travel) ────────── */

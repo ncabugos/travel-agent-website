@@ -16,6 +16,8 @@ import { getBlogPosts } from '@/lib/blog'
 import { ProgramLogoGrid } from '@/components/hotel-programs/ProgramLogoGrid'
 import { getAgentHotelPrograms } from '@/lib/hotel-programs'
 import { EDEN } from '@/lib/media-library'
+import { buildMetadata, getSeoFacts } from '@/lib/seo'
+import { JsonLd, travelAgencySchema, leadAdvisorSchema } from '@/components/seo/JsonLd'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -25,10 +27,14 @@ export async function generateMetadata({ params }: PageProps) {
   const { agentId } = await params
   const agent = await getAgentProfile(agentId)
   if (!agent) return {}
-  return {
-    title: `${agent.agency_name} — Luxury Travel`,
-    description: `Curated luxury travel by ${agent.full_name} at ${agent.agency_name}.`,
-  }
+  const facts = getSeoFacts(agent)
+  return buildMetadata({
+    agent,
+    title: 'Luxury Virtuoso Travel Advisors',
+    description: facts.brandDescriptionLong,
+    ogTitle: `${agent.agency_name} | Luxury Virtuoso Travel Advisors`,
+    ogDescription: facts.brandTagline + (facts.memberOf?.some(m=>m.name==='Virtuoso') ? ' A Virtuoso Member Agency.' : ''),
+  })
 }
 
 // ── Hero Slides ─────────────────────────────────────────────────────────────
@@ -92,8 +98,12 @@ export default async function AgentHomePage({ params }: PageProps) {
   const sans = 'var(--font-sans)'
   const base = `/frontend/${agentId}`
 
+  const advisorSchema = leadAdvisorSchema(agent)
+  const homeSchemas = [travelAgencySchema(agent), advisorSchema].filter(Boolean) as object[]
+
   return (
     <main style={{ background: '#FFFFFF' }}>
+      <JsonLd data={homeSchemas} />
 
       {/* ─────────────────────────────────────────────────────────────────────
           1. HERO SLIDER — full-viewport cinematic slider
@@ -225,6 +235,8 @@ export default async function AgentHomePage({ params }: PageProps) {
             ? agent.instagram_url.replace(/.*instagram\.com\//, '').replace(/\/$/, '')
             : 'edenforyourworld'
         }
+        facebookUrl={agent.facebook_url}
+        youtubeUrl={agent.youtube_url}
         agentId={agentId}
       />
 

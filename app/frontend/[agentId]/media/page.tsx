@@ -10,7 +10,20 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps) {
   const { agentId } = await params
   const agent = await getAgentProfile(agentId)
-  return { title: `Media — ${agent?.agency_name ?? 'Luxury Travel'}` }
+  if (!agent) return { title: 'Press' }
+  const { buildMetadata } = await import('@/lib/seo')
+  const isEden = agent.id === '2e18df43-171a-4565-b840-aade259cab69'
+  return buildMetadata({
+    agent,
+    title: 'Press & Awards',
+    description: isEden
+      ? 'Recognition for Eden For Your World — Condé Nast Traveler Top Travel Specialist 2024 & 2025, Virtuoso Most Innovative Advisor, and editorial press.'
+      : `Press, awards and editorial features for ${agent.agency_name}.`,
+    path: 'media',
+    ogDescription: isEden
+      ? "Featured in Condé Nast Traveler, Virtuoso Life and the industry's leading luxury travel publications."
+      : undefined,
+  })
 }
 
 const ACCOLADES: { source: string; title: string; detail: string; href?: string }[] = [

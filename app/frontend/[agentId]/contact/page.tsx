@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { getAgentProfile } from '@/lib/suppliers'
 import { notFound } from 'next/navigation'
 import { ContactForm } from '@/components/contact/ContactForm'
+import { JsonLd, contactPageSchema } from '@/components/seo/JsonLd'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -10,7 +11,22 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps) {
   const { agentId } = await params
   const agent = await getAgentProfile(agentId)
-  return { title: `Contact — ${agent?.agency_name ?? 'Luxury Travel'}` }
+  if (!agent) return { title: 'Contact' }
+  const { buildMetadata, getSeoFacts } = await import('@/lib/seo')
+  const facts = getSeoFacts(agent)
+  const isVirtuoso = (facts.memberOf ?? []).some((m) => m.name === 'Virtuoso')
+  return buildMetadata({
+    agent,
+    title: 'Contact Us | Plan Your Trip',
+    description:
+      `Start planning your bespoke luxury journey. Speak with ${
+        isVirtuoso ? 'a Virtuoso advisor' : 'an advisor'
+      } at ${agent.agency_name}` +
+      (agent.phone ? ` — call ${agent.phone}` : '') +
+      ' or request a private consultation.',
+    path: 'contact',
+    ogTitle: `Plan Your Luxury Journey | ${agent.agency_name}`,
+  })
 }
 
 const serif = 'var(--font-serif)'
@@ -27,6 +43,7 @@ export default async function ContactPage({ params }: PageProps) {
 
   return (
     <main style={{ background: 'var(--cream)' }}>
+      <JsonLd data={contactPageSchema(agent)} />
 
       {/* Page Banner */}
       <div style={{ position: 'relative', height: '50vh', minHeight: '340px', overflow: 'hidden' }}>

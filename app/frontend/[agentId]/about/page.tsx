@@ -14,7 +14,21 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps) {
   const { agentId } = await params
   const agent = await getAgentProfile(agentId)
-  return { title: `About — ${agent?.agency_name ?? 'Eden For Your World'}` }
+  if (!agent) return { title: 'About' }
+  const { buildMetadata, getSeoFacts } = await import('@/lib/seo')
+  const facts = getSeoFacts(agent)
+  const isEden = agent.id === '2e18df43-171a-4565-b840-aade259cab69'
+  return buildMetadata({
+    agent,
+    title: isEden ? 'About John Oberacker & Team' : `About ${agent.agency_name}`,
+    description: isEden
+      ? 'Meet the Virtuoso advisors of Eden For Your World — John Oberacker, Kasra Esteghamat & team. 20+ years, 80+ countries, Condé Nast Top Specialists.'
+      : facts.brandDescriptionLong,
+    path: 'about',
+    image: '/media/hotel-programs/peninsula/peninsula-brand-hero-2000.jpg',
+    imageAlt: `About ${agent.agency_name}`,
+    ogTitle: `About ${agent.agency_name} — Virtuoso Luxury Travel Advisors`,
+  })
 }
 
 const serif = 'var(--font-serif)'

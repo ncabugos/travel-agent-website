@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { getBlogPost, getBlogPosts, renderShortcodes } from '@/lib/blog'
 import { getAgentProfile } from '@/lib/suppliers'
 import type { GalleryImage } from '@/types/index'
+import { JsonLd, articleSchema, breadcrumbSchema } from '@/components/seo/JsonLd'
 
 interface PageProps {
   params: Promise<{ agentId: string; slug: string }>
@@ -11,12 +12,27 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug, agentId } = await params
-  const post = await getBlogPost(slug, agentId)
-  if (!post) return {}
+  const [post, agent] = await Promise.all([
+    getBlogPost(slug, agentId),
+    getAgentProfile(agentId),
+  ])
+  if (!post || !agent) return {}
+  const { buildMetadata } = await import('@/lib/seo')
   // SEO overrides win over the post's own title/excerpt.
   const title = post.seo_title?.trim() || post.title
-  const description = post.seo_description?.trim() || post.excerpt || undefined
-  return { title, description }
+  const description =
+    post.seo_description?.trim() ||
+    post.excerpt ||
+    `Insight from ${agent.agency_name}, a luxury travel agency.`
+  return buildMetadata({
+    agent,
+    title,
+    description,
+    path: `blog/${slug}`,
+    image: post.cover_image_url ?? undefined,
+    imageAlt: post.title,
+    ogType: 'article',
+  })
 }
 
 const serif = 'var(--font-serif)'
@@ -57,8 +73,29 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   const gallery: GalleryImage[] = post.gallery_images ?? []
 
+  const articleSchemas = agent
+    ? [
+        articleSchema(agent, {
+          title: post.title,
+          slug: post.slug,
+          excerpt: post.excerpt,
+          cover_image_url: post.cover_image_url,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          created_at: (post as any).created_at ?? null,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          updated_at: (post as any).updated_at ?? null,
+        }),
+        breadcrumbSchema(agent, [
+          { name: 'Home', path: '' },
+          { name: 'Journal', path: 'blog' },
+          { name: post.title, path: `blog/${post.slug}` },
+        ]),
+      ]
+    : []
+
   return (
     <main style={{ background: 'var(--cream)' }}>
+      {articleSchemas.length > 0 && <JsonLd data={articleSchemas} />}
 
       {/* Featured image */}
       {post.cover_image_url && (

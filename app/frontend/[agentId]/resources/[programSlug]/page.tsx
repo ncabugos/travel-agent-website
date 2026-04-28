@@ -6,6 +6,7 @@ import { getHotelProgram, getAllHotelProgramSlugs } from '@/lib/hotel-programs'
 import { BenefitsList } from '@/components/hotel-programs/BenefitsList'
 import { GallerySlider } from '@/components/hotel-programs/GallerySlider'
 import { HOTEL_GALLERY } from '@/lib/media-library'
+import { JsonLd, programServiceSchema, breadcrumbSchema } from '@/components/seo/JsonLd'
 
 interface PageProps {
   params: Promise<{ agentId: string; programSlug: string }>
@@ -17,13 +18,25 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const { programSlug } = await params
-  const program = await getHotelProgram(programSlug)
-  if (!program) return {}
-  return {
-    title: `${program.name} — Exclusive Hotel Benefits`,
-    description: program.tagline ?? program.description ?? undefined,
-  }
+  const { agentId, programSlug } = await params
+  const [program, agent] = await Promise.all([
+    getHotelProgram(programSlug),
+    getAgentProfile(agentId),
+  ])
+  if (!program || !agent) return {}
+  const { buildMetadata, getSeoFacts } = await import('@/lib/seo')
+  const facts = getSeoFacts(agent)
+  const isVirtuoso = (facts.memberOf ?? []).some((m) => m.name === 'Virtuoso')
+  return buildMetadata({
+    agent,
+    title: `${program.name} Benefits & Perks`,
+    description:
+      `Book ${program.name} properties with ${agent.agency_name} — exclusive upgrades, breakfast, resort credit and VIP recognition` +
+      (isVirtuoso ? ' through our Virtuoso membership.' : '.'),
+    path: `resources/${programSlug}`,
+    image: program.image_url ?? undefined,
+    imageAlt: program.name,
+  })
 }
 
 // Category display labels and accent colours
@@ -99,6 +112,14 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
 
   return (
     <main style={{ background: 'var(--cream)' }}>
+      <JsonLd data={[
+        programServiceSchema(agent, { name: program.name, description: program.description, slug: program.slug }),
+        breadcrumbSchema(agent, [
+          { name: 'Home', path: '' },
+          { name: 'Resources', path: 'resources' },
+          { name: program.name, path: `resources/${program.slug}` },
+        ]),
+      ]} />
 
       {/* ── Hero ──────────────────────────────────────────────────── */}
       <div style={{ position: 'relative', height: '70vh', minHeight: '480px', overflow: 'hidden' }}>

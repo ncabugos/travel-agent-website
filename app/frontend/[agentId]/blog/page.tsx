@@ -5,6 +5,7 @@ import { getAgentProfile } from '@/lib/suppliers'
 import { getChannelVideos } from '@/lib/youtube'
 import { notFound } from 'next/navigation'
 import { VideoGrid } from '@/components/journal/VideoGrid'
+import { JsonLd, blogSchema, breadcrumbSchema } from '@/components/seo/JsonLd'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -13,7 +14,22 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps) {
   const { agentId } = await params
   const agent = await getAgentProfile(agentId)
-  return { title: `Journal — ${agent?.agency_name ?? 'Eden For Your World'}` }
+  if (!agent) return { title: 'Journal' }
+  const { buildMetadata, getSeoFacts } = await import('@/lib/seo')
+  const facts = getSeoFacts(agent)
+  const isVirtuoso = (facts.memberOf ?? []).some((m) => m.name === 'Virtuoso')
+  return buildMetadata({
+    agent,
+    title: 'Luxury Travel Journal',
+    description: isVirtuoso
+      ? `Destination guides, hotel reviews and insider tips from Virtuoso advisors. Curated stories from ${agent.agency_name}.`
+      : `Destination guides and travel stories from ${agent.agency_name}.`,
+    path: 'blog',
+    ogTitle: `The ${agent.agency_name} Journal — Luxury Travel Stories`,
+    ogDescription: isVirtuoso
+      ? 'First-hand luxury travel insight from Virtuoso advisors: hotel reviews, destination guides, and bespoke itinerary inspiration.'
+      : undefined,
+  })
 }
 
 const serif = 'var(--font-serif)'
@@ -30,9 +46,17 @@ export default async function BlogPage({ params }: PageProps) {
   ])
 
   const base = `/frontend/${agentId}`
+  const blogJsonLd = [
+    blogSchema(agent),
+    breadcrumbSchema(agent, [
+      { name: 'Home', path: '' },
+      { name: 'Journal', path: 'blog' },
+    ]),
+  ]
 
   return (
     <main style={{ background: 'var(--cream)' }}>
+      <JsonLd data={blogJsonLd} />
 
       {/* Page Banner */}
       <div style={{ position: 'relative', height: '50vh', minHeight: '340px', overflow: 'hidden' }}>
