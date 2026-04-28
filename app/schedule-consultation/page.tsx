@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ConsultationForm } from '@/components/marketing/ConsultationForm'
+import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 
 export const metadata = {
   title: 'Schedule a Consultation — EliteAdvisorHub',
@@ -137,6 +138,8 @@ export default async function ScheduleConsultationPage({ searchParams }: PagePro
 
         <ConsultationForm initialTier={initialTier} />
       </main>
+
+      <MarketingFooter />
     </div>
   )
 }

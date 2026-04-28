@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Globe, FileText, Building2, Paintbrush, Lock, TrendingUp } from 'lucide-react'
 import { CheckoutButton } from '@/components/stripe/CheckoutButton'
 import { MarketingNav } from '@/components/marketing/MarketingNav'
+import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 
 export const metadata = {
   title: 'EliteAdvisorHub — Websites for Elite Travel Advisors',
@@ -503,40 +504,8 @@ export default function EliteAdvisorHubHomePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer style={{
-        padding: '48px 24px', borderTop: '1px solid #f3f4f6',
-        backgroundColor: '#fafafa',
-      }}>
-        <div style={{
-          maxWidth: '1200px', margin: '0 auto',
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          flexWrap: 'wrap', gap: '16px',
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{
-              width: '24px', height: '24px', borderRadius: '6px',
-              background: 'linear-gradient(135deg, #111 0%, #374151 100%)',
-              display: 'flex', alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              <span style={{ color: '#fff', fontSize: '12px', fontWeight: 700 }}>E</span>
-            </div>
-            <span style={{ fontSize: '14px', fontWeight: 600, color: '#374151' }}>EliteAdvisorHub</span>
-          </div>
-          <p style={{ margin: 0, fontSize: '13px', color: '#9ca3af' }}>
-            © {new Date().getFullYear()} Elite Advisor Hub, LLC. All rights reserved. ·{' '}
-            <a href="https://eliteadvisorhub.com" style={{ color: '#9ca3af', textDecoration: 'none' }}>eliteadvisorhub.com</a>
-          </p>
-          <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
-            <Link href="/support" style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'none' }}>Support</Link>
-            <Link href="/privacy" style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'none' }}>Privacy</Link>
-            <Link href="/terms" style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'none' }}>Terms</Link>
-            <Link href="/admin/login" style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'none' }}>Admin</Link>
-            <Link href="/agent-portal/login" style={{ fontSize: '13px', color: '#9ca3af', textDecoration: 'none' }}>Agent Login</Link>
-          </div>
-        </div>
-      </footer>
+      {/* Global platform footer */}
+      <MarketingFooter />
 
       {/* Responsive + hover styles */}
       <style>{`

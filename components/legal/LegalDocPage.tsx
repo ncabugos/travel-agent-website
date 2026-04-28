@@ -2,6 +2,7 @@ import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import { marked } from 'marked'
 import Link from 'next/link'
+import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 
 interface LegalDocPageProps {
   /** Filename within public/legal/, e.g. "privacy-policy.md" */
@@ -110,6 +111,8 @@ export async function LegalDocPage({ file, pageTitle }: LegalDocPageProps) {
         }
         .legal-prose th { background: #f9fafb; font-weight: 600; }
       `}</style>
+
+      <MarketingFooter />
     </main>
   )
 }

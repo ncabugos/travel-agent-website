@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SupportForm } from '@/components/marketing/SupportForm'
+import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 
 export const metadata: Metadata = {
   title: 'Customer Support',
@@ -97,6 +98,8 @@ export default function SupportPage() {
           }
         }
       `}</style>
+
+      <MarketingFooter />
     </main>
   )
 }
