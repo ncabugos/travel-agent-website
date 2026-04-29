@@ -42,6 +42,12 @@ export interface AgentSeoFacts {
   }
   /** CST / regulatory identifier. */
   identifier?: string
+  /**
+   * Path to a favicon image (under /public). Applied via Next.js Metadata
+   * `icons.icon`, overriding the platform's default app/favicon.ico for
+   * this tenant's pages only.
+   */
+  favicon?: string
 }
 
 const EDEN_FACTS: AgentSeoFacts = {
@@ -82,6 +88,7 @@ const EDEN_FACTS: AgentSeoFacts = {
     ],
   },
   identifier: 'CST # 2097184-40',
+  favicon: '/assets/eden/logos/eden-wing-gold-125-reduced.png',
 }
 
 const AGENT_SEO_DATA: Record<string, AgentSeoFacts> = {
@@ -241,5 +248,10 @@ export function buildMetadata({
           'max-snippet': -1,
         }
       : { index: false, follow: false },
+    // Per-tenant favicon. Falls through to the platform's app/favicon.ico
+    // when no agent-specific favicon is configured.
+    ...(facts.favicon
+      ? { icons: { icon: facts.favicon, shortcut: facts.favicon, apple: facts.favicon } }
+      : {}),
   }
 }

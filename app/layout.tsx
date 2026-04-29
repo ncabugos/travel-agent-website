@@ -28,6 +28,10 @@ export const metadata: Metadata = {
     "The premium website platform for luxury travel advisors. Stunning templates, curated editorial content, supplier integrations, and zero tech burden.",
   applicationName: "EliteAdvisorHub",
   authors: [{ name: "EliteAdvisorHub" }],
+  // Default favicon. Tenant pages can override per-tenant via lib/seo.ts
+  // (e.g. Eden's gold wing). Lives in /public so it doesn't get auto-emitted
+  // by Next's app/favicon.ico file convention, which would always win.
+  icons: { icon: "/favicon.ico", shortcut: "/favicon.ico", apple: "/favicon.ico" },
   keywords: [
     "travel advisor websites",
     "luxury travel marketing",
