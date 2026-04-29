@@ -7,6 +7,11 @@ import type { BlogPost } from '@/types/index'
 interface CuratedExperiencesProps {
   posts: BlogPost[]
   agentId: string
+  /**
+   * Base path for tenant links. Empty on vanity domain (clean URLs),
+   * `/frontend/{agentId}` on the platform host.
+   */
+  base?: string
 }
 
 const PLACEHOLDER: BlogPost[] = [
@@ -66,7 +71,8 @@ const PLACEHOLDER: BlogPost[] = [
   },
 ]
 
-export function CuratedExperiences({ posts, agentId }: CuratedExperiencesProps) {
+export function CuratedExperiences({ posts, agentId, base }: CuratedExperiencesProps) {
+  const linkBase = base ?? `/frontend/${agentId}`
   const serif = 'var(--font-serif)'
   const sans = 'var(--font-sans)'
   const items = posts.length > 0 ? posts.slice(0, 3) : PLACEHOLDER
@@ -117,7 +123,7 @@ export function CuratedExperiences({ posts, agentId }: CuratedExperiencesProps) 
           {items.map((post) => {
             const href = post.slug === '#'
               ? '#'
-              : `/frontend/${agentId}/blog/${post.slug}`
+              : `${linkBase}/blog/${post.slug}`
 
             return (
               <Link
@@ -218,7 +224,7 @@ export function CuratedExperiences({ posts, agentId }: CuratedExperiencesProps) 
         {/* Discover More CTA */}
         <div style={{ textAlign: 'center', marginTop: '72px' }}>
           <Link
-            href={`/frontend/${agentId}/blog`}
+            href={`${linkBase}/blog`}
             style={{
               display: 'inline-block',
               fontFamily: sans,

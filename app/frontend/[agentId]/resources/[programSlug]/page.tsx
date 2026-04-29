@@ -7,6 +7,7 @@ import { BenefitsList } from '@/components/hotel-programs/BenefitsList'
 import { GallerySlider } from '@/components/hotel-programs/GallerySlider'
 import { HOTEL_GALLERY } from '@/lib/media-library'
 import { JsonLd, programServiceSchema, breadcrumbSchema } from '@/components/seo/JsonLd'
+import { tenantBase } from '@/lib/tenant-paths'
 
 interface PageProps {
   params: Promise<{ agentId: string; programSlug: string }>
@@ -102,7 +103,7 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
 
   if (!agent || !program) notFound()
 
-  const base        = `/frontend/${agentId}`
+  const base        = await tenantBase(agentId)
   const categoryMeta = program.category ? CATEGORY_META[program.category] : null
 
   // Pick gallery from the media library registry, fallback to local set

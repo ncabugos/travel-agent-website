@@ -18,6 +18,7 @@ import { getAgentHotelPrograms } from '@/lib/hotel-programs'
 import { EDEN } from '@/lib/media-library'
 import { buildMetadata, getSeoFacts } from '@/lib/seo'
 import { JsonLd, travelAgencySchema, leadAdvisorSchema } from '@/components/seo/JsonLd'
+import { tenantBase } from '@/lib/tenant-paths'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -96,7 +97,7 @@ export default async function AgentHomePage({ params }: PageProps) {
 
   const serif = 'var(--font-serif)'
   const sans = 'var(--font-sans)'
-  const base = `/frontend/${agentId}`
+  const base = await tenantBase(agentId)
 
   const advisorSchema = leadAdvisorSchema(agent)
   const homeSchemas = [travelAgencySchema(agent), advisorSchema].filter(Boolean) as object[]
@@ -140,7 +141,7 @@ export default async function AgentHomePage({ params }: PageProps) {
       {/* ─────────────────────────────────────────────────────────────────────
           5. CURATED EXPERIENCES — 3-col blog journal grid
           ───────────────────────────────────────────────────────────────────── */}
-      <CuratedExperiences posts={blogPosts} agentId={agentId} />
+      <CuratedExperiences posts={blogPosts} agentId={agentId} base={base} />
 
       {/* ─────────────────────────────────────────────────────────────────────
           6. EXCLUSIVE HOTEL PROGRAMS — logo grid on white
@@ -198,7 +199,7 @@ export default async function AgentHomePage({ params }: PageProps) {
               through the world's most prestigious hotel loyalty programs.
             </p>
           </div>
-          <ProgramLogoGrid programs={hotelPrograms} agentId={agentId} />
+          <ProgramLogoGrid programs={hotelPrograms} agentId={agentId} base={base} />
           <div style={{ textAlign: 'center', marginTop: '56px' }}>
             <Link
               href={`${base}/resources`}
@@ -243,7 +244,7 @@ export default async function AgentHomePage({ params }: PageProps) {
       {/* ─────────────────────────────────────────────────────────────────────
           9. CONTACT / PLAN YOUR TRIP — 2-col, image + contact info
           ───────────────────────────────────────────────────────────────────── */}
-      <ContactSection agent={agent} agentId={agentId} />
+      <ContactSection agent={agent} agentId={agentId} base={base} />
 
     </main>
   )

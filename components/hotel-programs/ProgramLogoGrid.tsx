@@ -4,6 +4,8 @@ import type { HotelProgram } from '@/lib/hotel-programs'
 interface ProgramLogoGridProps {
   programs: HotelProgram[]
   agentId: string
+  /** Tenant link base — empty on vanity domain, `/frontend/{agentId}` on platform. */
+  base?: string
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -34,7 +36,8 @@ function ProgramLogoFallback({ name }: { name: string }) {
   )
 }
 
-export function ProgramLogoGrid({ programs, agentId }: ProgramLogoGridProps) {
+export function ProgramLogoGrid({ programs, agentId, base }: ProgramLogoGridProps) {
+  const linkBase = base ?? `/frontend/${agentId}`
   if (!programs.length) return null
 
   return (
@@ -156,7 +159,7 @@ export function ProgramLogoGrid({ programs, agentId }: ProgramLogoGridProps) {
         {programs.map((program) => (
           <Link
             key={program.id}
-            href={`/frontend/${agentId}/resources/${program.slug}`}
+            href={`${linkBase}/resources/${program.slug}`}
             className="plg-cell"
             title={program.name}
           >

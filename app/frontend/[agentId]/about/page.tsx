@@ -6,6 +6,7 @@ import { ProgramLogoGrid } from '@/components/hotel-programs/ProgramLogoGrid'
 import { VideoEmbed } from '@/components/ui/VideoEmbed'
 import { notFound } from 'next/navigation'
 import { EDEN, HOTEL_GALLERY } from '@/lib/media-library'
+import { tenantBase } from '@/lib/tenant-paths'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -141,9 +142,10 @@ function PhoneIcon() {
 export default async function AboutPage({ params }: PageProps) {
   const { agentId } = await params
 
-  const [agent, programs] = await Promise.all([
+  const [agent, programs, base] = await Promise.all([
     getAgentProfile(agentId),
     getAgentHotelPrograms(agentId),
+    tenantBase(agentId),
   ])
 
   if (!agent) notFound()
@@ -185,7 +187,7 @@ export default async function AboutPage({ params }: PageProps) {
           Eden For Your World's goal is to reveal that Eden exists wherever you are… if you just have the right expert to help you find it.
         </p>
         <Link
-          href={`/frontend/${agentId}/contact`}
+          href={`${base}/contact`}
           style={{
             display: 'inline-block',
             padding: '14px 36px',
@@ -359,7 +361,7 @@ export default async function AboutPage({ params }: PageProps) {
               Click any programme to see the full list of benefits available to our clients.
             </p>
           </div>
-          <ProgramLogoGrid programs={programs} agentId={agentId} />
+          <ProgramLogoGrid programs={programs} agentId={agentId} base={base} />
         </div>
       </section>
 

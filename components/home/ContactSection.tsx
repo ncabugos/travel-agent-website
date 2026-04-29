@@ -16,6 +16,8 @@ interface AgentProfile {
 interface ContactSectionProps {
   agent: AgentProfile
   agentId: string
+  /** Tenant link base — empty on vanity domain, `/frontend/{agentId}` on platform. */
+  base?: string
   /** Hero image for the left column */
   imageSrc?: string
   imageAlt?: string
@@ -24,9 +26,11 @@ interface ContactSectionProps {
 export function ContactSection({
   agent,
   agentId,
+  base,
   imageSrc = EDEN.collageFooter,
   imageAlt = 'Eden For Your World',
 }: ContactSectionProps) {
+  const linkBase = base ?? `/frontend/${agentId}`
   const serif = 'var(--font-serif)'
   const sans = 'var(--font-sans)'
 
@@ -163,7 +167,7 @@ export function ContactSection({
 
         {/* CTA button */}
         <Link
-          href={`/frontend/${agentId}/contact`}
+          href={`${linkBase}/contact`}
           style={{
             display: 'inline-block',
             alignSelf: 'flex-start',

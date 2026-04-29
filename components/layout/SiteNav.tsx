@@ -8,6 +8,8 @@ import { EDEN } from '@/lib/media-library'
 interface SiteNavProps {
   agentId: string
   agencyName: string
+  /** Tenant link base — empty on vanity domain, `/frontend/{agentId}` on platform. */
+  base?: string
 }
 
 const DESKTOP_NAV = [
@@ -29,11 +31,11 @@ const MOBILE_NAV = [
 
 const WHITE_LOGO = '/assets/eden/logos/eden-new-white-header-350-reduced.png'
 
-export function SiteNav({ agentId, agencyName }: SiteNavProps) {
+export function SiteNav({ agentId, agencyName, base: baseProp }: SiteNavProps) {
   const [scrolled,   setScrolled]  = useState(false)
   const [hovered,    setHovered]   = useState(false)
   const [menuOpen,   setMenuOpen]  = useState(false)
-  const base = `/frontend/${agentId}`
+  const base = baseProp ?? `/frontend/${agentId}`
 
   // Scroll lock when mobile drawer is open
   useEffect(() => {

@@ -4,6 +4,7 @@ import { getAgentProfile } from '@/lib/suppliers'
 import { getAgentHotelPrograms } from '@/lib/hotel-programs'
 import { ProgramLogoGrid } from '@/components/hotel-programs/ProgramLogoGrid'
 import { notFound } from 'next/navigation'
+import { tenantBase } from '@/lib/tenant-paths'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -54,9 +55,10 @@ const sans  = 'var(--font-sans)'
 export default async function ResourcesPage({ params }: PageProps) {
   const { agentId } = await params
 
-  const [agent, programs] = await Promise.all([
+  const [agent, programs, base] = await Promise.all([
     getAgentProfile(agentId),
     getAgentHotelPrograms(agentId),
+    tenantBase(agentId),
   ])
 
   if (!agent) notFound()
@@ -147,7 +149,7 @@ export default async function ResourcesPage({ params }: PageProps) {
             </p>
           </div>
 
-          <ProgramLogoGrid programs={programs} agentId={agentId} />
+          <ProgramLogoGrid programs={programs} agentId={agentId} base={base} />
         </div>
       </section>
 
@@ -302,7 +304,7 @@ export default async function ResourcesPage({ params }: PageProps) {
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.8rem, 3vw, 2.8rem)', fontWeight: 300, color: '#FFFFFF', marginBottom: '32px' }}>
             Book through us and unlock every benefit.
           </h2>
-          <Link href={`/frontend/${agentId}/contact`} className="btn-gold">Start Planning</Link>
+          <Link href={`${base}/contact`} className="btn-gold">Start Planning</Link>
         </div>
       </section>
 

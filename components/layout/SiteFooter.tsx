@@ -6,6 +6,8 @@ import Image from 'next/image'
 interface SiteFooterProps {
   agentId: string
   agencyName: string
+  /** Tenant link base — empty on vanity domain, `/frontend/{agentId}` on platform. */
+  base?: string
   phone?: string
   email?: string
   address?: string
@@ -27,6 +29,7 @@ const NAV_LINKS = [
 export function SiteFooter({
   agentId,
   agencyName,
+  base: baseProp,
   phone,
   email,
   address,
@@ -35,7 +38,7 @@ export function SiteFooter({
   facebook,
   youtube,
 }: SiteFooterProps) {
-  const base = `/frontend/${agentId}`
+  const base = baseProp ?? `/frontend/${agentId}`
 
   const labelStyle: React.CSSProperties = {
     fontFamily: 'var(--font-sans)',

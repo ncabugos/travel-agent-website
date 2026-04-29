@@ -5,6 +5,7 @@ import { getBlogPost, getBlogPosts, renderShortcodes } from '@/lib/blog'
 import { getAgentProfile } from '@/lib/suppliers'
 import type { GalleryImage } from '@/types/index'
 import { JsonLd, articleSchema, breadcrumbSchema } from '@/components/seo/JsonLd'
+import { tenantBase } from '@/lib/tenant-paths'
 
 interface PageProps {
   params: Promise<{ agentId: string; slug: string }>
@@ -48,7 +49,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   if (!post) notFound()
 
-  const base = `/frontend/${agentId}`
+  const base = await tenantBase(agentId)
   const otherPosts = recentPosts.filter(p => p.id !== post.id).slice(0, 4)
 
   // ── Auto-paragraph: convert \n\n → <p> blocks (like WP's wpautop) ────────

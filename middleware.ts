@@ -5,12 +5,17 @@ import { createClient } from '@supabase/supabase-js'
 
 // ── Custom domain → agentId cache ─────────────────────────────────────────
 // In-memory map refreshed every 5 minutes so we don't hit Supabase on every request.
-let domainCache: Map<string, { agentId: string; template: string }> = new Map()
+type DomainCacheEntry = { agentId: string; template: string }
+interface DomainMaps {
+  byDomain: Map<string, DomainCacheEntry>
+  byAgentId: Map<string, { domain: string; template: string }>
+}
+let domainCache: DomainMaps = { byDomain: new Map(), byAgentId: new Map() }
 let domainCacheUpdatedAt = 0
 const DOMAIN_CACHE_TTL = 5 * 60 * 1000 // 5 minutes
 
-async function getDomainMap(): Promise<Map<string, { agentId: string; template: string }>> {
-  if (Date.now() - domainCacheUpdatedAt < DOMAIN_CACHE_TTL && domainCache.size > 0) {
+async function getDomainMap(): Promise<DomainMaps> {
+  if (Date.now() - domainCacheUpdatedAt < DOMAIN_CACHE_TTL && domainCache.byDomain.size > 0) {
     return domainCache
   }
 
@@ -26,22 +31,38 @@ async function getDomainMap(): Promise<Map<string, { agentId: string; template: 
       .select('id, custom_domain, template')
       .not('custom_domain', 'is', null)
 
-    const map = new Map<string, { agentId: string; template: string }>()
+    const byDomain = new Map<string, DomainCacheEntry>()
+    const byAgentId = new Map<string, { domain: string; template: string }>()
     for (const row of data ?? []) {
       if (row.custom_domain) {
         // Store with and without www for flexible matching
-        const domain = row.custom_domain.toLowerCase().replace(/^www\./, '')
-        map.set(domain, { agentId: row.id, template: row.template || 'frontend' })
-        map.set(`www.${domain}`, { agentId: row.id, template: row.template || 'frontend' })
+        const apex = row.custom_domain.toLowerCase().replace(/^www\./, '')
+        const template = row.template || 'frontend'
+        byDomain.set(apex, { agentId: row.id, template })
+        byDomain.set(`www.${apex}`, { agentId: row.id, template })
+        // Reverse lookup: agentId → canonical apex domain (no www).
+        byAgentId.set(row.id, { domain: apex, template })
       }
     }
 
-    domainCache = map
+    domainCache = { byDomain, byAgentId }
     domainCacheUpdatedAt = Date.now()
-    return map
+    return domainCache
   } catch {
     return domainCache // return stale cache on error
   }
+}
+
+/**
+ * Match `/{template}/{agentId}/{...rest}` and pull out the parts so we can
+ * (a) strip the prefix on a vanity domain, or (b) redirect platform paths
+ * to the agent's vanity domain. Returns null if the path isn't a tenant path.
+ */
+const TENANT_PATH = /^\/(frontend|t2|t3|t4)\/([0-9a-f-]{36})(\/.*)?$/i
+function parseTenantPath(pathname: string): { template: string; agentId: string; rest: string } | null {
+  const m = TENANT_PATH.exec(pathname)
+  if (!m) return null
+  return { template: m[1], agentId: m[2], rest: m[3] ?? '' }
 }
 
 // Known platform hostnames that should NOT trigger domain routing
@@ -63,9 +84,20 @@ export async function middleware(request: NextRequest) {
 
   if (!isPlatformHost(host) && !pathname.startsWith('/admin') && !pathname.startsWith('/agent-portal') && !pathname.startsWith('/api')) {
     const domainMap = await getDomainMap()
-    const match = domainMap.get(host)
+    const match = domainMap.byDomain.get(host)
 
     if (match) {
+      // ── Redirect /{template}/{agentId}/* on the vanity domain to the
+      // clean path. This handles directly shared/bookmarked links that
+      // include the platform prefix and prevents the rewrite below from
+      // producing a /{template}/{agentId}/{template}/{agentId}/* 404.
+      const tenantPath = parseTenantPath(pathname)
+      if (tenantPath && tenantPath.agentId === match.agentId) {
+        const url = request.nextUrl.clone()
+        url.pathname = tenantPath.rest || '/'
+        return NextResponse.redirect(url, 301)
+      }
+
       // Rewrite / → /frontend/{agentId}, /journal/slug → /frontend/{agentId}/journal/slug, etc.
       const basePath = `/${match.template}/${match.agentId}`
       const rewritePath = pathname === '/' ? basePath : `${basePath}${pathname}`
@@ -73,6 +105,25 @@ export async function middleware(request: NextRequest) {
       const url = request.nextUrl.clone()
       url.pathname = rewritePath
       return NextResponse.rewrite(url)
+    }
+  }
+
+  // ── Platform host: redirect /{template}/{agentId}/* to the agent's
+  //    vanity domain when one is configured. Consolidates SEO equity and
+  //    keeps Google indexing only the canonical (vanity) URL.
+  if (isPlatformHost(host)) {
+    const tenantPath = parseTenantPath(pathname)
+    if (tenantPath) {
+      const domainMap = await getDomainMap()
+      const reverse = domainMap.byAgentId.get(tenantPath.agentId)
+      if (reverse) {
+        const url = request.nextUrl.clone()
+        url.protocol = 'https:'
+        url.host = reverse.domain
+        url.port = ''
+        url.pathname = tenantPath.rest || '/'
+        return NextResponse.redirect(url, 301)
+      }
     }
   }
 

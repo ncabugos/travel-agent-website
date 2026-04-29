@@ -6,6 +6,7 @@ import { getChannelVideos } from '@/lib/youtube'
 import { notFound } from 'next/navigation'
 import { VideoGrid } from '@/components/journal/VideoGrid'
 import { JsonLd, blogSchema, breadcrumbSchema } from '@/components/seo/JsonLd'
+import { tenantBase } from '@/lib/tenant-paths'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -45,7 +46,7 @@ export default async function BlogPage({ params }: PageProps) {
     getChannelVideos('edenforyourworld', 9),
   ])
 
-  const base = `/frontend/${agentId}`
+  const base = await tenantBase(agentId)
   const blogJsonLd = [
     blogSchema(agent),
     breadcrumbSchema(agent, [

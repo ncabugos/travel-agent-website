@@ -4,6 +4,7 @@ import { getAgentProfile } from '@/lib/suppliers'
 import { TopBar } from '@/components/layout/TopBar'
 import { SiteNav } from '@/components/layout/SiteNav'
 import { SiteFooter } from '@/components/layout/SiteFooter'
+import { tenantBase } from '@/lib/tenant-paths'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -28,6 +29,7 @@ interface LayoutProps {
 export default async function AgentFrontendLayout({ children, params }: LayoutProps) {
   const { agentId } = await params
   const agent = await getAgentProfile(agentId)
+  const base = await tenantBase(agentId)
 
   const social = {
     instagram: agent?.instagram_url,
@@ -49,6 +51,7 @@ export default async function AgentFrontendLayout({ children, params }: LayoutPr
       <SiteNav
         agentId={agentId}
         agencyName={agent?.agency_name ?? 'Luxury Travel'}
+        base={base}
       />
       <div>
         {children}
@@ -56,6 +59,7 @@ export default async function AgentFrontendLayout({ children, params }: LayoutPr
       <SiteFooter
         agentId={agentId}
         agencyName={agent?.agency_name ?? 'Luxury Travel'}
+        base={base}
         phone={agent?.phone ?? '+1 (562) 856-8603'}
         email={agent?.email ?? 'info@edenfyw.com'}
         address={agent?.address}
