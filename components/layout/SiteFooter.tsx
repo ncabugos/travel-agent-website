@@ -111,17 +111,22 @@ export function SiteFooter({
         <div className="footer-nav">
           <span style={labelStyle}>Navigation</span>
           <div className="footer-nav-links">
-            {NAV_LINKS.map(({ label, path }) => (
-              <Link
-                key={label}
-                href={`${base}${path}`}
-                style={linkStyle}
-                onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
-                onMouseLeave={e => (e.currentTarget.style.color = '#9A9590')}
-              >
-                {label}
-              </Link>
-            ))}
+            {NAV_LINKS.map(({ label, path }) => {
+              // Home (path='') resolves to base, but on the vanity domain
+              // base is '' too — fall back to '/' so the link isn't empty.
+              const href = path ? `${base}${path}` : (base || '/')
+              return (
+                <Link
+                  key={label}
+                  href={href}
+                  style={linkStyle}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = '#9A9590')}
+                >
+                  {label}
+                </Link>
+              )
+            })}
           </div>
         </div>
 

@@ -1,41 +1,26 @@
 /**
- * Tenant URL helper for server components.
+ * Tenant URL helper.
  *
  * On the platform host (eliteadvisorhub.com, *.vercel.app, localhost) every
- * internal link needs the `/frontend/[agentId]` prefix so Next can match the
- * route. On a vanity domain (e.g. edenforyourworld.com) middleware rewrites
- * the request to the prefixed path transparently, so internal links should
+ * internal link needs the `/frontend/[agentId]` prefix. On a vanity domain
+ * middleware rewrites the request transparently, so internal links should
  * emit clean paths starting at `/`.
  *
- * Pages compute `base` once at the top of the component, then pass it to
- * children that render Links. Client components receive `base` as a prop.
+ * We can't read the request host inside SSG'd pages (would throw
+ * DYNAMIC_SERVER_USAGE), so we derive the base from `agent.custom_domain`
+ * instead. The assumption: when an agent has a custom_domain configured,
+ * that's the canonical URL — and middleware redirects platform paths to
+ * the vanity domain anyway, so we always emit clean links for those tenants.
  */
 
-import { headers } from 'next/headers'
-
-const PLATFORM_HOSTS = new Set([
-  'localhost',
-  'eliteadvisorhub.com',
-  'www.eliteadvisorhub.com',
-])
-
-function isPlatformHost(host: string): boolean {
-  return (
-    PLATFORM_HOSTS.has(host) ||
-    host.endsWith('.vercel.app') ||
-    host.includes('localhost')
-  )
-}
+import type { AgentProfile } from '@/lib/suppliers'
 
 /**
- * Returns the base path for tenant links given the request host.
- *  - Platform host: `/frontend/{agentId}`
- *  - Vanity domain: '' (empty string)
- *
- * Use as `${base}/about`, `${base}/resources/${slug}`, etc.
+ * Returns the base path for tenant links.
+ *  - Agent with custom_domain: '' (clean URLs — middleware on the vanity
+ *    host serves these directly; on the platform host it 301s to vanity).
+ *  - Agent without custom_domain: `/frontend/{agentId}` (works on platform).
  */
-export async function tenantBase(agentId: string): Promise<string> {
-  const h = await headers()
-  const host = h.get('host')?.toLowerCase().replace(/:\d+$/, '') ?? ''
-  return isPlatformHost(host) ? `/frontend/${agentId}` : ''
+export function tenantBase(agent: Pick<AgentProfile, 'id' | 'custom_domain'>): string {
+  return agent.custom_domain ? '' : `/frontend/${agent.id}`
 }

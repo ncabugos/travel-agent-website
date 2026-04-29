@@ -36,6 +36,10 @@ export function SiteNav({ agentId, agencyName, base: baseProp }: SiteNavProps) {
   const [hovered,    setHovered]   = useState(false)
   const [menuOpen,   setMenuOpen]  = useState(false)
   const base = baseProp ?? `/frontend/${agentId}`
+  // Home href: on the vanity domain `base` is '' which would render an empty
+  // Link href and behave as a no-op. Fall back to '/' so Home always works.
+  const homeHref = base || '/'
+  const linkHref = (path: string) => (path ? `${base}${path}` : homeHref)
 
   // Scroll lock when mobile drawer is open
   useEffect(() => {
@@ -106,12 +110,12 @@ export function SiteNav({ agentId, agencyName, base: baseProp }: SiteNavProps) {
           {/* Left links */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
             {DESKTOP_NAV.slice(0, 3).map(({ label, path }) => (
-              <NavLink key={label} href={`${base}${path}`} style={linkStyle}>{label}</NavLink>
+              <NavLink key={label} href={linkHref(path)} style={linkStyle}>{label}</NavLink>
             ))}
           </div>
 
           {/* Center logo */}
-          <Link href={base} style={{ display: 'flex', alignItems: 'center', lineHeight: 1 }}>
+          <Link href={homeHref} style={{ display: 'flex', alignItems: 'center', lineHeight: 1 }}>
             <Image
               src={solid ? EDEN.logoGold : WHITE_LOGO}
               alt={agencyName}
@@ -125,7 +129,7 @@ export function SiteNav({ agentId, agencyName, base: baseProp }: SiteNavProps) {
           {/* Right links */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '32px' }}>
             {DESKTOP_NAV.slice(3).map(({ label, path }) => (
-              <NavLink key={label} href={`${base}${path}`} style={linkStyle}>{label}</NavLink>
+              <NavLink key={label} href={linkHref(path)} style={linkStyle}>{label}</NavLink>
             ))}
           </div>
         </div>
@@ -139,7 +143,7 @@ export function SiteNav({ agentId, agencyName, base: baseProp }: SiteNavProps) {
           <div style={{ width: '44px' }} />
 
           {/* Centered logo */}
-          <Link href={base} onClick={closeMenu} style={{ display: 'flex', alignItems: 'center' }}>
+          <Link href={homeHref} onClick={closeMenu} style={{ display: 'flex', alignItems: 'center' }}>
             <Image
               src={solid ? EDEN.logoGold : WHITE_LOGO}
               alt={agencyName}
@@ -261,7 +265,7 @@ export function SiteNav({ agentId, agencyName, base: baseProp }: SiteNavProps) {
             {MOBILE_NAV.map(({ label, path }, i) => (
               <li key={label} style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
                 <Link
-                  href={`${base}${path}`}
+                  href={linkHref(path)}
                   onClick={closeMenu}
                   style={{
                     display: 'block',

@@ -142,13 +142,13 @@ function PhoneIcon() {
 export default async function AboutPage({ params }: PageProps) {
   const { agentId } = await params
 
-  const [agent, programs, base] = await Promise.all([
+  const [agent, programs] = await Promise.all([
     getAgentProfile(agentId),
     getAgentHotelPrograms(agentId),
-    tenantBase(agentId),
   ])
 
   if (!agent) notFound()
+  const base = tenantBase(agent)
 
   return (
     <main style={{ background: '#FAFAF8' }}>

@@ -49,7 +49,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   if (!post) notFound()
 
-  const base = await tenantBase(agentId)
+  const base = agent ? tenantBase(agent) : `/frontend/${agentId}`
   const otherPosts = recentPosts.filter(p => p.id !== post.id).slice(0, 4)
 
   // ── Auto-paragraph: convert \n\n → <p> blocks (like WP's wpautop) ────────

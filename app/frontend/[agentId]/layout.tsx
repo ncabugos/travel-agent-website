@@ -29,7 +29,7 @@ interface LayoutProps {
 export default async function AgentFrontendLayout({ children, params }: LayoutProps) {
   const { agentId } = await params
   const agent = await getAgentProfile(agentId)
-  const base = await tenantBase(agentId)
+  const base = agent ? tenantBase(agent) : `/frontend/${agentId}`
 
   const social = {
     instagram: agent?.instagram_url,

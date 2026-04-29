@@ -97,7 +97,7 @@ export default async function AgentHomePage({ params }: PageProps) {
 
   const serif = 'var(--font-serif)'
   const sans = 'var(--font-sans)'
-  const base = await tenantBase(agentId)
+  const base = tenantBase(agent)
 
   const advisorSchema = leadAdvisorSchema(agent)
   const homeSchemas = [travelAgencySchema(agent), advisorSchema].filter(Boolean) as object[]

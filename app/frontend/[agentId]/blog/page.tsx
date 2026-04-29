@@ -46,7 +46,7 @@ export default async function BlogPage({ params }: PageProps) {
     getChannelVideos('edenforyourworld', 9),
   ])
 
-  const base = await tenantBase(agentId)
+  const base = tenantBase(agent)
   const blogJsonLd = [
     blogSchema(agent),
     breadcrumbSchema(agent, [

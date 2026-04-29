@@ -103,7 +103,7 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
 
   if (!agent || !program) notFound()
 
-  const base        = await tenantBase(agentId)
+  const base        = tenantBase(agent)
   const categoryMeta = program.category ? CATEGORY_META[program.category] : null
 
   // Pick gallery from the media library registry, fallback to local set
