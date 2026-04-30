@@ -107,7 +107,6 @@ export default async function BlogPostPage({ params }: PageProps) {
             alt={post.title}
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
           />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 70%, rgba(250,250,245,1) 100%)' }} />
         </div>
       )}
 
