@@ -40,32 +40,45 @@ export function SiteFooter({
 }: SiteFooterProps) {
   const base = baseProp ?? `/frontend/${agentId}`
 
+  /* Shared micro-label style — used for every uppercase section label
+     (Navigation, Contact, and the Mailing Address sub-label) so the footer
+     reads as one consistent system rather than three different stamps. */
   const labelStyle: React.CSSProperties = {
     fontFamily: 'var(--font-sans)',
-    fontSize: '9px',
-    letterSpacing: '0.28em',
+    fontSize: '10px',
+    letterSpacing: '0.24em',
     textTransform: 'uppercase',
-    color: 'var(--warm-gray)',
-    marginBottom: '20px',
+    color: '#7A7570',
+    marginBottom: '24px',
     display: 'block',
   }
 
   const linkStyle: React.CSSProperties = {
     fontFamily: 'var(--font-sans)',
     fontSize: '13px',
-    color: '#9A9590',
+    color: '#A8A39E',
     textDecoration: 'none',
-    letterSpacing: '0.05em',
+    letterSpacing: '0.04em',
     transition: 'color 0.2s',
     display: 'block',
-    lineHeight: '2',
+    lineHeight: '2.1',
+  }
+
+  /* Bottom-bar text style: copy line, "A Virtuoso Member Agency",
+     and the Terms / Privacy links all share this so the row reads
+     as one band of text. */
+  const bottomMetaStyle: React.CSSProperties = {
+    fontFamily: 'var(--font-sans)',
+    fontSize: '10px',
+    letterSpacing: '0.14em',
+    color: '#5A5550',
   }
 
   return (
     <footer style={{ background: 'var(--dark-footer)', color: '#9A9590' }}>
 
       {/* ── Main columns ─────────────────────────────────────────────── */}
-      <div className="footer-main max-w-7xl mx-auto px-8 py-20">
+      <div className="footer-main max-w-7xl mx-auto">
 
         {/* Col 1: Brand */}
         <div className="footer-brand">
@@ -76,23 +89,24 @@ export function SiteFooter({
               letterSpacing: '0.12em',
               color: 'var(--gold)',
               display: 'block',
-              marginBottom: '12px',
+              marginBottom: '14px',
               fontWeight: 300,
+              lineHeight: 1.2,
             }}
           >
             {agencyName}
           </span>
-          <p style={{ fontSize: '13px', lineHeight: '1.8', color: '#6A6560', maxWidth: '240px' }}>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', lineHeight: '1.85', color: '#7A7570', maxWidth: '260px', margin: 0 }}>
             Curating the world&apos;s most extraordinary journeys — with precision, passion, and white-glove care.
           </p>
           {/* Social icons */}
-          <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
+          <div className="footer-social" style={{ display: 'flex', gap: '18px', marginTop: '22px' }}>
             <FooterSocialLink href={instagram ?? '#'} label="Instagram" type="instagram" />
             <FooterSocialLink href={facebook ?? '#'}  label="Facebook"  type="facebook"  />
             <FooterSocialLink href={youtube ?? '#'}   label="YouTube"   type="youtube"   />
           </div>
           {/* Virtuoso affiliation */}
-          <div style={{ marginTop: '28px' }}>
+          <div className="footer-virtuoso" style={{ marginTop: '32px' }}>
             <Image
               src="/assets/virtuoso-footer.png"
               alt="Virtuoso"
@@ -101,7 +115,7 @@ export function SiteFooter({
               className="virtuoso-logo"
               style={{ objectFit: 'contain', objectPosition: 'left', opacity: 0.85, display: 'block' }}
             />
-            <p className="virtuoso-caption" style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.08em', color: '#4A4845', lineHeight: '1.6', marginTop: '8px', maxWidth: '220px' }}>
+            <p className="virtuoso-caption" style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.08em', color: '#5A5550', lineHeight: '1.7', marginTop: '10px', marginBottom: 0, maxWidth: '220px' }}>
               An Affiliate of Montecito Village Travel, A Virtuoso Agency.
             </p>
           </div>
@@ -151,39 +165,41 @@ export function SiteFooter({
           >
             {email || 'info@edenfyw.com'}
           </a>
-          <p style={{ ...linkStyle, cursor: 'default', lineHeight: '1.6' }}>
-            <span style={{ fontSize: '9px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#6A6560', display: 'block', marginBottom: '4px' }}>Mailing Address</span>
-            {address ?? '5318 E. 2nd St. #520, Long Beach, CA 90803'}
-          </p>
+          <div style={{ marginTop: '6px' }}>
+            <span style={{ ...labelStyle, fontSize: '9px', marginBottom: '8px', color: '#5A5550' }}>Mailing Address</span>
+            <p style={{ ...linkStyle, lineHeight: '1.7', cursor: 'default', margin: 0 }}>
+              {address ?? '5318 E. 2nd St. #520, Long Beach, CA 90803'}
+            </p>
+          </div>
         </div>
       </div>
 
       {/* ── Bottom bar ─────────────────────────────────────────────────── */}
       <div
-        className="footer-bottom max-w-7xl mx-auto px-8 py-5"
+        className="footer-bottom max-w-7xl mx-auto"
         style={{ borderTop: '1px solid #1F1D1A' }}
       >
-        <p className="footer-copy" style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.15em', color: '#4A4845' }}>
+        <p className="footer-copy" style={{ ...bottomMetaStyle, margin: 0 }}>
           © {new Date().getFullYear()} {agencyName}. All Rights Reserved.
           {cstNumber ? ` | CST # ${cstNumber}` : ' | CST # 2097184-40'}
         </p>
         <div className="footer-legal">
-          <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.12em', color: '#4A4845' }}>
-            A Virtuoso Member Agency
-          </span>
+          <span style={bottomMetaStyle}>A Virtuoso Member Agency</span>
           <Link
             href={`${base}/terms-of-service`}
-            style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.12em', color: '#6A6560', textDecoration: 'none', borderBottom: '1px solid #2E2C29', paddingBottom: '1px' }}
+            className="footer-legal-link"
+            style={{ ...bottomMetaStyle, color: '#7A7570', textDecoration: 'none', borderBottom: '1px solid #2A2825', paddingBottom: '2px' }}
             onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#6A6560')}
+            onMouseLeave={e => (e.currentTarget.style.color = '#7A7570')}
           >
             Terms of Service
           </Link>
           <Link
             href={`${base}/privacy-policy`}
-            style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.12em', color: '#6A6560', textDecoration: 'none', borderBottom: '1px solid #2E2C29', paddingBottom: '1px' }}
+            className="footer-legal-link"
+            style={{ ...bottomMetaStyle, color: '#7A7570', textDecoration: 'none', borderBottom: '1px solid #2A2825', paddingBottom: '2px' }}
             onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#6A6560')}
+            onMouseLeave={e => (e.currentTarget.style.color = '#7A7570')}
           >
             Privacy Policy
           </Link>
@@ -195,9 +211,10 @@ export function SiteFooter({
         /* Desktop: 3-col grid */
         .footer-main {
           display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 60px;
+          grid-template-columns: 1.1fr 0.9fr 1fr;
+          gap: 56px;
           align-items: start;
+          padding: 72px 32px 64px;
         }
         .footer-nav-links {
           display: flex;
@@ -208,12 +225,21 @@ export function SiteFooter({
           flex-direction: row;
           align-items: center;
           justify-content: space-between;
-          gap: 12px;
+          gap: 16px;
+          padding: 22px 32px;
         }
         .footer-legal {
           display: flex;
           align-items: center;
-          gap: 24px;
+          gap: 22px;
+        }
+
+        /* Tablet: tighter columns at narrow desktop */
+        @media (max-width: 960px) {
+          .footer-main {
+            gap: 40px;
+            padding: 64px 28px 56px;
+          }
         }
 
         /* Mobile: clean single-column stacked layout */
@@ -221,49 +247,51 @@ export function SiteFooter({
           .footer-main {
             grid-template-columns: 1fr !important;
             gap: 0 !important;
-            padding: 48px 24px !important;
+            padding: 48px 24px 16px !important;
           }
 
           /* Brand section — centered, full-width */
           .footer-brand {
             text-align: center;
-            padding-bottom: 40px;
+            padding-bottom: 36px;
             border-bottom: 1px solid #1F1D1A;
           }
-          .footer-brand p { max-width: 100% !important; }
-          .footer-brand > div:first-of-type { justify-content: center; }
+          .footer-brand p { max-width: 100% !important; margin: 0 auto !important; }
+          .footer-social { justify-content: center; }
 
-          /* Nav — horizontal 2-col pill grid */
+          /* Nav — horizontal 2-col grid */
           .footer-nav {
-            padding: 36px 0 32px;
+            padding: 32px 0 28px;
             border-bottom: 1px solid #1F1D1A;
+            text-align: center;
           }
           .footer-nav > span {
             text-align: center;
             display: block;
-            margin-bottom: 20px !important;
+            margin-bottom: 18px !important;
           }
           .footer-nav-links {
             display: grid !important;
             grid-template-columns: 1fr 1fr;
-            gap: 4px 0;
-            text-align: center;
+            gap: 2px 0;
           }
           .footer-nav-links a {
             padding: 8px 0 !important;
             line-height: 1.4 !important;
+            text-align: center;
           }
 
           /* Contact — centered */
           .footer-contact {
-            padding: 36px 0 0;
+            padding: 32px 0 8px;
             text-align: center;
           }
-          .footer-contact > span { display: block; text-align: center; }
+          .footer-contact > span:first-child { display: block; text-align: center; }
           .footer-contact a,
           .footer-contact p { text-align: center !important; }
 
           /* Virtuoso logo — center on mobile */
+          .footer-virtuoso { display: flex; flex-direction: column; align-items: center; }
           .virtuoso-logo {
             margin: 0 auto;
             object-position: center !important;
@@ -277,15 +305,26 @@ export function SiteFooter({
           .footer-bottom {
             flex-direction: column !important;
             text-align: center;
-            gap: 16px !important;
-            padding: 24px !important;
+            gap: 14px !important;
+            padding: 22px 24px !important;
           }
           .footer-legal {
             flex-wrap: wrap;
             justify-content: center;
-            gap: 16px !important;
+            gap: 18px !important;
           }
           .footer-copy { text-align: center; }
+        }
+
+        /* Small phones: tighter horizontal padding (iPhones still get 2-col nav) */
+        @media (max-width: 420px) {
+          .footer-main { padding: 40px 18px 12px !important; }
+          .footer-bottom { padding: 20px 18px !important; }
+        }
+        /* Very small phones (≤360px): collapse nav to one column */
+        @media (max-width: 360px) {
+          .footer-nav-links { grid-template-columns: 1fr !important; }
+          .footer-nav-links a { padding: 6px 0 !important; }
         }
       `}</style>
     </footer>
