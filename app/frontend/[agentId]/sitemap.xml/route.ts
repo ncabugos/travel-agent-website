@@ -1,3 +1,5 @@
+import { promises as fs } from 'node:fs'
+import path from 'node:path'
 import { getAgentProfile } from '@/lib/suppliers'
 import { getBlogPosts } from '@/lib/blog'
 import { getAgentHotelPrograms } from '@/lib/hotel-programs'
@@ -5,6 +7,15 @@ import { canonicalUrl } from '@/lib/seo'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 3600
+
+async function fileExists(p: string) {
+  try {
+    await fs.access(p)
+    return true
+  } catch {
+    return false
+  }
+}
 
 interface RouteContext {
   params: Promise<{ agentId: string }>
@@ -53,6 +64,18 @@ export async function GET(_req: Request, { params }: RouteContext) {
       changefreq: 'monthly',
       priority: 0.6,
     })
+  }
+
+  const legalDir = path.join(process.cwd(), 'public', 'legal', 'tenants', agentId)
+  const [hasTerms, hasPrivacy] = await Promise.all([
+    fileExists(path.join(legalDir, 'terms-of-service.md')),
+    fileExists(path.join(legalDir, 'privacy-policy.md')),
+  ])
+  if (hasTerms) {
+    urls.push({ loc: canonicalUrl(agent, 'terms-of-service'), changefreq: 'yearly', priority: 0.3 })
+  }
+  if (hasPrivacy) {
+    urls.push({ loc: canonicalUrl(agent, 'privacy-policy'), changefreq: 'yearly', priority: 0.3 })
   }
 
   const xml =

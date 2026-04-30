@@ -172,7 +172,7 @@ export function SiteFooter({
             A Virtuoso Member Agency
           </span>
           <Link
-            href={`${base}/terms`}
+            href={`${base}/terms-of-service`}
             style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.12em', color: '#6A6560', textDecoration: 'none', borderBottom: '1px solid #2E2C29', paddingBottom: '1px' }}
             onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
             onMouseLeave={e => (e.currentTarget.style.color = '#6A6560')}
@@ -180,7 +180,7 @@ export function SiteFooter({
             Terms of Service
           </Link>
           <Link
-            href={`${base}/privacy`}
+            href={`${base}/privacy-policy`}
             style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.12em', color: '#6A6560', textDecoration: 'none', borderBottom: '1px solid #2E2C29', paddingBottom: '1px' }}
             onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
             onMouseLeave={e => (e.currentTarget.style.color = '#6A6560')}
