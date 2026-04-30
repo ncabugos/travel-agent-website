@@ -116,7 +116,7 @@ export async function submitContactForm(
       const resend = new Resend(process.env.RESEND_API_KEY)
       const FROM = process.env.EMAIL_FROM ?? 'EliteAdvisorHub <onboarding@resend.dev>'
 
-      await resend.emails.send({
+      const { data: sendData, error: sendError } = await resend.emails.send({
         from: FROM,
         to: recipient,
         replyTo: email,
@@ -145,15 +145,36 @@ export async function submitContactForm(
           </div>
         `,
       })
+
+      if (sendError) {
+        console.error('[contact] resend rejected send', {
+          from: FROM,
+          to: recipient,
+          statusCode: sendError.statusCode ?? null,
+          name: sendError.name,
+          message: sendError.message,
+        })
+        return {
+          success: false,
+          error: 'We received your message but could not send the notification. Please email us directly if urgent.',
+        }
+      }
+
+      console.info('[contact] resend accepted', { id: sendData?.id, to: recipient })
     } catch (e) {
-      console.error('[contact] email send failed:', e)
-      // The DB write succeeded so the inquiry is recorded; surface a soft
-      // error so the user knows we got it but couldn't notify the advisor.
+      const err = e as { message?: string; name?: string; statusCode?: number }
+      console.error('[contact] email send threw', {
+        name: err.name ?? 'Error',
+        statusCode: err.statusCode ?? null,
+        message: err.message ?? String(e),
+      })
       return {
         success: false,
         error: 'We received your message but could not send the notification. Please email us directly if urgent.',
       }
     }
+  } else {
+    console.warn('[contact] RESEND_API_KEY not set — skipping email send')
   }
 
   return { success: true }

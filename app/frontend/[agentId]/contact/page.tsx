@@ -46,7 +46,7 @@ export default async function ContactPage({ params }: PageProps) {
       <JsonLd data={contactPageSchema(agent)} />
 
       {/* Page Banner */}
-      <div style={{ position: 'relative', height: '50vh', minHeight: '340px', overflow: 'hidden' }}>
+      <div className="contact-hero" style={{ position: 'relative', height: '50vh', minHeight: '340px', overflow: 'hidden' }}>
         <Image src="/media/hero images/four-seasons-CapFerrat_garden-hero.jpg" alt="Travel planning" fill priority sizes="100vw" style={{ objectFit: 'cover', objectPosition: 'center 50%' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(20,18,16,0.6)' }} />
         <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' }}>
@@ -55,8 +55,8 @@ export default async function ContactPage({ params }: PageProps) {
       </div>
 
       {/* Two-column layout */}
-      <section style={{ padding: '100px 24px 120px' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.6fr', gap: '80px', alignItems: 'start' }}>
+      <section className="contact-section">
+        <div className="contact-grid">
 
           {/* Contact Info */}
           <div>
@@ -88,6 +88,30 @@ export default async function ContactPage({ params }: PageProps) {
         </div>
       </section>
 
+      <style>{`
+        .contact-hero { height: 50vh; min-height: 340px; }
+        .contact-section { padding: 100px 24px 120px; }
+        .contact-grid {
+          max-width: 1100px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: 1fr 1.6fr;
+          gap: 80px;
+          align-items: start;
+        }
+        @media (max-width: 900px) {
+          .contact-section { padding: 64px 20px 80px; }
+          .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 48px;
+          }
+        }
+        @media (max-width: 600px) {
+          .contact-hero { height: 42vh; min-height: 280px; }
+          .contact-section { padding: 48px 18px 64px; }
+          .contact-grid { gap: 40px; }
+        }
+      `}</style>
     </main>
   )
 }

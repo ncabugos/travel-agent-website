@@ -81,13 +81,13 @@ export function ContactForm({ agentId }: { agentId: string }) {
         </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px 24px' }}>
+      <div className="contact-form-grid">
         <Field label="First Name *" name="first_name" error={state.fieldErrors?.first_name} />
         <Field label="Last Name *" name="last_name" error={state.fieldErrors?.last_name} />
         <Field label="Email *" name="email" type="email" error={state.fieldErrors?.email} />
         <Field label="Phone" name="phone" type="tel" />
 
-        <div style={{ gridColumn: '1 / -1' }}>
+        <div className="contact-form-full">
           <Field label="Dream Destination" name="destination" placeholder="e.g. Amalfi Coast, Bali, Kenya..." />
         </div>
 
@@ -99,7 +99,7 @@ export function ContactForm({ agentId }: { agentId: string }) {
 
         <Field label="Number of Travellers" name="num_travelers" type="number" placeholder="e.g. 2" />
 
-        <div style={{ gridColumn: '1 / -1' }}>
+        <div className="contact-form-full">
           <SelectField
             label="Preferred Advisor"
             name="advisor_pref"
@@ -107,7 +107,7 @@ export function ContactForm({ agentId }: { agentId: string }) {
           />
         </div>
 
-        <div style={{ gridColumn: '1 / -1' }}>
+        <div className="contact-form-full">
           <label style={labelStyle}>Message</label>
           <textarea
             name="message"
@@ -118,10 +118,11 @@ export function ContactForm({ agentId }: { agentId: string }) {
         </div>
       </div>
 
-      <div style={{ marginTop: '32px' }}>
+      <div className="contact-form-actions">
         <button
           type="submit"
           disabled={isPending}
+          className="contact-form-submit"
           style={{
             fontFamily: sans,
             fontSize: '10px',
@@ -138,6 +139,24 @@ export function ContactForm({ agentId }: { agentId: string }) {
           {isPending ? 'Sending...' : 'Send Enquiry'}
         </button>
       </div>
+
+      <style>{`
+        .contact-form-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px 24px;
+        }
+        .contact-form-full { grid-column: 1 / -1; }
+        .contact-form-actions { margin-top: 32px; }
+        @media (max-width: 600px) {
+          .contact-form-grid {
+            grid-template-columns: 1fr;
+            gap: 18px;
+          }
+          .contact-form-actions { margin-top: 28px; }
+          .contact-form-submit { width: 100%; padding: 18px 24px !important; }
+        }
+      `}</style>
     </form>
   )
 }
