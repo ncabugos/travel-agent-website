@@ -21,10 +21,20 @@ async function resolveChannelId(handle: string, apiKey: string): Promise<string 
   const url = `https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=${encodeURIComponent(handle)}&key=${apiKey}`
   try {
     const res = await fetch(url, { next: { revalidate: 3600 } })
-    if (!res.ok) return null
+    if (!res.ok) {
+      // Surface the *reason* the API rejected the request so we can tell
+      // an expired/invalid key apart from a wrong handle, missing referer
+      // restriction, disabled API, etc. Never log the key itself.
+      const body = await res.text().catch(() => '<unreadable>')
+      console.error(
+        `[youtube] resolveChannelId failed status=${res.status} keyLen=${apiKey.length} keyPrefix=${apiKey.slice(0, 6)} body=${body.slice(0, 400)}`,
+      )
+      return null
+    }
     const data = await res.json()
     return data.items?.[0]?.id ?? null
-  } catch {
+  } catch (err) {
+    console.error('[youtube] resolveChannelId threw:', err)
     return null
   }
 }
