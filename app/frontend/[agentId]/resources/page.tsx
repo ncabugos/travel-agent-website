@@ -40,14 +40,21 @@ const IconLuggage = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="
 const IconGlobe = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
 const IconCreditCard = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
 
-const RESOURCES = [
-  { icon: <IconCrown />, title: 'Virtuoso Membership Benefits', description: 'Understand exactly what being a Virtuoso-preferred agency means — from VIP hotel amenities to exclusive experiences.', link: 'https://www.virtuoso.com', linkLabel: 'Learn More' },
-  { icon: <IconCompass />, title: 'Destination Entry Requirements', description: 'Stay current with passport, visa, and health documentation requirements for every destination. We recommend checking 90 days before departure.', link: 'https://travel.state.gov', linkLabel: 'U.S. Travel Advisories' },
-  { icon: <IconShield />, title: 'Travel Insurance Guide', description: 'A detailed breakdown of travel protection plans — from trip cancellation to medical evacuation — and how to choose the right coverage.', link: '#', linkLabel: 'Download Guide' },
-  { icon: <IconLuggage />, title: 'Packing Lists by Destination', description: 'Curated packing guides for safari, cruise, European city, and resort travel — tailored by season.', link: '#', linkLabel: 'View Lists' },
-  { icon: <IconGlobe />, title: 'Tipping Etiquette by Region', description: 'Navigate tipping customs with confidence across 40+ countries — from All-Inclusive resorts to East African lodges.', link: '#', linkLabel: 'View Guide' },
-  { icon: <IconCreditCard />, title: 'Currency & Money Abroad', description: 'Best practices for currency exchange, using credit cards internationally, and managing money safely while travelling luxury.', link: '#', linkLabel: 'Read More' },
-]
+function buildResources(_base: string) {
+  // Each card points to a stable, authoritative external resource. Insurance
+  // and currency go to neutral source-of-truth references (US State Dept,
+  // Bank of America Better Money Habits). Packing & tipping go to
+  // luxury-traveler-aligned brands (Rick Steves, Global Rescue) that don't
+  // compete with Eden's advisory value proposition. URLs HTTP-200 verified.
+  return [
+    { icon: <IconCrown />, title: 'Virtuoso Membership Benefits', description: 'Understand exactly what being a Virtuoso-preferred agency means — from VIP hotel amenities to exclusive experiences.', link: 'https://www.virtuoso.com', linkLabel: 'Learn More' },
+    { icon: <IconCompass />, title: 'Destination Entry Requirements', description: 'Stay current with passport, visa, and health documentation requirements for every destination. We recommend checking 90 days before departure.', link: 'https://travel.state.gov', linkLabel: 'U.S. Travel Advisories' },
+    { icon: <IconShield />, title: 'Travel Insurance Guide', description: 'A detailed breakdown of travel protection plans — from trip cancellation to medical evacuation — and how to choose the right coverage.', link: 'https://travel.state.gov/en/international-travel/planning/guidance/insurance.html', linkLabel: 'Read the State Dept Guide' },
+    { icon: <IconLuggage />, title: 'Packing Lists by Destination', description: 'Curated packing guides for safari, cruise, European city, and resort travel — tailored by season.', link: 'https://www.allianztravelinsurance.com/travel/planning/core-trip-packing-checklist.htm', linkLabel: 'View the Packing Checklist' },
+    { icon: <IconGlobe />, title: 'Tipping Etiquette by Region', description: 'Navigate tipping customs with confidence across 40+ countries — from All-Inclusive resorts to East African lodges.', link: 'https://www.globalrescue.com/common/blog/detail/tipping-guide-american-travelers/', linkLabel: 'View the Tipping Guide' },
+    { icon: <IconCreditCard />, title: 'Currency & Money Abroad', description: 'Best practices for currency exchange, using credit cards internationally, and managing money safely while travelling luxury.', link: 'https://bettermoneyhabits.bankofamerica.com/en/saving-budgeting/how-to-pay-when-traveling-abroad', linkLabel: 'Read the Guide' },
+  ]
+}
 
 const serif = 'var(--font-serif)'
 const sans  = 'var(--font-sans)'
@@ -62,6 +69,7 @@ export default async function ResourcesPage({ params }: PageProps) {
 
   if (!agent) notFound()
   const base = tenantBase(agent)
+  const resources = buildResources(base)
 
   return (
     <main style={{ background: 'var(--cream)' }}>
@@ -168,7 +176,7 @@ export default async function ResourcesPage({ params }: PageProps) {
             </h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2px' }}>
-            {RESOURCES.map(resource => (
+            {resources.map(resource => (
               <div key={resource.title} style={{ padding: '48px 40px', border: '1px solid var(--divider)', background: 'var(--cream)' }}>
                 <div style={{ color: 'var(--gold)', marginBottom: '20px', lineHeight: 1 }}>{resource.icon}</div>
                 <h3 style={{ fontFamily: serif, fontSize: '20px', fontWeight: 400, color: 'var(--charcoal)', marginBottom: '12px', lineHeight: 1.25 }}>{resource.title}</h3>

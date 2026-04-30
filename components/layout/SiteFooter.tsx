@@ -144,7 +144,28 @@ export function SiteFooter({
           </div>
         </div>
 
-        {/* Col 3: Contact */}
+        {/* Col 3: Legal */}
+        <div className="footer-legal-col">
+          <span style={labelStyle}>Legal</span>
+          <Link
+            href={`${base}/terms-of-service`}
+            style={linkStyle}
+            onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+            onMouseLeave={e => (e.currentTarget.style.color = '#A8A39E')}
+          >
+            Terms of Service
+          </Link>
+          <Link
+            href={`${base}/privacy-policy`}
+            style={linkStyle}
+            onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+            onMouseLeave={e => (e.currentTarget.style.color = '#A8A39E')}
+          >
+            Privacy Policy
+          </Link>
+        </div>
+
+        {/* Col 4: Contact */}
         <div className="footer-contact">
           <span style={labelStyle}>Contact</span>
           {phone && (
@@ -183,36 +204,16 @@ export function SiteFooter({
           © {new Date().getFullYear()} {agencyName}. All Rights Reserved.
           {cstNumber ? ` | CST # ${cstNumber}` : ' | CST # 2097184-40'}
         </p>
-        <div className="footer-legal">
-          <span style={bottomMetaStyle}>A Virtuoso Member Agency</span>
-          <Link
-            href={`${base}/terms-of-service`}
-            className="footer-legal-link"
-            style={{ ...bottomMetaStyle, color: '#7A7570', textDecoration: 'none', borderBottom: '1px solid #2A2825', paddingBottom: '2px' }}
-            onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#7A7570')}
-          >
-            Terms of Service
-          </Link>
-          <Link
-            href={`${base}/privacy-policy`}
-            className="footer-legal-link"
-            style={{ ...bottomMetaStyle, color: '#7A7570', textDecoration: 'none', borderBottom: '1px solid #2A2825', paddingBottom: '2px' }}
-            onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#7A7570')}
-          >
-            Privacy Policy
-          </Link>
-        </div>
+        <span style={bottomMetaStyle}>A Virtuoso Member Agency</span>
       </div>
 
       {/* ── Scoped responsive styles ───────────────────────────────────── */}
       <style>{`
-        /* Desktop: 3-col grid */
+        /* Desktop: 4-col grid (Brand · Navigation · Legal · Contact) */
         .footer-main {
           display: grid;
-          grid-template-columns: 1.1fr 0.9fr 1fr;
-          gap: 56px;
+          grid-template-columns: 1.2fr 0.8fr 0.7fr 1fr;
+          gap: 48px;
           align-items: start;
           padding: 72px 32px 64px;
         }
@@ -227,11 +228,6 @@ export function SiteFooter({
           justify-content: space-between;
           gap: 16px;
           padding: 22px 32px;
-        }
-        .footer-legal {
-          display: flex;
-          align-items: center;
-          gap: 22px;
         }
 
         /* Tablet: tighter columns at narrow desktop */
@@ -283,6 +279,23 @@ export function SiteFooter({
             text-align: center;
           }
 
+          /* Legal — same centered pattern as nav */
+          .footer-legal-col {
+            padding: 32px 0 28px;
+            border-bottom: 1px solid #1F1D1A;
+            text-align: center;
+          }
+          .footer-legal-col > span {
+            text-align: center;
+            display: block;
+            margin-bottom: 18px !important;
+          }
+          .footer-legal-col a {
+            padding: 8px 0 !important;
+            line-height: 1.4 !important;
+            text-align: center;
+          }
+
           /* Contact — centered */
           .footer-contact {
             padding: 32px 0 8px;
@@ -309,11 +322,6 @@ export function SiteFooter({
             text-align: center;
             gap: 14px !important;
             padding: 22px 24px !important;
-          }
-          .footer-legal {
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 18px !important;
           }
           .footer-copy { text-align: center; }
         }
