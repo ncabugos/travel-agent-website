@@ -115,7 +115,7 @@ export function SiteFooter({
               className="virtuoso-logo"
               style={{ objectFit: 'contain', objectPosition: 'left', opacity: 0.85, display: 'block' }}
             />
-            <p className="virtuoso-caption" style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.08em', color: '#5A5550', lineHeight: '1.7', marginTop: '10px', marginBottom: 0, maxWidth: '220px' }}>
+            <p className="virtuoso-caption" style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.08em', color: '#5A5550', lineHeight: '1.7', marginTop: '22px', marginBottom: 0, maxWidth: '220px' }}>
               An Affiliate of Montecito Village Travel, A Virtuoso Agency.
             </p>
           </div>
@@ -256,7 +256,9 @@ export function SiteFooter({
             padding-bottom: 36px;
             border-bottom: 1px solid #1F1D1A;
           }
-          .footer-brand p { max-width: 100% !important; margin: 0 auto !important; }
+          /* Target only the tagline (direct child <p>), not the Virtuoso
+             caption nested inside .footer-virtuoso. */
+          .footer-brand > p { max-width: 100% !important; margin: 0 auto !important; }
           .footer-social { justify-content: center; }
 
           /* Nav — horizontal 2-col grid */
