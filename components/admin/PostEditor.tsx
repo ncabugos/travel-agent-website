@@ -11,10 +11,16 @@ import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Link from '@tiptap/extension-link'
 import TiptapImage from '@tiptap/extension-image'
+import TextAlign from '@tiptap/extension-text-align'
+import Youtube from '@tiptap/extension-youtube'
 import type { BlogPost, GalleryImage, BlogCategory } from '@/types/index'
 import type { SupplierTagOption } from '@/lib/supplier-tags'
 import { DEMO_AGENTS } from '@/lib/demo-agents'
-import { Lightbulb, Code2 } from 'lucide-react'
+import {
+  Lightbulb, Code2,
+  AlignLeft, AlignCenter, AlignRight, AlignJustify,
+  Link2, ImageIcon, Video, ListOrdered,
+} from 'lucide-react'
 import { ImageUpload } from '@/components/admin/ImageUpload'
 
 // ── SEO field limits ───────────────────────────────────────────────────────
@@ -98,8 +104,10 @@ export function PostEditor({ post, agents, categories = [], suppliers = [], isNe
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Link.configure({ openOnClick: false }),
-      TiptapImage,
+      Link.configure({ openOnClick: false, autolink: true, HTMLAttributes: { rel: 'noopener noreferrer' } }),
+      TiptapImage.configure({ inline: false, allowBase64: false }),
+      TextAlign.configure({ types: ['paragraph', 'heading'], alignments: ['left', 'center', 'right', 'justify'] }),
+      Youtube.configure({ controls: true, nocookie: true, modestBranding: true, width: 640, height: 360 }),
     ],
     content: post?.body_html ?? '',
     immediatelyRender: false,
@@ -110,6 +118,61 @@ export function PostEditor({ post, agents, categories = [], suppliers = [], isNe
       },
     },
   })
+
+  /* ── Block format dropdown handler ─────────────────────────────────────── */
+  const setBlockFormat = useCallback((value: string) => {
+    if (!editor) return
+    const chain = editor.chain().focus()
+    if (value === 'paragraph') chain.setParagraph().run()
+    else if (value === 'blockquote') chain.toggleBlockquote().run()
+    else if (value.startsWith('h')) {
+      const level = Number(value.slice(1)) as 1 | 2 | 3 | 4 | 5 | 6
+      chain.setHeading({ level }).run()
+    }
+  }, [editor])
+
+  /* Current block format for the dropdown's value attribute. */
+  const currentBlockFormat = (() => {
+    if (!editor) return 'paragraph'
+    if (editor.isActive('blockquote')) return 'blockquote'
+    for (const level of [1, 2, 3, 4, 5, 6] as const) {
+      if (editor.isActive('heading', { level })) return `h${level}`
+    }
+    return 'paragraph'
+  })()
+
+  /* ── Insert helpers ─────────────────────────────────────────────────────── */
+  const insertLink = useCallback(() => {
+    if (!editor) return
+    const previousUrl = editor.getAttributes('link').href as string | undefined
+    const url = window.prompt('Link URL:', previousUrl ?? 'https://')
+    if (url === null) return
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink().run()
+      return
+    }
+    const { from, to } = editor.state.selection
+    if (from === to) {
+      editor.chain().focus().insertContent(`<a href="${url}">${url}</a>`).run()
+    } else {
+      editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
+    }
+  }, [editor])
+
+  const insertImage = useCallback(() => {
+    if (!editor) return
+    const url = window.prompt('Image URL (paste a hosted image link):', 'https://')
+    if (!url) return
+    const alt = window.prompt('Alt text (for accessibility):', '') ?? ''
+    editor.chain().focus().setImage({ src: url, alt }).run()
+  }, [editor])
+
+  const insertVideo = useCallback(() => {
+    if (!editor) return
+    const url = window.prompt('YouTube URL:', 'https://www.youtube.com/watch?v=')
+    if (!url) return
+    editor.commands.setYoutubeVideo({ src: url, width: 640, height: 360 })
+  }, [editor])
 
   /* ── Insert token at cursor ── */
   const insertToken = useCallback((token: string) => {
@@ -369,12 +432,50 @@ export function PostEditor({ post, agents, categories = [], suppliers = [], isNe
           <Card label="Content">
             {/* Toolbar */}
             <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', padding: '8px 12px', borderBottom: '1px solid #f3f4f6', alignItems: 'center' }}>
+              {/* Block format dropdown */}
+              <select
+                value={currentBlockFormat}
+                onChange={e => setBlockFormat(e.target.value)}
+                disabled={sourceMode}
+                title="Paragraph format"
+                style={{
+                  padding: '5px 8px',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '4px',
+                  fontSize: '12px',
+                  background: '#fff',
+                  color: '#374151',
+                  cursor: sourceMode ? 'not-allowed' : 'pointer',
+                  opacity: sourceMode ? 0.6 : 1,
+                  minWidth: '120px',
+                }}
+              >
+                <option value="paragraph">Paragraph</option>
+                <option value="h1">Heading 1</option>
+                <option value="h2">Heading 2</option>
+                <option value="h3">Heading 3</option>
+                <option value="h4">Heading 4</option>
+                <option value="h5">Heading 5</option>
+                <option value="h6">Heading 6</option>
+                <option value="blockquote">Blockquote</option>
+              </select>
+              <Sep />
               <ToolBtn label="B" title="Bold" onClick={() => editor?.chain().focus().toggleBold().run()} active={editor?.isActive('bold')} disabled={sourceMode} />
               <ToolBtn label="I" title="Italic" onClick={() => editor?.chain().focus().toggleItalic().run()} active={editor?.isActive('italic')} disabled={sourceMode} />
-              <ToolBtn label="H2" title="Heading 2" onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()} active={editor?.isActive('heading', { level: 2 })} disabled={sourceMode} />
-              <ToolBtn label="H3" title="Heading 3" onClick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()} active={editor?.isActive('heading', { level: 3 })} disabled={sourceMode} />
-              <ToolBtn label="❝" title="Blockquote" onClick={() => editor?.chain().focus().toggleBlockquote().run()} active={editor?.isActive('blockquote')} disabled={sourceMode} />
+              <Sep />
+              {/* Alignment */}
+              <ToolBtn icon={<AlignLeft size={14} strokeWidth={1.75} />} title="Align left" onClick={() => editor?.chain().focus().setTextAlign('left').run()} active={editor?.isActive({ textAlign: 'left' })} disabled={sourceMode} />
+              <ToolBtn icon={<AlignCenter size={14} strokeWidth={1.75} />} title="Align center" onClick={() => editor?.chain().focus().setTextAlign('center').run()} active={editor?.isActive({ textAlign: 'center' })} disabled={sourceMode} />
+              <ToolBtn icon={<AlignRight size={14} strokeWidth={1.75} />} title="Align right" onClick={() => editor?.chain().focus().setTextAlign('right').run()} active={editor?.isActive({ textAlign: 'right' })} disabled={sourceMode} />
+              <ToolBtn icon={<AlignJustify size={14} strokeWidth={1.75} />} title="Justify" onClick={() => editor?.chain().focus().setTextAlign('justify').run()} active={editor?.isActive({ textAlign: 'justify' })} disabled={sourceMode} />
+              <Sep />
+              {/* Inserts */}
+              <ToolBtn icon={<Link2 size={14} strokeWidth={1.75} />} title="Insert / edit link" onClick={insertLink} active={editor?.isActive('link')} disabled={sourceMode} />
+              <ToolBtn icon={<ImageIcon size={14} strokeWidth={1.75} />} title="Insert image" onClick={insertImage} disabled={sourceMode} />
+              <ToolBtn icon={<Video size={14} strokeWidth={1.75} />} title="Insert YouTube video" onClick={insertVideo} disabled={sourceMode} />
+              <Sep />
               <ToolBtn label="• List" title="Bullet list" onClick={() => editor?.chain().focus().toggleBulletList().run()} active={editor?.isActive('bulletList')} disabled={sourceMode} />
+              <ToolBtn icon={<ListOrdered size={14} strokeWidth={1.75} />} title="Numbered list" onClick={() => editor?.chain().focus().toggleOrderedList().run()} active={editor?.isActive('orderedList')} disabled={sourceMode} />
               <Sep />
               {/* Token insert */}
               <div style={{ position: 'relative' }}>
@@ -446,11 +547,21 @@ export function PostEditor({ post, agents, categories = [], suppliers = [], isNe
             <style>{`
               .tiptap { outline: none; }
               .tiptap p { margin: 0 0 12px; }
-              .tiptap h2 { font-size: 22px; margin: 24px 0 12px; }
-              .tiptap h3 { font-size: 18px; margin: 20px 0 10px; }
+              .tiptap h1 { font-size: 28px; margin: 28px 0 14px; font-weight: 600; }
+              .tiptap h2 { font-size: 22px; margin: 24px 0 12px; font-weight: 600; }
+              .tiptap h3 { font-size: 18px; margin: 20px 0 10px; font-weight: 600; }
+              .tiptap h4 { font-size: 16px; margin: 18px 0 10px; font-weight: 600; }
+              .tiptap h5 { font-size: 14px; margin: 16px 0 8px; font-weight: 600; }
+              .tiptap h6 { font-size: 13px; margin: 14px 0 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
               .tiptap blockquote { border-left: 3px solid #d97706; padding-left: 16px; margin: 16px 0; color: #6b7280; font-style: italic; }
-              .tiptap ul { padding-left: 20px; }
+              .tiptap ul, .tiptap ol { padding-left: 20px; margin: 0 0 12px; }
               .tiptap a { color: #d97706; text-decoration: underline; }
+              .tiptap img { max-width: 100%; height: auto; border-radius: 6px; margin: 12px 0; }
+              .tiptap [data-youtube-video] { margin: 16px 0; }
+              .tiptap [data-youtube-video] iframe { max-width: 100%; aspect-ratio: 16 / 9; border-radius: 6px; }
+              .tiptap [style*="text-align: center"] { text-align: center; }
+              .tiptap [style*="text-align: right"] { text-align: right; }
+              .tiptap [style*="text-align: justify"] { text-align: justify; }
             `}</style>
           </Card>
 
@@ -826,14 +937,18 @@ function CharCounter({ value, max, fallbackValue }: { value: string; max: number
   )
 }
 
-function ToolBtn({ label, title, onClick, active, disabled }: { label: string; title: string; onClick: () => void; active?: boolean; disabled?: boolean }) {
+function ToolBtn({ label, icon, title, onClick, active, disabled }: { label?: string; icon?: React.ReactNode; title: string; onClick: () => void; active?: boolean; disabled?: boolean }) {
   return (
     <button
       title={title}
       onClick={onClick}
       disabled={disabled}
       style={{
-        padding: '4px 8px',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '4px',
+        padding: icon && !label ? '5px 7px' : '4px 8px',
         border: 'none',
         background: active && !disabled ? '#f3f4f6' : 'none',
         borderRadius: '4px',
@@ -844,6 +959,7 @@ function ToolBtn({ label, title, onClick, active, disabled }: { label: string; t
         opacity: disabled ? 0.6 : 1,
       }}
     >
+      {icon}
       {label}
     </button>
   )

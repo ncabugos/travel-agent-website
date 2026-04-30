@@ -248,10 +248,31 @@ export default async function BlogPostPage({ params }: PageProps) {
         .blog-body ul { list-style-type: disc; padding-left: 28px; margin-bottom: 20px; }
         .blog-body ol { list-style-type: decimal; padding-left: 28px; margin-bottom: 20px; }
         .blog-body li { margin-bottom: 2px; line-height: 1.5; }
-        .blog-body img { max-width: 100%; height: auto; margin: 24px 0; }
-        .blog-body h2, .blog-body h3 { margin-top: 32px; margin-bottom: 16px; font-family: ${serif}; color: var(--charcoal); }
+        .blog-body img { max-width: 100%; height: auto; margin: 24px 0; border-radius: 4px; }
+        .blog-body h1, .blog-body h2, .blog-body h3, .blog-body h4, .blog-body h5, .blog-body h6 {
+          font-family: ${serif};
+          color: var(--charcoal);
+          margin-top: 32px;
+          margin-bottom: 16px;
+          font-weight: 400;
+        }
+        .blog-body h1 { font-size: 2.2em; line-height: 1.2; }
+        .blog-body h2 { font-size: 1.7em; line-height: 1.25; }
+        .blog-body h3 { font-size: 1.35em; line-height: 1.3; }
+        .blog-body h4 { font-size: 1.15em; line-height: 1.35; }
+        .blog-body h5 { font-size: 1em; font-weight: 500; }
+        .blog-body h6 { font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); }
         .blog-body a { color: var(--gold); text-decoration: underline; }
         .blog-body blockquote { border-left: none; padding: 32px 0; margin: 40px 0; font-family: ${serif}; font-style: italic; font-size: 1.35em; line-height: 1.6; color: var(--charcoal); text-align: center; }
+        .blog-body [data-youtube-video] { margin: 32px 0; }
+        .blog-body [data-youtube-video] iframe,
+        .blog-body iframe {
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          height: auto;
+          border-radius: 4px;
+          border: 0;
+        }
       `}</style>
     </main>
   )
