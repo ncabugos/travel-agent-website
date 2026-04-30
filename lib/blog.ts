@@ -64,6 +64,28 @@ export function renderShortcodes(html: string, agent: AgentProfile): string {
   // Strip WordPress [gallery] shortcodes
   out = out.replace(/\[\/?\s*gallery[^\]]*\]/g, '')
 
+  // ── Strip legacy WordPress media references ────────────────────────────
+  // The 005_wp_import migration carried <img> tags whose src points to the
+  // old edenforyourworld.com /blog/wp-content/uploads/ tree. Those URLs 404
+  // on the new Next.js app, leaving broken-image icons + linkified alt text.
+  // Most are wrapped in self-linking <a href="…same wp-content URL…"><img>
+  // </a> blocks (WordPress's "click image to view full size" pattern).
+  //
+  // Order matters: strip the anchors first, then any naked broken <img>.
+  // 1. Self-linking anchor wrapping a wp-content image — drop the whole anchor.
+  out = out.replace(
+    /<a\s+[^>]*href="[^"]*\/wp-content\/uploads\/[^"]*"[^>]*>\s*<img\s[^>]*\/?>\s*<\/a>/gi,
+    '',
+  )
+  // 2. Standalone broken <img> from the same source.
+  out = out.replace(
+    /<img\s+[^>]*src="[^"]*\/wp-content\/uploads\/[^"]*"[^>]*\/?>/gi,
+    '',
+  )
+  // 3. Empty paragraphs left over from stripping (`<p></p>`, `<p>&nbsp;</p>`,
+  //    `<p>\s*</p>`).
+  out = out.replace(/<p>\s*(?:&nbsp;)?\s*<\/p>/gi, '')
+
   return out
 }
 
