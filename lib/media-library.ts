@@ -123,7 +123,7 @@ export const HOTEL_GALLERY: Record<string, string[]> = {
     m('/media/hotel-programs/belmond-bellini-club/belmond-hero-2000.jpg'),
     m('/media/hotel-programs/belmond-bellini-club/belmond-slider-1-1500.jpg'),
     m('/media/hotel-programs/belmond-bellini-club/belmond-slider-2-1500.jpg'),
-    m('/media/hotel-programs/belmond-bellini-club/belmond-slider-3-1500.jpg'),
+    // belmond-slider-3-1500.jpg removed — file does not exist on disk
     m('/media/hotel-programs/belmond-bellini-club/belmond-slider-4-1500.jpg'),
     m('/media/hotel-programs/belmond-bellini-club/home-slider-image-Belmond-Leapard.jpg'),
   ],

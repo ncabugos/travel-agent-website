@@ -106,9 +106,12 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
   const base        = tenantBase(agent)
   const categoryMeta = program.category ? CATEGORY_META[program.category] : null
 
-  // Pick gallery from the media library registry, fallback to local set
+  // Pick gallery from the media library registry, fallback to local set.
+  // HOTEL_GALLERY[slug][0] is the hero/cover by convention — skip it in the
+  // slider so the same shot doesn't render twice on the page.
   const galleryImages = toSlides(programSlug) ?? FALLBACK_GALLERY
   const heroImg       = galleryImages[0]?.src ?? '/media/hotel-programs/peninsula/peninsula-hero.jpg'
+  const sliderImages  = galleryImages.length > 1 ? galleryImages.slice(1) : galleryImages
   const heroLogo      = HERO_LOGO[programSlug] ?? null
 
   return (
@@ -266,7 +269,7 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
             Experience {program.name}
           </h2>
         </div>
-        <GallerySlider images={galleryImages} />
+        <GallerySlider images={sliderImages} />
       </section>
 
       {/* ── How to Book ───────────────────────────────────────────── */}
