@@ -117,7 +117,6 @@ export const HOTEL_GALLERY: Record<string, string[]> = {
     m('/media/hotel-programs/aman/aman-slider-2-1500.jpg'),
     m('/media/hotel-programs/aman/aman-slider-3-1500.jpg'),
     m('/media/hotel-programs/aman/home-slider-image-AmanPuri-Thailand.jpg'),
-    m('/media/hotel-programs/aman/overwater_c42d1ec6ef-scaled.jpg'),
   ],
   'belmond-bellini-club': [
     m('/media/hotel-programs/belmond-bellini-club/belmond-hero-2000.jpg'),
