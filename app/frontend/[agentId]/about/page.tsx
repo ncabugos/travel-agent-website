@@ -5,7 +5,7 @@ import { getAgentHotelPrograms } from '@/lib/hotel-programs'
 import { ProgramLogoGrid } from '@/components/hotel-programs/ProgramLogoGrid'
 import { VideoEmbed } from '@/components/ui/VideoEmbed'
 import { notFound } from 'next/navigation'
-import { EDEN, HOTEL_GALLERY } from '@/lib/media-library'
+import { EDEN } from '@/lib/media-library'
 import { tenantBase } from '@/lib/tenant-paths'
 
 interface PageProps {
@@ -143,7 +143,7 @@ export default async function AboutPage({ params }: PageProps) {
       {/* ─── HERO ─── */}
       <div style={{ position: 'relative', height: '55vh', minHeight: '380px', overflow: 'hidden' }}>
         <Image
-          src={HOTEL_GALLERY['peninsula-pen-club'][1] ?? HOTEL_GALLERY['peninsula-pen-club'][0]}
+          src="/media/hotel-programs/peninsula/peninsula-brand-hero-2000.jpg"
           alt="About Eden"
           fill
           priority

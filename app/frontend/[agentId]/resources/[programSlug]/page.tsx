@@ -5,7 +5,6 @@ import { getAgentProfile } from '@/lib/suppliers'
 import { getHotelProgram, getAllHotelProgramSlugs } from '@/lib/hotel-programs'
 import { BenefitsList } from '@/components/hotel-programs/BenefitsList'
 import { GallerySlider } from '@/components/hotel-programs/GallerySlider'
-import { HOTEL_GALLERY } from '@/lib/media-library'
 import { JsonLd, programServiceSchema, breadcrumbSchema } from '@/components/seo/JsonLd'
 import { tenantBase } from '@/lib/tenant-paths'
 
@@ -46,20 +45,6 @@ const CATEGORY_META: Record<string, { label: string }> = {
   brand_programme:   { label: 'Brand Programme' },
   luxury_collection: { label: 'Luxury Collection' },
   global_network:    { label: 'Global Network' },
-}
-
-// Fallback gallery using hero shots from the media library
-const FALLBACK_GALLERY = [
-  { src: '/media/hotel-programs/aman/overwater_c42d1ec6ef-scaled.jpg', alt: 'Overwater villa' },
-  { src: '/media/hotel-programs/peninsula/peninsula-hero.jpg',          alt: 'Grand hotel' },
-  { src: '/media/hotel-programs/kempinski/kempinski-hero-scaled.jpg',   alt: 'Luxury suite' },
-]
-
-/** Convert HOTEL_GALLERY string[] to the {src, alt?} shape expected by GallerySlider */
-function toSlides(slug: string) {
-  const imgs = HOTEL_GALLERY[slug]
-  if (!imgs || imgs.length === 0) return null
-  return imgs.map((src: string) => ({ src }))
 }
 
 const serif = 'var(--font-serif)'
@@ -106,13 +91,9 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
   const base        = tenantBase(agent)
   const categoryMeta = program.category ? CATEGORY_META[program.category] : null
 
-  // Pick gallery from the media library registry, fallback to local set.
-  // HOTEL_GALLERY[slug][0] is the hero/cover by convention — skip it in the
-  // slider so the same shot doesn't render twice on the page.
-  const galleryImages = toSlides(programSlug) ?? FALLBACK_GALLERY
-  const heroImg       = galleryImages[0]?.src ?? '/media/hotel-programs/peninsula/peninsula-hero.jpg'
-  const sliderImages  = galleryImages.length > 1 ? galleryImages.slice(1) : galleryImages
-  const heroLogo      = HERO_LOGO[programSlug] ?? null
+  const heroImg      = program.image_url ?? '/media/hotel-programs/peninsula-penclub/Peninsula-Hotels-Hero-2000.jpg'
+  const sliderImages = program.slider_images.map((src) => ({ src }))
+  const heroLogo     = HERO_LOGO[programSlug] ?? null
 
   return (
     <main style={{ background: 'var(--cream)' }}>
