@@ -186,11 +186,11 @@ export const HOTEL_GALLERY: Record<string, string[]> = {
     m('/media/hotel-programs/hyatt-prive/hyatt-slider-4-1500.jpg'),
   ],
   'kempinski-club-1897': [
-    m('/media/hotel-programs/kempinski/kempinski-hero-scaled.jpg'),
-    m('/media/hotel-programs/kempinski/kempinski-slider-1-1500.jpg'),
-    m('/media/hotel-programs/kempinski/kempinski-slider-2-1500.jpg'),
-    m('/media/hotel-programs/kempinski/kempinski-slider-3-1500.jpg'),
-    m('/media/hotel-programs/kempinski/kempinski-featured-1080.jpg'),
+    m('/media/hotel-programs/kempinski-1897/kempinski-hero-scaled.jpg'),
+    m('/media/hotel-programs/kempinski-1897/kempinski-slider-1-1500.jpg'),
+    m('/media/hotel-programs/kempinski-1897/kempinski-slider-2-1500.jpg'),
+    m('/media/hotel-programs/kempinski-1897/kempinski-slider-3-1500.jpg'),
+    m('/media/hotel-programs/kempinski-1897/kempinski-featured-1080.jpg'),
   ],
   'one-and-only-hotels-and-resorts': [
     m('/media/hotel-programs/one-and-only/oneandonly-resorts-Hero-2000.jpg'),
@@ -247,10 +247,10 @@ export const HOTEL_GALLERY: Record<string, string[]> = {
     m('/media/hotel-programs/leading-hotels/leading-hotels-featured-1500.jpg'),
   ],
   'como-hotels': [
-    m('/media/hotel-programs/dorchester/Como-hero-tuscany-2200.jpg'),
-    m('/media/hotel-programs/dorchester/COMO-hotels-1500-1.jpg'),
-    m('/media/hotel-programs/dorchester/COMO-hotels-1500-2.jpg'),
-    m('/media/hotel-programs/dorchester/COMO-hotels-1500-3.jpg'),
+    m('/media/hotel-programs/como-hotels/Como-hero-tuscany-2200.jpg'),
+    m('/media/hotel-programs/como-hotels/COMO-hotels-1500-1.jpg'),
+    m('/media/hotel-programs/como-hotels/COMO-hotels-1500-2.jpg'),
+    m('/media/hotel-programs/como-hotels/COMO-hotels-1500-3.jpg'),
   ],
 }
 
