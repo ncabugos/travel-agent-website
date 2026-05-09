@@ -51,8 +51,8 @@ export default async function T3PlanATripPage({ params }: PageProps) {
 
       {/* Process */}
       <section className="t3-section">
-        <div style={{ maxWidth: 720, marginBottom: 80 }}>
-          <span className="t3-eyebrow">How It Works</span>
+        <div style={{ maxWidth: 'var(--t3-content-narrow)', marginBottom: 'var(--t3-gap-loose)' }}>
+          <span className="t3-eyebrow t3-eyebrow-plain">How It Works</span>
           <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
             Four steps, one advisor, quietly.
           </h2>
@@ -62,8 +62,7 @@ export default async function T3PlanATripPage({ params }: PageProps) {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: 64,
-            rowGap: 72,
+            gap: 'var(--t3-gap-loose)',
           }}
           className="t3-process-grid"
         >
@@ -111,8 +110,8 @@ export default async function T3PlanATripPage({ params }: PageProps) {
       />
 
       <style>{`
-        @media (max-width: 900px) {
-          .t3-process-grid { grid-template-columns: 1fr !important; gap: 56px !important; }
+        @media (max-width: 768px) {
+          .t3-process-grid { grid-template-columns: 1fr !important; gap: var(--t3-gap) !important; }
         }
       `}</style>
     </>

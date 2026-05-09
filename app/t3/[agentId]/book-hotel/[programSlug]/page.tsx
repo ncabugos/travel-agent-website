@@ -64,7 +64,7 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
           }}
         />
 
-        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px', maxWidth: 760 }}>
+        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px', maxWidth: 'var(--t3-content-narrow)' }}>
           <span
             className="t3-eyebrow t3-eyebrow-plain"
             style={{ justifyContent: 'center', color: 'rgba(255,255,255,0.72)', marginBottom: 24 }}
@@ -115,8 +115,8 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1.4fr',
-            gap: 96,
-            paddingTop: 24,
+            gap: 'var(--t3-gap-loose)',
+            paddingTop: 'var(--t3-gap-tight)',
           }}
           className="t3-program-intro"
         >
@@ -152,7 +152,7 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
       {/* ── Benefits ───────────────────────────────────────────────────── */}
       {program.benefits.length > 0 && (
         <section className="t3-section t3-section-alt">
-          <div style={{ maxWidth: 720, marginBottom: 64 }}>
+          <div style={{ maxWidth: 'var(--t3-content-narrow)', marginBottom: 'var(--t3-gap-loose)' }}>
             <span className="t3-eyebrow t3-eyebrow-plain">Your Exclusive Privileges</span>
             <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
               Every benefit, included on every stay.
@@ -167,9 +167,9 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: '48px 56px',
+              gap: 'var(--t3-gap)',
               borderTop: '1px solid var(--t3-divider)',
-              paddingTop: 48,
+              paddingTop: 'var(--t3-gap)',
             }}
             className="t3-benefits-grid"
           >
@@ -238,11 +238,12 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
       <section
         style={{
           position: 'relative',
-          padding: 'var(--t3-section-pad) 24px',
+          padding: 'var(--t3-section-pad) 48px',
           textAlign: 'center',
           overflow: 'hidden',
           color: '#fff',
         }}
+        className="t3-program-cta"
       >
         {program.image_url && (
           <Image
@@ -262,7 +263,7 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
               'linear-gradient(to bottom, rgba(20,17,15,0.88) 0%, rgba(20,17,15,0.72) 100%)',
           }}
         />
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: 720, margin: '0 auto' }}>
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: 'var(--t3-content-narrow)', margin: '0 auto' }}>
           <span
             className="t3-eyebrow t3-eyebrow-plain"
             style={{ justifyContent: 'center', color: 'rgba(255,255,255,0.72)' }}
@@ -297,11 +298,16 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
       </section>
 
       <style>{`
-        @media (max-width: 900px) {
-          .t3-program-intro { grid-template-columns: 1fr !important; gap: 32px !important; }
-          .t3-benefits-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
+        @media (max-width: 1024px) {
+          .t3-program-intro { gap: var(--t3-gap) !important; }
+          .t3-benefits-grid { gap: var(--t3-gap) !important; }
+        }
+        @media (max-width: 768px) {
+          .t3-program-intro { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; }
+          .t3-benefits-grid { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; }
           .t3-program-gallery { grid-template-columns: 1fr !important; }
           .t3-program-gallery > div { grid-column: auto !important; aspect-ratio: 4 / 3 !important; }
+          .t3-program-cta { padding-left: 24px !important; padding-right: 24px !important; }
         }
       `}</style>
     </>

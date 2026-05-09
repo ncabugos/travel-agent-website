@@ -12,11 +12,11 @@ export default async function T3ContactPage({ params }: PageProps) {
   return (
     <>
       {/* Spacer to clear fixed nav */}
-      <div style={{ height: 140, background: 'var(--t3-bg)' }} />
+      <div style={{ height: 'clamp(96px, 14vw, 140px)', background: 'var(--t3-bg)' }} />
 
-      <section className="t3-section" style={{ paddingTop: 40, paddingBottom: 40 }}>
-        <div style={{ maxWidth: 720 }}>
-          <span className="t3-eyebrow">Contact</span>
+      <section className="t3-section" style={{ paddingTop: 'var(--t3-gap)', paddingBottom: 'var(--t3-gap)' }}>
+        <div style={{ maxWidth: 'var(--t3-content-narrow)' }}>
+          <span className="t3-eyebrow t3-eyebrow-plain">Contact</span>
           <h1 className="t3-display" style={{ marginTop: 32, fontSize: 'clamp(2.8rem, 6vw, 5.5rem)' }}>
             Let&apos;s talk about where you&apos;re going.
           </h1>

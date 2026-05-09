@@ -35,13 +35,13 @@ export default async function T3BookHotelPage({ params }: PageProps) {
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1.4fr',
-            gap: 96,
-            paddingTop: 24,
+            gap: 'var(--t3-gap-loose)',
+            paddingTop: 'var(--t3-gap-tight)',
           }}
           className="t3-hotel-intro"
         >
           <div>
-            <span className="t3-eyebrow">Our Approach</span>
+            <span className="t3-eyebrow t3-eyebrow-plain">Our Approach</span>
             <h2 className="t3-headline-xl" style={{ marginTop: 32 }}>
               What we arrange, on every stay.
             </h2>
@@ -54,7 +54,7 @@ export default async function T3BookHotelPage({ params }: PageProps) {
               style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(2, 1fr)',
-                gap: 24,
+                gap: 'var(--t3-gap-tight)',
                 borderTop: '1px solid var(--t3-divider)',
                 paddingTop: 32,
               }}
@@ -71,7 +71,7 @@ export default async function T3BookHotelPage({ params }: PageProps) {
                 <div key={p.label}>
                   <div
                     style={{
-                      fontSize: 10,
+                      fontSize: 'clamp(10px, 0.85vw, 11px)',
                       fontWeight: 500,
                       letterSpacing: '0.18em',
                       textTransform: 'uppercase',
@@ -81,7 +81,7 @@ export default async function T3BookHotelPage({ params }: PageProps) {
                   >
                     {p.label}
                   </div>
-                  <div style={{ fontSize: 13, color: 'var(--t3-text-muted)', lineHeight: 1.5 }}>
+                  <div style={{ fontSize: 'clamp(13px, 1vw, 14px)', color: 'var(--t3-text-muted)', lineHeight: 1.55 }}>
                     {p.detail}
                   </div>
                 </div>
@@ -94,8 +94,8 @@ export default async function T3BookHotelPage({ params }: PageProps) {
       {/* Programs grid */}
       <div className="t3-section-alt">
         <section className="t3-section">
-          <div style={{ maxWidth: 720, marginBottom: 72 }}>
-            <span className="t3-eyebrow">The Collection</span>
+          <div style={{ maxWidth: 'var(--t3-content-narrow)', marginBottom: 72 }}>
+            <span className="t3-eyebrow t3-eyebrow-plain">The Collection</span>
             <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
               Our preferred hotel programs.
             </h2>
@@ -109,8 +109,7 @@ export default async function T3BookHotelPage({ params }: PageProps) {
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: 32,
-              rowGap: 48,
+              gap: 'var(--t3-gap)',
             }}
             className="t3-programs-grid"
           >
@@ -215,10 +214,10 @@ export default async function T3BookHotelPage({ params }: PageProps) {
 
       {/* CTA */}
       <section className="t3-section" style={{ textAlign: 'center' }}>
-        <span className="t3-eyebrow" style={{ justifyContent: 'center' }}>
+        <span className="t3-eyebrow t3-eyebrow-plain" style={{ justifyContent: 'center' }}>
           Begin
         </span>
-        <h2 className="t3-headline-xl" style={{ marginTop: 28, maxWidth: 720, marginLeft: 'auto', marginRight: 'auto' }}>
+        <h2 className="t3-headline-xl" style={{ marginTop: 28, maxWidth: 'var(--t3-content-narrow)', marginLeft: 'auto', marginRight: 'auto' }}>
           Tell us where you&apos;d like to stay.
         </h2>
         <p
@@ -235,10 +234,13 @@ export default async function T3BookHotelPage({ params }: PageProps) {
       <style>{`
         .t3-program-card:hover { border-color: var(--t3-accent) !important; }
         .t3-program-card:hover .t3-program-card-img { transform: scale(1.04); }
-        @media (max-width: 900px) {
-          .t3-hotel-intro { grid-template-columns: 1fr !important; gap: 40px !important; }
+        @media (max-width: 1024px) {
+          .t3-hotel-intro { gap: var(--t3-gap) !important; }
+        }
+        @media (max-width: 768px) {
+          .t3-hotel-intro { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; }
           .t3-hotel-perks { grid-template-columns: 1fr !important; }
-          .t3-programs-grid { grid-template-columns: 1fr !important; }
+          .t3-programs-grid { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; }
         }
       `}</style>
     </>

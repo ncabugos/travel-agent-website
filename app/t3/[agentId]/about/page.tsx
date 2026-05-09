@@ -73,7 +73,7 @@ export default async function T3AboutPage({ params }: PageProps) {
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1.3fr',
-            gap: 96,
+            gap: 'var(--t3-gap-loose)',
             alignItems: 'center',
           }}
           className="t3-about-story"
@@ -94,7 +94,7 @@ export default async function T3AboutPage({ params }: PageProps) {
           </div>
 
           <div>
-            <span className="t3-eyebrow">01 — The Studio</span>
+            <span className="t3-eyebrow t3-eyebrow-plain">01 — The Studio</span>
             <h2 className="t3-headline-xl" style={{ marginTop: 28, marginBottom: 32 }}>
               Twenty-two years, one principle.
             </h2>
@@ -109,7 +109,7 @@ export default async function T3AboutPage({ params }: PageProps) {
               style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: 32,
+                gap: 'var(--t3-gap-tight)',
                 borderTop: '1px solid var(--t3-divider)',
                 paddingTop: 40,
               }}
@@ -133,7 +133,7 @@ export default async function T3AboutPage({ params }: PageProps) {
                   </div>
                   <div
                     style={{
-                      fontSize: 11,
+                      fontSize: 'clamp(10px, 0.85vw, 11px)',
                       fontWeight: 500,
                       letterSpacing: '0.18em',
                       textTransform: 'uppercase',
@@ -151,8 +151,8 @@ export default async function T3AboutPage({ params }: PageProps) {
 
       {/* ── 02 · Values ──────────────────────────────────────────────────── */}
       <section className="t3-section t3-section-alt">
-        <div style={{ maxWidth: 820, marginBottom: 80 }}>
-          <span className="t3-eyebrow">02 — How We Work</span>
+        <div style={{ maxWidth: 'var(--t3-content-prose)', marginBottom: 'var(--t3-gap-loose)' }}>
+          <span className="t3-eyebrow t3-eyebrow-plain">02 — How We Work</span>
           <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
             Four principles we refuse to compromise on.
           </h2>
@@ -162,8 +162,7 @@ export default async function T3AboutPage({ params }: PageProps) {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: 64,
-            rowGap: 80,
+            gap: 'var(--t3-gap-loose)',
           }}
           className="t3-values-grid"
         >
@@ -192,8 +191,8 @@ export default async function T3AboutPage({ params }: PageProps) {
 
       {/* ── 03 · Team ────────────────────────────────────────────────────── */}
       <section className="t3-section">
-        <div style={{ textAlign: 'center', marginBottom: 80, maxWidth: 680, margin: '0 auto 80px' }}>
-          <span className="t3-eyebrow" style={{ justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center', maxWidth: 'var(--t3-content-narrow)', margin: '0 auto var(--t3-gap-loose)' }}>
+          <span className="t3-eyebrow t3-eyebrow-plain" style={{ justifyContent: 'center' }}>
             03 — The People
           </span>
           <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
@@ -208,7 +207,7 @@ export default async function T3AboutPage({ params }: PageProps) {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 48,
+            gap: 'var(--t3-gap)',
           }}
           className="t3-team-grid"
         >
@@ -241,7 +240,7 @@ export default async function T3AboutPage({ params }: PageProps) {
               </h3>
               <p
                 style={{
-                  fontSize: 10,
+                  fontSize: 'clamp(10px, 0.85vw, 11px)',
                   fontWeight: 500,
                   letterSpacing: '0.2em',
                   textTransform: 'uppercase',
@@ -261,7 +260,7 @@ export default async function T3AboutPage({ params }: PageProps) {
                 }}
               />
 
-              <p className="t3-body" style={{ fontSize: 14, marginBottom: 20 }}>
+              <p className="t3-body" style={{ fontSize: 'clamp(13.5px, 1vw, 14.5px)', marginBottom: 20 }}>
                 {member.bio}
               </p>
 
@@ -279,7 +278,7 @@ export default async function T3AboutPage({ params }: PageProps) {
                   <li
                     key={s}
                     style={{
-                      fontSize: 12,
+                      fontSize: 'clamp(12px, 0.95vw, 13px)',
                       color: 'var(--t3-text-muted)',
                       display: 'flex',
                       alignItems: 'center',
@@ -307,11 +306,11 @@ export default async function T3AboutPage({ params }: PageProps) {
       <section
         style={{
           position: 'relative',
-          minHeight: 520,
+          minHeight: 'clamp(420px, 56vh, 560px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '120px 48px',
+          padding: 'var(--t3-section-pad-sm) 24px',
           overflow: 'hidden',
           background: 'var(--t3-dark-bg)',
         }}
@@ -334,13 +333,13 @@ export default async function T3AboutPage({ params }: PageProps) {
           style={{
             position: 'relative',
             zIndex: 2,
-            maxWidth: 820,
+            maxWidth: 'var(--t3-content-prose)',
             textAlign: 'center',
             color: '#fff',
           }}
         >
           <span
-            className="t3-eyebrow"
+            className="t3-eyebrow t3-eyebrow-plain"
             style={{ color: 'rgba(255,255,255,0.72)', justifyContent: 'center', marginBottom: 40 }}
           >
             04 — In Eleanor&apos;s Words
@@ -359,7 +358,7 @@ export default async function T3AboutPage({ params }: PageProps) {
           <p
             style={{
               marginTop: 40,
-              fontSize: 11,
+              fontSize: 'clamp(10px, 0.85vw, 11px)',
               fontWeight: 500,
               letterSpacing: '0.22em',
               textTransform: 'uppercase',
@@ -373,10 +372,10 @@ export default async function T3AboutPage({ params }: PageProps) {
 
       {/* ── 05 · CTA ─────────────────────────────────────────────────────── */}
       <section className="t3-section t3-section-alt" style={{ textAlign: 'center' }}>
-        <span className="t3-eyebrow" style={{ justifyContent: 'center' }}>
+        <span className="t3-eyebrow t3-eyebrow-plain" style={{ justifyContent: 'center' }}>
           05 — Begin
         </span>
-        <h2 className="t3-headline-xl" style={{ marginTop: 28, maxWidth: 720, marginLeft: 'auto', marginRight: 'auto' }}>
+        <h2 className="t3-headline-xl" style={{ marginTop: 28, maxWidth: 'var(--t3-content-narrow)', marginLeft: 'auto', marginRight: 'auto' }}>
           Tell us what you&apos;re dreaming of.
         </h2>
         <p
@@ -396,11 +395,15 @@ export default async function T3AboutPage({ params }: PageProps) {
       </section>
 
       <style>{`
-        @media (max-width: 900px) {
-          .t3-about-story { grid-template-columns: 1fr !important; gap: 48px !important; }
-          .t3-values-grid { grid-template-columns: 1fr !important; gap: 56px !important; }
-          .t3-team-grid { grid-template-columns: 1fr !important; gap: 64px !important; }
-          .t3-about-stats { grid-template-columns: repeat(3, 1fr) !important; }
+        @media (max-width: 1024px) {
+          .t3-about-story { gap: var(--t3-gap) !important; }
+          .t3-team-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 768px) {
+          .t3-about-story { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; }
+          .t3-values-grid { grid-template-columns: 1fr !important; gap: var(--t3-gap) !important; }
+          .t3-team-grid { grid-template-columns: 1fr !important; gap: var(--t3-gap) !important; }
+          .t3-about-stats { gap: var(--t3-gap-tight) !important; }
         }
       `}</style>
     </>

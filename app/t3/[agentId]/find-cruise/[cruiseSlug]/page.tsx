@@ -64,9 +64,9 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
           }}
         />
 
-        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px', maxWidth: 760 }}>
+        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px', maxWidth: 'var(--t3-content-narrow)' }}>
           <span
-            className="t3-eyebrow"
+            className="t3-eyebrow t3-eyebrow-plain"
             style={{ justifyContent: 'center', color: 'rgba(255,255,255,0.72)', marginBottom: 24 }}
           >
             {(line.cruise_types || []).join(' · ') || 'Luxury Cruise'}
@@ -112,13 +112,13 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1.4fr',
-            gap: 96,
-            paddingTop: 24,
+            gap: 'var(--t3-gap-loose)',
+            paddingTop: 'var(--t3-gap-tight)',
           }}
           className="t3-cruise-intro"
         >
           <div>
-            <span className="t3-eyebrow">About the Line</span>
+            <span className="t3-eyebrow t3-eyebrow-plain">About the Line</span>
             <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
               {line.name}
             </h2>
@@ -132,8 +132,8 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
       {/* ── Highlights / Advisor-only benefits ─────────────────────────── */}
       {line.highlights && line.highlights.length > 0 && (
         <section className="t3-section t3-section-alt">
-          <div style={{ maxWidth: 720, marginBottom: 64 }}>
-            <span className="t3-eyebrow">Why We Book This Line</span>
+          <div style={{ maxWidth: 'var(--t3-content-narrow)', marginBottom: 'var(--t3-gap)' }}>
+            <span className="t3-eyebrow t3-eyebrow-plain">Why We Book This Line</span>
             <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
               Included on every voyage.
             </h2>
@@ -147,9 +147,9 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: '48px 56px',
+              gap: 'var(--t3-gap)',
               borderTop: '1px solid var(--t3-divider)',
-              paddingTop: 48,
+              paddingTop: 'var(--t3-gap)',
             }}
             className="t3-cruise-highlights-grid"
           >
@@ -170,7 +170,7 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
                 <h3 className="t3-headline-md" style={{ marginBottom: 12, fontSize: 'clamp(18px, 1.6vw, 22px)' }}>
                   {h.title}
                 </h3>
-                <p className="t3-body" style={{ fontSize: 14.5, margin: 0 }}>
+                <p className="t3-body" style={{ fontSize: 'clamp(13.5px, 1vw, 14.5px)', margin: 0 }}>
                   {h.description}
                 </p>
               </div>
@@ -182,8 +182,8 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
       {/* ── Fleet ──────────────────────────────────────────────────────── */}
       {line.ships && line.ships.length > 0 && (
         <section className="t3-section">
-          <div style={{ maxWidth: 720, marginBottom: 64 }}>
-            <span className="t3-eyebrow">The Fleet</span>
+          <div style={{ maxWidth: 'var(--t3-content-narrow)', marginBottom: 'var(--t3-gap)' }}>
+            <span className="t3-eyebrow t3-eyebrow-plain">The Fleet</span>
             <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
               Ships we know personally.
             </h2>
@@ -193,8 +193,7 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: 32,
-              rowGap: 48,
+              gap: 'var(--t3-gap)',
             }}
             className="t3-cruise-ships-grid"
           >
@@ -223,7 +222,7 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
                   {ship.name}
                 </h3>
                 {ship.description && (
-                  <p className="t3-body" style={{ fontSize: 13.5, color: 'var(--t3-text-muted)', margin: 0 }}>
+                  <p className="t3-body" style={{ fontSize: 'clamp(13px, 1vw, 14px)', color: 'var(--t3-text-muted)', margin: 0 }}>
                     {ship.description}
                   </p>
                 )}
@@ -272,11 +271,12 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
       <section
         style={{
           position: 'relative',
-          padding: 'var(--t3-section-pad) 24px',
+          padding: 'var(--t3-section-pad) 48px',
           textAlign: 'center',
           overflow: 'hidden',
           color: '#fff',
         }}
+        className="t3-cruise-cta"
       >
         {line.hero_image_url && (
           <Image
@@ -296,9 +296,9 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
               'linear-gradient(to bottom, rgba(20,17,15,0.88) 0%, rgba(20,17,15,0.72) 100%)',
           }}
         />
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: 720, margin: '0 auto' }}>
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: 'var(--t3-content-narrow)', margin: '0 auto' }}>
           <span
-            className="t3-eyebrow"
+            className="t3-eyebrow t3-eyebrow-plain"
             style={{ justifyContent: 'center', color: 'rgba(255,255,255,0.72)' }}
           >
             Ready to sail
@@ -329,15 +329,18 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
       </section>
 
       <style>{`
-        @media (max-width: 900px) {
-          .t3-cruise-intro { grid-template-columns: 1fr !important; gap: 32px !important; }
-          .t3-cruise-highlights-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
-          .t3-cruise-ships-grid { grid-template-columns: 1fr 1fr !important; }
+        @media (max-width: 1024px) {
+          .t3-cruise-intro { gap: var(--t3-gap) !important; }
+          .t3-cruise-highlights-grid { gap: var(--t3-gap) !important; }
+          .t3-cruise-ships-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 768px) {
+          .t3-cruise-intro { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; }
+          .t3-cruise-highlights-grid { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; }
+          .t3-cruise-ships-grid { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; }
           .t3-cruise-gallery { grid-template-columns: 1fr !important; }
           .t3-cruise-gallery > div { grid-column: auto !important; aspect-ratio: 4 / 3 !important; }
-        }
-        @media (max-width: 600px) {
-          .t3-cruise-ships-grid { grid-template-columns: 1fr !important; }
+          .t3-cruise-cta { padding-left: 24px !important; padding-right: 24px !important; }
         }
       `}</style>
     </>

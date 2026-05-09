@@ -28,8 +28,23 @@
 
   /* ── Spacing ─────────────────────────────────────────────────────────── */
   --t3-section-pad:   clamp(96px, 13vw, 160px);
-  --t3-content-max:   1440px;
-  --t3-content-wide:  1680px;
+  --t3-section-pad-sm: clamp(56px, 9vw, 96px);
+
+  /* Content widths — pick the smallest that fits the content. */
+  --t3-content-narrow:  760px;   /* hero copy, tight prose */
+  --t3-content-prose:   860px;   /* article body */
+  --t3-content-default: 1200px;  /* moderate sections */
+  --t3-content-max:     1440px;
+  --t3-content-wide:    1680px;
+
+  /* Gaps */
+  --t3-gap-tight: 24px;
+  --t3-gap:       48px;
+  --t3-gap-loose: 80px;
+
+  /* Breakpoints (for use in component @media — all CSS uses these two) */
+  --t3-bp-tablet: 1024px;
+  --t3-bp-mobile: 768px;
 
   /* ── Transitions ─────────────────────────────────────────────────────── */
   --t3-ease:          cubic-bezier(0.25, 0.1, 0.25, 1);

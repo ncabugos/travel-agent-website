@@ -18,12 +18,12 @@ export default async function T3JournalIndexPage({ params }: PageProps) {
 
   return (
     <section className="t3-section">
-      <div style={{ marginBottom: 56 }}>
-        <span className="t3-eyebrow">Journal</span>
+      <div style={{ marginBottom: 'var(--t3-gap)' }}>
+        <span className="t3-eyebrow t3-eyebrow-plain">Journal</span>
         <h1 className="t3-headline-xl" style={{ marginTop: 28, marginBottom: 16 }}>
           Dispatches from the road.
         </h1>
-        <p className="t3-body t3-body-lg" style={{ maxWidth: 680 }}>
+        <p className="t3-body t3-body-lg" style={{ maxWidth: 'var(--t3-content-narrow)' }}>
           Hand-picked destinations, recent openings, and the stories our advisors think worth your time.
         </p>
       </div>
@@ -37,8 +37,7 @@ export default async function T3JournalIndexPage({ params }: PageProps) {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 32,
-            rowGap: 56,
+            gap: 'var(--t3-gap)',
           }}
           className="t3-journal-index-grid"
         >
@@ -76,7 +75,7 @@ export default async function T3JournalIndexPage({ params }: PageProps) {
               <div
                 style={{
                   fontFamily: 'var(--t3-font-body)',
-                  fontSize: 10,
+                  fontSize: 'clamp(10px, 0.85vw, 11px)',
                   fontWeight: 500,
                   letterSpacing: '0.22em',
                   textTransform: 'uppercase',
@@ -90,7 +89,7 @@ export default async function T3JournalIndexPage({ params }: PageProps) {
                 {p.title}
               </h3>
               {p.excerpt && (
-                <p className="t3-body" style={{ fontSize: 14, lineHeight: 1.65, margin: 0 }}>
+                <p className="t3-body" style={{ fontSize: 'clamp(13.5px, 1vw, 14.5px)', lineHeight: 1.65, margin: 0 }}>
                   {p.excerpt}
                 </p>
               )}
@@ -101,8 +100,8 @@ export default async function T3JournalIndexPage({ params }: PageProps) {
 
       <style>{`
         .t3-journal-card:hover .t3-journal-img { transform: scale(1.04); }
-        @media (max-width: 900px) { .t3-journal-index-grid { grid-template-columns: 1fr 1fr !important; } }
-        @media (max-width: 600px) { .t3-journal-index-grid { grid-template-columns: 1fr !important; } }
+        @media (max-width: 1024px) { .t3-journal-index-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+        @media (max-width: 768px) { .t3-journal-index-grid { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; } }
       `}</style>
     </section>
   )

@@ -33,12 +33,12 @@ export default async function T3FindCruisePage({ params }: PageProps) {
       <section className="t3-section">
         <div
           style={{
-            maxWidth: 900,
+            maxWidth: 'var(--t3-content-prose)',
             margin: '0 auto',
             textAlign: 'center',
           }}
         >
-          <span className="t3-eyebrow" style={{ justifyContent: 'center' }}>
+          <span className="t3-eyebrow t3-eyebrow-plain" style={{ justifyContent: 'center' }}>
             Why Sail With Us
           </span>
           <h2 className="t3-headline-xl" style={{ marginTop: 28, marginBottom: 32 }}>
@@ -54,9 +54,9 @@ export default async function T3FindCruisePage({ params }: PageProps) {
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: 48,
+              gap: 'var(--t3-gap)',
               borderTop: '1px solid var(--t3-divider)',
-              paddingTop: 48,
+              paddingTop: 'var(--t3-gap)',
             }}
             className="t3-cruise-stats"
           >
@@ -78,7 +78,7 @@ export default async function T3FindCruisePage({ params }: PageProps) {
                 </div>
                 <div
                   style={{
-                    fontSize: 11,
+                    fontSize: 'clamp(10px, 0.85vw, 11px)',
                     fontWeight: 500,
                     letterSpacing: '0.18em',
                     textTransform: 'uppercase',
@@ -96,8 +96,8 @@ export default async function T3FindCruisePage({ params }: PageProps) {
       {/* Partners grid */}
       <div className="t3-section-alt">
         <section className="t3-section">
-          <div style={{ maxWidth: 720, marginBottom: 72 }}>
-            <span className="t3-eyebrow">The Lines We Know</span>
+          <div style={{ maxWidth: 'var(--t3-content-narrow)', marginBottom: 72 }}>
+            <span className="t3-eyebrow t3-eyebrow-plain">The Lines We Know</span>
             <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
               Preferred Cruise Partners.
             </h2>
@@ -111,8 +111,7 @@ export default async function T3FindCruisePage({ params }: PageProps) {
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: 32,
-              rowGap: 48,
+              gap: 'var(--t3-gap)',
             }}
             className="t3-cruise-grid"
           >
@@ -169,7 +168,7 @@ export default async function T3FindCruisePage({ params }: PageProps) {
                   )}
                   <div
                     style={{
-                      fontSize: 10,
+                      fontSize: 'clamp(10px, 0.85vw, 11px)',
                       fontWeight: 500,
                       letterSpacing: '0.2em',
                       textTransform: 'uppercase',
@@ -187,9 +186,9 @@ export default async function T3FindCruisePage({ params }: PageProps) {
                       style={{
                         fontFamily: 'var(--t3-font-display)',
                         fontStyle: 'italic',
-                        fontSize: 14,
+                        fontSize: 'clamp(13px, 1.05vw, 14.5px)',
                         color: 'var(--t3-text-muted)',
-                        lineHeight: 1.5,
+                        lineHeight: 1.55,
                         margin: 0,
                         marginBottom: 18,
                       }}
@@ -202,7 +201,7 @@ export default async function T3FindCruisePage({ params }: PageProps) {
                       marginTop: 'auto',
                       paddingTop: 16,
                       borderTop: '1px solid var(--t3-divider)',
-                      fontSize: 11,
+                      fontSize: 'clamp(10px, 0.9vw, 11px)',
                       letterSpacing: '0.2em',
                       textTransform: 'uppercase',
                       color: 'var(--t3-accent)',
@@ -220,10 +219,10 @@ export default async function T3FindCruisePage({ params }: PageProps) {
 
       {/* CTA */}
       <section className="t3-section" style={{ textAlign: 'center' }}>
-        <span className="t3-eyebrow" style={{ justifyContent: 'center' }}>
+        <span className="t3-eyebrow t3-eyebrow-plain" style={{ justifyContent: 'center' }}>
           Begin
         </span>
-        <h2 className="t3-headline-xl" style={{ marginTop: 28, maxWidth: 720, marginLeft: 'auto', marginRight: 'auto' }}>
+        <h2 className="t3-headline-xl" style={{ marginTop: 28, maxWidth: 'var(--t3-content-narrow)', marginLeft: 'auto', marginRight: 'auto' }}>
           Planning a voyage?
         </h2>
         <p
@@ -242,12 +241,12 @@ export default async function T3FindCruisePage({ params }: PageProps) {
       <style>{`
         .t3-cruise-card:hover { border-color: var(--t3-accent) !important; }
         .t3-cruise-card:hover .t3-cruise-card-img { transform: scale(1.04); }
-        @media (max-width: 1000px) {
-          .t3-cruise-grid { grid-template-columns: 1fr 1fr !important; }
+        @media (max-width: 1024px) {
+          .t3-cruise-grid { grid-template-columns: repeat(2, 1fr) !important; gap: var(--t3-gap) !important; }
         }
-        @media (max-width: 640px) {
-          .t3-cruise-grid { grid-template-columns: 1fr !important; }
-          .t3-cruise-stats { grid-template-columns: 1fr !important; gap: 32px !important; }
+        @media (max-width: 768px) {
+          .t3-cruise-grid { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; }
+          .t3-cruise-stats { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; }
         }
       `}</style>
     </>
