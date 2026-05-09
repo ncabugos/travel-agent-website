@@ -90,6 +90,74 @@ export default async function T3PlanATripPage({ params }: PageProps) {
         </div>
       </section>
 
+      {/* ── Proof block (client testimonial) ───────────────────────────── */}
+      <section
+        style={{
+          position: 'relative',
+          minHeight: 'clamp(380px, 48vh, 480px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 'var(--t3-section-pad-sm) 24px',
+          overflow: 'hidden',
+          background: 'var(--t3-dark-bg)',
+        }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/media/hotel-programs/four-seasons/fs-Golden_pool-1500.jpg"
+          alt=""
+          aria-hidden
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity: 0.38,
+          }}
+        />
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 2,
+            maxWidth: 'var(--t3-content-prose)',
+            textAlign: 'center',
+            color: '#fff',
+          }}
+        >
+          <span
+            className="t3-eyebrow t3-eyebrow-plain"
+            style={{ color: 'rgba(255,255,255,0.72)', justifyContent: 'center', marginBottom: 32 }}
+          >
+            From a recent client
+          </span>
+          <p
+            className="t3-headline-lg"
+            style={{
+              fontStyle: 'italic',
+              color: '#fff',
+              lineHeight: 1.3,
+              fontSize: 'clamp(1.4rem, 2.6vw, 2.2rem)',
+            }}
+          >
+            &ldquo;The proposal arrived on a Tuesday. By Friday we were rebooked into a suite at a property we hadn&apos;t even considered, and it was the best week of the year.&rdquo;
+          </p>
+          <p
+            style={{
+              marginTop: 32,
+              fontSize: 'clamp(10px, 0.85vw, 11px)',
+              fontWeight: 500,
+              letterSpacing: '0.22em',
+              textTransform: 'uppercase',
+              color: 'rgba(255,255,255,0.72)',
+            }}
+          >
+            M. K. — Returning client, eight years
+          </p>
+        </div>
+      </section>
+
       {/* Contact form (reuses T3ContactSection) */}
       <T3ContactSection
         eyebrow="Start Here"

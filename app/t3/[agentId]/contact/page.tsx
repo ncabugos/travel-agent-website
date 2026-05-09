@@ -26,6 +26,48 @@ export default async function T3ContactPage({ params }: PageProps) {
         </div>
       </section>
 
+      {/* ── What to expect ──────────────────────────────────────────────── */}
+      <section className="t3-section" style={{ paddingTop: 0 }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 'var(--t3-gap)',
+            borderTop: '1px solid var(--t3-divider)',
+            paddingTop: 'var(--t3-gap)',
+          }}
+          className="t3-contact-expect"
+        >
+          {[
+            { num: '01', label: 'You write', body: 'Tell us as much or as little as you want — a region, a date, a mood. There is no wrong way to start.' },
+            { num: '02', label: 'We reply', body: 'An advisor reads every note personally. Expect a thoughtful response within one business day, often within hours.' },
+            { num: '03', label: 'We talk', body: 'A 30-minute call follows. By the end, you will know whether we are the right fit — and we will know whether we can help.' },
+          ].map((s) => (
+            <div key={s.num}>
+              <div
+                style={{
+                  fontFamily: 'var(--t3-font-display)',
+                  fontSize: 'clamp(28px, 3vw, 40px)',
+                  fontWeight: 400,
+                  color: 'var(--t3-accent)',
+                  marginBottom: 14,
+                  letterSpacing: '-0.02em',
+                  lineHeight: 1,
+                }}
+              >
+                {s.num}
+              </div>
+              <h3 className="t3-headline-md" style={{ marginBottom: 10, fontSize: 'clamp(17px, 1.5vw, 20px)' }}>
+                {s.label}
+              </h3>
+              <p className="t3-body" style={{ fontSize: 'clamp(13.5px, 1vw, 14.5px)', margin: 0 }}>
+                {s.body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <T3ContactSection
         eyebrow="Begin"
         headline="Tell us about your journey."
@@ -33,6 +75,15 @@ export default async function T3ContactPage({ params }: PageProps) {
         email={agent?.email}
         address={agent?.address}
       />
+
+      <style>{`
+        @media (max-width: 1024px) {
+          .t3-contact-expect { gap: var(--t3-gap) !important; }
+        }
+        @media (max-width: 768px) {
+          .t3-contact-expect { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; }
+        }
+      `}</style>
     </>
   )
 }
