@@ -146,7 +146,11 @@ export function T3Nav({ agentId, agencyName, logoUrl, navLinks }: T3NavProps) {
                 border: 0,
                 color: 'inherit',
                 cursor: 'pointer',
-                padding: 8,
+                padding: 12,
+                minWidth: 44,
+                minHeight: 44,
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -201,7 +205,7 @@ export function T3Nav({ agentId, agencyName, logoUrl, navLinks }: T3NavProps) {
       )}
 
       <style>{`
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
           .t3-desktop-nav { display: none !important; }
           .t3-mobile-toggle { display: inline-flex !important; }
         }
