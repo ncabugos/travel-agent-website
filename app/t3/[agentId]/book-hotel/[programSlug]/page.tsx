@@ -1,7 +1,12 @@
 import { getHotelProgram, getHotelPrograms } from '@/lib/hotel-programs'
+import { getFeaturedHotels } from '@/lib/featured-hotels'
+import { getBlogPostsBySupplier } from '@/lib/blog'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
+import { T3FeaturedProperties } from '@/components/t3/T3FeaturedProperties'
+import { T3SiblingPrograms } from '@/components/t3/T3SiblingPrograms'
+import { T3JournalTeaser, type T3JournalPost } from '@/components/t3/T3JournalTeaser'
 
 interface PageProps {
   params: Promise<{ agentId: string; programSlug: string }>
@@ -28,6 +33,28 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
   if (!program) notFound()
 
   const base = `/t3/${agentId}`
+
+  // Fetch supplemental modules in parallel; each gracefully renders nothing when empty.
+  const [featuredHotels, relatedPosts, allPrograms] = await Promise.all([
+    getFeaturedHotels(programSlug),
+    getBlogPostsBySupplier(programSlug, agentId).catch(() => []),
+    getHotelPrograms(),
+  ])
+
+  // Sibling programs: same category, ordered by sort_order, exclude current.
+  const siblingPrograms = allPrograms
+    .filter((p) => p.slug !== program.slug && p.category === program.category)
+    .slice(0, 3)
+
+  // Convert BlogPost[] → T3JournalPost[] shape used by T3JournalTeaser.
+  const journalItems: T3JournalPost[] = relatedPosts.slice(0, 3).map((p) => ({
+    slug: p.slug,
+    title: p.title,
+    excerpt: p.excerpt ?? null,
+    cover_image_url: p.cover_image_url ?? null,
+    published_at: p.published_at ?? null,
+    category: p.categories?.[0] ?? null,
+  }))
 
   return (
     <>
@@ -190,7 +217,7 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
                 <h3 className="t3-headline-md" style={{ marginBottom: 12, fontSize: 'clamp(18px, 1.6vw, 22px)' }}>
                   {b.title}
                 </h3>
-                <p className="t3-body" style={{ fontSize: 14.5, margin: 0 }}>
+                <p className="t3-body" style={{ fontSize: 'clamp(13.5px, 1vw, 14.5px)', margin: 0 }}>
                   {b.description}
                 </p>
               </div>
@@ -232,6 +259,24 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
             ))}
           </div>
         </section>
+      )}
+
+      {/* ── Featured Properties ────────────────────────────────────────── */}
+      <T3FeaturedProperties
+        hotels={featuredHotels}
+        programName={program.name}
+        base={base}
+      />
+
+      {/* ── Related Journal ────────────────────────────────────────────── */}
+      {journalItems.length > 0 && (
+        <T3JournalTeaser
+          agentId={agentId}
+          posts={journalItems}
+          eyebrow="From the Journal"
+          heading={`More on ${program.name}.`}
+          subheading="Recent dispatches and field notes from our advisors."
+        />
       )}
 
       {/* ── CTA ────────────────────────────────────────────────────────── */}
@@ -294,8 +339,31 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
               All Hotel Programs
             </Link>
           </div>
+          {(program.booking_notes || program.eligibility_notes) && (
+            <p
+              style={{
+                marginTop: 32,
+                fontFamily: 'var(--t3-font-display)',
+                fontStyle: 'italic',
+                fontSize: 'clamp(12px, 0.95vw, 13.5px)',
+                lineHeight: 1.6,
+                color: 'rgba(247, 245, 240, 0.62)',
+                maxWidth: 'var(--t3-content-narrow)',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+              }}
+            >
+              {program.booking_notes ?? program.eligibility_notes}
+            </p>
+          )}
         </div>
       </section>
+
+      {/* ── Sibling programs ───────────────────────────────────────────── */}
+      <T3SiblingPrograms
+        programs={siblingPrograms}
+        base={base}
+      />
 
       <style>{`
         @media (max-width: 1024px) {
