@@ -66,7 +66,7 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
 
         <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px', maxWidth: 760 }}>
           <span
-            className="t3-eyebrow"
+            className="t3-eyebrow t3-eyebrow-plain"
             style={{ justifyContent: 'center', color: 'rgba(255,255,255,0.72)', marginBottom: 24 }}
           >
             Hotel Program
@@ -121,7 +121,7 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
           className="t3-program-intro"
         >
           <div>
-            <span className="t3-eyebrow">About the Program</span>
+            <span className="t3-eyebrow t3-eyebrow-plain">About the Program</span>
             <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
               {program.name}
             </h2>
@@ -153,7 +153,7 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
       {program.benefits.length > 0 && (
         <section className="t3-section t3-section-alt">
           <div style={{ maxWidth: 720, marginBottom: 64 }}>
-            <span className="t3-eyebrow">Your Exclusive Privileges</span>
+            <span className="t3-eyebrow t3-eyebrow-plain">Your Exclusive Privileges</span>
             <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
               Every benefit, included on every stay.
             </h2>
@@ -234,46 +234,6 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
         </section>
       )}
 
-      {/* ── Booking notes ──────────────────────────────────────────────── */}
-      {(program.eligibility_notes || program.booking_notes) && (
-        <section className="t3-section" style={{ paddingTop: 0 }}>
-          <div
-            style={{
-              maxWidth: 820,
-              margin: '0 auto',
-              padding: '48px 56px',
-              background: 'var(--t3-bg-alt)',
-              borderLeft: '2px solid var(--t3-accent)',
-            }}
-          >
-            <span
-              className="t3-eyebrow"
-              style={{ marginBottom: 20 }}
-            >
-              How to book
-            </span>
-            {program.booking_notes && (
-              <p className="t3-body" style={{ marginBottom: program.eligibility_notes ? 16 : 0 }}>
-                {program.booking_notes}
-              </p>
-            )}
-            {program.eligibility_notes && (
-              <p
-                className="t3-body"
-                style={{
-                  fontSize: 13,
-                  color: 'var(--t3-text-muted)',
-                  margin: 0,
-                  fontStyle: 'italic',
-                }}
-              >
-                {program.eligibility_notes}
-              </p>
-            )}
-          </div>
-        </section>
-      )}
-
       {/* ── CTA ────────────────────────────────────────────────────────── */}
       <section
         style={{
@@ -304,7 +264,7 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
         />
         <div style={{ position: 'relative', zIndex: 1, maxWidth: 720, margin: '0 auto' }}>
           <span
-            className="t3-eyebrow"
+            className="t3-eyebrow t3-eyebrow-plain"
             style={{ justifyContent: 'center', color: 'rgba(255,255,255,0.72)' }}
           >
             Ready when you are
