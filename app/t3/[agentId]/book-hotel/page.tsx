@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { getAgentHotelPrograms } from '@/lib/hotel-programs'
+import { getHotelFilterOptions } from '@/lib/hotels'
 import { T3PageHero } from '@/components/t3/T3PageHero'
+import { T3HotelDirectory } from '@/components/t3/T3HotelDirectory'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -15,7 +17,11 @@ export const metadata = {
 
 export default async function T3BookHotelPage({ params }: PageProps) {
   const { agentId } = await params
-  const programs = await getAgentHotelPrograms(agentId)
+  const [programs, filterOpts] = await Promise.all([
+    getAgentHotelPrograms(agentId),
+    getHotelFilterOptions(),
+  ])
+  const { countries, vibes, brands } = filterOpts
   const base = `/t3/${agentId}`
 
   return (
@@ -211,6 +217,30 @@ export default async function T3BookHotelPage({ params }: PageProps) {
           </div>
         </section>
       </div>
+
+      {/* Hotel directory — search every property */}
+      <section id="hotel-directory" className="t3-section">
+        <div style={{ textAlign: 'center', maxWidth: 'var(--t3-content-prose)', margin: '0 auto var(--t3-gap-loose)' }}>
+          <span className="t3-eyebrow t3-eyebrow-plain" style={{ justifyContent: 'center' }}>
+            The Full Directory
+          </span>
+          <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
+            Search every hotel.
+          </h2>
+          <p className="t3-body t3-body-lg" style={{ marginTop: 24 }}>
+            The programs above are our deepest relationships, but our advisor
+            access reaches further. Search by name, city, or country across
+            our complete directory — {countries.length}+ countries, {brands.length}+ brands.
+          </p>
+        </div>
+
+        <T3HotelDirectory
+          agentId={agentId}
+          countries={countries}
+          vibes={vibes}
+          brands={brands}
+        />
+      </section>
 
       {/* CTA */}
       <section className="t3-section" style={{ textAlign: 'center' }}>
