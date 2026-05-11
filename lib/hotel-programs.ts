@@ -701,6 +701,13 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/leading-hotels/leading_hotels-Featured Slider 1500.jpg',
       '/media/hotel-programs/leading-hotels/leading_hotels-Featured Slider 2 1500.jpg',
       '/media/hotel-programs/leading-hotels/leading_hotels-Featured Slider 3 1500.jpg',
+      // ─── Newly added member-property shots ───────────────────────────
+      '/media/hotel-programs/leading-hotels/le-sirenuse.webp',          // Le Sirenuse · Positano
+      '/media/hotel-programs/leading-hotels/hotel-hassler.webp',        // Hotel Hassler · Rome
+      '/media/hotel-programs/leading-hotels/la-mamounia.webp',          // La Mamounia · Marrakech
+      '/media/hotel-programs/leading-hotels/dangleterre.webp',          // Hotel d'Angleterre · Copenhagen
+      '/media/hotel-programs/leading-hotels/thelowell.webp',            // The Lowell · New York
+      '/media/hotel-programs/leading-hotels/sukhothai-suite-01.webp',   // The Sukhothai · Bangkok
     ],
     tagline: 'The world\'s original collection of independent luxury hotels.',
     description: 'The Leading Hotels of the World is a prestigious collection of over 400 independent luxury hotels spanning more than 80 countries. Since 1928, it has been the gold standard in curated independent luxury travel, connecting discerning guests with extraordinary properties that reflect the unique character and culture of their destination. Booking through a preferred partner ensures exclusive recognition and benefits unavailable on any other channel.',
