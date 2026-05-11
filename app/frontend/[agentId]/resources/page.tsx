@@ -2,7 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getAgentProfile } from '@/lib/suppliers'
 import { getAgentHotelPrograms } from '@/lib/hotel-programs'
+import { getHotelFilterOptions } from '@/lib/hotels'
 import { ProgramLogoGrid } from '@/components/hotel-programs/ProgramLogoGrid'
+import { HotelDirectoryEden } from '@/components/hotel-programs/HotelDirectoryEden'
 import { notFound } from 'next/navigation'
 import { tenantBase } from '@/lib/tenant-paths'
 
@@ -62,14 +64,16 @@ const sans  = 'var(--font-sans)'
 export default async function ResourcesPage({ params }: PageProps) {
   const { agentId } = await params
 
-  const [agent, programs] = await Promise.all([
+  const [agent, programs, filterOpts] = await Promise.all([
     getAgentProfile(agentId),
     getAgentHotelPrograms(agentId),
+    getHotelFilterOptions(),
   ])
 
   if (!agent) notFound()
   const base = tenantBase(agent)
   const resources = buildResources(base)
+  const { countries, vibes, brands } = filterOpts
 
   return (
     <main style={{ background: 'var(--cream)' }}>
@@ -158,6 +162,42 @@ export default async function ResourcesPage({ params }: PageProps) {
           </div>
 
           <ProgramLogoGrid programs={programs} agentId={agentId} base={base} />
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
+        <hr style={{ border: 'none', borderTop: '1px solid var(--divider)' }} />
+      </div>
+
+      {/* ── Searchable Hotel Directory ────────────────────────────── */}
+      <section id="hotel-directory" style={{ padding: '100px 24px' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', maxWidth: 760, margin: '0 auto 64px' }}>
+            <p className="section-label" style={{ marginBottom: '12px' }}>The Full Directory</p>
+            <h2 style={{
+              fontFamily: serif,
+              fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
+              fontWeight: 300,
+              color: 'var(--charcoal)',
+              lineHeight: 1.2,
+              marginBottom: '20px',
+            }}>
+              Search every hotel.
+            </h2>
+            <p style={{ fontFamily: sans, fontSize: '14px', color: 'var(--warm-gray)', lineHeight: '1.85' }}>
+              The programmes above are our deepest relationships, but our advisor
+              access reaches further. Search by name, city, or country across our
+              full directory — every listing is bookable through us.
+            </p>
+          </div>
+
+          <HotelDirectoryEden
+            base={base}
+            countries={countries}
+            vibes={vibes}
+            brands={brands}
+          />
         </div>
       </section>
 
