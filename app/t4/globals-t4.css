@@ -40,16 +40,21 @@
 
 /* ─── Sections ─────────────────────────────────────────────────────────── */
 
+/* Section element spans the full viewport so background colors (via
+   .t4-section-alt / -dark / -deeper) fill edge-to-edge. Content stays
+   centered at --t4-content-max via padding-inline that grows on wider
+   viewports — identical content width to the legacy max-width approach
+   but the colored bg no longer caps at the content-max width. */
 .t4-section {
-  padding: var(--t4-section-pad) 48px;
-  max-width: var(--t4-content-max);
-  margin: 0 auto;
+  padding-top: var(--t4-section-pad);
+  padding-bottom: var(--t4-section-pad);
+  padding-inline: max(48px, calc((100vw - var(--t4-content-max)) / 2));
 }
 
 .t4-section-wide {
-  padding: var(--t4-section-pad) 48px;
-  max-width: var(--t4-content-wide);
-  margin: 0 auto;
+  padding-top: var(--t4-section-pad);
+  padding-bottom: var(--t4-section-pad);
+  padding-inline: max(48px, calc((100vw - var(--t4-content-wide)) / 2));
 }
 
 .t4-section-alt {
