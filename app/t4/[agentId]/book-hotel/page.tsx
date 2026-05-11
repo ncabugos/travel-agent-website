@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { getAgentHotelPrograms } from '@/lib/hotel-programs'
+import { getHotelFilterOptions } from '@/lib/hotels'
 import { T4PageHero } from '@/components/t4/T4PageHero'
+import { T4HotelDirectory } from '@/components/t4/T4HotelDirectory'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -14,7 +16,11 @@ export const metadata = {
 
 export default async function T4BookHotelIndexPage({ params }: PageProps) {
   const { agentId } = await params
-  const programs = await getAgentHotelPrograms(agentId)
+  const [programs, filterOpts] = await Promise.all([
+    getAgentHotelPrograms(agentId),
+    getHotelFilterOptions(),
+  ])
+  const { countries, vibes, brands } = filterOpts
   const base = `/t4/${agentId}`
 
   return (
@@ -204,6 +210,28 @@ export default async function T4BookHotelIndexPage({ params }: PageProps) {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* Hotel directory — search every individual property */}
+      <section id="hotel-directory" className="t4-section">
+        <div style={{ textAlign: 'center', maxWidth: 'var(--t4-content-prose, 880px)', margin: '0 auto 64px' }}>
+          <span className="t4-eyebrow">The Full Directory</span>
+          <h2 className="t4-headline-xl" style={{ marginTop: 28 }}>
+            Search every hotel.
+          </h2>
+          <p className="t4-body t4-body-lg" style={{ marginTop: 24 }}>
+            The programs above are our deepest relationships. The search
+            reaches further — by name, city, or country across our complete
+            directory.
+          </p>
+        </div>
+
+        <T4HotelDirectory
+          agentId={agentId}
+          countries={countries}
+          vibes={vibes}
+          brands={brands}
+        />
       </section>
 
       <style>{`
