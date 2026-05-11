@@ -159,6 +159,7 @@ export default async function T3HomePage({ params }: PageProps) {
 
       {/* ── 10 · Contact ────────────────────────────────────────────────── */}
       <T3ContactSection
+        agentId={agentId}
         eyebrow="10 — Begin the Conversation"
         headline="Every great journey starts with a conversation."
         body="Tell us where you're dreaming of, and we'll reach out within 24 hours to discuss what's possible."

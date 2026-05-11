@@ -1,12 +1,15 @@
 import { getAgentProfile } from '@/lib/suppliers'
+import { T2ContactForm } from '@/components/t2/T2ContactForm'
 import Image from 'next/image'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
+  searchParams?: Promise<{ hotel?: string }>
 }
 
-export default async function ContactPage({ params }: PageProps) {
+export default async function ContactPage({ params, searchParams }: PageProps) {
   const { agentId } = await params
+  const { hotel } = (await searchParams) ?? {}
   const agent = await getAgentProfile(agentId)
 
   const phone = agent?.phone ?? '+1 (800) 555-0100'
@@ -98,18 +101,7 @@ export default async function ContactPage({ params }: PageProps) {
             <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 14, color: 'var(--t2-text-muted)', marginBottom: 24 }}>
               Tell us about your next dream trip and we&apos;ll get back to you within 24 hours.
             </p>
-            <form>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
-                <input type="text" placeholder="First Name *" required className="t2-input" />
-                <input type="text" placeholder="Last Name *" required className="t2-input" />
-              </div>
-              <input type="email" placeholder="Email Address *" required className="t2-input" style={{ marginBottom: 16 }} />
-              <input type="tel" placeholder="Phone Number" className="t2-input" style={{ marginBottom: 16 }} />
-              <textarea placeholder="Tell us about your travel goals..." className="t2-input t2-textarea" style={{ marginBottom: 24 }} />
-              <button type="submit" className="t2-btn t2-btn-primary" style={{ width: '100%', textAlign: 'center' }}>
-                Submit Request
-              </button>
-            </form>
+            <T2ContactForm agentId={agentId} hotel={hotel} />
           </div>
         </div>
       </section>

@@ -6,6 +6,12 @@ import { JsonLd, contactPageSchema } from '@/components/seo/JsonLd'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
+  /**
+   * Optional `?hotel=<name>` arrives when the visitor reached this page
+   * from a hotel detail page's Enquire button. We forward it through to
+   * ContactForm so the form shows context + the advisor email is tagged.
+   */
+  searchParams?: Promise<{ hotel?: string }>
 }
 
 export async function generateMetadata({ params }: PageProps) {
@@ -32,8 +38,9 @@ export async function generateMetadata({ params }: PageProps) {
 const serif = 'var(--font-serif)'
 const sans  = 'var(--font-sans)'
 
-export default async function ContactPage({ params }: PageProps) {
+export default async function ContactPage({ params, searchParams }: PageProps) {
   const { agentId } = await params
+  const { hotel } = (await searchParams) ?? {}
   const agent = await getAgentProfile(agentId)
   if (!agent) notFound()
 
@@ -84,7 +91,7 @@ export default async function ContactPage({ params }: PageProps) {
           </div>
 
           {/* Form */}
-          <ContactForm agentId={agentId} />
+          <ContactForm agentId={agentId} hotel={hotel} />
         </div>
       </section>
 

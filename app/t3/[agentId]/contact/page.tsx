@@ -3,10 +3,12 @@ import { T3ContactSection } from '@/components/t3/T3ContactSection'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
+  searchParams?: Promise<{ hotel?: string }>
 }
 
-export default async function T3ContactPage({ params }: PageProps) {
+export default async function T3ContactPage({ params, searchParams }: PageProps) {
   const { agentId } = await params
+  const { hotel } = (await searchParams) ?? {}
   const agent = await getAgentProfile(agentId)
 
   return (
@@ -69,11 +71,13 @@ export default async function T3ContactPage({ params }: PageProps) {
       </section>
 
       <T3ContactSection
+        agentId={agentId}
         eyebrow="Begin"
         headline="Tell us about your journey."
         phone={agent?.phone}
         email={agent?.email}
         address={agent?.address}
+        hotel={hotel}
       />
 
       <style>{`

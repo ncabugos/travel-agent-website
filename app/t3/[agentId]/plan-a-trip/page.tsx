@@ -160,6 +160,7 @@ export default async function T3PlanATripPage({ params }: PageProps) {
 
       {/* Contact form (reuses T3ContactSection) */}
       <T3ContactSection
+        agentId={agentId}
         eyebrow="Start Here"
         headline="Tell us about your trip."
         body="Share a few details below and we will respond personally — usually within a few hours, never more than one business day."

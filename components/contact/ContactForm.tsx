@@ -32,7 +32,18 @@ const ADVISOR_PREFS = [
 
 const initialState: ContactFormState = {}
 
-export function ContactForm({ agentId }: { agentId: string }) {
+interface ContactFormProps {
+  agentId: string
+  /**
+   * Hotel name to pre-tag this enquiry with. Comes from `?hotel=<name>` on
+   * the URL when a visitor clicks "Enquire about this stay" from a hotel
+   * detail page. Surfaces visibly above the form AND in the email subject
+   * + body sent to the advisor so they know which property triggered it.
+   */
+  hotel?: string
+}
+
+export function ContactForm({ agentId, hotel }: ContactFormProps) {
   const [state, formAction, isPending] = useActionState(submitContactForm, initialState)
   // Captured once on mount; the server checks elapsed time vs this stamp to
   // reject sub-second submissions (form-fill bots).
@@ -56,6 +67,50 @@ export function ContactForm({ agentId }: { agentId: string }) {
     <form action={formAction}>
       <input type="hidden" name="agent_id" value={agentId} />
       <input type="hidden" name="_rendered_at" value={String(renderedAt)} />
+      {hotel && <input type="hidden" name="hotel_name" value={hotel} />}
+
+      {/* Visible chip showing which hotel triggered this enquiry. Shown only
+          when ?hotel= is on the URL; sent through to the advisor's inbox
+          via hidden `hotel_name` above. */}
+      {hotel && (
+        <div
+          role="status"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 16,
+            padding: '14px 20px',
+            marginBottom: '28px',
+            background: 'var(--cream, #faf7f2)',
+            border: '1px solid var(--gold, #b5945a)',
+            borderLeftWidth: '3px',
+          }}
+        >
+          <span
+            style={{
+              fontFamily: sans,
+              fontSize: '9px',
+              letterSpacing: '0.28em',
+              textTransform: 'uppercase',
+              color: 'var(--gold, #b5945a)',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            Enquiring about
+          </span>
+          <span
+            style={{
+              fontFamily: serif,
+              fontSize: '15px',
+              fontWeight: 500,
+              color: 'var(--charcoal, #1f1c18)',
+              flex: 1,
+            }}
+          >
+            {hotel}
+          </span>
+        </div>
+      )}
 
       {/* Honeypot — visually hidden but in the DOM. Real users never see or
           fill this; spam bots that blindly populate every input do, and the
@@ -112,7 +167,9 @@ export function ContactForm({ agentId }: { agentId: string }) {
           <textarea
             name="message"
             rows={5}
-            placeholder="Tell us more about your ideal journey..."
+            placeholder={hotel
+              ? `Anything else we should know about your stay at ${hotel}? Dates, occasion, preferences…`
+              : 'Tell us more about your ideal journey...'}
             style={{ ...inputStyle, resize: 'vertical', minHeight: '120px' }}
           />
         </div>

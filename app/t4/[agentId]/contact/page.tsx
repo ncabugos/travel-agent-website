@@ -3,6 +3,7 @@ import { ContactForm } from '@/components/contact/ContactForm'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
+  searchParams?: Promise<{ hotel?: string }>
 }
 
 export const metadata = {
@@ -10,8 +11,9 @@ export const metadata = {
   description: 'Begin a conversation with Casa Solis.',
 }
 
-export default async function T4ContactPage({ params }: PageProps) {
+export default async function T4ContactPage({ params, searchParams }: PageProps) {
   const { agentId } = await params
+  const { hotel } = (await searchParams) ?? {}
 
   return (
     <>
@@ -59,7 +61,7 @@ export default async function T4ContactPage({ params }: PageProps) {
 
           {/* Form */}
           <div>
-            <ContactForm agentId={agentId} />
+            <ContactForm agentId={agentId} hotel={hotel} />
           </div>
         </div>
 

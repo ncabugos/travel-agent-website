@@ -36,6 +36,10 @@ export async function submitContactForm(
   const numTrav    = get('num_travelers')
   const advisorPref= get('advisor_pref')
   const message    = get('message')
+  // Hotel context — set by the visible chip in the form when the user
+  // arrives via /contact?hotel=<name> from a hotel detail page.
+  // Tags the subject line and adds a prominent row in the advisor email.
+  const hotelName  = get('hotel_name')
 
   // ── Spam protection ──────────────────────────────────────────────────
   // 1. Honeypot — hidden field that real users never fill.
@@ -66,10 +70,11 @@ export async function submitContactForm(
 
   const fullName = `${firstName} ${lastName}`
   const fullMessage = [
-    vacType    ? `Vacation type: ${vacType}`     : null,
-    numTrav    ? `Travelers: ${numTrav}`          : null,
+    hotelName  ? `Hotel of interest: ${hotelName}` : null,
+    vacType    ? `Vacation type: ${vacType}`       : null,
+    numTrav    ? `Travelers: ${numTrav}`            : null,
     advisorPref? `Advisor preference: ${advisorPref}` : null,
-    message    ? message                          : null,
+    message    ? message                            : null,
   ].filter(Boolean).join('\n') || null
 
   // ── DB write (audit trail) ───────────────────────────────────────────
@@ -116,15 +121,34 @@ export async function submitContactForm(
       const resend = new Resend(process.env.RESEND_API_KEY)
       const FROM = process.env.EMAIL_FROM ?? 'EliteAdvisorHub <onboarding@resend.dev>'
 
+      // Subject line is the most-visible signal in an inbox view; tag with
+      // [Hotel] when the enquiry came from a hotel detail page so the
+      // advisor knows the context without opening the email.
+      const subjectTag = hotelName
+        ? `[Hotel — ${hotelName}]`
+        : '[New enquiry]'
+      const subject = `${subjectTag} ${fullName}${
+        !hotelName && destination ? ' — ' + destination : ''
+      }`
+
       const { data: sendData, error: sendError } = await resend.emails.send({
         from: FROM,
         to: recipient,
         replyTo: email,
-        subject: `[New enquiry] ${fullName}${destination ? ' — ' + destination : ''}`,
+        subject,
         html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px 0; color: #1f2937;">
-            <h2 style="margin: 0 0 4px; font-size: 18px; color: #111;">New enquiry${agencyName ? ' for ' + escape(agencyName) : ''}</h2>
+            <h2 style="margin: 0 0 4px; font-size: 18px; color: #111;">${
+              hotelName ? 'Hotel enquiry' : 'New enquiry'
+            }${agencyName ? ' for ' + escape(agencyName) : ''}</h2>
             <p style="margin: 0 0 24px; font-size: 13px; color: #6b7280;">Reply directly to this email to reach ${escape(fullName)}.</p>
+
+            ${hotelName ? `
+              <div style="background: #faf7f2; border-left: 3px solid #b5945a; padding: 14px 18px; margin-bottom: 20px;">
+                <div style="font-size: 10px; color: #b5945a; text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 4px;">Hotel of interest</div>
+                <div style="font-size: 17px; font-weight: 500; color: #111;">${escape(hotelName)}</div>
+              </div>
+            ` : ''}
 
             <table style="width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 24px;">
               <tr><td style="padding: 6px 0; color: #6b7280; width: 130px;">Name</td><td style="padding: 6px 0; font-weight: 500;">${escape(fullName)}</td></tr>

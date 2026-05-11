@@ -1,30 +1,38 @@
 'use client'
-import { useState } from 'react'
+import { useActionState, useState } from 'react'
+import { submitContactForm, type ContactFormState } from '@/lib/actions/contact'
 
 interface T3ContactSectionProps {
+  /** Required for the server action — without it the email can't be routed
+   * to the right advisor inbox. Falls back to platform admin if omitted. */
+  agentId?: string
   eyebrow?: string
   headline: string
   body?: string
   phone?: string
   email?: string
   address?: string
+  /** Pre-fills a hotel context chip + tags the advisor email. Set via
+   * `?hotel=<name>` on the URL when a visitor arrives from a hotel detail
+   * page's Enquire button. */
+  hotel?: string
 }
 
+const initialState: ContactFormState = {}
+
 export function T3ContactSection({
-  eyebrow = '07 — Begin the Conversation',
+  agentId,
+  eyebrow = 'Begin the Conversation',
   headline,
   body,
   phone,
   email,
   address,
+  hotel,
 }: T3ContactSectionProps) {
-  const [submitted, setSubmitted] = useState(false)
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    // TODO: wire to /api/leads when ready
-    setSubmitted(true)
-  }
+  const [state, formAction, isPending] = useActionState(submitContactForm, initialState)
+  // Sub-2-second submission protection (matches Eden + T4 forms).
+  const [renderedAt] = useState<number>(() => Date.now())
 
   return (
     <section id="contact" className="t3-section t3-section-alt" style={{ maxWidth: '100%' }}>
@@ -37,7 +45,7 @@ export function T3ContactSection({
         className="t3-contact-wrap"
       >
         <div style={{ textAlign: 'center', marginBottom: 72 }}>
-          <span className="t3-eyebrow">{eyebrow}</span>
+          <span className="t3-eyebrow t3-eyebrow-plain">{eyebrow}</span>
           <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
             {headline}
           </h2>
@@ -51,7 +59,7 @@ export function T3ContactSection({
           )}
         </div>
 
-        {submitted ? (
+        {state.success ? (
           <div
             style={{
               padding: '48px 32px',
@@ -64,11 +72,70 @@ export function T3ContactSection({
               Thank you
             </h3>
             <p className="t3-body" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
-              Your inquiry has been received. We&apos;ll respond personally within 24 hours.
+              Your inquiry has been received. We&apos;ll respond personally within one business day.
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} style={{ background: 'var(--t3-bg)', padding: '64px 64px' }} className="t3-contact-form">
+          <form
+            action={formAction}
+            style={{ background: 'var(--t3-bg)', padding: '64px 64px' }}
+            className="t3-contact-form"
+          >
+            <input type="hidden" name="agent_id" value={agentId ?? ''} />
+            <input type="hidden" name="_rendered_at" value={String(renderedAt)} />
+            {hotel && <input type="hidden" name="hotel_name" value={hotel} />}
+
+            {/* Honeypot — invisible to humans, blindly filled by spam bots. */}
+            <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}>
+              <input type="text" name="website_url" tabIndex={-1} autoComplete="off" defaultValue="" />
+            </div>
+
+            {/* Visible chip showing which hotel triggered this enquiry. */}
+            {hotel && (
+              <div
+                role="status"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 16,
+                  padding: '16px 22px',
+                  marginBottom: 36,
+                  background: 'var(--t3-bg-alt)',
+                  borderLeft: '3px solid var(--t3-accent)',
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: 'var(--t3-font-sans)',
+                    fontSize: 10,
+                    fontWeight: 500,
+                    letterSpacing: '0.28em',
+                    textTransform: 'uppercase',
+                    color: 'var(--t3-accent)',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  Enquiring about
+                </span>
+                <span
+                  style={{
+                    fontFamily: 'var(--t3-font-display)',
+                    fontSize: 18,
+                    color: 'var(--t3-text)',
+                    flex: 1,
+                  }}
+                >
+                  {hotel}
+                </span>
+              </div>
+            )}
+
+            {state.error && (
+              <div style={{ padding: '14px 20px', marginBottom: 24, background: '#FEF3CD', border: '1px solid #F5C842' }}>
+                <p style={{ fontFamily: 'var(--t3-font-sans)', fontSize: 13, color: '#7A5C00' }}>{state.error}</p>
+              </div>
+            )}
+
             <div
               style={{
                 display: 'grid',
@@ -78,9 +145,9 @@ export function T3ContactSection({
               }}
               className="t3-form-grid"
             >
-              <Field label="First Name" name="firstName" required />
-              <Field label="Last Name" name="lastName" required />
-              <Field label="Email Address" name="email" type="email" required />
+              <Field label="First Name" name="first_name" required error={state.fieldErrors?.first_name} />
+              <Field label="Last Name" name="last_name" required error={state.fieldErrors?.last_name} />
+              <Field label="Email Address" name="email" type="email" required error={state.fieldErrors?.email} />
               <Field label="Phone Number" name="phone" type="tel" />
               <Field label="Destination of Interest" name="destination" full />
               <div style={{ gridColumn: '1 / -1' }}>
@@ -88,7 +155,9 @@ export function T3ContactSection({
                 <textarea
                   name="message"
                   className="t3-input t3-textarea"
-                  placeholder="Preferred dates, number of travelers, style of travel, any must-haves..."
+                  placeholder={hotel
+                    ? `Anything else we should know about your stay at ${hotel}? Dates, occasion, preferences…`
+                    : 'Preferred dates, number of travelers, style of travel, any must-haves...'}
                   rows={4}
                 />
               </div>
@@ -116,8 +185,8 @@ export function T3ContactSection({
               >
                 By submitting this inquiry you consent to being contacted about travel planning. We never share your information.
               </p>
-              <button type="submit" className="t3-btn t3-btn-solid">
-                Send Inquiry
+              <button type="submit" className="t3-btn t3-btn-solid" disabled={isPending}>
+                {isPending ? 'Sending…' : 'Send Inquiry'}
               </button>
             </div>
           </form>
@@ -162,12 +231,14 @@ function Field({
   type = 'text',
   required,
   full,
+  error,
 }: {
   label: string
   name: string
   type?: string
   required?: boolean
   full?: boolean
+  error?: string
 }) {
   return (
     <div style={{ gridColumn: full ? '1 / -1' : undefined }}>
@@ -181,8 +252,12 @@ function Field({
         type={type}
         required={required}
         className="t3-input"
+        style={error ? { borderBottomColor: '#C0392B' } : undefined}
         placeholder=""
       />
+      {error && (
+        <p style={{ fontSize: 11, color: '#C0392B', marginTop: 6 }}>{error}</p>
+      )}
     </div>
   )
 }
