@@ -1,6 +1,19 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+/**
+ * Lazily construct the Resend client so a missing RESEND_API_KEY doesn't
+ * throw at module-load time. Without this, every preview deployment that
+ * doesn't have the env var configured fails the "Collecting page data"
+ * build step the moment Next.js imports an API route that imports this
+ * module (e.g. /api/agent-portal/onboarding).
+ */
+function getResend(): Resend {
+  const key = process.env.RESEND_API_KEY
+  if (!key) {
+    throw new Error('RESEND_API_KEY is not set — cannot send transactional email')
+  }
+  return new Resend(key)
+}
 
 const FROM_ADDRESS = process.env.EMAIL_FROM ?? 'EliteAdvisorHub <onboarding@resend.dev>'
 const ADMIN_EMAIL = 'cabugosb3@gmail.com'
@@ -19,7 +32,7 @@ interface OnboardingAgent {
  * and their site needs to be designed/provisioned.
  */
 export async function sendAdminOnboardingNotification(agent: OnboardingAgent) {
-  const { data, error } = await resend.emails.send({
+  const { data, error } = await getResend().emails.send({
     from: FROM_ADDRESS,
     to: ADMIN_EMAIL,
     subject: `New Agent Onboarding: ${agent.agency_name}`,
@@ -77,7 +90,7 @@ export async function sendAgentWelcomeEmail(agent: OnboardingAgent) {
     ? `Because you've chosen our <strong>Custom</strong> tier, we'll reach out within the next business day to schedule a conversation about your site design and unique requirements.`
     : `Your site will be live within <strong>24-48 hours</strong>. We're designing it now based on the information you provided.`
 
-  const { data, error } = await resend.emails.send({
+  const { data, error } = await getResend().emails.send({
     from: FROM_ADDRESS,
     to: agent.email,
     subject: `Welcome to EliteAdvisorHub, ${agent.full_name}!`,
