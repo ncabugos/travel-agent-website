@@ -48,15 +48,15 @@
 }
 
 /* ── Section containers ───────────────────────────────────────────────── */
-/* Section element spans the full viewport so background colors (via
-   .t2-section-alt / .t2-section-dark) fill edge-to-edge. Content centers
-   at --t2-content-max via padding-inline that grows on wider viewports —
-   identical content width to the legacy max-width approach but the colored
-   bg no longer caps at the content-max width. */
+/* Keeps the legacy max-width-on-element pattern (some t2 pages override
+   maxWidth inline for narrower sections — calc-padding-inline would
+   conflict with those). For full-width colored backgrounds, wrap the
+   t2-section in a parent div with the background applied — the parent
+   div is 100vw, the section stays max-content-max for centering. */
 .t2-section {
-  padding-top: var(--t2-section-pad);
-  padding-bottom: var(--t2-section-pad);
-  padding-inline: max(48px, calc((100vw - var(--t2-content-max)) / 2));
+  padding: var(--t2-section-pad) 48px;
+  max-width: var(--t2-content-max);
+  margin: 0 auto;
 }
 
 .t2-section-full {

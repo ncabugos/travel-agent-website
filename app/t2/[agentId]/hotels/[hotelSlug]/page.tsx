@@ -209,8 +209,11 @@ export default async function T2HotelDetailPage({ params }: PageProps) {
       </section>
 
       {/* ── Related — same brand ─────────────────────────────────────── */}
+      {/* Wrapper div carries the full-viewport background; inner section
+          centers content at --t2-content-max. */}
       {related.length > 0 && (
-        <section className="t2-section" style={{ background: 'var(--t2-bg-alt, #f8f5ef)' }}>
+        <div style={{ background: 'var(--t2-bg-alt, #f8f5ef)' }}>
+        <section className="t2-section">
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
             <p className="t2-label" style={{ marginBottom: 8, color: 'var(--t2-accent)' }}>
               More from this brand
@@ -242,6 +245,7 @@ export default async function T2HotelDetailPage({ params }: PageProps) {
             ))}
           </div>
         </section>
+        </div>
       )}
 
       <T2LeadForm

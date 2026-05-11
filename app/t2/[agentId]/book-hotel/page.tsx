@@ -73,8 +73,9 @@ export default async function BookHotelPage({ params }: PageProps) {
         subheading="Every program below unlocks preferred benefits — room upgrades on arrival, daily breakfast, early check-in or late check-out, and a personalised welcome — bookable only through a Virtuoso-affiliated advisor."
       />
 
-      {/* Searchable hotel directory */}
-      <section id="hotel-directory" className="t2-section" style={{ background: 'var(--t2-bg-alt, #f8f5ef)' }}>
+      {/* Searchable hotel directory — wrapper div carries full-viewport bg */}
+      <div id="hotel-directory" style={{ background: 'var(--t2-bg-alt, #f8f5ef)' }}>
+      <section className="t2-section">
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <p className="t2-label" style={{ marginBottom: 12, color: 'var(--t2-accent)' }}>The Full Directory</p>
           <h2 className="t2-heading t2-heading-lg">Search every hotel.</h2>
@@ -92,6 +93,7 @@ export default async function BookHotelPage({ params }: PageProps) {
           brands={brands}
         />
       </section>
+      </div>
 
       {/* Lead Form */}
       <T2LeadForm
