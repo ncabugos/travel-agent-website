@@ -67,16 +67,21 @@
 }
 
 /* ── Sections ─────────────────────────────────────────────────────────── */
+/* The section element itself spans the full viewport width so background
+   colors (via .t3-section-alt / .t3-section-dark) fill edge-to-edge.
+   Content stays centered at --t3-content-max via padding-inline that grows
+   on wider viewports — content area is identical to the legacy max-width
+   approach but the colored bg no longer caps at 1440px. */
 .t3-section {
-  padding: var(--t3-section-pad) 48px;
-  max-width: var(--t3-content-max);
-  margin: 0 auto;
+  padding-top: var(--t3-section-pad);
+  padding-bottom: var(--t3-section-pad);
+  padding-inline: max(48px, calc((100vw - var(--t3-content-max)) / 2));
 }
 
 .t3-section-wide {
-  padding: var(--t3-section-pad) 48px;
-  max-width: var(--t3-content-wide);
-  margin: 0 auto;
+  padding-top: var(--t3-section-pad);
+  padding-bottom: var(--t3-section-pad);
+  padding-inline: max(48px, calc((100vw - var(--t3-content-wide)) / 2));
 }
 
 .t3-section-full {
