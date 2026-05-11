@@ -29,7 +29,7 @@ export default async function T3HomePage({ params }: PageProps) {
     getFeaturedPartners(),
   ])
 
-  const agencyName = agent?.agency_name ?? 'Meridian & Company'
+  const agencyName = agent?.agency_name ?? 'Meridian Travel'
 
   return (
     <>

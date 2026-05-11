@@ -21,7 +21,7 @@ const PLATFORM_LINKS = [
 const DEMO_LINKS = [
   { label: 'Eden',                  href: '/frontend/demo-agent' },
   { label: 'Vista',                 href: '/t2/t2-demo' },
-  { label: 'Meridian',              href: '/t3/t3-demo' },
+  { label: 'Meridian Travel',              href: '/t3/t3-demo' },
   { label: 'Your Travel Center',    href: '/t2/ytc-demo' },
   { label: 'Casa Solis',            href: '/t4/casa-solis' },
   { label: 'Wine & Wellness Travel', href: '/t2/wwt-demo' },

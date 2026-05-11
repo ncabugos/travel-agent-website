@@ -8,7 +8,7 @@ interface PageProps {
 }
 
 export const metadata = {
-  title: 'Hotel Programs | Meridian & Company',
+  title: 'Hotel Programs | Meridian Travel',
   description:
     'Our preferred hotel programs — preferred-partner access with amenities arranged by your advisor on every stay.',
 }

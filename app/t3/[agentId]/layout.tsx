@@ -32,18 +32,20 @@ export default async function T3Layout({ children, params }: LayoutProps) {
     <div className={`${spaceGrotesk.variable} ${inter.variable} t3-page`}>
       <T3Nav
         agentId={agentId}
-        agencyName={agent?.agency_name ?? 'Meridian & Company'}
+        agencyName={agent?.agency_name ?? 'Meridian Travel'}
         tagline={agent?.tagline ?? undefined}
         logoUrl={agent?.logo_url ?? undefined}
         navLinks={agent?.nav_links}
+        phone={agent?.phone ?? '+1 (800) 555-0103'}
+        email={agent?.email ?? 'hello@meridiantravel.com'}
       />
       <main>{children}</main>
       <T3Footer
         agentId={agentId}
-        agencyName={agent?.agency_name ?? 'Meridian & Company'}
+        agencyName={agent?.agency_name ?? 'Meridian Travel'}
         tagline={agent?.tagline ?? undefined}
         phone={agent?.phone ?? '+1 (800) 555-0103'}
-        email={agent?.email ?? 'hello@meridianandco.com'}
+        email={agent?.email ?? 'hello@meridiantravel.com'}
         address={agent?.address}
         cstNumber={agent?.cst_number}
         instagramUrl={agent?.instagram_url}

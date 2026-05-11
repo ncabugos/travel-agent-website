@@ -10,7 +10,7 @@ const TEAM = [
     name: 'Eleanor Price',
     title: 'Founder & Principal Advisor',
     photo: '/media/team/agent-sarah-chen.png',
-    bio: 'A former hotelier turned advisor, Eleanor founded Meridian & Company after two decades in luxury hospitality — most recently as guest experience director at one of Europe\'s most celebrated private-island resorts. Her relationships span three generations of the industry, from general managers to head butlers.',
+    bio: 'A former hotelier turned advisor, Eleanor founded Meridian Travel after two decades in luxury hospitality — most recently as guest experience director at one of Europe\'s most celebrated private-island resorts. Her relationships span three generations of the industry, from general managers to head butlers.',
     specialties: ['Private islands & residences', 'European grand hotels', 'Multi-generational travel'],
   },
   {
@@ -60,10 +60,10 @@ export default async function T3AboutPage({ params }: PageProps) {
     <>
       <T3PageHero
         image="/media/hotel-programs/four-seasons/fs-maui-ocean_suite-3840x2160.jpg"
-        imageAlt="About Meridian & Company"
+        imageAlt="About Meridian Travel"
         eyebrow="About"
         title="A studio for the considered traveler."
-        body="Founded in Boston in 2004, Meridian & Company is a travel studio — not an agency — quietly advising a small group of clients on how to see the world at its most extraordinary."
+        body="Founded in Boston in 2004, Meridian Travel is a travel studio — not an agency — quietly advising a small group of clients on how to see the world at its most extraordinary."
         imageCaption="Four Seasons Maui · Wailea"
       />
 

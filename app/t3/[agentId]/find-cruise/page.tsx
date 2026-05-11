@@ -8,7 +8,7 @@ interface PageProps {
 }
 
 export const metadata = {
-  title: 'Cruise Partners | Meridian & Company',
+  title: 'Cruise Partners | Meridian Travel',
   description:
     'Our preferred cruise partners — advisor-only benefits on every voyage with the world\'s finest ocean, river, and expedition lines.',
 }

@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: PageProps) {
   const program = await getHotelProgram(programSlug)
   if (!program) return { title: 'Program not found' }
   return {
-    title: `${program.name} | Meridian & Company`,
+    title: `${program.name} | Meridian Travel`,
     description: program.tagline ?? program.description ?? undefined,
   }
 }

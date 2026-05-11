@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: PageProps) {
   const line = await getCruiseLine(cruiseSlug)
   if (!line) return { title: 'Cruise line not found' }
   return {
-    title: `${line.name} | Meridian & Company`,
+    title: `${line.name} | Meridian Travel`,
     description: line.tagline ?? line.description ?? undefined,
   }
 }
