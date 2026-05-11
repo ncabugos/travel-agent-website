@@ -399,6 +399,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/hyatt-prive/hyatt-slider-2-1500.jpg',
       '/media/hotel-programs/hyatt-prive/hyatt-slider-3-1500.jpg',
       '/media/hotel-programs/hyatt-prive/hyatt-slider-4-1500.jpg',
+      '/media/hotel-programs/hyatt-prive/hyatt-slider-5-1500.jpg',  // Park Hyatt Cabo del Sol exterior (1000px — replace when higher-res available)
+      '/media/hotel-programs/hyatt-prive/hyatt-slider-6-1500.jpg',  // Miraval Arizona retreat patio (1000px — replace when higher-res available)
     ],
     tagline: 'Strictly limited to a small collection of Hyatt\'s most exceptional global agencies.',
     description: 'World of Hyatt Privé is an exclusive travel advisor programme providing preferred benefits at Hyatt\'s most prestigious properties, including Park Hyatt, Alila, Andaz, and Grand Hyatt. Membership is strictly limited, ensuring recognition and service of the highest order.',
