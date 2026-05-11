@@ -1,5 +1,5 @@
 import { getHotelProgram, getHotelPrograms } from '@/lib/hotel-programs'
-import { getFeaturedHotels } from '@/lib/featured-hotels'
+import { getProgramFeaturedHotels } from '@/lib/hotels'
 import { getBlogPostsBySupplier } from '@/lib/blog'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
@@ -36,7 +36,7 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
 
   // Fetch supplemental modules in parallel; each gracefully renders nothing when empty.
   const [featuredHotels, relatedPosts, allPrograms] = await Promise.all([
-    getFeaturedHotels(programSlug),
+    getProgramFeaturedHotels(programSlug),
     getBlogPostsBySupplier(programSlug, agentId).catch(() => []),
     getHotelPrograms(),
   ])

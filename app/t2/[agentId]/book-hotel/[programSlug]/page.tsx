@@ -1,5 +1,5 @@
 import { getHotelProgram, getHotelPrograms } from '@/lib/hotel-programs'
-import { getFeaturedHotels } from '@/lib/featured-hotels'
+import { getProgramFeaturedHotels } from '@/lib/hotels'
 import { getSupplierPromo } from '@/lib/supplier-promos'
 import { getBlogPostsBySupplier } from '@/lib/blog'
 import { notFound } from 'next/navigation'
@@ -22,14 +22,14 @@ export async function generateStaticParams() {
 
 export default async function HotelProgramDetailPage({ params }: PageProps) {
   const { agentId, programSlug } = await params
-  const [program, promo, relatedPosts] = await Promise.all([
+  const [program, promo, relatedPosts, featuredHotels] = await Promise.all([
     getHotelProgram(programSlug),
     getSupplierPromo('hotel_program', programSlug),
     getBlogPostsBySupplier(`hotel:${programSlug}`, agentId),
+    getProgramFeaturedHotels(programSlug),
   ])
   if (!program) notFound()
 
-  const featuredHotels = getFeaturedHotels(programSlug)
   const base = `/t2/${agentId}`
 
   // Fallback promo used until a DB row is configured for this program

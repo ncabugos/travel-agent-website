@@ -1,8 +1,14 @@
 import Link from 'next/link'
-import type { FeaturedHotel } from '@/lib/featured-hotels'
+import type { LuxuryHotel } from '@/lib/hotels'
+import { HotelCardImage } from '@/components/t2/HotelCardImage'
 
 interface Props {
-  hotels: FeaturedHotel[]
+  /**
+   * Live hotel records from luxury_hotels (typed as LuxuryHotel). Each
+   * card links to the internal /hotels/{slug} detail page rather than
+   * an external supplier URL.
+   */
+  hotels: LuxuryHotel[]
   programName: string
   base: string
   eyebrow?: string
@@ -13,8 +19,8 @@ interface Props {
 
 /**
  * Editorial 3-up grid of representative properties within a hotel program.
- * Server-rendered; each card links to the supplier's detail page (Virtuoso, etc).
- * Falls back silently when no hotels are curated for the program.
+ * Server-rendered; each card links to /{template}/{agentId}/hotels/{slug}.
+ * Falls back to nothing (caller decides) when the brand has no hotels.
  */
 export function T3FeaturedProperties({
   hotels,
@@ -61,7 +67,12 @@ export function T3FeaturedProperties({
         className="t3-fp-grid"
       >
         {items.map((hotel) => (
-          <article key={hotel.detail_url + hotel.name} className="t3-fp-card">
+          <Link
+            key={hotel.slug}
+            href={`${base}/hotels/${hotel.slug}`}
+            className="t3-fp-card"
+            style={{ color: 'inherit', textDecoration: 'none', display: 'block' }}
+          >
             <div
               style={{
                 position: 'relative',
@@ -71,18 +82,10 @@ export function T3FeaturedProperties({
                 marginBottom: 20,
               }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={hotel.image_url}
+              <HotelCardImage
+                src={hotel.cover_image_url}
                 alt={hotel.name}
-                className="t3-fp-img"
-                loading="lazy"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  transition: 'transform 0.9s var(--t3-ease-out)',
-                }}
+                fallbackLabel={hotel.name}
               />
             </div>
             <div
@@ -102,10 +105,12 @@ export function T3FeaturedProperties({
             </h3>
             {hotel.description && (
               <p className="t3-body" style={{ fontSize: 'clamp(13px, 1vw, 14px)', lineHeight: 1.6, margin: 0 }}>
-                {hotel.description}
+                {hotel.description.length > 110
+                  ? hotel.description.slice(0, 107).trimEnd() + '…'
+                  : hotel.description}
               </p>
             )}
-          </article>
+          </Link>
         ))}
       </div>
 

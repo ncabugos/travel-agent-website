@@ -110,3 +110,57 @@ export async function getHotel(slug: string): Promise<LuxuryHotel | null> {
   if (error) return null
   return data as LuxuryHotel
 }
+
+// ── Program → Brand mapping ───────────────────────────────────────────────
+// Maps each hotel program slug to the exact hotel_company string used in
+// the luxury_hotels table. Verified end-to-end via
+//   curl /api/hotels?brand=<value>
+// Programs without a clean single-brand match (Dorchester, Leading Hotels
+// of the World) are deliberately omitted — they continue to use the
+// curated static FEATURED_HOTELS fallback handled by the caller.
+//
+// When this maps to Supabase, this map becomes a `hotel_company` column on
+// the hotel_programs table; no API changes required.
+export const PROGRAM_HOTEL_COMPANIES: Record<string, string> = {
+  'aman-hotels-and-resorts':              'Aman',
+  'auberge-resorts-collection':           'Auberge Collection',
+  'belmond-bellini-club':                 'Belmond',
+  'como-hotels':                          'COMO Hotels and Resorts',
+  'four-seasons-preferred-partner':       'Four Seasons Hotels and Resorts',
+  'hera-accor-hotels':                    'Accor',
+  'hyatt-prive':                          'Hyatt Hotels Corporation',
+  'kempinski-club-1897':                  'Kempinski Hotels',
+  'mandarin-oriental-fan-club':           'Mandarin Oriental',
+  'marriott-international-luminous':      'Luxury Group at Marriott International',
+  'montage-hotels':                       'Montage International',
+  'oetker-hotel-collection-pearl-partner':'Oetker Hotels',
+  'one-and-only-hotels-and-resorts':      'One&Only Resorts',
+  'peninsula-pen-club':                   'The Peninsula',
+  'ritz-carlton-stars':                   'Luxury Group at Marriott International',
+  'rocco-forte-hotels':                   'Rocco Forte Hotels',
+  'rosewood-elite':                       'Rosewood Hotels & Resorts',
+  'shangri-la-hotels-the-luxury-circle':  'Shangri-La Group',
+}
+
+/**
+ * Resolves the curated "Featured" properties for a hotel program by
+ * querying the live luxury_hotels table for the program's parent brand.
+ *
+ * Replaces the legacy static FEATURED_HOTELS map (lib/featured-hotels.ts)
+ * for programs that have a clean single-brand mapping above. Callers should
+ * still fall back to FEATURED_HOTELS for programs without a mapping
+ * (Dorchester, Leading Hotels of the World) — the page-level component
+ * handles that transition.
+ *
+ * Returns up to `limit` hotels ordered by sort_order, or an empty array if
+ * the program has no brand mapping or the query fails.
+ */
+export async function getProgramFeaturedHotels(
+  programSlug: string,
+  limit = 6,
+): Promise<LuxuryHotel[]> {
+  const brand = PROGRAM_HOTEL_COMPANIES[programSlug]
+  if (!brand) return []
+  const { hotels } = await getHotels({ brand, pageSize: limit })
+  return hotels
+}
