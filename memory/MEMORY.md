@@ -1,1 +1,4 @@
-- [User role — operator + advisor](user_role.md) — User operates this platform and is the advisor behind Wine & Wellness Travel (wineandwellnesstravel.com)
+- [User role — operator + advisor](user_role.md) — User operates this platform and is the advisor behind Wine & Wellness Travel (wineandwellnesstravel.com); legacy @lesbourgeoistravel handle is retired
+- [First paying client — Eden For Your World](first_client_eden.md) — John Oberacker / edenforyourworld.com; designated brand ambassador for the eliteadvisorhub.com public launch
+- [Three product layers + launch phasing](product_layers.md) — SaaS now, Studio Phase 3, Supplier Partnerships Year 2, Aurora as separate Signature SKU
+- [Brand positioning — for the top 1%](brand_positioning.md) — Invitation-worthy voice rule. Full brief in docs/brand-positioning.md
