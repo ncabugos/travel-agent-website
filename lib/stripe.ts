@@ -25,18 +25,18 @@ export const stripe = new Proxy({} as Stripe, {
  */
 export const TIER_PRICES = {
   starter: {
-    monthly: 'price_1TML8P8v2wD2qM7NJNqIbg2d',   // $79/mo
-    setup:   'price_1TML8P8v2wD2qM7NmKUt6lR4',   // $299 one-time
+    monthly: 'price_1TX7jk8v2wD2qM7NPeCGVf4z',   // $89/mo
+    setup:   'price_1TX7kB8v2wD2qM7Nt2qubW0a',   // $499 one-time
     product: 'prod_UL1AMnVvNsNdOS',
   },
   growth: {
-    monthly: 'price_1TML9t8v2wD2qM7NW9wEky4g',   // $149/mo
-    setup:   'price_1TML9t8v2wD2qM7NH1D4V00J',   // $499 one-time
+    monthly: 'price_1TX7i18v2wD2qM7N56tXNpcz',   // $179/mo
+    setup:   'price_1TX7im8v2wD2qM7NBzIVHzQY',   // $1,499 one-time
     product: 'prod_UL1CqmRyDAyIsY',
   },
   custom: {
-    monthly: 'price_1TMLBC8v2wD2qM7N5dQufIvC',   // $299/mo
-    setup:   'price_1TMLBC8v2wD2qM7Nyfw4HYQT',   // $1500 one-time
+    monthly: 'price_1TX7l48v2wD2qM7NlhFixCZW',   // $349/mo
+    setup:   'price_1TX7lV8v2wD2qM7N753J5nyp',   // $2,999 one-time
     product: 'prod_UL1Dq1k2RMpTfI',
   },
   // Agency is a consultation-only tier (custom-priced per seat). No Stripe
