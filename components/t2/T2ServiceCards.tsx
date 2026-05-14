@@ -167,7 +167,7 @@ export function T2ServiceCards({ agentId, heading, subheading, cards }: T2Servic
                 </div>
               )}
 
-              {/* Solid card: content centered vertically + horizontally */}
+              {/* Solid card: content flows top-down with CTA pushed to bottom */}
               {isSolid && (
                 <div
                   style={{
@@ -176,9 +176,6 @@ export function T2ServiceCards({ agentId, heading, subheading, cards }: T2Servic
                     padding: '32px 28px',
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    textAlign: 'center',
                     zIndex: 2,
                   }}
                 >
@@ -202,7 +199,7 @@ export function T2ServiceCards({ agentId, heading, subheading, cards }: T2Servic
                         color: 'rgba(255,255,255,0.58)',
                         lineHeight: 1.65,
                         fontWeight: 300,
-                        marginBottom: 24,
+                        flex: 1,
                       }}
                     >
                       {card.description}
@@ -222,6 +219,7 @@ export function T2ServiceCards({ agentId, heading, subheading, cards }: T2Servic
                       alignItems: 'center',
                       gap: 8,
                       transition: 'color 0.3s ease',
+                      marginTop: 24,
                     }}
                   >
                     {card.cta.label}
