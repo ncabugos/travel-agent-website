@@ -2,6 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getHotelProgram, getHotelPrograms } from '@/lib/hotel-programs'
+import { getProgramFeaturedHotels } from '@/lib/hotels'
+import { T4HotelGrid } from '@/components/t4/T4HotelGrid'
 
 interface PageProps {
   params: Promise<{ agentId: string; programSlug: string }>
@@ -19,9 +21,14 @@ export async function generateMetadata({ params }: PageProps) {
   return { title: `${p.name} | Casa Solis`, description: p.tagline ?? undefined }
 }
 
+export const revalidate = 3600
+
 export default async function T4HotelProgramDetailPage({ params }: PageProps) {
   const { agentId, programSlug } = await params
-  const program = await getHotelProgram(programSlug)
+  const [program, featuredHotels] = await Promise.all([
+    getHotelProgram(programSlug),
+    getProgramFeaturedHotels(programSlug, 50),
+  ])
   if (!program) notFound()
 
   const base = `/t4/${agentId}`
@@ -268,6 +275,9 @@ export default async function T4HotelProgramDetailPage({ params }: PageProps) {
           `}</style>
         </section>
       )}
+
+      {/* ── Properties ─────────────────────────────────────────────────── */}
+      <T4HotelGrid hotels={featuredHotels} programName={program.name} base={base} />
 
       {/* ── CTA ────────────────────────────────────────────────────────── */}
       <section
