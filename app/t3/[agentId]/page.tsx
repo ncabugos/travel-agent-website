@@ -91,7 +91,7 @@ export default async function T3HomePage({ params }: PageProps) {
           {
             title: 'Bespoke Journeys',
             description: 'Tell us where you\u2019re going and we\u2019ll handle the rest \u2014 one advisor, one point of contact, one perfectly planned trip.',
-            image: '/media/hero images/four-seasons-taormina-suite-hero.jpg',
+            image: '',
             cta: { label: 'Start a Trip', href: '/contact' },
           },
         ]}

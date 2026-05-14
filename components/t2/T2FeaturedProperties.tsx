@@ -17,9 +17,14 @@ interface Props {
   agentId: string
 }
 
+const INITIAL_COUNT = 9
+
 export function T2FeaturedProperties({ hotels, programName, agentId }: Props) {
+  const [showAll, setShowAll] = useState(false)
   if (!hotels || hotels.length === 0) return null
   const base = `/t2/${agentId}`
+  const visible = showAll ? hotels : hotels.slice(0, INITIAL_COUNT)
+  const hasMore = hotels.length > INITIAL_COUNT && !showAll
 
   return (
     <section style={{ padding: 'var(--t2-section-pad) 0', background: 'var(--t2-bg-alt)' }}>
@@ -29,7 +34,7 @@ export function T2FeaturedProperties({ hotels, programName, agentId }: Props) {
             Within the Collection
           </p>
           <h2 className="t2-heading t2-heading-lg">
-            {`A few ${programName} properties.`}
+            {`${programName} properties.`}
           </h2>
         </div>
 
@@ -41,9 +46,23 @@ export function T2FeaturedProperties({ hotels, programName, agentId }: Props) {
           }}
           className="t2-fp-grid"
         >
-          {hotels.map((hotel) => (
+          {visible.map((hotel) => (
             <PropertyCard key={hotel.slug} hotel={hotel} base={base} />
           ))}
+        </div>
+
+        <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginTop: 48 }}>
+          {hasMore && (
+            <button
+              onClick={() => setShowAll(true)}
+              className="t2-btn t2-btn-outline"
+            >
+              View More Properties
+            </button>
+          )}
+          <Link href={`${base}/book-hotel`} className="t2-btn t2-btn-ghost-dark">
+            View the Hotel Catalogue
+          </Link>
         </div>
       </div>
 

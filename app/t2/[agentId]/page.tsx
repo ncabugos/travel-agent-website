@@ -151,7 +151,7 @@ export default async function T2HomePage({ params }: PageProps) {
           {
             title: 'Appointments',
             description: 'Discover the world in a way you never knew was possible. Book an appointment and let\'s discuss your travel plans.',
-            image: '/media/hero images/four-seasons-taormina-suite-hero.jpg',
+            image: '',
             cta: { label: "Let's Chat", href: '/contact' },
           },
         ]}

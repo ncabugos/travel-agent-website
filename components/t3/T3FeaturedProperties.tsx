@@ -1,38 +1,32 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
 import type { LuxuryHotel } from '@/lib/hotels'
 import { HotelCardImage } from '@/components/t2/HotelCardImage'
 
+const INITIAL_COUNT = 9
+
 interface Props {
-  /**
-   * Live hotel records from luxury_hotels (typed as LuxuryHotel). Each
-   * card links to the internal /hotels/{slug} detail page rather than
-   * an external supplier URL.
-   */
   hotels: LuxuryHotel[]
   programName: string
   base: string
   eyebrow?: string
   heading?: string
-  /** Cap the number of cards (defaults to 6 — 2 rows of 3). */
-  limit?: number
 }
 
-/**
- * Editorial 3-up grid of representative properties within a hotel program.
- * Server-rendered; each card links to /{template}/{agentId}/hotels/{slug}.
- * Falls back to nothing (caller decides) when the brand has no hotels.
- */
 export function T3FeaturedProperties({
   hotels,
   programName,
   base,
   eyebrow = 'Within the Collection',
   heading,
-  limit = 6,
 }: Props) {
+  const [showAll, setShowAll] = useState(false)
   if (!hotels || hotels.length === 0) return null
-  const items = hotels.slice(0, limit)
-  const headingText = heading ?? `A few ${programName} properties we know.`
+  const visible = showAll ? hotels : hotels.slice(0, INITIAL_COUNT)
+  const hasMore = hotels.length > INITIAL_COUNT && !showAll
+  const headingText = heading ?? `${programName} properties.`
 
   return (
     <section className="t3-section t3-section-alt">
@@ -66,7 +60,7 @@ export function T3FeaturedProperties({
         }}
         className="t3-fp-grid"
       >
-        {items.map((hotel) => (
+        {visible.map((hotel) => (
           <Link
             key={hotel.slug}
             href={`${base}/hotels/${hotel.slug}`}
@@ -112,6 +106,20 @@ export function T3FeaturedProperties({
             )}
           </Link>
         ))}
+      </div>
+
+      <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginTop: 'var(--t3-gap)' }}>
+        {hasMore && (
+          <button
+            onClick={() => setShowAll(true)}
+            className="t3-btn t3-btn-outline"
+          >
+            View More Properties
+          </button>
+        )}
+        <Link href={`${base}/book-hotel`} className="t3-btn t3-btn-ghost-dark">
+          View the Hotel Catalogue
+        </Link>
       </div>
 
       <style>{`
