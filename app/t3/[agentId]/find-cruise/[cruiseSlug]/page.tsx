@@ -177,56 +177,6 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* ── Highlights / Advisor-only benefits ─────────────────────────── */}
-      {line.highlights && line.highlights.length > 0 && (
-        <section className="t3-section t3-section-alt">
-          <div style={{ maxWidth: 'var(--t3-content-narrow)', marginBottom: 'var(--t3-gap)' }}>
-            <span className="t3-eyebrow t3-eyebrow-plain">Why We Book This Line</span>
-            <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
-              Included on every voyage.
-            </h2>
-            <p className="t3-body t3-body-lg" style={{ marginTop: 24 }}>
-              These benefits apply to every {line.name} booking made through us —
-              advisor-arranged, confirmed before you sail.
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: 'var(--t3-gap)',
-              borderTop: '1px solid var(--t3-divider)',
-              paddingTop: 'var(--t3-gap)',
-            }}
-            className="t3-cruise-highlights-grid"
-          >
-            {line.highlights.map((h, i) => (
-              <div key={h.title}>
-                <div
-                  style={{
-                    fontFamily: 'var(--t3-font-display)',
-                    fontSize: 28,
-                    fontWeight: 400,
-                    color: 'var(--t3-accent)',
-                    marginBottom: 12,
-                    letterSpacing: '-0.02em',
-                  }}
-                >
-                  {String(i + 1).padStart(2, '0')}
-                </div>
-                <h3 className="t3-headline-md" style={{ marginBottom: 12, fontSize: 'clamp(18px, 1.6vw, 22px)' }}>
-                  {h.title}
-                </h3>
-                <p className="t3-body" style={{ fontSize: 'clamp(13.5px, 1vw, 14.5px)', margin: 0 }}>
-                  {h.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
       {/* ── Fleet ──────────────────────────────────────────────────────── */}
       {line.ships && line.ships.length > 0 && (
         <section className="t3-section">

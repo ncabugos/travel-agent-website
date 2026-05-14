@@ -200,67 +200,6 @@ export default async function T4CruiseLineDetailPage({ params }: PageProps) {
         `}</style>
       </section>
 
-      {/* Highlights */}
-      {line.highlights && line.highlights.length > 0 && (
-        <section
-          style={{
-            padding: 'var(--t4-section-pad) 48px',
-            background: 'var(--t4-bg-alt)',
-          }}
-        >
-          <div style={{ maxWidth: 'var(--t4-content-wide)', margin: '0 auto' }}>
-            <div style={{ maxWidth: 720, marginBottom: 72 }}>
-              <span className="t4-eyebrow">Why We Book This Line</span>
-              <h2 className="t4-headline-xl" style={{ marginTop: 28 }}>
-                Included on every voyage.
-              </h2>
-            </div>
-
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                columnGap: 80,
-                rowGap: 56,
-                borderTop: '1px solid var(--t4-divider)',
-                paddingTop: 56,
-              }}
-              className="t4-highlights-grid"
-            >
-              {line.highlights.map((h, i) => (
-                <div key={h.title}>
-                  <div
-                    style={{
-                      fontFamily: 'var(--t4-font-display)',
-                      fontSize: 44,
-                      fontWeight: 300,
-                      color: 'var(--t4-accent)',
-                      marginBottom: 16,
-                      letterSpacing: '-0.02em',
-                      lineHeight: 1,
-                    }}
-                  >
-                    {String(i + 1).padStart(2, '0')}
-                  </div>
-                  <h3 className="t4-headline-md" style={{ marginBottom: 12 }}>
-                    {h.title}
-                  </h3>
-                  <p className="t4-body" style={{ margin: 0 }}>
-                    {h.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <style>{`
-              @media (max-width: 700px) {
-                .t4-highlights-grid { grid-template-columns: 1fr !important; row-gap: 40px !important; }
-              }
-            `}</style>
-          </div>
-        </section>
-      )}
-
       {/* Fleet */}
       {line.ships && line.ships.length > 0 && (
         <section className="t4-section">

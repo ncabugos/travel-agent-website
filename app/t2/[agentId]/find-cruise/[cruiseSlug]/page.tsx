@@ -175,19 +175,6 @@ export default async function CruiseDetailPage({ params }: PageProps) {
         `}</style>
       </section>
 
-      {/* ── Benefits — icon grid ── */}
-      {cruise.highlights.length > 0 && (
-        <section className="t2-section" style={{ maxWidth: '100%', width: '100%' }}>
-          <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 48px' }}>
-            <T2BenefitsGrid
-              benefits={cruise.highlights}
-              heading="What Sets Them Apart"
-              label="Exclusive Benefits"
-            />
-          </div>
-        </section>
-      )}
-
       {/* ── Promo Banner ── */}
       <section className="t2-section" style={{ paddingTop: 0 }}>
         <T2PromoBanner
