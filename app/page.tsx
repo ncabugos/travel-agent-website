@@ -164,6 +164,7 @@ export default function EliteAdvisorHubHomePage() {
     <div style={{
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
       color: '#111',
+      background: '#fff',
     }}>
       {/* Navigation */}
       <MarketingNav />
