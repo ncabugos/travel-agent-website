@@ -114,6 +114,67 @@ export default async function CruiseDetailPage({ params }: PageProps) {
         )}
       </section>
 
+      {/* ── Virtuoso Voyages ── */}
+      <section className="t2-section" style={{ background: 'var(--t2-bg-alt)' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 48px' }}>
+          <div style={{ textAlign: 'center', maxWidth: 680, margin: '0 auto 64px' }}>
+            <span style={{ fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--t2-primary)', opacity: 0.6, display: 'block', marginBottom: 16 }}>
+              Virtuoso Voyages
+            </span>
+            <h2 className="t2-heading" style={{ fontSize: 'clamp(28px, 3.5vw, 42px)', marginBottom: 20 }}>
+              Benefits included on every booking.
+            </h2>
+            <p className="t2-body t2-body-center" style={{ fontSize: 16, lineHeight: 1.85 }}>
+              As a member of Virtuoso Voyages, we are able to offer our clients exclusive benefits on every sailing — arranged before you board and confirmed directly through us.
+            </p>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 40,
+          }} className="t2-voyages-grid">
+            {[
+              { title: 'Dedicated Onboard Host', description: 'A personal Virtuoso host sails with your group, present throughout the voyage to answer questions and ensure every detail runs exactly as planned.' },
+              { title: 'Private Welcome Reception', description: 'An exclusive cocktail reception at the start of each sailing, arranged solely for Virtuoso Voyages guests with introductions facilitated by your host.' },
+              { title: 'Shipboard Credit', description: '$100 per stateroom on voyages under 14 nights; $200 per stateroom on voyages of 14 nights or more, to spend freely on dining, spa, or excursions.' },
+              { title: 'Exclusive Shore Experience', description: 'A private shore excursion, VIP tour, or private car and driver whose itinerary is shaped entirely around your interests and pace — never a group schedule.' },
+              { title: 'Specialty Dining', description: 'Complimentary reservations at specialty restaurants on select sailings, including chef\'s tastings and curated wine pairings on participating vessels.' },
+              { title: 'Spa & Wellness Access', description: 'Select spa treatments, wellness credits, and onboard amenities included on participating voyages across our preferred cruise partners.' },
+            ].map((p, i) => (
+              <div key={p.title} style={{
+                background: '#fff',
+                borderRadius: 'var(--t2-radius-lg)',
+                padding: '32px 28px',
+                border: '1px solid var(--t2-divider)',
+              }}>
+                <div style={{
+                  fontFamily: 'var(--t2-font-serif)',
+                  fontSize: 13,
+                  letterSpacing: '0.1em',
+                  color: 'var(--t2-primary)',
+                  opacity: 0.45,
+                  marginBottom: 16,
+                }}>
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+                <h3 style={{ fontFamily: 'var(--t2-font-serif)', fontSize: 18, fontWeight: 500, marginBottom: 12 }}>{p.title}</h3>
+                <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 13.5, lineHeight: 1.75, color: 'var(--t2-text-muted)', margin: 0 }}>{p.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <style>{`
+          @media (max-width: 900px) {
+            .t2-voyages-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          }
+          @media (max-width: 560px) {
+            .t2-voyages-grid { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
+      </section>
+
       {/* ── Benefits — icon grid ── */}
       {cruise.highlights.length > 0 && (
         <section className="t2-section" style={{ maxWidth: '100%', width: '100%' }}>
