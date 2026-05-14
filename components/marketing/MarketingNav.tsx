@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const NAV_LINKS = [
   { label: 'Features', href: '#features' },
@@ -45,8 +46,15 @@ export function MarketingNav() {
           }}
         >
           {/* Brand */}
-          <Link href="/" onClick={close} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <span style={{ fontSize: '16px', fontWeight: 700, letterSpacing: '-0.02em' }}>EliteAdvisorHub</span>
+          <Link href="/" onClick={close} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
+            <Image
+              src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
+              alt="EliteAdvisorHub"
+              width={800}
+              height={134}
+              style={{ objectFit: 'contain', height: '32px', width: 'auto' }}
+              priority
+            />
           </Link>
 
           {/* Desktop links */}

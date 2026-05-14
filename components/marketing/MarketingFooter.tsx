@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 /**
  * MarketingFooter
@@ -64,16 +65,14 @@ export function MarketingFooter() {
 
           {/* Brand block */}
           <div>
-            <Link href="/" style={{
-              fontSize: 18,
-              fontWeight: 700,
-              color: '#111',
-              textDecoration: 'none',
-              letterSpacing: '-0.01em',
-              display: 'inline-block',
-              marginBottom: 12,
-            }}>
-              EliteAdvisorHub
+            <Link href="/" style={{ display: 'inline-block', marginBottom: 12, textDecoration: 'none' }}>
+              <Image
+                src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
+                alt="EliteAdvisorHub"
+                width={800}
+                height={134}
+                style={{ objectFit: 'contain', height: '28px', width: 'auto' }}
+              />
             </Link>
             <p style={{
               fontSize: 13,

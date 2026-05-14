@@ -3,12 +3,11 @@ import { Globe, FileText, Building2, Paintbrush, Lock, TrendingUp } from 'lucide
 import { CheckoutButton } from '@/components/stripe/CheckoutButton'
 import { MarketingNav } from '@/components/marketing/MarketingNav'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
-import { HeroSlideshow } from '@/components/marketing/HeroSlideshow'
 
 export const metadata = {
-  title: 'EliteAdvisorHub — Websites for Elite Travel Advisors',
+  title: 'EliteAdvisorHub — For the Top 1% of Travel Advisors',
   description:
-    'A premium website platform for luxury travel advisors. Stunning templates, curated blog content, supplier integrations, and zero tech burden.',
+    'Infrastructure for advisors working at elite advisor standards — maintained hotel programs, a weekly editorial pipeline, and templates built for a $25,000 booking, not a $250 one.',
 }
 
 interface DemoCard {
@@ -36,18 +35,17 @@ const PRICING_TIERS: PricingTier[] = [
   {
     name: 'Starter',
     tier: 'starter',
-    price: '$79',
-    setup: '$299',
+    price: '$89',
+    setup: '$499',
     priceMode: 'money',
     popular: false,
-    blurb: 'A polished, branded website with curated editorial and your preferred hotel programs. For advisors who want to launch fast.',
+    blurb: 'A foothold on the platform. Curated supplier programs, your custom domain, the journal pipeline, and a portal that will scale with you. For advisors building toward Growth.',
     features: [
-      'Branded Vista or Meridian template',
-      'Curated editorial & journal',
+      'Advisor website with custom domain',
+      'Curated editorial & journal pipeline (1 post/month)',
       'Advisor portal access',
-      'Custom domain',
-      'Hotel programs (Aman, Four Seasons, Belmond, etc.)',
-      'Preferred Cruise Partners overview',
+      'Hotel programs — Aman, Four Seasons, Belmond, and more',
+      'Preferred cruise partners overview',
       'Email support',
     ],
     cta: 'checkout',
@@ -55,18 +53,18 @@ const PRICING_TIERS: PricingTier[] = [
   {
     name: 'Growth',
     tier: 'growth',
-    price: '$149',
-    setup: '$499',
+    price: '$179',
+    setup: '$1,499',
     priceMode: 'money',
     popular: true,
-    blurb: 'Everything in Starter, plus searchable hotel & cruise directories and an Instagram feed. For advisors with an established book.',
+    blurb: 'For advisors with an established book — a searchable hotel directory of 1,795+ properties, cruise partners, an Instagram feed, and the Vista or Meridian template.',
     features: [
       'Everything in Starter',
+      'Vista or Meridian template',
       'Searchable hotel directory (1,795+ properties)',
       'Searchable cruise directory',
       'Experiences directory',
       'Instagram feed integration',
-      'Advanced analytics',
       'Priority support',
     ],
     cta: 'checkout',
@@ -74,36 +72,37 @@ const PRICING_TIERS: PricingTier[] = [
   {
     name: 'Custom',
     tier: 'custom',
-    price: '$299',
-    setup: '$1,500',
+    price: '$349',
+    setup: '$2,999',
     priceMode: 'money',
     popular: false,
-    blurb: 'A fully custom-designed site with additional pages, CRM integration, and white-label options. For established advisors with a distinct brand.',
+    blurb: "For advisors whose brand already exists in their clients' minds. We align the platform to it — typography, palette, premium modules, the bespoke landing pages your referrals expect.",
     features: [
       'Everything in Growth',
-      'Custom-designed template',
-      'Additional custom pages',
-      'CRM integration',
-      'White-label options',
+      'Any template, including Casa Solis',
+      'Villa catalog access',
+      'Custom-branded topic requests (2 posts/week)',
+      'Bespoke landing pages',
+      'Dedicated design consultation',
     ],
     cta: 'consultation',
   },
   {
     name: 'Agency',
     tier: 'agency',
-    price: 'Contact for quote',
-    setup: null,
+    price: 'from $899',
+    setup: 'from $4,999',
     priceMode: 'quote',
     popular: false,
-    blurb: 'Multi-advisor agencies get individual advisor pages, unified branding, lead routing, and centralized billing. Priced per seat.',
+    blurb: 'For boutique agencies managing multiple advisors under one brand — individual profiles, unified billing, shared content library, co-authored editorial, and lead routing built for practices that have outgrown a single site.',
     features: [
       'Everything in Custom',
-      'Individual advisor pages',
+      'Individual advisor profiles under one brand',
       'Agency-wide lead routing',
-      'Unified agency billing',
-      'Agency admin dashboard',
+      'Unified billing',
+      'Co-authored editorial (2 posts/week per advisor)',
       'Shared content library',
-      'Team onboarding & training',
+      'Team onboarding',
     ],
     cta: 'consultation',
   },
@@ -178,8 +177,19 @@ export default function EliteAdvisorHubHomePage() {
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {/* Background slideshow */}
-        <HeroSlideshow />
+        {/* Background Image */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=2560&q=80"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: 'absolute', inset: 0,
+            width: '100%', height: '100%',
+            objectFit: 'cover',
+            zIndex: 0,
+          }}
+        />
         {/* Dark gradient overlay */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: 1,
@@ -195,47 +205,55 @@ export default function EliteAdvisorHubHomePage() {
             marginBottom: '32px', textTransform: 'uppercase', letterSpacing: '0.05em',
             backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.15)',
           }}>
-            ✦ The Website Platform for Elite Travel Advisors
+            ✦ Built for the top 1% of travel advisors
           </div>
 
           <h1 style={{
-            fontSize: 'clamp(40px, 6vw, 72px)',
+            fontSize: 'clamp(36px, 5.5vw, 66px)',
             fontWeight: 800,
-            lineHeight: 1.1,
+            lineHeight: 1.12,
             letterSpacing: '-0.03em',
             margin: '0 0 24px',
-            maxWidth: '860px',
+            maxWidth: '900px',
             color: '#fff',
           }}>
-            Your clients dream.
+            For travel advisors who place clients at Aman
+            <br />
+            before the season opens —
             <br />
             <span style={{
               background: 'linear-gradient(135deg, #a5b4fc, #c4b5fd)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}>
-              Your website delivers.
+              websites that earn that work.
             </span>
           </h1>
 
           <p style={{
             fontSize: '18px', lineHeight: 1.7, color: 'rgba(255,255,255,0.82)',
-            maxWidth: '600px', margin: '0 auto 40px',
+            maxWidth: '620px', margin: '0 auto 40px',
           }}>
-            EliteAdvisorHub is the turn-key website platform built for luxury travel advisors —
-            stunning templates, curated editorial content, supplier integrations, and zero tech burden.
+            A platform maintained by a working advisor — hotel programs from Aman, Belmond,
+            Rosewood, and Four Seasons, a weekly editorial pipeline, and a portal built
+            for advisors who bill by the experience, not the hour.
           </p>
 
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <a
               href="#pricing"
+              className="eah-cta-primary"
               style={{
-                padding: '14px 32px', backgroundColor: '#fff', color: '#111',
+                padding: '14px 32px',
+                background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
+                color: '#fff',
                 borderRadius: '10px', fontSize: '15px', fontWeight: 600,
-                textDecoration: 'none', transition: 'transform 0.15s',
+                textDecoration: 'none',
+                boxShadow: '0 4px 24px rgba(124, 58, 237, 0.35)',
+                transition: 'transform 0.2s, box-shadow 0.2s',
               }}
             >
-              Get Started
+              Explore Tiers
             </a>
             <a
               href="#demos"
@@ -244,6 +262,7 @@ export default function EliteAdvisorHubHomePage() {
                 borderRadius: '10px', fontSize: '15px', fontWeight: 500,
                 textDecoration: 'none', border: '1px solid rgba(255,255,255,0.25)',
                 backdropFilter: 'blur(8px)',
+                transition: 'background 0.2s',
               }}
             >
               View Demos
@@ -261,31 +280,71 @@ export default function EliteAdvisorHubHomePage() {
             fontSize: '36px', fontWeight: 700, textAlign: 'center',
             letterSpacing: '-0.02em', margin: '0 0 12px',
           }}>
-            Everything you need, nothing you don&apos;t
+            The platform behind the practice
           </h2>
           <p style={{
             textAlign: 'center', fontSize: '16px', color: '#6b7280',
             margin: '0 0 60px', maxWidth: '520px', marginInline: 'auto',
           }}>
-            Focus on selling travel. We handle the technology.
+            Built by a working advisor. Maintained for practices that treat every booking as a credential.
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }} className="eah-features-grid">
             {[
-              { icon: <Globe size={28} strokeWidth={1.5} />, title: 'Branded Website', desc: 'A premium, branded website that mirrors the luxury experience you sell. Choose from editorial templates or commission a fully custom design.' },
-              { icon: <FileText size={28} strokeWidth={1.5} />, title: 'Curated Editorial', desc: 'Our in-house editorial team publishes destination guides and travel tips weekly. Choose the categories that appear on your site.' },
-              { icon: <Building2 size={28} strokeWidth={1.5} />, title: 'Supplier Integrations', desc: 'Showcase your preferred hotels, cruises, villas, and tour partners with rich media from our centralized supplier directory.' },
-              { icon: <Paintbrush size={28} strokeWidth={1.5} />, title: 'Zero Tech Burden', desc: 'No coding, no hosting, no maintenance. We handle updates, SEO, and performance so you can focus on clients.' },
-              { icon: <Lock size={28} strokeWidth={1.5} />, title: 'Advisor Portal', desc: 'Manage your content, submit edit requests, publish journal posts, and update your profile from a clean, intuitive dashboard.' },
-              { icon: <TrendingUp size={28} strokeWidth={1.5} />, title: 'Built to Scale', desc: 'From a single page to a full marketing hub. Upgrade tiers as your business grows — no migration, no re-design.' },
-            ].map((f) => (
-              <div key={f.title} style={{
-                padding: '32px', borderRadius: '16px', border: '1px solid #f3f4f6',
-                transition: 'border-color 0.2s, box-shadow 0.2s',
-              }}>
-                <div style={{ marginBottom: '16px', color: '#374151' }}>{f.icon}</div>
-                <h3 style={{ margin: '0 0 8px', fontSize: '16px', fontWeight: 600 }}>{f.title}</h3>
-                <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', lineHeight: 1.6 }}>{f.desc}</p>
+              {
+                icon: <Globe size={22} strokeWidth={1.5} />,
+                title: 'Branded Website',
+                desc: "Three editorial templates — Vista, Meridian, and Casa Solis — plus fully custom builds for advisors whose brand exists in their clients' minds before the site does.",
+              },
+              {
+                icon: <FileText size={22} strokeWidth={1.5} />,
+                title: 'Curated Editorial',
+                desc: 'Articles drafted by the editorial team and published to your journal weekly. Choose the categories — destinations, hotels, wellness, or wine — that reflect your niche.',
+              },
+              {
+                icon: <Building2 size={22} strokeWidth={1.5} />,
+                title: 'Supplier Programs',
+                desc: 'Hotel programs from Aman, Belmond, Rosewood, and Four Seasons — plus 30+ cruise partners. Each advisor selects the suppliers that match their actual book.',
+              },
+              {
+                icon: <Paintbrush size={22} strokeWidth={1.5} />,
+                title: 'Managed Infrastructure',
+                desc: 'No hosting fees, no developer retainers, no maintenance windows. SEO, performance, and platform updates are handled — so you stay in front of clients.',
+              },
+              {
+                icon: <Lock size={22} strokeWidth={1.5} />,
+                title: 'Advisor Portal',
+                desc: 'Submit edit requests, manage your journal, update preferred suppliers, and track site modifications from one dashboard. Changes are turned around within 24 hours.',
+              },
+              {
+                icon: <TrendingUp size={22} strokeWidth={1.5} />,
+                title: 'Built to Scale',
+                desc: 'Tiers stack — no rebuilds, no migrations. Add modules, upgrade your template, or expand to an agency plan as your practice grows. The site comes with you.',
+              },
+            ].map((f, i) => (
+              <div
+                key={f.title}
+                className="eah-feature-card"
+                style={{
+                  padding: '28px', borderRadius: '16px',
+                  border: '1px solid #f0eeff',
+                  background: '#fff',
+                  transition: 'border-color 0.25s, box-shadow 0.25s, transform 0.25s',
+                  animationDelay: `${i * 80}ms`,
+                }}
+              >
+                <div style={{
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  width: '44px', height: '44px', borderRadius: '12px',
+                  background: 'linear-gradient(135deg, rgba(139,92,246,0.12), rgba(196,181,253,0.12))',
+                  border: '1px solid rgba(139,92,246,0.15)',
+                  color: '#8b5cf6',
+                  marginBottom: '18px',
+                }}>
+                  {f.icon}
+                </div>
+                <h3 style={{ margin: '0 0 8px', fontSize: '15px', fontWeight: 600, letterSpacing: '-0.01em' }}>{f.title}</h3>
+                <p style={{ margin: 0, fontSize: '13.5px', color: '#6b7280', lineHeight: 1.65 }}>{f.desc}</p>
               </div>
             ))}
           </div>
@@ -301,33 +360,41 @@ export default function EliteAdvisorHubHomePage() {
             fontSize: '36px', fontWeight: 700, textAlign: 'center',
             letterSpacing: '-0.02em', margin: '0 0 12px',
           }}>
-            Simple, transparent pricing
+            Four tiers.
           </h2>
           <p style={{
             textAlign: 'center', fontSize: '16px', color: '#6b7280',
             margin: '0 0 60px',
           }}>
-            Choose the plan that fits your business.
+            Every one of them assumes the advisor is the asset. The platform is the surface.
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }} className="eah-pricing-grid">
             {PRICING_TIERS.map((plan) => (
-              <div key={plan.name} style={{
-                padding: '36px 28px',
-                borderRadius: '16px',
-                backgroundColor: '#fff',
-                border: plan.popular ? '2px solid #111' : '1px solid #e5e7eb',
-                position: 'relative',
-                boxShadow: plan.popular ? '0 8px 30px rgba(0,0,0,0.08)' : 'none',
-                display: 'flex',
-                flexDirection: 'column',
-              }}>
+              <div
+                key={plan.name}
+                className={plan.popular ? 'eah-pricing-card eah-pricing-popular' : 'eah-pricing-card'}
+                style={{
+                  padding: '36px 28px',
+                  borderRadius: '16px',
+                  backgroundColor: '#fff',
+                  border: plan.popular ? '2px solid transparent' : '1px solid #e5e7eb',
+                  background: plan.popular
+                    ? 'linear-gradient(#fff,#fff) padding-box, linear-gradient(135deg,#7c3aed,#c4b5fd) border-box'
+                    : '#fff',
+                  position: 'relative',
+                  boxShadow: plan.popular ? '0 8px 40px rgba(124,58,237,0.14)' : 'none',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'transform 0.25s, box-shadow 0.25s',
+                }}>
                 {plan.popular && (
                   <div style={{
                     position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)',
-                    backgroundColor: '#111', color: '#fff', fontSize: '11px', fontWeight: 600,
+                    background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
+                    color: '#fff', fontSize: '11px', fontWeight: 600,
                     padding: '4px 16px', borderRadius: '20px', textTransform: 'uppercase',
-                    letterSpacing: '0.05em',
+                    letterSpacing: '0.05em', whiteSpace: 'nowrap',
                   }}>
                     Most Popular
                   </div>
@@ -346,7 +413,7 @@ export default function EliteAdvisorHubHomePage() {
                   )}
                 </div>
                 <p style={{ fontSize: '13px', color: '#9ca3af', margin: '0 0 24px', minHeight: '20px' }}>
-                  {plan.setup ? `+ ${plan.setup} one-time setup` : '\u00A0'}
+                  {plan.setup ? `+ ${plan.setup} one-time setup` : ' '}
                 </p>
 
                 <p style={{ fontSize: '13px', color: '#6b7280', lineHeight: 1.55, margin: '0 0 20px' }}>
@@ -356,14 +423,14 @@ export default function EliteAdvisorHubHomePage() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '28px', flex: 1 }}>
                   {plan.features.map((f) => (
                     <div key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '13px', color: '#374151', lineHeight: 1.45 }}>
-                      <span style={{ color: '#16a34a', fontWeight: 700, flexShrink: 0, marginTop: '1px' }}>✓</span> {f}
+                      <span style={{ color: '#8b5cf6', fontWeight: 700, flexShrink: 0, marginTop: '1px' }}>✓</span> {f}
                     </div>
                   ))}
                 </div>
 
                 {plan.cta === 'checkout' ? (
                   <CheckoutButton tier={plan.tier as 'starter' | 'growth'} popular={plan.popular}>
-                    Get Started
+                    Begin Setup
                   </CheckoutButton>
                 ) : (
                   <Link
@@ -373,13 +440,15 @@ export default function EliteAdvisorHubHomePage() {
                       textAlign: 'center',
                       padding: '12px 20px',
                       borderRadius: '10px',
-                      backgroundColor: plan.popular ? '#111' : '#fff',
+                      background: plan.popular
+                        ? 'linear-gradient(135deg, #7c3aed, #a78bfa)'
+                        : '#fff',
                       color: plan.popular ? '#fff' : '#111',
-                      border: plan.popular ? '1px solid #111' : '1px solid #111',
+                      border: plan.popular ? 'none' : '1px solid #e5e7eb',
                       fontSize: '14px',
                       fontWeight: 600,
                       textDecoration: 'none',
-                      transition: 'background 0.15s, color 0.15s',
+                      transition: 'opacity 0.15s, transform 0.15s',
                     }}
                   >
                     Schedule a Consultation
@@ -406,8 +475,8 @@ export default function EliteAdvisorHubHomePage() {
             textAlign: 'center', fontSize: '16px', color: '#6b7280',
             margin: '0 0 60px', maxWidth: '580px', marginInline: 'auto',
           }}>
-            Four live demo sites built on EliteAdvisorHub — two standard templates,
-            one custom build, and one real agency example.
+            Six live sites on EliteAdvisorHub — two standard templates, three custom builds,
+            and one agency example. Each is live and available to explore.
           </p>
 
           <div
@@ -488,7 +557,7 @@ export default function EliteAdvisorHubHomePage() {
                     <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 700, letterSpacing: '-0.01em' }}>
                       {demo.name}
                     </h3>
-                    <span style={{ fontSize: '13px', color: '#111', fontWeight: 600 }}>
+                    <span className="eah-demo-cta" style={{ fontSize: '13px', color: '#8b5cf6', fontWeight: 600, transition: 'gap 0.2s' }}>
                       View Demo →
                     </span>
                   </div>
@@ -505,31 +574,70 @@ export default function EliteAdvisorHubHomePage() {
       {/* Global platform footer */}
       <MarketingFooter />
 
-      {/* Responsive + hover styles */}
       <style>{`
+        /* ── Keyframes ─────────────────────────────────────────── */
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes ctaPulse {
+          0%, 100% { box-shadow: 0 4px 24px rgba(124,58,237,0.35); }
+          50%       { box-shadow: 0 4px 36px rgba(124,58,237,0.55); }
+        }
+
+        /* ── Hero CTA ───────────────────────────────────────────── */
+        .eah-cta-primary {
+          animation: ctaPulse 3s ease-in-out infinite;
+        }
+        .eah-cta-primary:hover {
+          transform: translateY(-1px);
+          animation: none;
+          box-shadow: 0 6px 32px rgba(124,58,237,0.5) !important;
+        }
+
+        /* ── Feature cards ──────────────────────────────────────── */
+        .eah-feature-card {
+          animation: fadeUp 0.5s ease both;
+        }
+        .eah-feature-card:hover {
+          transform: translateY(-3px);
+          border-color: rgba(139,92,246,0.25) !important;
+          box-shadow: 0 8px 32px rgba(139,92,246,0.08);
+        }
+
+        /* ── Pricing cards ──────────────────────────────────────── */
+        .eah-pricing-card:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 12px 40px rgba(139,92,246,0.1);
+        }
+        .eah-pricing-popular:hover {
+          box-shadow: 0 12px 48px rgba(124,58,237,0.2) !important;
+        }
+
+        /* ── Demo cards ─────────────────────────────────────────── */
         .eah-demo-card:hover {
           transform: translateY(-4px);
-          border-color: #d1d5db !important;
-          box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+          border-color: rgba(139,92,246,0.3) !important;
+          box-shadow: 0 12px 40px rgba(139,92,246,0.1);
         }
         .eah-demo-card:hover .eah-demo-thumb {
           transform: scale(1.04);
         }
+
+        /* ── Responsive ─────────────────────────────────────────── */
         @media (max-width: 1200px) {
-          .eah-pricing-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
+          .eah-pricing-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
         @media (max-width: 900px) {
           .eah-features-grid,
-          .eah-demos-grid {
-            grid-template-columns: 1fr !important;
-          }
+          .eah-demos-grid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 640px) {
-          .eah-pricing-grid {
-            grid-template-columns: 1fr !important;
-          }
+          .eah-pricing-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .eah-feature-card,
+          .eah-cta-primary { animation: none !important; }
         }
       `}</style>
     </div>
