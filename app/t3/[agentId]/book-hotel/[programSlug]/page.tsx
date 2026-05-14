@@ -12,6 +12,8 @@ interface PageProps {
   params: Promise<{ agentId: string; programSlug: string }>
 }
 
+export const revalidate = 3600
+
 export async function generateStaticParams() {
   const programs = await getHotelPrograms()
   return programs.map((p) => ({ programSlug: p.slug }))
