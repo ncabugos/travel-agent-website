@@ -38,7 +38,7 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
 
   // Fetch supplemental modules in parallel; each gracefully renders nothing when empty.
   const [featuredHotels, relatedPosts, allPrograms] = await Promise.all([
-    getProgramFeaturedHotels(programSlug),
+    getProgramFeaturedHotels(programSlug, 50),
     getBlogPostsBySupplier(programSlug, agentId).catch(() => []),
     getHotelPrograms(),
   ])

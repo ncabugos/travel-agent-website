@@ -28,7 +28,7 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
     getHotelProgram(programSlug),
     getSupplierPromo('hotel_program', programSlug),
     getBlogPostsBySupplier(`hotel:${programSlug}`, agentId),
-    getProgramFeaturedHotels(programSlug),
+    getProgramFeaturedHotels(programSlug, 50),
   ])
   if (!program) notFound()
 

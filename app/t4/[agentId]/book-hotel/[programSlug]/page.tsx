@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getHotelProgram, getHotelPrograms } from '@/lib/hotel-programs'
+import { getProgramFeaturedHotels } from '@/lib/hotels'
 
 interface PageProps {
   params: Promise<{ agentId: string; programSlug: string }>
@@ -23,7 +24,10 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function T4HotelProgramDetailPage({ params }: PageProps) {
   const { agentId, programSlug } = await params
-  const program = await getHotelProgram(programSlug)
+  const [program, featuredHotels] = await Promise.all([
+    getHotelProgram(programSlug),
+    getProgramFeaturedHotels(programSlug, 50),
+  ])
   if (!program) notFound()
 
   const base = `/t4/${agentId}`
@@ -268,6 +272,111 @@ export default async function T4HotelProgramDetailPage({ params }: PageProps) {
               .t4-gallery-grid > div { grid-column: auto !important; aspect-ratio: 1 / 1 !important; }
             }
           `}</style>
+        </section>
+      )}
+
+      {/* ── Properties ─────────────────────────────────────────────────── */}
+      {featuredHotels.length > 0 && (
+        <section className="t4-section">
+          <div style={{ maxWidth: 'var(--t4-content-wide)', margin: '0 auto' }}>
+            <div style={{ marginBottom: 56 }}>
+              <span className="t4-eyebrow">The Collection</span>
+              <h2 className="t4-headline-xl" style={{ marginTop: 28 }}>
+                {program.name} properties.
+              </h2>
+            </div>
+
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                gap: 32,
+              }}
+              className="t4-hotels-grid"
+            >
+              {featuredHotels.map((hotel) => (
+                <Link
+                  key={hotel.slug}
+                  href={`${base}/hotels/${hotel.slug}`}
+                  style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
+                >
+                  <div
+                    style={{
+                      position: 'relative',
+                      aspectRatio: '4 / 3',
+                      overflow: 'hidden',
+                      background: 'var(--t4-bg-alt)',
+                      marginBottom: 20,
+                    }}
+                  >
+                    {hotel.cover_image_url ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={hotel.cover_image_url}
+                        alt={hotel.name}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          transition: 'transform 0.5s ease',
+                        }}
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div style={{ width: '100%', height: '100%', background: 'var(--t4-bg-alt)' }} />
+                    )}
+                  </div>
+                  {hotel.city && (
+                    <p
+                      style={{
+                        fontFamily: 'var(--t4-font-body)',
+                        fontSize: 11,
+                        letterSpacing: '0.12em',
+                        textTransform: 'uppercase',
+                        color: 'var(--t4-accent)',
+                        margin: '0 0 8px',
+                      }}
+                    >
+                      {hotel.city}{hotel.country ? `, ${hotel.country}` : ''}
+                    </p>
+                  )}
+                  <h3
+                    style={{
+                      fontFamily: 'var(--t4-font-display)',
+                      fontSize: 'clamp(18px, 1.5vw, 22px)',
+                      fontWeight: 400,
+                      margin: '0 0 8px',
+                      letterSpacing: '-0.01em',
+                    }}
+                  >
+                    {hotel.name}
+                  </h3>
+                  {hotel.vibe && (
+                    <p
+                      style={{
+                        fontFamily: 'var(--t4-font-body)',
+                        fontSize: 13,
+                        color: 'var(--t4-muted)',
+                        margin: 0,
+                        fontWeight: 300,
+                      }}
+                    >
+                      {hotel.vibe}
+                    </p>
+                  )}
+                </Link>
+              ))}
+            </div>
+
+            <style>{`
+              @media (max-width: 900px) {
+                .t4-hotels-grid { grid-template-columns: repeat(2, 1fr) !important; }
+              }
+              @media (max-width: 600px) {
+                .t4-hotels-grid { grid-template-columns: 1fr !important; }
+              }
+            `}</style>
+          </div>
         </section>
       )}
 
