@@ -177,7 +177,7 @@ export function T3ServiceCards({
                 </div>
               )}
 
-              {/* Solid card: content flows top-down, CTA at bottom */}
+              {/* Solid card: content centered vertically + horizontally */}
               {isSolid && (
                 <div
                   style={{
@@ -186,6 +186,9 @@ export function T3ServiceCards({
                     padding: '32px 28px',
                     display: 'flex',
                     flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    textAlign: 'center',
                     color: '#fff',
                   }}
                 >
@@ -207,7 +210,7 @@ export function T3ServiceCards({
                       fontSize: 13.5,
                       color: 'rgba(247, 245, 240, 0.62)',
                       lineHeight: 1.55,
-                      flex: 1,
+                      marginBottom: 24,
                     }}
                   >
                     {card.description}
@@ -225,7 +228,6 @@ export function T3ServiceCards({
                       fontWeight: 500,
                       color: 'var(--t3-accent, #8B6F47)',
                       transition: 'color 0.2s ease, gap 0.2s ease',
-                      marginTop: 24,
                     }}
                   >
                     {card.cta.label}
