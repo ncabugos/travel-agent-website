@@ -162,10 +162,12 @@ export function FindHotelClient({ agentId, countries, vibes, brands }: FindHotel
                 {/* Vibe badge */}
                 {hotel.vibe && (
                   <span style={{
-                    position: 'absolute', top: 12, right: 12,
-                    fontFamily: 'var(--t2-font-sans)', fontSize: 9, letterSpacing: '0.15em',
-                    textTransform: 'uppercase', background: 'rgba(0,0,0,0.6)',
-                    color: '#FFF', padding: '4px 10px', borderRadius: 2,
+                    position: 'absolute', top: 14, left: 14,
+                    fontFamily: 'var(--t2-font-sans)', fontSize: 10, fontWeight: 600,
+                    letterSpacing: '0.2em', textTransform: 'uppercase',
+                    background: '#fff', color: 'var(--t2-text)',
+                    padding: '7px 14px', borderRadius: 2,
+                    boxShadow: '0 2px 12px rgba(0,0,0,0.18)',
                   }}>
                     {hotel.vibe}
                   </span>

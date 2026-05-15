@@ -339,16 +339,17 @@ export function T3HotelDirectory({ agentId, countries, vibes, brands }: T3HotelD
           top: 14px;
           left: 14px;
           font-family: var(--t3-font-sans);
-          font-size: 9.5px;
-          font-weight: 500;
-          letter-spacing: 0.22em;
+          font-size: 10px;
+          font-weight: 600;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
-          background: rgba(20, 17, 15, 0.66);
-          color: #fff;
-          padding: 5px 11px;
-          backdrop-filter: blur(4px);
-          -webkit-backdrop-filter: blur(4px);
+          background: #fff;
+          color: var(--t3-text);
+          padding: 7px 14px;
+          box-shadow: 0 2px 12px rgba(20, 17, 15, 0.18);
+          transition: transform 0.3s ease;
         }
+        .t3-hd-card:hover .t3-hd-vibe-badge { transform: translateY(-2px); }
         .t3-hd-card-body {
           display: flex;
           flex-direction: column;

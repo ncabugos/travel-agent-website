@@ -40,72 +40,32 @@ export function T4HotelGrid({ hotels, programName, base }: Props) {
             <Link
               key={hotel.slug}
               href={`${base}/hotels/${hotel.slug}`}
-              style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
+              className="t4-hg-card"
             >
-              <div
-                style={{
-                  position: 'relative',
-                  aspectRatio: '4 / 3',
-                  overflow: 'hidden',
-                  background: 'var(--t4-bg-alt)',
-                  marginBottom: 20,
-                }}
-              >
+              <div className="t4-hg-img-wrap">
                 {hotel.cover_image_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={hotel.cover_image_url}
                     alt={hotel.name}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      transition: 'transform 0.5s ease',
-                    }}
                     loading="lazy"
                   />
                 ) : (
                   <div style={{ width: '100%', height: '100%', background: 'var(--t4-bg-alt)' }} />
                 )}
+                {hotel.vibe && (
+                  <span className="t4-hg-vibe">{hotel.vibe}</span>
+                )}
               </div>
               {hotel.city && (
-                <p
-                  style={{
-                    fontFamily: 'var(--t4-font-body)',
-                    fontSize: 11,
-                    letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
-                    color: 'var(--t4-accent)',
-                    margin: '0 0 8px',
-                  }}
-                >
+                <p className="t4-hg-loc">
                   {hotel.city}{hotel.country ? `, ${hotel.country}` : ''}
                 </p>
               )}
-              <h3
-                style={{
-                  fontFamily: 'var(--t4-font-display)',
-                  fontSize: 'clamp(18px, 1.5vw, 22px)',
-                  fontWeight: 400,
-                  margin: '0 0 8px',
-                  letterSpacing: '-0.01em',
-                }}
-              >
-                {hotel.name}
-              </h3>
-              {hotel.vibe && (
-                <p
-                  style={{
-                    fontFamily: 'var(--t4-font-body)',
-                    fontSize: 13,
-                    color: 'var(--t4-muted)',
-                    margin: 0,
-                    fontWeight: 300,
-                  }}
-                >
-                  {hotel.vibe}
-                </p>
-              )}
+              <h3 className="t4-hg-name">{hotel.name}</h3>
+              <span className="t4-hg-cta">
+                View hotel <span aria-hidden>→</span>
+              </span>
             </Link>
           ))}
         </div>
@@ -126,6 +86,70 @@ export function T4HotelGrid({ hotels, programName, base }: Props) {
       </div>
 
       <style>{`
+        .t4-hg-card {
+          display: flex; flex-direction: column;
+          text-decoration: none; color: inherit;
+          transition: transform 0.4s var(--t4-ease, cubic-bezier(0.25, 0.1, 0.25, 1));
+        }
+        .t4-hg-card:hover { transform: translateY(-4px); }
+        .t4-hg-img-wrap {
+          position: relative;
+          aspect-ratio: 4 / 3;
+          overflow: hidden;
+          background: var(--t4-bg-alt);
+          margin-bottom: 18px;
+        }
+        .t4-hg-img-wrap img {
+          width: 100%; height: 100%;
+          object-fit: cover;
+          transition: transform 0.9s var(--t4-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+        }
+        .t4-hg-card:hover .t4-hg-img-wrap img { transform: scale(1.05); }
+        .t4-hg-vibe {
+          position: absolute; top: 14px; left: 14px;
+          font-family: var(--t4-font-body);
+          font-size: 10px; font-weight: 600;
+          letter-spacing: 0.2em; text-transform: uppercase;
+          background: #fff;
+          color: var(--t4-text, #1a1715);
+          padding: 7px 14px;
+          box-shadow: 0 2px 12px rgba(20,17,15,0.18);
+          transition: transform 0.3s ease;
+        }
+        .t4-hg-card:hover .t4-hg-vibe { transform: translateY(-2px); }
+        .t4-hg-loc {
+          font-family: var(--t4-font-body);
+          font-size: 11px;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--t4-accent);
+          margin: 0 0 8px;
+        }
+        .t4-hg-name {
+          font-family: var(--t4-font-display);
+          font-size: clamp(18px, 1.5vw, 22px);
+          font-weight: 400;
+          letter-spacing: -0.01em;
+          margin: 0 0 14px;
+        }
+        .t4-hg-cta {
+          font-family: var(--t4-font-body);
+          font-size: 10.5px; font-weight: 500;
+          letter-spacing: 0.22em; text-transform: uppercase;
+          color: var(--t4-text, #1a1715);
+          padding-top: 14px;
+          border-top: 1px solid var(--t4-divider);
+          margin-top: auto;
+          transition: color 0.25s ease;
+        }
+        .t4-hg-cta span {
+          margin-left: 6px;
+          display: inline-block;
+          transition: transform 0.3s ease;
+        }
+        .t4-hg-card:hover .t4-hg-cta { color: var(--t4-accent); }
+        .t4-hg-card:hover .t4-hg-cta span { transform: translateX(5px); }
+
         @media (max-width: 900px) {
           .t4-hotels-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
