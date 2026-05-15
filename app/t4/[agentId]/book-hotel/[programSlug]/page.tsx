@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { getHotelProgram, getHotelPrograms } from '@/lib/hotel-programs'
 import { getProgramFeaturedHotels } from '@/lib/hotels'
 import { T4HotelGrid } from '@/components/t4/T4HotelGrid'
+import { T4HotelGallerySlideshow } from '@/components/t4/T4HotelGallerySlideshow'
 
 interface PageProps {
   params: Promise<{ agentId: string; programSlug: string }>
@@ -234,45 +235,10 @@ export default async function T4HotelProgramDetailPage({ params }: PageProps) {
         </section>
       )}
 
-      {/* ── Gallery ────────────────────────────────────────────────────── */}
+      {/* ── Gallery (slideshow over all images) ────────────────────────── */}
       {program.slider_images && program.slider_images.length > 0 && (
         <section className="t4-section">
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: 12,
-            }}
-            className="t4-gallery-grid"
-          >
-            {program.slider_images.slice(0, 6).map((src, i) => (
-              <div
-                key={src}
-                style={{
-                  position: 'relative',
-                  aspectRatio: i === 0 ? '16 / 10' : '1 / 1',
-                  gridColumn: i === 0 ? 'span 3' : 'auto',
-                  overflow: 'hidden',
-                  background: 'var(--t4-bg-alt)',
-                }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={src}
-                  alt={`${program.name} gallery ${i + 1}`}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  loading={i < 3 ? 'eager' : 'lazy'}
-                />
-              </div>
-            ))}
-          </div>
-
-          <style>{`
-            @media (max-width: 900px) {
-              .t4-gallery-grid { grid-template-columns: 1fr 1fr !important; }
-              .t4-gallery-grid > div { grid-column: auto !important; aspect-ratio: 1 / 1 !important; }
-            }
-          `}</style>
+          <T4HotelGallerySlideshow images={program.slider_images} alt={program.name} />
         </section>
       )}
 
