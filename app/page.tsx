@@ -3,6 +3,7 @@ import { Globe, FileText, Building2, Paintbrush, Lock, TrendingUp } from 'lucide
 import { CheckoutButton } from '@/components/stripe/CheckoutButton'
 import { MarketingNav } from '@/components/marketing/MarketingNav'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
+import { HeroSlideshow } from '@/components/marketing/HeroSlideshow'
 
 export const metadata = {
   title: 'EliteAdvisorHub — For the Top 1% of Travel Advisors',
@@ -178,19 +179,8 @@ export default function EliteAdvisorHubHomePage() {
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {/* Background Image */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=2560&q=80"
-          alt=""
-          aria-hidden="true"
-          style={{
-            position: 'absolute', inset: 0,
-            width: '100%', height: '100%',
-            objectFit: 'cover',
-            zIndex: 0,
-          }}
-        />
+        {/* Background slideshow */}
+        <HeroSlideshow />
         {/* Dark gradient overlay */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: 1,
