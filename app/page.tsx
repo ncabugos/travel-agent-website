@@ -58,10 +58,10 @@ const PRICING_TIERS: PricingTier[] = [
     setup: '$1,499',
     priceMode: 'money',
     popular: true,
-    blurb: 'For advisors with an established book — a searchable hotel directory of 1,795+ properties, cruise partners, an Instagram feed, and the Vista or Meridian template.',
+    blurb: 'For advisors with an established book — a searchable hotel directory of 1,795+ properties, cruise partners, an Instagram feed, and a refined editorial template.',
     features: [
       'Everything in Starter',
-      'Vista or Meridian template',
+      'Editorial template with curated typography',
       'Searchable hotel directory (1,795+ properties)',
       'Searchable cruise directory',
       'Experiences directory',
@@ -80,7 +80,7 @@ const PRICING_TIERS: PricingTier[] = [
     blurb: "For advisors whose brand already exists in their clients' minds. We align the platform to it — typography, palette, premium modules, the bespoke landing pages your referrals expect.",
     features: [
       'Everything in Growth',
-      'Any template, including Casa Solis',
+      'Any template in our library',
       'Villa catalog access',
       'Custom-branded topic requests (2 posts/week)',
       'Bespoke landing pages',
