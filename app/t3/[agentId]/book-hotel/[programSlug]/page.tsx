@@ -7,6 +7,8 @@ import Link from 'next/link'
 import { T3FeaturedProperties } from '@/components/t3/T3FeaturedProperties'
 import { T3SiblingPrograms } from '@/components/t3/T3SiblingPrograms'
 import { T3JournalTeaser, type T3JournalPost } from '@/components/t3/T3JournalTeaser'
+import { T3PromoBanner } from '@/components/t3/T3PromoBanner'
+import { getSupplierPromo } from '@/lib/supplier-promos'
 
 interface PageProps {
   params: Promise<{ agentId: string; programSlug: string }>
@@ -37,10 +39,11 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
   const base = `/t3/${agentId}`
 
   // Fetch supplemental modules in parallel; each gracefully renders nothing when empty.
-  const [featuredHotels, relatedPosts, allPrograms] = await Promise.all([
+  const [featuredHotels, relatedPosts, allPrograms, promo] = await Promise.all([
     getProgramFeaturedHotels(programSlug, 50),
     getBlogPostsBySupplier(programSlug, agentId).catch(() => []),
     getHotelPrograms(),
+    getSupplierPromo('hotel_program', programSlug),
   ])
 
   // Sibling programs: same category, ordered by sort_order, exclude current.
@@ -227,6 +230,20 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
           </div>
         </section>
       )}
+
+      {/* ── Promo banner ──────────────────────────────────────────────── */}
+      <section className="t3-section">
+        <T3PromoBanner
+          promo={promo}
+          agentId={agentId}
+          fallback={{
+            headline: `Discover ${program.name}`,
+            subheading: `Book through us and unlock exclusive ${program.name} privileges — upgrades, daily breakfast, and VIP recognition unavailable through any other channel.`,
+            cta_label: 'Book through us',
+            image_url: program.slider_images?.[0] ?? program.image_url ?? undefined,
+          }}
+        />
+      </section>
 
       {/* ── Gallery ────────────────────────────────────────────────────── */}
       {program.slider_images && program.slider_images.length > 0 && (

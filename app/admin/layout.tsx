@@ -11,6 +11,7 @@ const navItems: SidebarItem[] = [
   { href: '/admin/consultations', label: 'Consultations', icon: Icons.inbox },
   { href: '/admin/blog', label: 'Journal Posts', icon: Icons.edit },
   { href: '/admin/categories', label: 'Categories', icon: Icons.tag },
+  { href: '/admin/promos', label: 'Promo Banners', icon: Icons.tag },
   { href: '/admin/requests', label: 'Edit Requests', icon: Icons.inbox },
 ]
 

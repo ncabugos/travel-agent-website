@@ -3,8 +3,10 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getHotelProgram, getHotelPrograms } from '@/lib/hotel-programs'
 import { getProgramFeaturedHotels } from '@/lib/hotels'
+import { getSupplierPromo } from '@/lib/supplier-promos'
 import { T4HotelGrid } from '@/components/t4/T4HotelGrid'
 import { T4HotelGallerySlideshow } from '@/components/t4/T4HotelGallerySlideshow'
+import { T4PromoBanner } from '@/components/t4/T4PromoBanner'
 
 interface PageProps {
   params: Promise<{ agentId: string; programSlug: string }>
@@ -26,9 +28,10 @@ export const revalidate = 3600
 
 export default async function T4HotelProgramDetailPage({ params }: PageProps) {
   const { agentId, programSlug } = await params
-  const [program, featuredHotels] = await Promise.all([
+  const [program, featuredHotels, promo] = await Promise.all([
     getHotelProgram(programSlug),
     getProgramFeaturedHotels(programSlug, 50),
+    getSupplierPromo('hotel_program', programSlug),
   ])
   if (!program) notFound()
 
@@ -232,6 +235,22 @@ export default async function T4HotelProgramDetailPage({ params }: PageProps) {
               }
             `}</style>
           </div>
+        </section>
+      )}
+
+      {/* ── Promo banner ───────────────────────────────────────────────── */}
+      {(promo || program.name) && (
+        <section className="t4-section">
+          <T4PromoBanner
+            promo={promo}
+            agentId={agentId}
+            fallback={{
+              headline: `Discover ${program.name}`,
+              subheading: `Book through us and unlock exclusive ${program.name} privileges — upgrades, daily breakfast, and VIP recognition unavailable through any other channel.`,
+              cta_label: 'Book through us',
+              image_url: program.slider_images?.[0] ?? program.image_url ?? undefined,
+            }}
+          />
         </section>
       )}
 
