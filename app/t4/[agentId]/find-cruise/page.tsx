@@ -52,79 +52,102 @@ export default async function T4FindCruiseIndexPage({ params }: PageProps) {
             }}
             className="t4-cruise-index-grid"
           >
-            {lines.map((line) => (
-              <Link
-                key={line.slug}
-                href={`${base}/find-cruise/${line.slug}`}
-                className="t4-cruise-card"
-                style={{
-                  display: 'block',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                }}
-              >
-                {line.hero_image_url && (
-                  <div
-                    style={{
-                      position: 'relative',
-                      aspectRatio: '4 / 5',
-                      overflow: 'hidden',
-                      background: 'var(--t4-bg)',
-                      marginBottom: 24,
-                    }}
-                  >
-                    <Image
-                      src={line.hero_image_url}
-                      alt={line.name}
-                      fill
-                      sizes="(max-width: 900px) 100vw, 33vw"
-                      className="t4-cruise-card-img"
-                      style={{
-                        objectFit: 'cover',
-                        transition: 'transform 1.1s var(--t4-ease-out)',
-                      }}
-                      unoptimized
-                    />
-                  </div>
-                )}
-                <div
-                  style={{
-                    fontFamily: 'var(--t4-font-body)',
-                    fontSize: 10,
-                    fontWeight: 500,
-                    letterSpacing: '0.28em',
-                    textTransform: 'uppercase',
-                    color: 'var(--t4-accent)',
-                    marginBottom: 8,
-                  }}
+            {lines.map((line) => {
+              const types = (line.cruise_types || [])[0] || 'Luxury'
+              return (
+                <Link
+                  key={line.slug}
+                  href={`${base}/find-cruise/${line.slug}`}
+                  className="t4-cruise-card"
                 >
-                  {(line.cruise_types || []).join(' · ') || 'Luxury Cruise'}
-                </div>
-                <h3 className="t4-headline-md" style={{ marginBottom: 10, fontSize: 'clamp(17px, 1.5vw, 20px)' }}>
-                  {line.name}
-                </h3>
-                {line.tagline && (
-                  <p
-                    style={{
-                      fontFamily: 'var(--t4-font-display)',
-                      fontStyle: 'italic',
-                      fontSize: 14,
-                      color: 'var(--t4-text-muted)',
-                      margin: 0,
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    {line.tagline}
-                  </p>
-                )}
-              </Link>
-            ))}
+                  {line.hero_image_url && (
+                    <div className="t4-cruise-card-imgwrap">
+                      <Image
+                        src={line.hero_image_url}
+                        alt={line.name}
+                        fill
+                        sizes="(max-width: 900px) 100vw, 33vw"
+                        className="t4-cruise-card-img"
+                        unoptimized
+                      />
+                      <span className="t4-cruise-vibe">{types}</span>
+                    </div>
+                  )}
+                  <h3 className="t4-headline-md t4-cruise-card-name">{line.name}</h3>
+                  {line.tagline && (
+                    <p className="t4-cruise-card-tagline">{line.tagline}</p>
+                  )}
+                  <span className="t4-cruise-card-cta">
+                    View line <span aria-hidden>→</span>
+                  </span>
+                </Link>
+              )
+            })}
           </div>
         </div>
       </section>
 
       <style>{`
-        .t4-cruise-card:hover .t4-cruise-card-img { transform: scale(1.04); }
+        .t4-cruise-card {
+          display: flex; flex-direction: column;
+          text-decoration: none; color: inherit;
+          transition: transform 0.4s var(--t4-ease, cubic-bezier(0.25, 0.1, 0.25, 1));
+        }
+        .t4-cruise-card:hover { transform: translateY(-4px); }
+        .t4-cruise-card-imgwrap {
+          position: relative;
+          aspect-ratio: 4 / 5;
+          overflow: hidden;
+          background: var(--t4-bg);
+          margin-bottom: 22px;
+        }
+        .t4-cruise-card-img {
+          object-fit: cover;
+          transition: transform 1.1s var(--t4-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+        }
+        .t4-cruise-card:hover .t4-cruise-card-img { transform: scale(1.05); }
+        .t4-cruise-vibe {
+          position: absolute; top: 14px; left: 14px;
+          font-family: var(--t4-font-body);
+          font-size: 10px; font-weight: 600;
+          letter-spacing: 0.2em; text-transform: uppercase;
+          background: #fff;
+          color: var(--t4-text);
+          padding: 7px 14px;
+          box-shadow: 0 2px 12px rgba(20,17,15,0.18);
+          transition: transform 0.3s ease;
+        }
+        .t4-cruise-card:hover .t4-cruise-vibe { transform: translateY(-2px); }
+        .t4-cruise-card-name {
+          margin: 0 0 10px;
+          font-size: clamp(17px, 1.5vw, 20px);
+        }
+        .t4-cruise-card-tagline {
+          font-family: var(--t4-font-display);
+          font-style: italic;
+          font-size: 14px;
+          color: var(--t4-text-muted);
+          line-height: 1.5;
+          margin: 0 0 18px;
+        }
+        .t4-cruise-card-cta {
+          font-family: var(--t4-font-body);
+          font-size: 10.5px; font-weight: 500;
+          letter-spacing: 0.22em; text-transform: uppercase;
+          color: var(--t4-text);
+          padding-top: 14px;
+          border-top: 1px solid var(--t4-divider);
+          margin-top: auto;
+          transition: color 0.25s ease;
+        }
+        .t4-cruise-card-cta span {
+          margin-left: 6px;
+          display: inline-block;
+          transition: transform 0.3s ease;
+        }
+        .t4-cruise-card:hover .t4-cruise-card-cta { color: var(--t4-accent); }
+        .t4-cruise-card:hover .t4-cruise-card-cta span { transform: translateX(5px); }
+
         @media (max-width: 900px) {
           .t4-cruise-index-grid { grid-template-columns: 1fr 1fr !important; }
         }

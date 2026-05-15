@@ -151,6 +151,18 @@ export default async function T3FindCruisePage({ params }: PageProps) {
                         transition: 'transform 0.9s var(--t3-ease-out)',
                       }}
                     />
+                    <span style={{
+                      position: 'absolute', top: 14, left: 14,
+                      fontFamily: 'var(--t3-font-sans)',
+                      fontSize: 10, fontWeight: 600,
+                      letterSpacing: '0.2em', textTransform: 'uppercase',
+                      background: '#fff',
+                      color: 'var(--t3-text)',
+                      padding: '7px 14px',
+                      boxShadow: '0 2px 12px rgba(20,17,15,0.18)',
+                    }}>
+                      {(line.cruise_types || [])[0] || 'Luxury'}
+                    </span>
                   </div>
                 )}
                 <div style={{ padding: '28px 28px 24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -166,18 +178,6 @@ export default async function T3FindCruisePage({ params }: PageProps) {
                       />
                     </div>
                   )}
-                  <div
-                    style={{
-                      fontSize: 'clamp(10px, 0.85vw, 11px)',
-                      fontWeight: 500,
-                      letterSpacing: '0.2em',
-                      textTransform: 'uppercase',
-                      color: 'var(--t3-accent)',
-                      marginBottom: 8,
-                    }}
-                  >
-                    {(line.cruise_types || []).join(' · ') || 'Luxury Cruise'}
-                  </div>
                   <h3 className="t3-headline-md" style={{ marginBottom: 10, fontSize: 'clamp(17px, 1.5vw, 20px)' }}>
                     {line.name}
                   </h3>
