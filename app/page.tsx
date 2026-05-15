@@ -25,7 +25,7 @@ interface PricingTier {
   tier: 'starter' | 'growth' | 'custom' | 'agency'
   price: string
   setup: string | null
-  priceMode: 'money' | 'quote'
+  priceMode: 'money' | 'quote' | 'from'
   popular: boolean
   blurb: string
   features: string[]
@@ -91,9 +91,9 @@ const PRICING_TIERS: PricingTier[] = [
   {
     name: 'Agency',
     tier: 'agency',
-    price: 'from $899',
+    price: '$899',
     setup: 'from $4,999',
-    priceMode: 'quote',
+    priceMode: 'from',
     popular: false,
     blurb: 'For boutique agencies managing multiple advisors under one brand — individual profiles, unified billing, shared content library, co-authored editorial, and lead routing built for practices that have outgrown a single site.',
     features: [
@@ -208,16 +208,13 @@ export default function EliteAdvisorHubHomePage() {
             maxWidth: '900px',
             color: '#fff',
           }}>
-            For travel advisors who place clients at Aman
-            <br />
-            before the season opens —
-            <br />
+            Websites for{' '}
             <span style={{
               background: 'linear-gradient(135deg, #a5b4fc, #c4b5fd)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}>
-              websites that earn that work.
+              Elite Travel Advisors
             </span>
           </h1>
 
@@ -225,9 +222,7 @@ export default function EliteAdvisorHubHomePage() {
             fontSize: '18px', lineHeight: 1.7, color: 'rgba(255,255,255,0.82)',
             maxWidth: '620px', margin: '0 auto 40px',
           }}>
-            A platform maintained by a working advisor — hotel programs from Aman, Belmond,
-            Rosewood, and Four Seasons, a weekly editorial pipeline, and a portal built
-            for advisors who bill by the experience, not the hour.
+            A website platform for independent travel advisors and boutique agencies. A curated network of luxury hotels, cruise lines, and more — kept current for you so you can spend the day selling travel.
           </p>
 
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -369,10 +364,7 @@ export default function EliteAdvisorHubHomePage() {
                   padding: '36px 28px',
                   borderRadius: '16px',
                   backgroundColor: '#fff',
-                  border: plan.popular ? '2px solid transparent' : '1px solid #e5e7eb',
-                  background: plan.popular
-                    ? 'linear-gradient(#fff,#fff) padding-box, linear-gradient(135deg,#7c3aed,#c4b5fd) border-box'
-                    : '#fff',
+                  border: plan.popular ? '2px solid #7c3aed' : '1px solid #e5e7eb',
                   position: 'relative',
                   boxShadow: plan.popular ? '0 8px 40px rgba(124,58,237,0.14)' : 'none',
                   display: 'flex',
@@ -382,7 +374,7 @@ export default function EliteAdvisorHubHomePage() {
                 {plan.popular && (
                   <div style={{
                     position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)',
-                    background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
+                    backgroundColor: '#7c3aed',
                     color: '#fff', fontSize: '11px', fontWeight: 600,
                     padding: '4px 16px', borderRadius: '20px', textTransform: 'uppercase',
                     letterSpacing: '0.05em', whiteSpace: 'nowrap',
@@ -397,6 +389,8 @@ export default function EliteAdvisorHubHomePage() {
                       <span style={{ fontSize: '36px', fontWeight: 800, letterSpacing: '-0.03em' }}>{plan.price}</span>
                       <span style={{ fontSize: '14px', color: '#6b7280' }}>/month</span>
                     </>
+                  ) : plan.priceMode === 'from' ? (
+                    <span style={{ fontSize: '26px', fontWeight: 700, letterSpacing: '-0.02em' }}>from {plan.price}</span>
                   ) : (
                     <span style={{ fontSize: '18px', fontWeight: 700, letterSpacing: '-0.01em', color: '#111' }}>
                       {plan.price}
