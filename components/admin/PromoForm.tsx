@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { PROMO_LIMITS, type SupplierPromo, type SupplierPromoInput, type SupplierTarget } from '@/lib/supplier-promos'
+import { ImageUpload } from '@/components/admin/ImageUpload'
 
 interface Props {
   promo?: SupplierPromo | null
@@ -156,17 +157,9 @@ export function PromoForm({ promo }: Props) {
         </Field>
       </div>
 
-      {/* Image URL */}
-      <Field label="Image URL">
-        <input
-          type="text" value={imageUrl ?? ''} onChange={e => setImageUrl(e.target.value)}
-          maxLength={PROMO_LIMITS.image_url} style={inputStyle}
-          placeholder="/media/hotel-programs/.../hero.jpg or https://..."
-        />
-        {imageUrl && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={imageUrl} alt="preview" style={{ marginTop: 8, maxHeight: 140, borderRadius: 6, border: '1px solid #e5e7eb' }} />
-        )}
+      {/* Image — upload (drop / browse / paste) with URL fallback */}
+      <Field label="Image">
+        <ImageUpload value={imageUrl ?? ''} onChange={setImageUrl} />
       </Field>
 
       {/* Schedule + active */}
