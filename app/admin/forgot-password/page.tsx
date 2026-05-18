@@ -2,76 +2,64 @@
 import { useState, FormEvent } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { AuthLayout } from '@/components/auth/AuthLayout'
-import { GoogleButton } from '@/components/auth/GoogleButton'
 
-export default function AgentLoginPage() {
+export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+  const [sent, setSent] = useState(false)
 
-  async function handleLogin(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
-    setMessage('')
-
-    if (!email) {
-      setError('Please enter your email.')
+    const supabase = createClient()
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${location.origin}/admin/reset-password`,
+    })
+    if (resetError) {
+      setError(resetError.message)
       setLoading(false)
       return
     }
-
-    const supabase = createClient()
-    const { error: authError } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: `${location.origin}/api/agent-portal/auth-callback`,
-      },
-    })
-
-    if (authError) {
-      setError(authError.message)
-    } else {
-      setMessage('Check your email for the login link!')
-    }
+    setSent(true)
     setLoading(false)
   }
 
   return (
     <AuthLayout
-      headline="Manage Your Travel Practice"
-      subline="Sign in to your EliteAdvisorHub website — update content, manage inquiries, and grow your business."
+      headline="Websites for Elite Travel Advisors"
+      subline="A website platform for independent travel advisors and boutique agencies."
     >
       <div style={{ textAlign: 'center', marginBottom: '28px' }}>
         <h2 style={{ margin: 0, fontSize: '30px', fontWeight: 700, color: '#111', letterSpacing: '-0.02em' }}>
-          Welcome Back
+          Reset Your Password
         </h2>
         <p style={{ margin: '8px 0 0', fontSize: '14px', color: '#6b7280' }}>
-          Enter your email and we&apos;ll send you a secure sign-in link.
+          Enter your email and we&apos;ll send you a link to reset your password.
         </p>
       </div>
 
-      {message ? (
+      {sent ? (
         <div style={{
           padding: '16px', backgroundColor: '#f0fdf4', color: '#166534',
           borderRadius: '10px', fontSize: '14px', fontWeight: 500,
           border: '1px solid #bbf7d0', textAlign: 'center',
         }}>
-          ✓ {message}
+          ✓ Check your email for the reset link.
         </div>
       ) : (
-        <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div>
             <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#111', marginBottom: '8px' }}>
               Email
             </label>
             <input
               type="email"
-              required
               value={email}
               onChange={e => setEmail(e.target.value)}
-              placeholder="agent@example.com"
+              placeholder="user@company.com"
+              required
               autoFocus
               style={{
                 width: '100%', padding: '12px 14px', border: '1px solid #e5e7eb',
@@ -106,26 +94,15 @@ export default function AgentLoginPage() {
               boxShadow: '0 1px 2px rgba(124,58,237,0.25)',
             }}
           >
-            {loading ? 'Sending link…' : 'Send Magic Link'}
+            {loading ? 'Sending…' : 'Send Reset Link'}
           </button>
         </form>
       )}
 
-      {/* Divider */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '22px 0 16px' }}>
-        <div style={{ flex: 1, height: '1px', backgroundColor: '#e5e7eb' }} />
-        <span style={{ fontSize: '11px', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-          Or continue with
-        </span>
-        <div style={{ flex: 1, height: '1px', backgroundColor: '#e5e7eb' }} />
-      </div>
-
-      <GoogleButton redirectPath="/api/agent-portal/auth-callback" label="Google" />
-
       <p style={{ textAlign: 'center', marginTop: '24px', fontSize: '13px', color: '#6b7280' }}>
-        Don&apos;t have an account?{' '}
-        <a href="/agent-portal/register" style={{ color: '#7c3aed', textDecoration: 'none', fontWeight: 600 }}>
-          Register Now.
+        Remembered it?{' '}
+        <a href="/admin/login" style={{ color: '#7c3aed', textDecoration: 'none', fontWeight: 500 }}>
+          Back to sign in
         </a>
       </p>
     </AuthLayout>

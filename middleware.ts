@@ -150,8 +150,12 @@ export async function middleware(request: NextRequest) {
   // Refresh session (important for SSR)
   const { data: { session } } = await supabase.auth.getSession()
 
-  // ── Admin routes (/admin/* except /admin/login) ──────────────────────────
-  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')) {
+  // ── Admin routes (gated except for the public auth pages) ────────────────
+  const isPublicAdminPath =
+    pathname.startsWith('/admin/login') ||
+    pathname.startsWith('/admin/forgot-password') ||
+    pathname.startsWith('/admin/reset-password')
+  if (pathname.startsWith('/admin') && !isPublicAdminPath) {
     if (!session) {
       const loginUrl = new URL('/admin/login', request.url)
       loginUrl.searchParams.set('from', pathname)
@@ -179,8 +183,11 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // ── Agent portal routes (/agent-portal/* except /agent-portal/login) ─────
-  if (pathname.startsWith('/agent-portal') && !pathname.startsWith('/agent-portal/login')) {
+  // ── Agent portal routes (gated except for login + register) ──────────────
+  const isPublicAgentPath =
+    pathname.startsWith('/agent-portal/login') ||
+    pathname.startsWith('/agent-portal/register')
+  if (pathname.startsWith('/agent-portal') && !isPublicAgentPath) {
     if (!session) {
       return NextResponse.redirect(new URL('/agent-portal/login', request.url))
     }
