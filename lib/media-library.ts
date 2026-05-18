@@ -80,6 +80,28 @@ export const HOTEL_LOGOS = {
   sixSensesWhite:             m('/assets/supplier logos/white transparent/SixSenses-logo-white-600.webp'),
   montageWhite:               m('/assets/supplier logos/white transparent/montage-white-600.webp'),
   coutureWhite:               m('/assets/supplier logos/white transparent/couture-logo-white-600.webp'),
+
+  // ── Black transparent logos (for light/cream backgrounds) ────────────────────
+  belmondBelliniClubBlack:    m('/assets/supplier logos/black transparent/belmond_bellini-logo-black-600.png'),
+  dorchesterDiamondClubBlack: m('/assets/supplier logos/black transparent/dorchester_diamond-logo-black-600.png'),
+  fourSeasonsPreferredBlack:  m('/assets/supplier logos/black transparent/FS_preferred-600-black.png'),
+  hyattPriveBlack:            m('/assets/supplier logos/black transparent/HyattPrive-black-600.png'),
+  mandarinFanClubBlack:       m('/assets/supplier logos/black transparent/mandarin-oriental-fan-club-Mandarin-black-600.png'),
+  peninsulaPenClubBlack:      m('/assets/supplier logos/black transparent/Peninsula_PenClub-black-600.png'),
+  ritzCarltonStarsBlack:      m('/assets/supplier logos/black transparent/ritz-carlton-stars-black-600.png'),
+  roccoForteBlack:            m('/assets/supplier logos/black transparent/Rocco_Forte-black-600.png'),
+  rosewoodEliteBlack:         m('/assets/supplier logos/black transparent/rosewood_elite-black-600.png'),
+  shangriLaLuxuryCircleBlack: m('/assets/supplier logos/black transparent/ShangriLa-black-600.png'),
+  kempinskiClub1897Black:     m('/assets/supplier logos/black transparent/Kempinski-Club1897-black-600.png'),
+  oetkerPearlBlack:           m('/assets/supplier logos/black transparent/oetker-pearl-black-600.png'),
+  amanBlack:                  m('/assets/supplier logos/black transparent/Aman-black-600.png'),
+  aubergeResortsBlack:        m('/assets/supplier logos/black transparent/auberge-logo-black-600.png'),
+  comoHotelsBlack:            m('/assets/supplier logos/black transparent/como-hotels-black-600.png'),
+  montageBlack:               m('/assets/supplier logos/black transparent/montage-black-600.png'),
+  oneAndOnlyBlack:            m('/assets/supplier logos/black transparent/one%26only-black-600.png'),
+  accorHeraBlack:             m('/assets/supplier logos/black transparent/accor-hera-black-600.png'),
+  marriottLuminousBlack:      m('/assets/supplier logos/black transparent/Marriott_stars_luminous-black-600.png'),
+  leadingHotelsBlack:         m('/assets/supplier logos/black transparent/LeadingHotels-black-600.png'),
 } as const
 
 export type HotelLogoKey = keyof typeof HOTEL_LOGOS

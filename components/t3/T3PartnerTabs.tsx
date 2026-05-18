@@ -135,9 +135,9 @@ export function T3PartnerTabs({
               }}
               className="t3-partner-cell"
             >
-              {p.logo_url ? (
+              {(p.logo_url_black || p.logo_url) ? (
                 <Image
-                  src={p.logo_url}
+                  src={p.logo_url_black || p.logo_url || ''}
                   alt={p.name}
                   width={234}
                   height={84}
@@ -145,9 +145,8 @@ export function T3PartnerTabs({
                     objectFit: 'contain',
                     maxWidth: '100%',
                     maxHeight: 110,
-                    opacity: 0.55,
-                    filter: 'grayscale(100%)',
-                    transition: 'opacity 0.3s ease, filter 0.3s ease',
+                    opacity: 0.7,
+                    transition: 'opacity 0.3s ease',
                   }}
                   className="t3-partner-logo"
                   unoptimized
@@ -219,7 +218,6 @@ export function T3PartnerTabs({
       <style>{`
         .t3-partner-cell:hover .t3-partner-logo {
           opacity: 1 !important;
-          filter: grayscale(0%) !important;
         }
         @media (max-width: 1000px) {
           .t3-partner-grid {

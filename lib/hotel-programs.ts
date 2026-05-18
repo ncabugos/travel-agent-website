@@ -14,6 +14,7 @@ export interface HotelProgram {
   name: string
   logo_url: string | null
   logo_url_white: string | null   // transparent white version for dark hero
+  logo_url_black: string | null   // transparent black version for light/cream backgrounds
   image_url: string | null
   slider_images: string[]
   tagline: string | null
@@ -36,6 +37,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'Belmond Bellini Club',
     logo_url: HOTEL_LOGOS.belmondBelliniClub,
     logo_url_white: HOTEL_LOGOS.belmondBelliniClubWhite,
+    logo_url_black: HOTEL_LOGOS.belmondBelliniClubBlack,
     image_url: '/media/hotel-programs/belmond-bellini-club/belmond-hero-2000.jpg',
     slider_images: [
       '/media/hotel-programs/belmond-bellini-club/belmond-slider-1-1500.jpg',
@@ -71,6 +73,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'Diamond Club — Dorchester Collection',
     logo_url: HOTEL_LOGOS.dorchesterDiamondClub,
     logo_url_white: HOTEL_LOGOS.dorchesterDiamondClubWhite,
+    logo_url_black: HOTEL_LOGOS.dorchesterDiamondClubBlack,
     image_url: '/media/hotel-programs/dorchester/dorchester-hero-2000.jpg',
     slider_images: [
       'https://zcllngvctqthvqaupxyt.supabase.co/storage/v1/object/public/hotel-covers/gallery/dorchester/dorchester-intro-1500.jpg',
@@ -117,6 +120,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'Four Seasons Preferred Partner',
     logo_url: HOTEL_LOGOS.fourSeasonsPreferred,
     logo_url_white: HOTEL_LOGOS.fourSeasonsPreferredWhite,
+    logo_url_black: HOTEL_LOGOS.fourSeasonsPreferredBlack,
     image_url: '/media/hotel-programs/four-seasons/fs-hero-2200.jpg',
     slider_images: [
       '/media/hotel-programs/four-seasons/fs-hero_v2-2200.jpg',
@@ -154,6 +158,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'STARS — The Ritz-Carlton',
     logo_url: HOTEL_LOGOS.ritzCarltonStars,
     logo_url_white: HOTEL_LOGOS.ritzCarltonStarsWhite,
+    logo_url_black: HOTEL_LOGOS.ritzCarltonStarsBlack,
     image_url: '/media/hotel-programs/marriott-luminous/Ritz-SB-hero-scaled.jpg',
     slider_images: [
       '/media/hotel-programs/marriott-luminous/st-regis-maldives-1500.jpg',
@@ -188,6 +193,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'Rosewood Elite',
     logo_url: HOTEL_LOGOS.rosewoodElite,
     logo_url_white: HOTEL_LOGOS.rosewoodEliteWhite,
+    logo_url_black: HOTEL_LOGOS.rosewoodEliteBlack,
     image_url: '/media/hotel-programs/rosewood-elite/rosewood-hero-sb.jpg',
     slider_images: [
       '/media/hotel-programs/rosewood-elite/rosewood-miramar-hero-scaled.jpg',
@@ -222,6 +228,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'Accor Preferred by HERA',
     logo_url: HOTEL_LOGOS.accorHera,
     logo_url_white: HOTEL_LOGOS.accorHeraWhite,
+    logo_url_black: HOTEL_LOGOS.accorHeraBlack,
     image_url: '/media/hotel-programs/hera-accor/accor-hotels-1500-1.jpg',
     slider_images: [
       '/media/hotel-programs/hera-accor/accor-hotels-1500-2.jpg',
@@ -251,6 +258,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'Mandarin Oriental Fan Club',
     logo_url: HOTEL_LOGOS.mandarinFanClub,
     logo_url_white: HOTEL_LOGOS.mandarinFanClubWhite,
+    logo_url_black: HOTEL_LOGOS.mandarinFanClubBlack,
     image_url: '/media/hotel-programs/mandarin-oriental/mandarin-hero-2000.jpg',
     slider_images: [
       '/media/hotel-programs/mandarin-oriental/mandarin-slider-1-1500.jpg',
@@ -282,6 +290,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'Shangri-La — The Luxury Circle',
     logo_url: HOTEL_LOGOS.shangriLaLuxuryCircle,
     logo_url_white: HOTEL_LOGOS.shangriLaLuxuryCircleWhite,
+    logo_url_black: HOTEL_LOGOS.shangriLaLuxuryCircleBlack,
     image_url: '/media/hotel-programs/shangri-la/shangri-featured-1500.jpg',
     slider_images: [
       '/media/hotel-programs/shangri-la/shangri-slider-1-1500.jpg',
@@ -316,6 +325,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'Sir Rocco\'s Knights — Rocco Forte Hotels',
     logo_url: HOTEL_LOGOS.roccoForte,
     logo_url_white: HOTEL_LOGOS.roccoForteWhite,
+    logo_url_black: HOTEL_LOGOS.roccoForteBlack,
     image_url: '/media/hotel-programs/rocco-forte/roccoforte-hero-2000.jpg',
     slider_images: [
       '/media/hotel-programs/rocco-forte/roccoforte-featured-1500.jpg',
@@ -346,6 +356,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'One&Only',
     logo_url: HOTEL_LOGOS.oneAndOnly,
     logo_url_white: HOTEL_LOGOS.oneAndOnlyWhite,
+    logo_url_black: HOTEL_LOGOS.oneAndOnlyBlack,
     image_url: '/media/hotel-programs/one-and-only/oneandonly-resorts-Hero-2000.jpg',
     slider_images: [
       '/media/hotel-programs/one-and-only/oneandonly-slider-1-1500.jpg',
@@ -378,6 +389,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'Auberge Resorts Collection',
     logo_url: HOTEL_LOGOS.aubergeResorts,
     logo_url_white: HOTEL_LOGOS.aubergeResortsWhite,
+    logo_url_black: HOTEL_LOGOS.aubergeResortsBlack,
     image_url: '/media/hotel-programs/auberge-resorts/auberge-hero-2000.jpg',
     slider_images: [
       '/media/hotel-programs/auberge-resorts/auberge-slider-1-1500.jpg',
@@ -409,6 +421,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'World of Hyatt Privé',
     logo_url: HOTEL_LOGOS.hyattPrive,
     logo_url_white: HOTEL_LOGOS.hyattPriveTransparent,
+    logo_url_black: HOTEL_LOGOS.hyattPriveBlack,
     image_url: '/media/hotel-programs/hyatt-prive/hyatt-hero-2000.jpg',
     slider_images: [
       '/media/hotel-programs/hyatt-prive/hyatt-slider-1-1500.jpg',
@@ -441,6 +454,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'Club 1897 — Kempinski',
     logo_url: HOTEL_LOGOS.kempinskiClub1897,
     logo_url_white: HOTEL_LOGOS.kempinskiClub1897White,
+    logo_url_black: HOTEL_LOGOS.kempinskiClub1897Black,
     image_url: '/media/hotel-programs/kempinski-1897/kempinski-hero-scaled.jpg',
     slider_images: [
       '/media/hotel-programs/kempinski-1897/kempinski-slider-1-1500.jpg',
@@ -472,6 +486,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'The Peninsula PenClub',
     logo_url: HOTEL_LOGOS.peninsulaPenClub,
     logo_url_white: HOTEL_LOGOS.peninsulaPenClubWhite,
+    logo_url_black: HOTEL_LOGOS.peninsulaPenClubBlack,
     image_url: '/media/hotel-programs/peninsula/peninsula-hero.jpg',
     slider_images: [
       '/media/hotel-programs/peninsula/peninsula-brand-hero-2000.jpg',
@@ -505,6 +520,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'COMO Hotels and Resorts',
     logo_url: HOTEL_LOGOS.comoHotels,
     logo_url_white: HOTEL_LOGOS.comoHotelsWhite,
+    logo_url_black: HOTEL_LOGOS.comoHotelsBlack,
     image_url: '/media/hotel-programs/como-hotels/Como-hero-tuscany-2200.jpg',
     slider_images: [
       '/media/hotel-programs/como-hotels/COMO-hotels-1500-1.jpg',
@@ -534,6 +550,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'Pearl Partner — Oetker Collection',
     logo_url: HOTEL_LOGOS.oetkerPearl,
     logo_url_white: HOTEL_LOGOS.oetkerPearlWhite,
+    logo_url_black: HOTEL_LOGOS.oetkerPearlBlack,
     image_url: '/media/hotel-programs/oetker-pearl/oetker-ducap-1500.jpg',
     slider_images: [
       '/media/hotel-programs/oetker-pearl/oetker-eden_rock_villa-1500.jpg',
@@ -565,6 +582,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'AMAN',
     logo_url: HOTEL_LOGOS.aman,
     logo_url_white: HOTEL_LOGOS.amanWhite,
+    logo_url_black: HOTEL_LOGOS.amanBlack,
     image_url: '/media/hotel-programs/aman/aman-hero-2000.jpg',
     slider_images: [
       '/media/hotel-programs/aman/aman-featured-1500.jpg',
@@ -596,6 +614,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'Montage Hotels & Resorts',
     logo_url: HOTEL_LOGOS.montage,
     logo_url_white: HOTEL_LOGOS.montageWhite,
+    logo_url_black: HOTEL_LOGOS.montageBlack,
     image_url: '/media/hotel-programs/montage/montage-cabo-spa_pool-1500.jpg',
     slider_images: [
       '/media/hotel-programs/montage/montage-slider-1-1500.jpg',
@@ -626,6 +645,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'Marriott International — Stars & Luminous',
     logo_url: HOTEL_LOGOS.marriottLuminous,
     logo_url_white: HOTEL_LOGOS.marriottLuminousWhite,
+    logo_url_black: HOTEL_LOGOS.marriottLuminousBlack,
     image_url: '/media/hotel-programs/marriott-luminous/marriott-hero-2200.jpg',
     slider_images: [
       '/media/hotel-programs/marriott-luminous/marriott-slider-1-1500.jpg',
@@ -668,6 +688,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     name: 'The Leading Hotels of the World',
     logo_url: HOTEL_LOGOS.leadingHotels,
     logo_url_white: HOTEL_LOGOS.leadingHotelsWhite,
+    logo_url_black: HOTEL_LOGOS.leadingHotelsBlack,
     image_url: '/media/hotel-programs/leading-hotels/leading-hotels-hero-2000.jpg',
     slider_images: [
       // ─── Newly added member-property shots ───────────────────────────
