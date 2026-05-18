@@ -66,16 +66,16 @@ export default async function CruiseDetailPage({ params }: PageProps) {
           background: 'linear-gradient(to bottom, rgba(20,18,16,0.4) 0%, rgba(20,18,16,0.7) 100%)',
         }} />
 
-        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px', maxWidth: 760 }}>
+        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px', maxWidth: 820 }}>
           {/* Only render an image if we have a transparent white logo — never filter opaque images */}
           {heroLogoUrl ? (
             <div style={{ marginBottom: 28, display: 'flex', justifyContent: 'center' }}>
               <Image
                 src={heroLogoUrl}
                 alt={`${cruise.name} logo`}
-                width={280}
-                height={100}
-                style={{ objectFit: 'contain', maxHeight: 90, maxWidth: 280 }}
+                width={520}
+                height={170}
+                style={{ objectFit: 'contain', maxHeight: 160, maxWidth: 'min(520px, 70vw)', width: 'auto', height: 'auto' }}
                 unoptimized
               />
             </div>
@@ -101,26 +101,30 @@ export default async function CruiseDetailPage({ params }: PageProps) {
               letterSpacing: '0.12em',
               color: 'rgba(255,255,255,0.85)',
               textTransform: 'uppercase',
-              marginBottom: 0,
+              marginBottom: cruise.description ? 22 : 0,
             }}>
               {cruise.tagline}
+            </p>
+          )}
+
+          {/* Description */}
+          {cruise.description && (
+            <p style={{
+              fontFamily: 'var(--t2-font-sans)',
+              fontSize: 'clamp(15px, 1.2vw, 17px)',
+              lineHeight: 1.75,
+              color: 'rgba(255,255,255,0.85)',
+              margin: '0 auto',
+              maxWidth: 680,
+            }}>
+              {cruise.description}
             </p>
           )}
         </div>
       </section>
 
-      {/* ── Description ── */}
-      <section className="t2-section" style={{ maxWidth: 820, textAlign: 'center' }}>
-        <h2 className="t2-heading t2-heading-lg" style={{ marginBottom: 20 }}>{cruise.name}</h2>
-        {cruise.description && (
-          <p className="t2-body t2-body-center" style={{ fontSize: 17, lineHeight: 1.9 }}>
-            {cruise.description}
-          </p>
-        )}
-      </section>
-
       {/* ── Virtuoso Voyages ── */}
-      <section className="t2-section" style={{ background: 'var(--t2-bg-alt)', maxWidth: 'none', paddingBottom: 0 }}>
+      <section className="t2-section" style={{ background: 'var(--t2-bg-alt)', maxWidth: 'none', paddingBottom: 'clamp(56px, 8vw, 96px)' }}>
         <div style={{ width: '100%', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', maxWidth: 680, margin: '0 auto 64px' }}>
             <span style={{ fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--t2-primary)', opacity: 0.6, display: 'block', marginBottom: 16 }}>
@@ -181,7 +185,7 @@ export default async function CruiseDetailPage({ params }: PageProps) {
       </section>
 
       {/* ── Promo Banner ── */}
-      <section className="t2-section" style={{ paddingTop: 0 }}>
+      <section className="t2-section">
         <T2PromoBanner
           promo={promo}
           fallback={{
