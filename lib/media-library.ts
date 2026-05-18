@@ -148,6 +148,8 @@ export const CRUISE_LOGOS: Record<string, CruiseLogoVariants> = {
   'windstar':              { white: cw('windstarCruises-white-600.png'),  black: cb('windstarCruises-black-600.png') },
   'explora-journeys':      { white: cw('exploreJourneys-white-600.png'),  black: cb('exploraJourneys-black-600.png') },
   'ritz-carlton-yacht':    { white: cw('RitzCarlton_Yacht-white-600.png'), black: cb('ritzCarlton_yacht-black-600.png') },
+  'aman-at-sea':           { white: cw('aman_at_sea-white-600.png'),       black: cb('aman_at_sea-black-600.png') },
+  'orient-express-sailing-yachts': { white: cw('orient_express_sailing-white-600.png'), black: cb('orient_express_sailing-black-600.png') },
 }
 
 /** Look up a cruise-line logo URL by slug. Returns null if no asset exists. */
