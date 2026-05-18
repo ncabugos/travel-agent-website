@@ -106,29 +106,56 @@ export const HOTEL_LOGOS = {
 
 export type HotelLogoKey = keyof typeof HOTEL_LOGOS
 
-// ─── Cruise Logos & Galleries ─────────────────────────────────────────────────
+// ─── Cruise Line Logos (slug → variant URLs) ──────────────────────────────────
+// Source assets:
+//   public/assets/supplier logos/white transparent/cruise/   ← for dark heroes
+//   public/assets/supplier logos/black transparent/cruise/   ← for light grids
+// Filename quirks (kept as-is to match the actual files on disk):
+//   silverSea-wnite-600.png  ← "wnite" misspelling
+//   exploreJourneys-white-600.png  ← "explore" instead of "explora"
+//   sceniceCruises-black-600.png   ← "scenice" instead of "scenic"
 
-export const CRUISE_LOGOS: Record<string, string> = {
-  'ama-waterways':      m('/media/cruises/logos/ama-waterways.jpg'),
-  'azamara':            m('/media/cruises/logos/azamara.jpg'),
-  'celebrity':          m('/media/cruises/logos/celebrity-cruises.jpg'),
-  'crystal':            m('/media/cruises/logos/crystal-cruises.jpg'),
-  'cunard':             m('/media/cruises/logos/cunard.jpg'),
-  'holland-america':    m('/media/cruises/logos/holland-america.jpg'),
-  'lindblad':           m('/media/cruises/logos/lindblad.jpg'),
-  'norwegian':          m('/media/cruises/logos/norwegian.jpg'),
-  'oceania':            m('/media/cruises/logos/oceania.jpg'),
-  'ponant':             m('/media/cruises/logos/ponant.jpg'),
-  'princess':           m('/media/cruises/logos/princess.jpg'),
-  'regent-seven-seas':  m('/media/cruises/logos/regent-seven-seas.jpg'),
-  'royal-caribbean':    m('/media/cruises/logos/royal-caribbean.jpg'),
-  'seabourn':           m('/media/cruises/logos/seabourn.jpg'),
-  'silversea':          m('/media/cruises/logos/silversea.jpg'),
-  'uniworld':           m('/media/cruises/logos/uniworld.jpg'),
-  'viking':             m('/media/cruises/logos/viking.jpg'),
-  'virgin-voyages':     m('/media/cruises/logos/virgin-voyages.jpg'),
-  'windstar':           m('/media/cruises/logos/windstar.jpg'),
+interface CruiseLogoVariants {
+  white: string | null
+  black: string | null
 }
+
+const cw = (file: string) => m(`/assets/supplier logos/white transparent/cruise/${file}`)
+const cb = (file: string) => m(`/assets/supplier logos/black transparent/cruise/${file}`)
+
+export const CRUISE_LOGOS: Record<string, CruiseLogoVariants> = {
+  'regent-seven-seas':     { white: cw('regent-white-600.png'),           black: cb('regent-black-600.png') },
+  'silversea':             { white: cw('silverSea-wnite-600.png'),        black: cb('silverSea-black-600.png') },
+  'seabourn':              { white: null,                                  black: cb('seabourn-black-600.png') },
+  'oceania':               { white: cw('oceaniaCruises-white-600.png'),   black: cb('oceaniaCruises-black-600.png') },
+  'azamara':               { white: cw('azamara-white-600.png'),          black: cb('azamara-black-600.png') },
+  'celebrity':             { white: cw('celebrityCruises-white-600.png'), black: cb('celebrityCruises-black-600.png') },
+  'cunard':                { white: cw('cunard-white-600.png'),           black: cb('cunard-black-600.png') },
+  'norwegian':             { white: cw('norwegian-white-600.png'),        black: cb('Norwegian-black-600.png') },
+  'royal-caribbean':       { white: cw('royalCaribbean-white-600.png'),   black: cb('royalCaribbean-black-600.png') },
+  'princess':              { white: cw('princessCruises-white-600.png'),  black: cb('princessCruises-black-600.png') },
+  'ponant':                { white: cw('ponant-white-600.png'),           black: cb('Ponant-black-600.png') },
+  'uncruise':              { white: cw('uncruise-white-600.png'),         black: cb('uncruise-black-600.png') },
+  'paul-gauguin':          { white: cw('paulGauguin-white-600.png'),      black: cb('paulGauguin-black-600.png') },
+  'star-clippers':         { white: cw('starClippers-white-600.png'),     black: cb('starClippers-black-600.png') },
+  'scenic':                { white: cw('scenicCruises-white-600.png'),    black: cb('sceniceCruises-black-600.png') },
+  'crystal-cruises':       { white: cw('crystalCruises-white-600.png'),   black: cb('crystalCruises-black-600.png') },
+  'viking':                { white: cw('VikingCruises-white-600.png'),    black: cb('vikingCruises-black-600.png') },
+  'ama-waterways':         { white: cw('amaWaterways-white-600.png'),     black: cb('amaWaterways-black-600.png') },
+  'uniworld':              { white: null,                                  black: cb('uniworld-black-600.png') },
+  'four_seasons_yacht':    { white: cw('FourSeasons_Yacht-white-600.png'), black: null },
+  'four-seasons-yacht':    { white: cw('FourSeasons_Yacht-white-600.png'), black: null },
+  'windstar':              { white: cw('windstarCruises-white-600.png'),  black: cb('windstarCruises-black-600.png') },
+  'explora-journeys':      { white: cw('exploreJourneys-white-600.png'),  black: cb('exploraJourneys-black-600.png') },
+  'ritz-carlton-yacht':    { white: cw('RitzCarlton_Yacht-white-600.png'), black: cb('ritzCarlton_yacht-black-600.png') },
+}
+
+/** Look up a cruise-line logo URL by slug. Returns null if no asset exists. */
+export function getCruiseLogo(slug: string, variant: 'white' | 'black'): string | null {
+  return CRUISE_LOGOS[slug]?.[variant] ?? null
+}
+
+// ─── Cruise Galleries ─────────────────────────────────────────────────────────
 
 export const CRUISE_GALLERY: Record<string, string[]> = {
   // Will be populated as cruise assets are imported

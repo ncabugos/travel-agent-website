@@ -1,6 +1,7 @@
 import { getCruiseLine, getAllCruiseLineSlugs } from '@/lib/cruise-lines'
 import { getSupplierPromo } from '@/lib/supplier-promos'
 import { getBlogPostsBySupplier } from '@/lib/blog'
+import { getCruiseLogo } from '@/lib/media-library'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -28,6 +29,10 @@ export default async function CruiseDetailPage({ params }: PageProps) {
   if (!cruise) notFound()
 
   const base = `/t2/${agentId}`
+  // Prefer DB value, fall back to slug-based asset lookup so cruise lines
+  // whose logo_url_white column is null still get a hero logo when we ship
+  // the corresponding asset in public/assets/supplier logos/.../cruise/.
+  const heroLogoUrl = cruise.logo_url_white || getCruiseLogo(cruise.slug, 'white')
 
 
   return (
@@ -63,10 +68,10 @@ export default async function CruiseDetailPage({ params }: PageProps) {
 
         <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px', maxWidth: 760 }}>
           {/* Only render an image if we have a transparent white logo — never filter opaque images */}
-          {cruise.logo_url_white ? (
+          {heroLogoUrl ? (
             <div style={{ marginBottom: 28, display: 'flex', justifyContent: 'center' }}>
               <Image
-                src={cruise.logo_url_white}
+                src={heroLogoUrl}
                 alt={`${cruise.name} logo`}
                 width={280}
                 height={100}
@@ -115,8 +120,8 @@ export default async function CruiseDetailPage({ params }: PageProps) {
       </section>
 
       {/* ── Virtuoso Voyages ── */}
-      <section className="t2-section" style={{ background: 'var(--t2-bg-alt)' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 48px' }}>
+      <section className="t2-section" style={{ background: 'var(--t2-bg-alt)', maxWidth: 'none', paddingBottom: 0 }}>
+        <div style={{ width: '100%', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', maxWidth: 680, margin: '0 auto 64px' }}>
             <span style={{ fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--t2-primary)', opacity: 0.6, display: 'block', marginBottom: 16 }}>
               Virtuoso Voyages
