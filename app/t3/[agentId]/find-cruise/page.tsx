@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { getCruiseLines } from '@/lib/cruise-lines'
 import { T3PageHero } from '@/components/t3/T3PageHero'
+import { T3CruiseCardImage } from '@/components/t3/T3CruiseCardImage'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -131,40 +132,13 @@ export default async function T3FindCruisePage({ params }: PageProps) {
                   transition: 'border-color 0.3s var(--t3-ease)',
                 }}
               >
-                {line.hero_image_url && (
-                  <div
-                    style={{
-                      position: 'relative',
-                      aspectRatio: '16 / 10',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={line.hero_image_url}
-                      alt={line.name}
-                      className="t3-cruise-card-img"
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        transition: 'transform 0.9s var(--t3-ease-out)',
-                      }}
-                    />
-                    <span style={{
-                      position: 'absolute', top: 14, left: 14,
-                      fontFamily: 'var(--t3-font-sans)',
-                      fontSize: 10, fontWeight: 600,
-                      letterSpacing: '0.2em', textTransform: 'uppercase',
-                      background: '#fff',
-                      color: 'var(--t3-text)',
-                      padding: '7px 14px',
-                      boxShadow: '0 2px 12px rgba(20,17,15,0.18)',
-                    }}>
-                      {(line.cruise_types || [])[0] || 'Luxury'}
-                    </span>
-                  </div>
-                )}
+                <T3CruiseCardImage
+                  src={line.hero_image_url}
+                  fallback={line.slider_images?.[0]}
+                  alt={line.name}
+                  badge={(line.cruise_types || [])[0] || 'Luxury'}
+                />
+
                 <div style={{ padding: '28px 28px 24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                   {line.logo_url && (
                     <div style={{ height: 36, marginBottom: 16, display: 'flex', alignItems: 'center' }}>
