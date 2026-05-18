@@ -11,6 +11,8 @@ export interface SidebarItem {
 interface SidebarProps {
   brand: string
   brandSub?: string
+  /** Optional logo image (wordmark). If set, replaces the plain text brand. */
+  brandLogoSrc?: string
   items: SidebarItem[]
   bottomItems?: SidebarItem[]
   currentPath?: string
@@ -18,7 +20,7 @@ interface SidebarProps {
   onLogout?: () => void
 }
 
-export function Sidebar({ brand, brandSub, items, bottomItems, currentPath, avatar, onLogout }: SidebarProps) {
+export function Sidebar({ brand, brandSub, brandLogoSrc, items, bottomItems, currentPath, avatar, onLogout }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false)
 
   return (
@@ -44,11 +46,20 @@ export function Sidebar({ brand, brandSub, items, bottomItems, currentPath, avat
       }}>
         {!collapsed && (
           <div>
-            <div style={{ fontSize: '16px', fontWeight: 700, color: '#111', letterSpacing: '-0.02em' }}>
-              {brand}
-            </div>
+            {brandLogoSrc ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={brandLogoSrc}
+                alt={brand}
+                style={{ height: '22px', width: 'auto', display: 'block' }}
+              />
+            ) : (
+              <div style={{ fontSize: '16px', fontWeight: 700, color: '#111', letterSpacing: '-0.02em' }}>
+                {brand}
+              </div>
+            )}
             {brandSub && (
-              <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '2px' }}>{brandSub}</div>
+              <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '6px' }}>{brandSub}</div>
             )}
           </div>
         )}

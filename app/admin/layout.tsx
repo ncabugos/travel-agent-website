@@ -23,8 +23,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname()
   const router = useRouter()
 
-  // Don't wrap login page in the dashboard shell
-  if (pathname === '/admin/login') {
+  // Don't wrap the public auth pages in the dashboard shell
+  const isPublicAuthPage =
+    pathname === '/admin/login' ||
+    pathname === '/admin/forgot-password' ||
+    pathname === '/admin/reset-password'
+  if (isPublicAuthPage) {
     return <>{children}</>
   }
 
@@ -39,6 +43,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <Sidebar
         brand="EliteAdvisorHub"
         brandSub="Admin Console"
+        brandLogoSrc="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
         items={navItems}
         bottomItems={bottomItems}
         currentPath={pathname}
