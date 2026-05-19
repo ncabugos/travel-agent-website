@@ -7,9 +7,9 @@ interface PageProps {
 }
 
 export const metadata = {
-  title: 'The Atelier | Casa Solis',
+  title: 'About | Casa Solis',
   description:
-    'The philosophy behind Casa Solis — how we plan, why we plan so little, and what we mean by quiet luxury.',
+    'How Casa Solis plans travel — six principles for a small, focused luxury advisory practice.',
 }
 
 const PRINCIPLES = [
@@ -59,11 +59,11 @@ export default async function T4AtelierPage({ params }: PageProps) {
     <>
       <T4PageHero
         image="/media/hotel-programs/rocco-forte/Rocco-Forte-hotels-Hero-2000.jpg"
-        imageAlt="The Atelier at Casa Solis"
-        eyebrow="The Atelier"
-        title="The philosophy behind the house."
+        imageAlt="About Casa Solis"
+        eyebrow="About Casa Solis"
+        title="How we plan luxury travel."
         body="Six principles we refuse to compromise on — written down so that clients, and advisors, can hold us to them."
-        imageCaption="The Studio · Solferino"
+        imageCaption="San Francisco Office"
       />
 
       {/* ── Principles ─────────────────────────────────────────────────── */}

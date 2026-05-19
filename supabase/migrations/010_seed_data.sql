@@ -122,24 +122,12 @@ insert into public.cruise_lines (name, slug, logo_url, hero_image_url, descripti
  '["All-inclusive 5-star luxury","Sun Lounge balcony suites","Unlimited premium beverages","Butler service","Scenic Enrich exclusive experiences"]'::jsonb,
  '[]'::jsonb, 18),
 
-('Amadeus River Cruises', 'amadeus', '/media/cruises/amadeus/amadeus-logo.png', '/media/cruises/amadeus/amadeus-hero.jpg',
- 'European river cruises with classic Viennese elegance and exceptional culinary experiences.',
- 'river',
- '["Classic European elegance","Panoramic twin balcony suites","Lido bar on top deck","Classical music program","Culinary excellence"]'::jsonb,
- '[]'::jsonb, 19),
-
 -- YACHT CRUISES
 ('Four Seasons Yachts', 'four-seasons-yachts', '/media/cruises/four_seasons_yacht/fs-yacht-logo.png', '/media/cruises/four_seasons_yacht/YCT_207_aspect16x9.jpg',
  'The legendary Four Seasons experience, now at sea. Ultra-luxury yacht cruises with the brand''s signature service.',
  'yacht',
  '["Four Seasons legendary service","All-suite yacht","Michelin-level dining","Transformative spa","1:1 guest-to-staff ratio"]'::jsonb,
- '[]'::jsonb, 20),
-
-('Sea Cloud Cruises', 'sea-cloud', '/media/cruises/sea-cloud/sea-cloud-logo.png', '/media/cruises/sea-cloud/sea-cloud-hero.jpg',
- 'Sailing on original tall ships — maritime heritage meets world-class luxury on the open sea.',
- 'yacht',
- '["Historic tall sailing ships","64-136 guests","Hand-set sails by crew","Gourmet international dining","Unique ports unreachable by larger ships"]'::jsonb,
- '[]'::jsonb, 21);
+ '[]'::jsonb, 20);
 
 
 -- =============================================================================

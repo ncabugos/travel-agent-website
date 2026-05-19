@@ -1,6 +1,9 @@
 import { T2LeadForm } from '@/components/t2/T2LeadForm'
 import { FindVillaClient } from '@/components/t2/FindVillaClient'
 import { getAllVillas, getVillaCountries } from '@/lib/villas'
+import { getAgentProfile } from '@/lib/suppliers'
+import { tierAllows, type Tier } from '@/lib/tier-features'
+import { notFound } from 'next/navigation'
 import Image from 'next/image'
 
 interface PageProps {
@@ -14,6 +17,13 @@ export const metadata = {
 
 export default async function BookVillaPage({ params }: PageProps) {
   const { agentId } = await params
+
+  // Villa catalog is a Custom-tier feature. Return 404 for Starter/Growth.
+  const agent = await getAgentProfile(agentId)
+  if (!tierAllows(agent?.tier as Tier | null | undefined, 'villas')) {
+    notFound()
+  }
+
   const [villas, countries] = await Promise.all([
     getAllVillas(),
     getVillaCountries(),

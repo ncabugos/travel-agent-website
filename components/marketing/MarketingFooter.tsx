@@ -19,13 +19,15 @@ const PLATFORM_LINKS = [
   { label: 'Schedule a consultation', href: '/schedule-consultation' },
 ]
 
+// Ordered by tier — Starter → Growth → Custom → Agency
 const DEMO_LINKS = [
-  { label: 'Eden',                  href: '/frontend/demo-agent' },
-  { label: 'Vista',                 href: '/t2/t2-demo' },
-  { label: 'Meridian Travel',              href: '/t3/t3-demo' },
-  { label: 'Your Travel Center',    href: '/t2/ytc-demo' },
-  { label: 'Casa Solis',            href: '/t4/casa-solis' },
+  { label: 'Vista',                  href: '/t2/t2-demo' },
+  { label: 'Meridian Travel',        href: '/t3/t3-demo' },
+  { label: 'Coast & Compass Travel', href: '/t2/coast-compass-demo' },
+  { label: 'Eden',                   href: '/frontend/demo-agent' },
+  { label: 'Casa Solis',             href: '/t4/casa-solis' },
   { label: 'Wine & Wellness Travel', href: '/t2/wwt-demo' },
+  { label: 'Your Travel Center',     href: '/t2/ytc-demo' },
 ]
 
 const COMPANY_LINKS = [

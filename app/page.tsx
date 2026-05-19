@@ -14,7 +14,7 @@ export const metadata = {
 interface DemoCard {
   slug: string
   name: string
-  kind: 'Custom' | 'Standard' | 'Agency'
+  kind: 'Starter' | 'Growth' | 'Custom' | 'Agency'
   tagline: string
   href: string
   thumbnail: string
@@ -109,19 +109,14 @@ const PRICING_TIERS: PricingTier[] = [
   },
 ]
 
+// Demos are grouped by tier (Starter → Growth → Custom → Agency) so they
+// read in the same order as the pricing tiers above.
 const DEMOS: DemoCard[] = [
-  {
-    slug: 'eden',
-    name: 'Eden',
-    kind: 'Custom',
-    tagline: 'An editorial custom build for a boutique advisor, designed from scratch.',
-    href: '/frontend/demo-agent',
-    thumbnail: '/demos/eden.png',
-  },
+  // ── Starter ─────────────────────────────────────────────────────────────────
   {
     slug: 'vista',
     name: 'Vista',
-    kind: 'Standard',
+    kind: 'Starter',
     tagline: 'Cinematic widescreen with bold serif typography and antique gold accents.',
     href: '/t2/t2-demo',
     thumbnail: '/demos/vista.png',
@@ -129,18 +124,28 @@ const DEMOS: DemoCard[] = [
   {
     slug: 'meridian',
     name: 'Meridian',
-    kind: 'Standard',
+    kind: 'Starter',
     tagline: 'Modern editorial in sans-serif — warm ivory, bronze italics, generous whitespace.',
     href: '/t3/t3-demo',
     thumbnail: '/demos/meridian.png',
   },
+  // ── Growth ──────────────────────────────────────────────────────────────────
   {
-    slug: 'ytc',
-    name: 'Your Travel Center',
-    kind: 'Agency',
-    tagline: 'A real Spokane agency, rebranded on the Vista template with custom identity.',
-    href: '/t2/ytc-demo',
-    thumbnail: '/demos/ytc.png',
+    slug: 'coast-and-compass',
+    name: 'Coast & Compass Travel',
+    kind: 'Growth',
+    tagline: 'Small-ship voyages and coastal escapes — Bodoni Moda serif, slideshow hero, editorial services index.',
+    href: '/t2/coast-compass-demo',
+    thumbnail: '/media/hero images/four-seasons-yacht-hero.jpg',
+  },
+  // ── Custom ──────────────────────────────────────────────────────────────────
+  {
+    slug: 'eden',
+    name: 'Eden',
+    kind: 'Custom',
+    tagline: 'An editorial custom build for a boutique advisor, designed from scratch.',
+    href: '/frontend/demo-agent',
+    thumbnail: '/demos/eden.png',
   },
   {
     slug: 'casa-solis',
@@ -157,6 +162,15 @@ const DEMOS: DemoCard[] = [
     tagline: 'A slow-travel custom build — wine-country, wellness retreats, and bespoke villas with parallax storytelling.',
     href: '/t2/wwt-demo',
     thumbnail: '/demos/wine_and_wellness.jpg',
+  },
+  // ── Agency ──────────────────────────────────────────────────────────────────
+  {
+    slug: 'ytc',
+    name: 'Your Travel Center',
+    kind: 'Agency',
+    tagline: 'A real Spokane agency, rebranded on the Vista template with custom identity.',
+    href: '/t2/ytc-demo',
+    thumbnail: '/demos/ytc.png',
   },
 ]
 
@@ -460,8 +474,9 @@ export default function EliteAdvisorHubHomePage() {
             textAlign: 'center', fontSize: '16px', color: '#6b7280',
             margin: '0 0 60px', maxWidth: '580px', marginInline: 'auto',
           }}>
-            Six live sites on EliteAdvisorHub — two standard templates, three custom builds,
-            and one agency example. Each is live and available to explore.
+            Seven live sites on EliteAdvisorHub, organized by tier — two Starter templates,
+            one Growth build, three Custom builds, and one Agency example. Each is live and
+            available to explore.
           </p>
 
           <div
@@ -631,8 +646,9 @@ export default function EliteAdvisorHubHomePage() {
 
 function kindBadgeBg(kind: DemoCard['kind']): string {
   switch (kind) {
+    case 'Starter':  return 'rgba(17, 17, 17, 0.92)'     // near-black
+    case 'Growth':   return 'rgba(184, 146, 106, 0.95)'  // antique gold
     case 'Custom':   return 'rgba(139, 92, 246, 0.92)'   // purple
-    case 'Standard': return 'rgba(17, 17, 17, 0.92)'     // near-black
     case 'Agency':   return 'rgba(22, 163, 74, 0.92)'    // green
   }
 }

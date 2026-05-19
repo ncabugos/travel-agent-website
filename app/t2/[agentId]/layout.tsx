@@ -1,4 +1,4 @@
-import { Playfair_Display, Inter } from 'next/font/google'
+import { Playfair_Display, Inter, Bodoni_Moda } from 'next/font/google'
 import type { ReactNode } from 'react'
 import { getAgentProfile } from '@/lib/suppliers'
 import { T2Nav } from '@/components/t2/T2Nav'
@@ -20,6 +20,15 @@ const inter = Inter({
   display: 'swap',
 })
 
+// Bodoni Moda — locked-in serif for the coast-compass-demo persona.
+// Other t2 demos keep Cormorant Garamond.
+const bodoniModa = Bodoni_Moda({
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  variable: '--font-bodoni',
+  display: 'swap',
+})
+
 interface LayoutProps {
   children: ReactNode
   params: Promise<{ agentId: string }>
@@ -30,7 +39,7 @@ export default async function T2Layout({ children, params }: LayoutProps) {
   const agent = await getAgentProfile(agentId)
 
   return (
-    <div className={`${playfair.variable} ${inter.variable} t2-page`}>
+    <div className={`${playfair.variable} ${inter.variable} ${bodoniModa.variable} t2-page`}>
       {/* Inject YTC theme override if this is the YTC demo */}
       {agentId === 'ytc-demo' && (
         <style>{`
@@ -93,6 +102,21 @@ export default async function T2Layout({ children, params }: LayoutProps) {
           .wwt-link:hover { opacity: 0.55; }
         `}</style>
       )}
+      {/* Coast & Compass — locked to Bodoni Moda. Scoped to .t2-page (not :root)
+          so var() resolves against the next/font class on the same element. */}
+      {agentId === 'coast-compass-demo' && (
+        <style>{`
+          .t2-page {
+            --t2-font-serif: var(--font-bodoni, 'Cormorant Garamond'), 'Cormorant Garamond', Georgia, serif;
+          }
+          .t2-page .t2-heading {
+            font-weight: 400;
+            letter-spacing: -0.018em;
+          }
+          .t2-page .t2-heading-lg { font-weight: 400; }
+          .t2-page .t2-ed-num { font-style: italic; }
+        `}</style>
+      )}
       <T2Nav
         agentId={agentId}
         agencyName={agent?.agency_name ?? 'Luxury Travel Co'}
@@ -100,6 +124,7 @@ export default async function T2Layout({ children, params }: LayoutProps) {
         logoUrl={agent?.logo_url ?? undefined}
         logoUrlDark={agent?.logo_url_dark ?? undefined}
         navLinks={agent?.nav_links}
+        tier={agent?.tier ?? null}
       />
       <main>{children}</main>
       <T2Footer
@@ -110,6 +135,7 @@ export default async function T2Layout({ children, params }: LayoutProps) {
         address={agent?.address}
         cstNumber={agent?.cst_number}
         logoUrl={agent?.logo_url ?? undefined}
+        tier={agent?.tier ?? null}
       />
     </div>
   )

@@ -34,7 +34,7 @@ export default async function T4Layout({ children, params }: LayoutProps) {
 
   return (
     <div className={`${cormorant.variable} ${dmSans.variable} t4-page`}>
-      <T4Nav agentId={agentId} agencyName={agencyName} />
+      <T4Nav agentId={agentId} agencyName={agencyName} tier={agent?.tier ?? null} />
       <main>{children}</main>
       <T4Footer
         agentId={agentId}

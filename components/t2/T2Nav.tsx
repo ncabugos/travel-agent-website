@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { filterNavByTier, type Tier } from '@/lib/tier-features'
 
 interface T2NavProps {
   agentId: string
@@ -11,6 +12,9 @@ interface T2NavProps {
   logoUrl?: string
   logoUrlDark?: string
   navLinks?: { label: string; href: string }[]
+  /** Subscription tier. Filters default nav links — villa drops below Custom,
+      experiences drops below Growth. Explicit `navLinks` overrides bypass this. */
+  tier?: Tier | null
 }
 
 const NAV_LINKS = [
@@ -22,12 +26,14 @@ const NAV_LINKS = [
   { label: 'About',          href: '/about' },
 ]
 
-export function T2Nav({ agentId, agencyName, tagline, logoUrl, logoUrlDark, navLinks }: T2NavProps) {
+export function T2Nav({ agentId, agencyName, tagline, logoUrl, logoUrlDark, navLinks, tier }: T2NavProps) {
   const [scrolled, setScrolled]   = useState(false)
   const [menuOpen, setMenuOpen]   = useState(false)
   const [mounted, setMounted]     = useState(false)
   const base = `/t2/${agentId}`
-  const LINKS = navLinks ?? NAV_LINKS
+  // Explicit override wins. Otherwise, filter defaults by tier so Starter
+  // never shows Experiences and only Custom+ shows Private Villas.
+  const LINKS = navLinks ?? filterNavByTier(NAV_LINKS, tier)
 
   useEffect(() => {
     setMounted(true)
