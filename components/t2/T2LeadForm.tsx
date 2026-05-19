@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { T2LeadFormLight } from './T2LeadFormLight'
 
 interface T2LeadFormProps {
   heading?: string
@@ -9,9 +11,18 @@ interface T2LeadFormProps {
 
 export function T2LeadForm({
   heading = 'Plan Your Trip',
-  subheading = 'We know travel inside and out, and we\'re ready to make your dream vacation a reality. Schedule an appointment and we can chat about your future travels.',
+  subheading = 'Tell us where you want to go. We\'ll match you with the right hotels, cruises, and itineraries — and unlock Virtuoso perks on every booking.',
 }: T2LeadFormProps) {
+  // All hooks must be called before any conditional return.
+  const pathname = usePathname()
   const [submitted, setSubmitted] = useState(false)
+
+  // Coast & Compass uses the light variant site-wide. Delegating here means
+  // every page that already renders <T2LeadForm /> inherits the swap with no
+  // call-site changes. Other personas keep the dark default.
+  if (pathname?.startsWith('/t2/coast-compass-demo')) {
+    return <T2LeadFormLight heading={heading} subheading={subheading} />
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()

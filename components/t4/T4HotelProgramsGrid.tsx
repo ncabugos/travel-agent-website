@@ -22,7 +22,7 @@ interface T4HotelProgramsGridProps {
 export function T4HotelProgramsGrid({
   agentId,
   programs,
-  eyebrow = 'The House',
+  eyebrow = 'Preferred Programs',
   heading = 'Our preferred programs.',
   body,
   limit = 4,
@@ -116,10 +116,10 @@ export function T4HotelProgramsGrid({
                   {`No. ${String(i + 1).padStart(2, '0')}`}
                 </div>
 
-                {program.logo_url && (
+                {(program.logo_url_black ?? program.logo_url) && (
                   <div style={{ height: 52, marginBottom: 24 }}>
                     <Image
-                      src={program.logo_url}
+                      src={program.logo_url_black ?? program.logo_url ?? ''}
                       alt={program.name}
                       width={220}
                       height={52}

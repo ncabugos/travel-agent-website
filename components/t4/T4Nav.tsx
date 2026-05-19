@@ -2,17 +2,22 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
+import { filterNavByTier, type Tier } from '@/lib/tier-features'
 
 interface T4NavProps {
   agentId: string
   agencyName: string
   navLinks?: { label: string; href: string }[]
+  /** Subscription tier — filters default nav links. T4 is a Custom-tier
+      template so its defaults already match, but the prop keeps the API
+      consistent with T2Nav/T3Nav. */
+  tier?: Tier | null
 }
 
 const DEFAULT_LINKS = [
-  { label: 'Atelier', href: '/atelier' },
+  { label: 'About',   href: '/atelier' },
   { label: 'Hotels',  href: '/book-hotel' },
-  { label: 'Voyages', href: '/find-cruise' },
+  { label: 'Cruises', href: '/find-cruise' },
   { label: 'Journal', href: '/journal' },
   { label: 'Press',   href: '/press' },
 ]
@@ -21,9 +26,12 @@ const DEFAULT_LINKS = [
  * T4 navigation — thin, centered, editorial. Transparent over hero with
  * white-on-dark copy; fades to solid warm-ivory with espresso copy on scroll.
  */
-export function T4Nav({ agentId, agencyName, navLinks }: T4NavProps) {
+export function T4Nav({ agentId, agencyName, navLinks, tier }: T4NavProps) {
   const base = `/t4/${agentId}`
-  const links = (navLinks && navLinks.length > 0 ? navLinks : DEFAULT_LINKS).map((l) => ({
+  const baseLinks = navLinks && navLinks.length > 0
+    ? navLinks
+    : filterNavByTier(DEFAULT_LINKS, tier)
+  const links = baseLinks.map((l) => ({
     label: l.label,
     href: l.href.startsWith('http') ? l.href : `${base}${l.href.replace(/^\//, '/')}`,
   }))

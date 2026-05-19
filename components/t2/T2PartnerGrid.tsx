@@ -18,14 +18,14 @@ const TABS = [
 
 // ─── Cruise fallback rows (black logos, slugs match find-cruise routes) ───────
 const FALLBACK_CRUISES: FeaturedPartner[] = [
-  { id: 'c1', name: 'Regent Seven Seas',  slug: 'regent-seven-seas', logo_url: '/media/cruises/regent-seven-seas/regent-black-500.jpg',   category: 'cruise', is_preferred: true, sort_order: 1 },
-  { id: 'c2', name: 'Silversea Cruises',  slug: 'silversea',         logo_url: '/assets/supplier logos/jpg/Silversea-Logo.jpg',            category: 'cruise', is_preferred: true, sort_order: 2 },
+  { id: 'c1', name: 'Regent Seven Seas',  slug: 'regent-seven-seas', logo_url: '/assets/supplier logos/black transparent/cruise/regent-black-600.png',   category: 'cruise', is_preferred: true, sort_order: 1 },
+  { id: 'c2', name: 'Silversea Cruises',  slug: 'silversea',         logo_url: '/assets/supplier logos/jpg/Silversea-Logo.png',            category: 'cruise', is_preferred: true, sort_order: 2 },
   { id: 'c3', name: 'Seabourn Cruises',   slug: 'seabourn',          logo_url: '/media/cruises/seabourn/seabourn-black-600.png',            category: 'cruise', is_preferred: true, sort_order: 3 },
-  { id: 'c4', name: 'Cunard',             slug: 'cunard',            logo_url: '/assets/supplier logos/jpg/Cunard-black.jpg',               category: 'cruise', is_preferred: true, sort_order: 4 },
-  { id: 'c5', name: 'Oceania Cruises',    slug: 'oceania',           logo_url: '/media/cruises/oceania/oceania-cruises-logo-black-600.jpg', category: 'cruise', is_preferred: true, sort_order: 5 },
-  { id: 'c6', name: 'Azamara',            slug: 'azamara',           logo_url: '/media/cruises/azamara/azamara-logo-black-600.jpg',         category: 'cruise', is_preferred: true, sort_order: 6 },
+  { id: 'c4', name: 'Cunard',             slug: 'cunard',            logo_url: '/assets/supplier logos/jpg/Cunard-black.png',               category: 'cruise', is_preferred: true, sort_order: 4 },
+  { id: 'c5', name: 'Oceania Cruises',    slug: 'oceania',           logo_url: '/media/cruises/oceania/oceania-cruises-logo-black-600.png', category: 'cruise', is_preferred: true, sort_order: 5 },
+  { id: 'c6', name: 'Azamara',            slug: 'azamara',           logo_url: '/media/cruises/azamara/azamara-logo-black-600.png',         category: 'cruise', is_preferred: true, sort_order: 6 },
   { id: 'c7', name: 'Ponant',             slug: 'ponant',            logo_url: '/media/cruises/ponant/ponant-blue-600.jpg',                 category: 'cruise', is_preferred: true, sort_order: 7 },
-  { id: 'c8', name: 'Holland America',    slug: 'holland-america',   logo_url: '/assets/supplier logos/jpg/Holland-America-black.jpg',      category: 'cruise', is_preferred: true, sort_order: 8 },
+  { id: 'c8', name: 'Holland America',    slug: 'holland-america',   logo_url: '/assets/supplier logos/jpg/Holland-America-black.png',      category: 'cruise', is_preferred: true, sort_order: 8 },
   { id: 'c9', name: 'Viking',             slug: 'viking',            logo_url: '/media/cruises/viking/viking-cruises-black.png',            category: 'cruise', is_preferred: true, sort_order: 9 },
 ]
 
@@ -129,7 +129,7 @@ export function T2PartnerGrid({ partners, agentId }: T2PartnerGridProps) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: isHotelTab ? 72 : 90,
+                height: isHotelTab ? 120 : 130,
                 textDecoration: 'none',
               }}
               className="t2-logo-cell"
@@ -138,13 +138,13 @@ export function T2PartnerGrid({ partners, agentId }: T2PartnerGridProps) {
                 <Image
                   src={partner.logo_url}
                   alt={partner.name}
-                  width={isHotelTab ? 234 : 286}
-                  height={isHotelTab ? 78 : 104}
+                  width={isHotelTab ? 320 : 360}
+                  height={isHotelTab ? 110 : 124}
                   style={{
                     objectFit: 'contain',
                     maxWidth: '100%',
-                    maxHeight: isHotelTab ? 68 : 83,
-                    opacity: 0.55,
+                    maxHeight: isHotelTab ? 100 : 110,
+                    opacity: 0.78,
                     filter: 'grayscale(100%)',
                     transition: 'opacity 0.3s ease, filter 0.3s ease',
                   }}
