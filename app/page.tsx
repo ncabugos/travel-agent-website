@@ -500,15 +500,17 @@ export default function EliteAdvisorHubHomePage() {
                 }}
                 className="eah-demo-card"
               >
-                {/* Thumbnail */}
+                {/* Thumbnail — 2:1 cinematic crop. Source PNGs are 16:10 full-
+                    page screenshots; the 2:1 container forces object-fit:cover
+                    to scale them up and crop the bottom 20% (the lighter
+                    footer / testimonial area), keeping only each demo's hero. */}
                 <div
                   style={{
                     position: 'relative',
                     width: '100%',
-                    aspectRatio: '16 / 10',
+                    aspectRatio: '2 / 1',
                     overflow: 'hidden',
                     background: '#f3f4f6',
-                    borderBottom: '1px solid #f3f4f6',
                   }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
