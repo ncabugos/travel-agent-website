@@ -4,6 +4,11 @@ import { CheckoutButton } from '@/components/stripe/CheckoutButton'
 import { MarketingNav } from '@/components/marketing/MarketingNav'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 import { HeroSlideshow } from '@/components/marketing/HeroSlideshow'
+import { MarketingBrandedWebsite } from '@/components/marketing/MarketingBrandedWebsite'
+import { MarketingSupplierPrograms } from '@/components/marketing/MarketingSupplierPrograms'
+import { MarketingReachSection } from '@/components/marketing/MarketingReachSection'
+import { MarketingCuratedEditorial } from '@/components/marketing/MarketingCuratedEditorial'
+import { MarketingAdvisorPortal } from '@/components/marketing/MarketingAdvisorPortal'
 
 export const metadata = {
   title: 'Elite Advisor Hub — For the Top 1% of Travel Advisors',
@@ -350,6 +355,13 @@ export default function EliteAdvisorHubHomePage() {
           </div>
         </div>
       </section>
+
+      {/* Deep-dive feature sections */}
+      <MarketingBrandedWebsite />
+      <MarketingSupplierPrograms />
+      <MarketingReachSection />
+      <MarketingCuratedEditorial />
+      <MarketingAdvisorPortal />
 
       {/* Pricing */}
       <section id="pricing" style={{
