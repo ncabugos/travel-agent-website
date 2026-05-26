@@ -67,12 +67,26 @@ export function MarketingNav() {
             <Link
               href="/agent-portal/login"
               style={{
-                padding: '8px 20px', backgroundColor: '#111', color: '#fff',
-                borderRadius: '8px', fontSize: '13px', fontWeight: 600,
+                padding: '8px 18px',
+                color: '#111',
+                fontSize: '13px', fontWeight: 600,
                 textDecoration: 'none',
               }}
             >
               Agent Login
+            </Link>
+            <Link
+              href="/agent-portal/register"
+              style={{
+                padding: '8px 20px',
+                background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
+                color: '#fff',
+                borderRadius: '8px', fontSize: '13px', fontWeight: 600,
+                textDecoration: 'none',
+                boxShadow: '0 1px 2px rgba(124,58,237,0.25)',
+              }}
+            >
+              Sign Up Now
             </Link>
           </div>
 
@@ -192,12 +206,29 @@ export function MarketingNav() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
             <Link
+              href="/agent-portal/register"
+              onClick={close}
+              style={{
+                display: 'block', textAlign: 'center',
+                padding: '14px 20px',
+                background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
+                color: '#fff',
+                borderRadius: '10px',
+                fontSize: '15px', fontWeight: 600,
+                textDecoration: 'none',
+                boxShadow: '0 1px 2px rgba(124,58,237,0.25)',
+              }}
+            >
+              Sign Up Now
+            </Link>
+            <Link
               href="/agent-portal/login"
               onClick={close}
               style={{
                 display: 'block', textAlign: 'center',
                 padding: '14px 20px',
-                backgroundColor: '#111', color: '#fff',
+                backgroundColor: '#fff', color: '#111',
+                border: '1px solid rgba(0,0,0,0.12)',
                 borderRadius: '10px',
                 fontSize: '15px', fontWeight: 600,
                 textDecoration: 'none',
