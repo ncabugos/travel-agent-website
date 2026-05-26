@@ -26,7 +26,6 @@ const DEMO_LINKS = [
   { label: 'Coast & Compass Travel', href: '/t2/coast-compass-demo' },
   { label: 'Eden',                   href: '/frontend/demo-agent' },
   { label: 'Casa Solis',             href: '/t4/casa-solis' },
-  { label: 'Wine & Wellness Travel', href: '/t2/wwt-demo' },
   { label: 'Your Travel Center',     href: '/t2/ytc-demo' },
 ]
 

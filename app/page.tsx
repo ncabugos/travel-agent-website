@@ -155,14 +155,6 @@ const DEMOS: DemoCard[] = [
     href: '/t4/casa-solis',
     thumbnail: '/demos/casa_solis.jpg',
   },
-  {
-    slug: 'wine-and-wellness',
-    name: 'Wine & Wellness Travel',
-    kind: 'Custom',
-    tagline: 'A slow-travel custom build — wine-country, wellness retreats, and bespoke villas with parallax storytelling.',
-    href: '/t2/wwt-demo',
-    thumbnail: '/demos/wine_and_wellness.jpg',
-  },
   // ── Agency ──────────────────────────────────────────────────────────────────
   {
     slug: 'ytc',
