@@ -128,6 +128,7 @@ export function T3Nav({ agentId, agencyName, logoUrl, navLinks, phone, email, ti
         }}
       >
         <div
+          className="t3-nav-shell"
           style={{
             maxWidth: 'var(--t3-content-wide)',
             margin: '0 auto',
@@ -334,6 +335,14 @@ export function T3Nav({ agentId, agencyName, logoUrl, navLinks, phone, email, ti
         @media (max-width: 1024px) {
           .t3-desktop-nav { display: none !important; }
           .t3-mobile-toggle { display: inline-flex !important; }
+        }
+        @media (max-width: 768px) {
+          .t3-nav-shell {
+            grid-template-columns: 1fr auto !important;
+            padding: 0 24px !important;
+            gap: 16px !important;
+          }
+          .t3-nav-shell > nav { display: none !important; }
         }
 
         /* ── The Itinerary mobile menu ─────────────────────────────────── */
