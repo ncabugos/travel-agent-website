@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import type { LuxuryHotel } from '@/lib/hotels'
 
 const INITIAL_COUNT = 9
@@ -44,11 +45,11 @@ export function T4HotelGrid({ hotels, programName, base }: Props) {
             >
               <div className="t4-hg-img-wrap">
                 {hotel.cover_image_url ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={hotel.cover_image_url}
                     alt={hotel.name}
-                    loading="lazy"
+                    fill
+                    sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw"
                   />
                 ) : (
                   <div style={{ width: '100%', height: '100%', background: 'var(--t4-bg-alt)' }} />

@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 interface T3PageHeroProps {
   image: string
   imageAlt?: string
@@ -30,17 +32,13 @@ export function T3PageHero({
       }}
     >
       {/* Background image */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={image}
         alt={imageAlt}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-        }}
+        fill
+        priority
+        sizes="100vw"
+        style={{ objectFit: 'cover' }}
       />
 
       {/* Gradient overlay */}
@@ -72,7 +70,7 @@ export function T3PageHero({
       >
         <div style={{ maxWidth: 820 }}>
           <span
-            className="t3-eyebrow"
+            className="t3-eyebrow t3-eyebrow-plain"
             style={{
               color: 'rgba(255,255,255,0.82)',
               marginBottom: 32,
