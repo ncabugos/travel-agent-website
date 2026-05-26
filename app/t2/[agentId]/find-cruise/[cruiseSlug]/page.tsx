@@ -1,7 +1,7 @@
 import { getCruiseLine, getAllCruiseLineSlugs } from '@/lib/cruise-lines'
 import { getSupplierPromo } from '@/lib/supplier-promos'
 import { getBlogPostsBySupplier } from '@/lib/blog'
-import { getCruiseLogo } from '@/lib/media-library'
+import { getCruiseLogo, getCruiseGallery } from '@/lib/media-library'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -33,6 +33,12 @@ export default async function CruiseDetailPage({ params }: PageProps) {
   // whose logo_url_white column is null still get a hero logo when we ship
   // the corresponding asset in public/assets/supplier logos/.../cruise/.
   const heroLogoUrl = cruise.logo_url_white || getCruiseLogo(cruise.slug, 'white')
+  // Prefer DB slider_images; fall back to slug-keyed gallery in media-library
+  // so cruise lines that haven't had their gallery uploaded to the DB still
+  // get a Gallery + promo-banner image when we ship the assets to /public.
+  const gallerySlides = (cruise.slider_images && cruise.slider_images.length > 0)
+    ? cruise.slider_images
+    : getCruiseGallery(cruise.slug)
 
 
   return (
@@ -193,15 +199,15 @@ export default async function CruiseDetailPage({ params }: PageProps) {
             subheading: `Book through Eden for Your World and unlock exclusive Virtuoso benefits on every ${cruise.name} voyage — onboard credits, private receptions, and VIP treatment unavailable anywhere else.`,
             cta_label: 'Plan This Cruise',
             cta_url: `${base}/contact`,
-            image_url: cruise.slider_images?.[0] ?? cruise.hero_image_url ?? undefined,
+            image_url: gallerySlides[0] ?? cruise.hero_image_url ?? undefined,
           }}
           agentId={agentId}
         />
       </section>
 
       {/* ── Gallery ── */}
-      {cruise.slider_images && cruise.slider_images.length > 0 && (
-        <T2HotelGallery images={cruise.slider_images} />
+      {gallerySlides.length > 0 && (
+        <T2HotelGallery images={gallerySlides} />
       )}
 
       {/* ── Ships ── */}

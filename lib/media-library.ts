@@ -146,7 +146,7 @@ export const CRUISE_LOGOS: Record<string, CruiseLogoVariants> = {
   'four_seasons_yacht':    { white: cw('FourSeasons_Yacht-white-600.png'), black: null },
   'four-seasons-yacht':    { white: cw('FourSeasons_Yacht-white-600.png'), black: null },
   'windstar':              { white: cw('windstarCruises-white-600.png'),  black: cb('windstarCruises-black-600.png') },
-  'explora-journeys':      { white: cw('exploreJourneys-white-600.png'),  black: cb('exploraJourneys-black-600.png') },
+  'explora-journeys':      { white: cw('explora-white-600.png'),          black: cb('explora-black-600.png') },
   'ritz-carlton-yacht':    { white: cw('RitzCarlton_Yacht-white-600.png'), black: cb('ritzCarlton_yacht-black-600.png') },
   'aman-at-sea':           { white: cw('aman_at_sea-white-600.png'),       black: cb('aman_at_sea-black-600.png') },
   'orient-express-sailing-yachts': { white: cw('orient_express_sailing-white-600.png'), black: cb('orient_express_sailing-black-600.png') },
@@ -160,7 +160,12 @@ export function getCruiseLogo(slug: string, variant: 'white' | 'black'): string 
 // ─── Cruise Galleries ─────────────────────────────────────────────────────────
 
 export const CRUISE_GALLERY: Record<string, string[]> = {
-  // Will be populated as cruise assets are imported
+  'explora-journeys': [
+    m('/media/cruises/explora-journeys/An-Invitation-to-Explora-Med.webp'),
+    m('/media/cruises/explora-journeys/Explora_Conservatory_Pool_Drone_347_MASTER-1.webp'),
+    m('/media/cruises/explora-journeys/EXPLORA II - Mediterranean 3.jpg'),
+    m('/media/cruises/explora-journeys/EXPLORA II - Mediterranean 4.jpg'),
+  ],
 }
 
 export function getCruiseGallery(slug: string): string[] {
