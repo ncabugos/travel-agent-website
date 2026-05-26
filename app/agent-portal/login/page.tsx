@@ -41,7 +41,7 @@ export default function AgentLoginPage() {
   return (
     <AuthLayout
       headline="Manage Your Travel Practice"
-      subline="Sign in to your EliteAdvisorHub website — update content, manage inquiries, and grow your business."
+      subline="Sign in to your Elite Advisor Hub website — update content, manage inquiries, and grow your business."
     >
       <div style={{ textAlign: 'center', marginBottom: '28px' }}>
         <h2 style={{ margin: 0, fontSize: '30px', fontWeight: 700, color: '#111', letterSpacing: '-0.02em' }}>

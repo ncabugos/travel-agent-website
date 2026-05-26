@@ -6,6 +6,7 @@
  * /agent-portal/login, /agent-portal/register.
  */
 import { ReactNode } from 'react'
+import Link from 'next/link'
 import { DotGlobe } from './DotGlobe'
 
 interface Props {
@@ -61,12 +62,14 @@ export function AuthLayout({ headline, subline, children }: Props) {
             pointerEvents: 'none', // let pointermove pass through to brand panel
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-white.png"
-            alt="EliteAdvisorHub"
-            style={{ height: '36px', width: 'auto', display: 'block', alignSelf: 'flex-start' }}
-          />
+          <Link href="/" style={{ alignSelf: 'flex-start', pointerEvents: 'auto' }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-white.png"
+              alt="Elite Advisor Hub"
+              style={{ height: '36px', width: 'auto', display: 'block' }}
+            />
+          </Link>
 
           <div style={{ maxWidth: '560px' }}>
             <h1 style={{
@@ -98,7 +101,7 @@ export function AuthLayout({ headline, subline, children }: Props) {
             color: 'rgba(255,255,255,0.75)',
             pointerEvents: 'auto', // re-enable for the link
           }}>
-            <span>© {new Date().getFullYear()} EliteAdvisorHub</span>
+            <span>© {new Date().getFullYear()} Elite Advisor Hub</span>
             <a href="/legal/privacy" style={{ color: 'inherit', textDecoration: 'none' }}>
               Privacy Policy
             </a>

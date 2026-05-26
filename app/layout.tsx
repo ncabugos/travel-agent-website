@@ -21,24 +21,24 @@ const SITE_URL =
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "EliteAdvisorHub — Websites for Elite Travel Advisors",
-    template: "%s · EliteAdvisorHub",
+    default: "Elite Advisor Hub — Websites for Elite Travel Advisors",
+    template: "%s · Elite Advisor Hub",
   },
   description:
     "The premium website platform for luxury travel advisors. Stunning templates, curated editorial content, supplier integrations, and zero tech burden.",
-  applicationName: "EliteAdvisorHub",
-  authors: [{ name: "EliteAdvisorHub" }],
+  applicationName: "Elite Advisor Hub",
+  authors: [{ name: "Elite Advisor Hub" }],
   keywords: [
     "travel advisor websites",
     "luxury travel marketing",
     "Virtuoso advisor website",
     "travel agency website platform",
-    "EliteAdvisorHub",
+    "Elite Advisor Hub",
   ],
   openGraph: {
     type: "website",
-    siteName: "EliteAdvisorHub",
-    title: "EliteAdvisorHub — Websites for Elite Travel Advisors",
+    siteName: "Elite Advisor Hub",
+    title: "Elite Advisor Hub — Websites for Elite Travel Advisors",
     description:
       "Stunning branded websites, curated editorial content, and supplier integrations for luxury travel advisors — with zero tech burden.",
     url: SITE_URL,
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "EliteAdvisorHub — Websites for Elite Travel Advisors",
+    title: "Elite Advisor Hub — Websites for Elite Travel Advisors",
     description:
       "The premium website platform for luxury travel advisors. Zero tech burden.",
   },

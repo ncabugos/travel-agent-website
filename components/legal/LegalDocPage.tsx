@@ -35,7 +35,7 @@ export async function LegalDocPage({ file, pageTitle }: LegalDocPageProps) {
             textDecoration: 'none',
           }}
         >
-          ← EliteAdvisorHub
+          ← Elite Advisor Hub
         </Link>
 
         <h1

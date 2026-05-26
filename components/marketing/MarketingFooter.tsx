@@ -70,7 +70,7 @@ export function MarketingFooter() {
             <Link href="/" style={{ display: 'inline-block', marginBottom: 12, textDecoration: 'none' }}>
               <Image
                 src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
-                alt="EliteAdvisorHub"
+                alt="Elite Advisor Hub"
                 width={800}
                 height={134}
                 style={{ objectFit: 'contain', height: '28px', width: 'auto' }}

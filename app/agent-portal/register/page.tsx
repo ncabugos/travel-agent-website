@@ -48,7 +48,7 @@ export default function AgentRegisterPage() {
   return (
     <AuthLayout
       headline="Launch Your Travel Practice Online"
-      subline="Create your EliteAdvisorHub account and get a polished website built for independent travel advisors."
+      subline="Create your Elite Advisor Hub account and get a polished website built for independent travel advisors."
     >
       <div style={{ textAlign: 'center', marginBottom: '28px' }}>
         <h2 style={{ margin: 0, fontSize: '30px', fontWeight: 700, color: '#111', letterSpacing: '-0.02em' }}>

@@ -6,7 +6,7 @@ import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 import { HeroSlideshow } from '@/components/marketing/HeroSlideshow'
 
 export const metadata = {
-  title: 'EliteAdvisorHub — For the Top 1% of Travel Advisors',
+  title: 'Elite Advisor Hub — For the Top 1% of Travel Advisors',
   description:
     'Infrastructure for advisors working at elite advisor standards — maintained hotel programs, a weekly editorial pipeline, and templates built for a $25,000 booking, not a $250 one.',
 }
@@ -474,7 +474,7 @@ export default function EliteAdvisorHubHomePage() {
             textAlign: 'center', fontSize: '16px', color: '#6b7280',
             margin: '0 0 60px', maxWidth: '580px', marginInline: 'auto',
           }}>
-            Seven live sites on EliteAdvisorHub, organized by tier — two Starter templates,
+            Seven live sites on Elite Advisor Hub, organized by tier — two Starter templates,
             one Growth build, three Custom builds, and one Agency example. Each is live and
             available to explore.
           </p>

@@ -49,7 +49,7 @@ export function MarketingNav() {
           <Link href="/" onClick={close} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
             <Image
               src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
-              alt="EliteAdvisorHub"
+              alt="Elite Advisor Hub"
               width={800}
               height={134}
               style={{ objectFit: 'contain', height: '32px', width: 'auto' }}

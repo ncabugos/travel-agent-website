@@ -41,7 +41,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <DashboardShell>
       <Sidebar
-        brand="EliteAdvisorHub"
+        brand="Elite Advisor Hub"
         brandSub="Admin Console"
         brandLogoSrc="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
         items={navItems}
