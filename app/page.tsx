@@ -150,7 +150,7 @@ const DEMOS: DemoCard[] = [
     kind: 'Custom',
     tagline: 'An editorial custom build for a boutique advisor, designed from scratch.',
     href: '/frontend/demo-agent',
-    thumbnail: '/demos/eden.png',
+    thumbnail: '/demos/eden-thumb.jpg',
   },
   {
     slug: 'casa-solis',
