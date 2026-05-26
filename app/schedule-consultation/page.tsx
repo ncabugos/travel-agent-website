@@ -3,7 +3,7 @@ import { ConsultationForm } from '@/components/marketing/ConsultationForm'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 
 export const metadata = {
-  title: 'Schedule a Consultation — EliteAdvisorHub',
+  title: 'Schedule a Consultation — Elite Advisor Hub',
   description:
     'Talk to our team about a custom-designed advisor site or multi-advisor agency build.',
 }
@@ -82,7 +82,7 @@ export default async function ScheduleConsultationPage({ searchParams }: PagePro
               </span>
             </div>
             <span style={{ fontSize: '16px', fontWeight: 700, letterSpacing: '-0.02em' }}>
-              EliteAdvisorHub
+              Elite Advisor Hub
             </span>
           </Link>
           <Link

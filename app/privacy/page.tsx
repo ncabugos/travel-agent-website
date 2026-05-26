@@ -4,7 +4,7 @@ import { LegalDocPage } from '@/components/legal/LegalDocPage'
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description:
-    'How Elite Advisor Hub, LLC collects, uses, and protects information about visitors and customers of EliteAdvisorHub.',
+    'How Elite Advisor Hub, LLC collects, uses, and protects information about visitors and customers of Elite Advisor Hub.',
 }
 
 export default function PrivacyPage() {

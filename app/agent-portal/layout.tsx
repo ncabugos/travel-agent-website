@@ -37,7 +37,7 @@ export default function AgentPortalLayout({ children }: { children: React.ReactN
   return (
     <DashboardShell>
       <Sidebar
-        brand="EliteAdvisorHub"
+        brand="Elite Advisor Hub"
         brandSub="Advisor Portal"
         items={navItems}
         currentPath={pathname}
