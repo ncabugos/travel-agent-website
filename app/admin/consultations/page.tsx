@@ -7,6 +7,7 @@ type ConsultationRow = {
   id: string
   created_at: string
   tier: string | null
+  source: string | null
   first_name: string
   last_name: string
   email: string
@@ -22,7 +23,7 @@ export default async function AdminConsultationsPage() {
   const { data, error } = await supabase
     .from('consultation_requests')
     .select(
-      'id, created_at, tier, first_name, last_name, email, phone, agency_name, num_advisors, timeline, status',
+      'id, created_at, tier, source, first_name, last_name, email, phone, agency_name, num_advisors, timeline, status',
     )
     .order('created_at', { ascending: false })
 
@@ -35,7 +36,7 @@ export default async function AdminConsultationsPage() {
           Consultation Requests
         </h1>
         <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#6b7280' }}>
-          Leads from the Custom and Agency tier consultation form.
+          Leads from the Custom/Agency consultation form and the Founding Advisor beta waitlist.
         </p>
       </div>
 
@@ -51,6 +52,7 @@ export default async function AdminConsultationsPage() {
             <tr style={{ borderBottom: '1px solid #f3f4f6', background: '#f9fafb' }}>
               <th style={th}>Name</th>
               <th style={th}>Agency / Contact</th>
+              <th style={th}>Source</th>
               <th style={th}>Tier</th>
               <th style={th}>Advisors</th>
               <th style={th}>Timeline</th>
@@ -62,7 +64,7 @@ export default async function AdminConsultationsPage() {
           <tbody>
             {rows.length === 0 && (
               <tr>
-                <td colSpan={8} style={{ textAlign: 'center', padding: '48px', color: '#9ca3af', fontSize: '14px' }}>
+                <td colSpan={9} style={{ textAlign: 'center', padding: '48px', color: '#9ca3af', fontSize: '14px' }}>
                   No consultation requests yet.
                 </td>
               </tr>
@@ -77,6 +79,11 @@ export default async function AdminConsultationsPage() {
                 <td style={td}>
                   <div style={{ fontSize: '13px', color: '#374151' }}>{r.agency_name ?? '—'}</div>
                   <div style={{ fontSize: '12px', color: '#6b7280' }}>{r.email}</div>
+                </td>
+                <td style={td}>
+                  <span style={sourceChip(r.source)}>
+                    {r.source === 'beta-waitlist' ? 'Beta waitlist' : 'Consultation'}
+                  </span>
                 </td>
                 <td style={td}>
                   <span style={tierChip(r.tier)}>{r.tier ?? '—'}</span>
@@ -128,6 +135,13 @@ const chip = (bg: string, color: string): React.CSSProperties => ({
   color,
   textTransform: 'capitalize',
 })
+
+function sourceChip(source: string | null): React.CSSProperties {
+  switch (source) {
+    case 'beta-waitlist': return chip('#fef9c3', '#854d0e')
+    default:              return chip('#e5e7eb', '#374151')
+  }
+}
 
 function tierChip(tier: string | null): React.CSSProperties {
   switch (tier) {
