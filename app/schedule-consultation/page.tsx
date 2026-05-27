@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ConsultationForm } from '@/components/marketing/ConsultationForm'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
@@ -54,43 +55,33 @@ export default async function ScheduleConsultationPage({ searchParams }: PagePro
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
               textDecoration: 'none',
               color: '#111',
             }}
           >
-            <div
-              style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '8px',
-                background: 'linear-gradient(135deg, #111 0%, #374151 100%)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+            <Image
+              src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
+              alt="Elite Advisor Hub"
+              width={800}
+              height={134}
+              priority
+              style={{ height: '26px', width: 'auto', display: 'block' }}
+            />
+          </Link>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+            <Link
+              href="/?cycle=annual#pricing"
+              style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}
             >
-              <span
-                style={{
-                  color: '#fff',
-                  fontSize: '16px',
-                  fontWeight: 700,
-                  letterSpacing: '-0.02em',
-                }}
-              >
-                E
-              </span>
-            </div>
-            <span style={{ fontSize: '16px', fontWeight: 700, letterSpacing: '-0.02em' }}>
-              Elite Advisor Hub
-            </span>
-          </Link>
-          <Link
-            href="/#pricing"
-            style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}
-          >
-            ← Back to pricing
-          </Link>
+              View annual plans →
+            </Link>
+            <Link
+              href="/#pricing"
+              style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}
+            >
+              ← Back to pricing
+            </Link>
+          </div>
         </div>
       </nav>
 

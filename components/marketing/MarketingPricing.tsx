@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { CheckoutButton } from '@/components/stripe/CheckoutButton'
 
@@ -93,7 +93,7 @@ const PRICING_TIERS: PricingTier[] = [
       'Bespoke landing pages',
       'Dedicated design consultation',
     ],
-    cta: 'consultation',
+    cta: 'checkout',
   },
   {
     name: 'Agency',
@@ -124,6 +124,17 @@ const usd = (n: number) =>
 
 export function MarketingPricing() {
   const [cycle, setCycle] = useState<BillingCycle>('monthly')
+
+  // Deep-linkable: visit /?cycle=annual#pricing (e.g. from the consultation
+  // page) and the Annual toggle is pre-selected. Read after mount to avoid
+  // needing a Suspense boundary; the initial render is monthly, then we
+  // flip to annual if the query param says so. Setting state inside a one-
+  // shot effect runs before the user can see flicker on a typical paint.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('cycle') === 'annual') setCycle('annual')
+  }, [])
 
   return (
     <section
@@ -405,17 +416,17 @@ function PricingCard({ plan, cycle }: PricingCardProps) {
 }
 
 // ── CTA ──────────────────────────────────────────────────────────────────────
-// Self-serve checkout tiers (Starter, Growth) → Stripe checkout on both cycles.
-// The CheckoutButton sends billingCycle to /api/stripe/checkout, which picks
-// the right recurring price ID from TIER_PRICES[tier].monthly | .annual.
-// Custom + Agency always route to /schedule-consultation regardless of cycle.
+// Self-serve checkout tiers (Starter, Growth, Custom) → Stripe checkout on
+// both cycles. The CheckoutButton sends billingCycle to /api/stripe/checkout,
+// which picks the right recurring price ID from TIER_PRICES[tier].monthly | .annual.
+// Agency stays /schedule-consultation regardless of cycle (custom-priced per seat).
 
 function PricingCta({ plan, cycle }: PricingCardProps) {
-  // Stripe checkout path — Starter + Growth on either cycle.
+  // Stripe checkout path — Starter, Growth, Custom on either cycle.
   if (plan.cta === 'checkout') {
     return (
       <CheckoutButton
-        tier={plan.tier as 'starter' | 'growth'}
+        tier={plan.tier as 'starter' | 'growth' | 'custom'}
         popular={plan.popular}
         billingCycle={cycle}
       >
@@ -424,7 +435,7 @@ function PricingCta({ plan, cycle }: PricingCardProps) {
     )
   }
 
-  // Consultation route for Custom + Agency on either cycle.
+  // Consultation route for Agency on either cycle.
   const href = `/schedule-consultation?tier=${plan.tier}${cycle === 'annual' ? '&billing=annual' : ''}`
   const ctaLabel = 'Schedule a Consultation'
 
