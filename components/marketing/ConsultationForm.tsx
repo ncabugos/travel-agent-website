@@ -6,8 +6,8 @@ import {
   type ConsultationFormState,
 } from '@/lib/actions/consultation'
 
-const serif = 'var(--font-serif)'
-const sans = 'var(--font-sans)'
+const serif = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+const sans = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
 
 const TIERS = [
   { value: 'starter', label: 'Starter — $79/mo' },
@@ -76,7 +76,7 @@ export function ConsultationForm({
         style={{
           textAlign: 'center',
           padding: '80px 40px',
-          border: '1px solid var(--divider)',
+          border: '1px solid #e5e7eb',
           background: '#fff',
         }}
       >
@@ -84,7 +84,7 @@ export function ConsultationForm({
           style={{
             fontFamily: serif,
             fontSize: '40px',
-            color: 'var(--gold)',
+            color: '#7c3aed',
             marginBottom: '24px',
           }}
         >
@@ -94,8 +94,9 @@ export function ConsultationForm({
           style={{
             fontFamily: serif,
             fontSize: '28px',
-            fontWeight: 300,
-            color: 'var(--charcoal)',
+            fontWeight: 700,
+            letterSpacing: '-0.02em',
+            color: '#111',
             marginBottom: '16px',
           }}
         >
@@ -105,7 +106,7 @@ export function ConsultationForm({
           style={{
             fontFamily: sans,
             fontSize: '15px',
-            color: 'var(--warm-gray)',
+            color: '#6b7280',
             lineHeight: '1.8',
             maxWidth: '440px',
             margin: '0 auto',
@@ -122,7 +123,7 @@ export function ConsultationForm({
   const showCustom = tier === 'custom'
 
   return (
-    <form action={formAction} style={{ background: '#fff', padding: '40px', border: '1px solid var(--divider)' }}>
+    <form action={formAction} style={{ background: '#fff', padding: '40px', border: '1px solid #e5e7eb' }}>
       {state.error && (
         <div
           style={{
@@ -158,13 +159,13 @@ export function ConsultationForm({
               alignItems: 'center',
               gap: '10px',
               padding: '14px 16px',
-              border: tier === t.value ? '1px solid var(--gold)' : '1px solid var(--divider)',
-              background: tier === t.value ? 'rgba(180, 154, 90, 0.06)' : '#fff',
+              border: tier === t.value ? '1px solid #7c3aed' : '1px solid #e5e7eb',
+              background: tier === t.value ? 'rgba(124, 58, 237, 0.06)' : '#fff',
               cursor: 'pointer',
               transition: 'border-color 0.2s ease, background 0.2s ease',
               fontFamily: sans,
               fontSize: '14px',
-              color: 'var(--charcoal)',
+              color: '#111',
             }}
           >
             <input
@@ -173,7 +174,7 @@ export function ConsultationForm({
               value={t.value}
               checked={tier === t.value}
               onChange={() => setTier(t.value)}
-              style={{ accentColor: 'var(--gold)' }}
+              style={{ accentColor: '#7c3aed' }}
             />
             {t.label}
           </label>
@@ -248,7 +249,7 @@ export function ConsultationForm({
                       gap: '8px',
                       fontFamily: sans,
                       fontSize: '13px',
-                      color: 'var(--charcoal)',
+                      color: '#111',
                       cursor: 'pointer',
                     }}
                   >
@@ -256,7 +257,7 @@ export function ConsultationForm({
                       type="checkbox"
                       name="specialties"
                       value={s}
-                      style={{ accentColor: 'var(--gold)' }}
+                      style={{ accentColor: '#7c3aed' }}
                     />
                     {s}
                   </label>
@@ -341,15 +342,19 @@ export function ConsultationForm({
           disabled={isPending}
           style={{
             fontFamily: sans,
-            fontSize: '10px',
-            letterSpacing: '0.3em',
-            textTransform: 'uppercase',
-            color: isPending ? 'var(--warm-gray)' : 'var(--charcoal)',
-            background: isPending ? 'var(--divider)' : 'var(--gold)',
+            fontSize: '13px',
+            fontWeight: 600,
+            letterSpacing: '0.04em',
+            color: '#fff',
+            background: isPending
+              ? 'linear-gradient(135deg, #a78bfa, #c4b5fd)'
+              : 'linear-gradient(135deg, #7c3aed, #a78bfa)',
             border: 'none',
-            padding: '18px 48px',
+            borderRadius: '10px',
+            padding: '14px 32px',
             cursor: isPending ? 'not-allowed' : 'pointer',
-            transition: 'background 0.3s ease',
+            boxShadow: '0 1px 2px rgba(124,58,237,0.25)',
+            transition: 'background 0.3s ease, transform 0.15s ease',
           }}
         >
           {isPending ? 'Sending…' : 'Schedule a Consultation'}
@@ -403,10 +408,10 @@ function SectionLabel({
         fontSize: '10px',
         letterSpacing: '0.3em',
         textTransform: 'uppercase',
-        color: 'var(--gold)',
+        color: '#7c3aed',
         marginBottom: '20px',
         paddingBottom: '12px',
-        borderBottom: '1px solid var(--divider)',
+        borderBottom: '1px solid #e5e7eb',
         ...style,
       }}
     >
@@ -423,7 +428,7 @@ function SectionSubLabel({ children }: { children: React.ReactNode }) {
         fontSize: '11px',
         letterSpacing: '0.2em',
         textTransform: 'uppercase',
-        color: 'var(--warm-gray)',
+        color: '#6b7280',
         marginBottom: '12px',
         marginTop: '8px',
       }}
@@ -439,7 +444,7 @@ const labelStyle: React.CSSProperties = {
   fontSize: '9px',
   letterSpacing: '0.25em',
   textTransform: 'uppercase',
-  color: 'var(--warm-gray)',
+  color: '#6b7280',
   marginBottom: '8px',
 }
 
@@ -448,10 +453,10 @@ const inputStyle: React.CSSProperties = {
   width: '100%',
   fontFamily: sans,
   fontSize: '14px',
-  color: 'var(--charcoal)',
+  color: '#111',
   background: 'transparent',
   border: 'none',
-  borderBottom: '1px solid var(--divider)',
+  borderBottom: '1px solid #e5e7eb',
   padding: '10px 0',
   outline: 'none',
   transition: 'border-color 0.2s ease',
@@ -477,12 +482,12 @@ function Field({
         name={name}
         type={type}
         placeholder={placeholder}
-        style={{ ...inputStyle, borderColor: error ? '#C0392B' : 'var(--divider)' }}
+        style={{ ...inputStyle, borderColor: error ? '#C0392B' : '#e5e7eb' }}
         onFocus={(e) => {
-          e.target.style.borderColor = 'var(--gold)'
+          e.target.style.borderColor = '#7c3aed'
         }}
         onBlur={(e) => {
-          e.target.style.borderColor = error ? '#C0392B' : 'var(--divider)'
+          e.target.style.borderColor = error ? '#C0392B' : '#e5e7eb'
         }}
       />
       {error && (
@@ -521,8 +526,8 @@ function SelectField({
           cursor: 'pointer',
           paddingRight: '20px',
         }}
-        onFocus={(e) => (e.target.style.borderColor = 'var(--gold)')}
-        onBlur={(e) => (e.target.style.borderColor = 'var(--divider)')}
+        onFocus={(e) => (e.target.style.borderColor = '#7c3aed')}
+        onBlur={(e) => (e.target.style.borderColor = '#e5e7eb')}
         defaultValue=""
       >
         {options.map((opt, i) => (
@@ -552,8 +557,8 @@ function TextAreaField({
         placeholder={placeholder}
         rows={4}
         style={{ ...inputStyle, resize: 'vertical', minHeight: '96px' }}
-        onFocus={(e) => (e.target.style.borderColor = 'var(--gold)')}
-        onBlur={(e) => (e.target.style.borderColor = 'var(--divider)')}
+        onFocus={(e) => (e.target.style.borderColor = '#7c3aed')}
+        onBlur={(e) => (e.target.style.borderColor = '#e5e7eb')}
       />
     </div>
   )
@@ -573,7 +578,7 @@ function YesNoField({ label, name }: { label: string; name: string }) {
               gap: '6px',
               fontFamily: sans,
               fontSize: '13px',
-              color: 'var(--charcoal)',
+              color: '#111',
               cursor: 'pointer',
               textTransform: 'capitalize',
             }}
@@ -582,7 +587,7 @@ function YesNoField({ label, name }: { label: string; name: string }) {
               type="radio"
               name={name}
               value={v}
-              style={{ accentColor: 'var(--gold)' }}
+              style={{ accentColor: '#7c3aed' }}
             />
             {v}
           </label>

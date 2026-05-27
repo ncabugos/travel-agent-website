@@ -26,9 +26,9 @@ export default async function ScheduleConsultationPage({ searchParams }: PagePro
     <div
       style={{
         minHeight: '100vh',
-        background: 'var(--cream, #FAFAF5)',
-        color: 'var(--charcoal, #1A1715)',
-        fontFamily: 'var(--font-sans)',
+        background: '#fafafa',
+        color: '#111',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
       }}
     >
       {/* Lightweight header — matches marketing homepage */}
@@ -89,11 +89,11 @@ export default async function ScheduleConsultationPage({ searchParams }: PagePro
         <header style={{ textAlign: 'center', marginBottom: '56px' }}>
           <div
             style={{
-              fontFamily: 'var(--font-sans)',
+              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
               fontSize: '10px',
               letterSpacing: '0.3em',
               textTransform: 'uppercase',
-              color: 'var(--gold, #B49A5A)',
+              color: '#7c3aed',
               marginBottom: '20px',
             }}
           >
@@ -101,23 +101,23 @@ export default async function ScheduleConsultationPage({ searchParams }: PagePro
           </div>
           <h1
             style={{
-              fontFamily: 'var(--font-serif)',
+              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
               fontSize: 'clamp(36px, 5vw, 52px)',
-              fontWeight: 300,
-              letterSpacing: '-0.01em',
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
               lineHeight: 1.15,
               margin: '0 0 20px',
-              color: 'var(--charcoal, #1A1715)',
+              color: '#111',
             }}
           >
             Let&apos;s talk about your site.
           </h1>
           <p
             style={{
-              fontFamily: 'var(--font-sans)',
+              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
               fontSize: '16px',
               lineHeight: 1.7,
-              color: 'var(--warm-gray, #8A8279)',
+              color: '#6b7280',
               maxWidth: '560px',
               margin: '0 auto',
             }}
