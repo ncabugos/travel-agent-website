@@ -70,6 +70,23 @@ export async function submitBetaWaitlist(
       }
     }
 
+    // Notify the operator. The DB insert already succeeded, so an email
+    // failure should not surface as a form error to the visitor — we just
+    // log it and return success. The row is still visible in
+    // /admin/consultations regardless.
+    try {
+      const { sendBetaWaitlistNotification } = await import('@/lib/email')
+      await sendBetaWaitlistNotification({
+        firstName,
+        lastName,
+        email,
+        businessName,
+        websiteUrl: websiteUrl || null,
+      })
+    } catch (emailErr) {
+      console.error('[beta-waitlist] admin notification email failed', emailErr)
+    }
+
     return { success: true }
   } catch (e) {
     console.error('[beta-waitlist] unexpected error', e)
