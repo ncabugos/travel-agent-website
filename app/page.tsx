@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Globe, FileText, Building2, Paintbrush, Lock, TrendingUp } from 'lucide-react'
-import { CheckoutButton } from '@/components/stripe/CheckoutButton'
+import { MarketingPricing } from '@/components/marketing/MarketingPricing'
 import { MarketingNav } from '@/components/marketing/MarketingNav'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 import { HeroSlideshow } from '@/components/marketing/HeroSlideshow'
@@ -24,95 +24,6 @@ interface DemoCard {
   href: string
   thumbnail: string
 }
-
-interface PricingTier {
-  name: string
-  tier: 'starter' | 'growth' | 'custom' | 'agency'
-  price: string
-  setup: string | null
-  priceMode: 'money' | 'quote' | 'from'
-  popular: boolean
-  blurb: string
-  features: string[]
-  cta: 'checkout' | 'consultation'
-}
-
-const PRICING_TIERS: PricingTier[] = [
-  {
-    name: 'Starter',
-    tier: 'starter',
-    price: '$89',
-    setup: '$499',
-    priceMode: 'money',
-    popular: false,
-    blurb: 'A foothold on the platform. Curated supplier programs, your custom domain, the journal pipeline, and a portal that will scale with you. For advisors building toward Growth.',
-    features: [
-      'Advisor website with custom domain',
-      'Curated editorial & journal pipeline (1 post/month)',
-      'Advisor portal access',
-      'Hotel programs — Aman, Four Seasons, Belmond, and more',
-      'Preferred cruise partners overview',
-      'Email support',
-    ],
-    cta: 'checkout',
-  },
-  {
-    name: 'Growth',
-    tier: 'growth',
-    price: '$179',
-    setup: '$1,499',
-    priceMode: 'money',
-    popular: true,
-    blurb: 'For advisors with an established book — a searchable hotel directory of 1,795+ properties, cruise partners, an Instagram feed, and a refined editorial template.',
-    features: [
-      'Everything in Starter',
-      'Editorial template with curated typography',
-      'Searchable hotel directory (1,795+ properties)',
-      'Searchable cruise directory',
-      'Experiences directory',
-      'Instagram feed integration',
-      'Priority support',
-    ],
-    cta: 'checkout',
-  },
-  {
-    name: 'Custom',
-    tier: 'custom',
-    price: '$349',
-    setup: '$2,999',
-    priceMode: 'money',
-    popular: false,
-    blurb: "For advisors whose brand already exists in their clients' minds. We align the platform to it — typography, palette, premium modules, the bespoke landing pages your referrals expect.",
-    features: [
-      'Everything in Growth',
-      'Any template in our library',
-      'Villa catalog access',
-      'Custom-branded topic requests (2 posts/week)',
-      'Bespoke landing pages',
-      'Dedicated design consultation',
-    ],
-    cta: 'consultation',
-  },
-  {
-    name: 'Agency',
-    tier: 'agency',
-    price: '$899',
-    setup: 'from $4,999',
-    priceMode: 'from',
-    popular: false,
-    blurb: 'For boutique agencies managing multiple advisors under one brand — individual profiles, unified billing, shared content library, co-authored editorial, and lead routing built for practices that have outgrown a single site.',
-    features: [
-      'Everything in Custom',
-      'Individual advisor profiles under one brand',
-      'Agency-wide lead routing',
-      'Unified billing',
-      'Co-authored editorial (2 posts/week per advisor)',
-      'Shared content library',
-      'Team onboarding',
-    ],
-    cta: 'consultation',
-  },
-]
 
 // Demos are grouped by tier (Starter → Growth → Custom → Agency) so they
 // read in the same order as the pricing tiers above.
@@ -356,112 +267,7 @@ export default function EliteAdvisorHubHomePage() {
       <MarketingAdvisorPortal />
 
       {/* Pricing */}
-      <section id="pricing" style={{
-        padding: '100px 24px', backgroundColor: '#fafafa',
-      }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-          <h2 style={{
-            fontSize: '36px', fontWeight: 700, textAlign: 'center',
-            letterSpacing: '-0.02em', margin: '0 0 12px',
-          }}>
-            Four tiers.
-          </h2>
-          <p style={{
-            textAlign: 'center', fontSize: '16px', color: '#6b7280',
-            margin: '0 0 60px',
-          }}>
-            Every one of them assumes the advisor is the asset. The platform is the surface.
-          </p>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }} className="eah-pricing-grid">
-            {PRICING_TIERS.map((plan) => (
-              <div
-                key={plan.name}
-                className={plan.popular ? 'eah-pricing-card eah-pricing-popular' : 'eah-pricing-card'}
-                style={{
-                  padding: '36px 28px',
-                  borderRadius: '16px',
-                  backgroundColor: '#fff',
-                  border: plan.popular ? '2px solid #7c3aed' : '1px solid #e5e7eb',
-                  position: 'relative',
-                  boxShadow: plan.popular ? '0 8px 40px rgba(124,58,237,0.14)' : 'none',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  transition: 'transform 0.25s, box-shadow 0.25s',
-                }}>
-                {plan.popular && (
-                  <div style={{
-                    position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)',
-                    backgroundColor: '#7c3aed',
-                    color: '#fff', fontSize: '11px', fontWeight: 600,
-                    padding: '4px 16px', borderRadius: '20px', textTransform: 'uppercase',
-                    letterSpacing: '0.05em', whiteSpace: 'nowrap',
-                  }}>
-                    Most Popular
-                  </div>
-                )}
-                <h3 style={{ margin: '0 0 8px', fontSize: '20px', fontWeight: 600 }}>{plan.name}</h3>
-                <div style={{ marginBottom: '8px' }}>
-                  {plan.priceMode === 'money' ? (
-                    <>
-                      <span style={{ fontSize: '36px', fontWeight: 800, letterSpacing: '-0.03em' }}>{plan.price}</span>
-                      <span style={{ fontSize: '14px', color: '#6b7280' }}>/month</span>
-                    </>
-                  ) : plan.priceMode === 'from' ? (
-                    <span style={{ fontSize: '26px', fontWeight: 700, letterSpacing: '-0.02em' }}>from {plan.price}</span>
-                  ) : (
-                    <span style={{ fontSize: '18px', fontWeight: 700, letterSpacing: '-0.01em', color: '#111' }}>
-                      {plan.price}
-                    </span>
-                  )}
-                </div>
-                <p style={{ fontSize: '13px', color: '#9ca3af', margin: '0 0 24px', minHeight: '20px' }}>
-                  {plan.setup ? `+ ${plan.setup} one-time setup` : ' '}
-                </p>
-
-                <p style={{ fontSize: '13px', color: '#6b7280', lineHeight: 1.55, margin: '0 0 20px' }}>
-                  {plan.blurb}
-                </p>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '28px', flex: 1 }}>
-                  {plan.features.map((f) => (
-                    <div key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '13px', color: '#374151', lineHeight: 1.45 }}>
-                      <span style={{ color: '#8b5cf6', fontWeight: 700, flexShrink: 0, marginTop: '1px' }}>✓</span> {f}
-                    </div>
-                  ))}
-                </div>
-
-                {plan.cta === 'checkout' ? (
-                  <CheckoutButton tier={plan.tier as 'starter' | 'growth'} popular={plan.popular}>
-                    Begin Setup
-                  </CheckoutButton>
-                ) : (
-                  <Link
-                    href={`/schedule-consultation?tier=${plan.tier}`}
-                    style={{
-                      display: 'block',
-                      textAlign: 'center',
-                      padding: '12px 20px',
-                      borderRadius: '10px',
-                      background: plan.popular
-                        ? 'linear-gradient(135deg, #7c3aed, #a78bfa)'
-                        : '#fff',
-                      color: plan.popular ? '#fff' : '#111',
-                      border: plan.popular ? 'none' : '1px solid #e5e7eb',
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      textDecoration: 'none',
-                      transition: 'opacity 0.15s, transform 0.15s',
-                    }}
-                  >
-                    Schedule a Consultation
-                  </Link>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <MarketingPricing />
 
       {/* Demos */}
       <section id="demos" style={{

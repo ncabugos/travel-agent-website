@@ -1,4 +1,5 @@
 import { T2HeroStatic } from '@/components/t2/T2HeroStatic'
+import { T2HeroSlider, type T2HeroSlide } from '@/components/t2/T2HeroSlider'
 import { T2HeroSlideshow } from '@/components/t2/T2HeroSlideshow'
 import { T2ServiceCards } from '@/components/t2/T2ServiceCards'
 import { T2ServiceCardsEditorial } from '@/components/t2/T2ServiceCardsEditorial'
@@ -229,7 +230,23 @@ export default async function T2HomePage({ params }: PageProps) {
   return (
     <>
       {/* ── 01 · Hero ───────────────────────────────────────────────────── */}
-      {persona?.hero.slideshowImages ? (
+      {agentId === 't2-demo' ? (
+        <T2HeroSlider
+          agentId={agentId}
+          h1="Bespoke journeys."
+          h2="Designed in conversation. Handled to the last detail. The trips top advisors plan for their own families, opened to yours."
+          cta1={{ label: 'View Experiences', href: '/experiences' }}
+          cta2={{ label: 'Start Planning', href: '/contact' }}
+          slides={[
+            { image: '/media/hero images/four-seasons-CapFerrat-pool-hero.jpg', eyebrow: "Côte d'Azur" },
+            { image: '/media/hotel-programs/belmond-bellini-club/belmond-hero-2000.jpg', eyebrow: 'Italian Lakes' },
+            { image: '/media/hotel-programs/oetker-pearl/eden-rock-st-barths-hero.jpg', eyebrow: 'St. Barths' },
+            { image: '/media/hotel-programs/aman/aman-hero-2000.jpg', eyebrow: 'Indonesian Archipelago' },
+            { image: '/media/hotel-programs/jumeirah/Burj-Al-Arab-Jumeirah-hero-2500.jpg', eyebrow: 'Arabian Coast' },
+            { image: '/media/hotel-programs/como-hotels/Como-hero-tuscany-2200.jpg', eyebrow: 'Tuscany' },
+          ] satisfies T2HeroSlide[]}
+        />
+      ) : persona?.hero.slideshowImages ? (
         <T2HeroSlideshow
           agentId={agentId}
           images={persona.hero.slideshowImages}
