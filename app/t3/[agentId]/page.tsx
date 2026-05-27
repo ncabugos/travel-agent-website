@@ -38,9 +38,8 @@ export default async function T3HomePage({ params }: PageProps) {
         agentId={agentId}
         image="/media/hotel-programs/belmond-bellini-club/belmond-hero-2000.jpg"
         imageCaption="Belmond Hotel Cipriani · Venice"
-        eyebrow="A World Beyond"
-        headlineLine1="Quietly"
-        headlineLine2="extraordinary."
+        headlineLine1="Extraordinary"
+        headlineLine2="adventures."
         body="We design private journeys for travelers who know exactly what they don't want. No templated itineraries — only considered introductions to the places, stays, and people worth knowing."
         primaryCta={{ label: 'Plan a Trip', href: '/contact' }}
         secondaryCta={{ label: 'Our Philosophy', href: '#philosophy' }}
@@ -91,7 +90,7 @@ export default async function T3HomePage({ params }: PageProps) {
           {
             title: 'Bespoke Journeys',
             description: 'Tell us where you\u2019re going and we\u2019ll handle the rest \u2014 one advisor, one point of contact, one perfectly planned trip.',
-            image: '',
+            image: '/media/hero images/four-seasons-taormina-suite-hero.jpg',
             cta: { label: 'Start a Trip', href: '/contact' },
           },
         ]}

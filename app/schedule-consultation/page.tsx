@@ -11,16 +11,18 @@ export const metadata = {
 
 const ALLOWED_TIERS = ['starter', 'growth', 'custom', 'agency'] as const
 type TierValue = (typeof ALLOWED_TIERS)[number]
+type BillingCycle = 'monthly' | 'annual'
 
 interface PageProps {
-  searchParams: Promise<{ tier?: string }>
+  searchParams: Promise<{ tier?: string; billing?: string }>
 }
 
 export default async function ScheduleConsultationPage({ searchParams }: PageProps) {
-  const { tier } = await searchParams
+  const { tier, billing } = await searchParams
   const initialTier: TierValue = (ALLOWED_TIERS as readonly string[]).includes(tier ?? '')
     ? (tier as TierValue)
     : 'custom'
+  const initialBilling: BillingCycle = billing === 'annual' ? 'annual' : 'monthly'
 
   return (
     <div
@@ -127,7 +129,7 @@ export default async function ScheduleConsultationPage({ searchParams }: PagePro
           </p>
         </header>
 
-        <ConsultationForm initialTier={initialTier} />
+        <ConsultationForm initialTier={initialTier} initialBilling={initialBilling} />
       </main>
 
       <MarketingFooter />

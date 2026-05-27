@@ -9,14 +9,29 @@ import {
 const serif = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
 const sans = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
 
-const TIERS = [
-  { value: 'starter', label: 'Starter — $79/mo' },
-  { value: 'growth', label: 'Growth — $149/mo' },
-  { value: 'custom', label: 'Custom — $299/mo' },
-  { value: 'agency', label: 'Agency — Contact for quote' },
-] as const
+type TierValue = 'starter' | 'growth' | 'custom' | 'agency'
+type BillingCycle = 'monthly' | 'annual'
 
-type TierValue = (typeof TIERS)[number]['value']
+interface TierPricing {
+  value: TierValue
+  name: string
+  monthly: string | null  // null = quote-only (Agency)
+  annual: string | null   // null = quote-only
+  annualEffectiveMonthly: string | null
+}
+
+const TIERS: TierPricing[] = [
+  { value: 'starter', name: 'Starter', monthly: '$89/mo',  annual: '$890/yr',   annualEffectiveMonthly: '$74/mo' },
+  { value: 'growth',  name: 'Growth',  monthly: '$179/mo', annual: '$1,790/yr', annualEffectiveMonthly: '$149/mo' },
+  { value: 'custom',  name: 'Custom',  monthly: '$349/mo', annual: '$3,490/yr', annualEffectiveMonthly: '$291/mo' },
+  { value: 'agency',  name: 'Agency',  monthly: null,      annual: null,        annualEffectiveMonthly: null },
+]
+
+function tierLabel(t: TierPricing, cycle: BillingCycle): string {
+  if (!t.monthly) return `${t.name} — Contact for quote`
+  if (cycle === 'annual') return `${t.name} — ${t.annual} (${t.annualEffectiveMonthly} effective)`
+  return `${t.name} — ${t.monthly}`
+}
 
 const TIMELINES = [
   'Select a timeline…',
@@ -61,14 +76,17 @@ const initialState: ConsultationFormState = {}
 
 export function ConsultationForm({
   initialTier = 'custom',
+  initialBilling = 'monthly',
 }: {
   initialTier?: TierValue
+  initialBilling?: BillingCycle
 }) {
   const [state, formAction, isPending] = useActionState(
     submitConsultationRequest,
     initialState,
   )
   const [tier, setTier] = useState<TierValue>(initialTier)
+  const [billing, setBilling] = useState<BillingCycle>(initialBilling)
 
   if (state.success) {
     return (
@@ -140,7 +158,50 @@ export function ConsultationForm({
       )}
 
       {/* ── Tier selection ─────────────────────────────────────────── */}
-      <SectionLabel>Plan of interest</SectionLabel>
+      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, marginBottom: 16 }}>
+        <SectionLabel>Plan of interest</SectionLabel>
+
+        {/* Billing-cycle toggle — mirrors the marketing pricing page */}
+        <div
+          role="radiogroup"
+          aria-label="Billing cycle"
+          style={{
+            display: 'inline-flex',
+            background: '#f4f4f5',
+            borderRadius: 999,
+            padding: 4,
+            fontFamily: sans,
+          }}
+        >
+          {(['monthly', 'annual'] as BillingCycle[]).map((c) => (
+            <button
+              key={c}
+              type="button"
+              onClick={() => setBilling(c)}
+              aria-checked={billing === c}
+              role="radio"
+              style={{
+                padding: '6px 16px',
+                fontSize: 12,
+                fontWeight: 600,
+                letterSpacing: '0.04em',
+                textTransform: 'capitalize',
+                border: 'none',
+                borderRadius: 999,
+                cursor: 'pointer',
+                background: billing === c ? '#fff' : 'transparent',
+                color: billing === c ? '#111' : '#6b7280',
+                boxShadow: billing === c ? '0 1px 2px rgba(0,0,0,0.06)' : 'none',
+                transition: 'background 0.2s ease, color 0.2s ease',
+              }}
+            >
+              {c === 'annual' ? 'Annual · 2 months free' : 'Monthly'}
+            </button>
+          ))}
+        </div>
+      </div>
+      {/* Persist billing on submit — operator sees this in the consultation request */}
+      <input type="hidden" name="billing" value={billing} />
       <div
         role="radiogroup"
         style={{
@@ -176,7 +237,7 @@ export function ConsultationForm({
               onChange={() => setTier(t.value)}
               style={{ accentColor: '#7c3aed' }}
             />
-            {t.label}
+            {tierLabel(t, billing)}
           </label>
         ))}
       </div>
