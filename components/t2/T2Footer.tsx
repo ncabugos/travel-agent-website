@@ -128,7 +128,7 @@ export function T2Footer({
               fontSize: 10,
               letterSpacing: '0.22em',
               textTransform: 'uppercase',
-              color: 'var(--t2-accent)',
+              color: 'color-mix(in srgb, var(--t2-accent, #9A8560), white 45%)',
               marginBottom: 24,
               fontWeight: 500,
             }}
@@ -165,7 +165,7 @@ export function T2Footer({
               fontSize: 10,
               letterSpacing: '0.22em',
               textTransform: 'uppercase',
-              color: 'var(--t2-accent)',
+              color: 'color-mix(in srgb, var(--t2-accent, #9A8560), white 45%)',
               marginBottom: 24,
               fontWeight: 500,
             }}
@@ -194,7 +194,7 @@ export function T2Footer({
               fontSize: 10,
               letterSpacing: '0.22em',
               textTransform: 'uppercase',
-              color: 'var(--t2-accent)',
+              color: 'color-mix(in srgb, var(--t2-accent, #9A8560), white 45%)',
               marginBottom: 24,
               fontWeight: 500,
             }}
@@ -234,7 +234,7 @@ export function T2Footer({
                 fontFamily: 'var(--t2-font-sans)',
                 fontSize: 13,
                 fontWeight: 300,
-                color: 'var(--t2-accent)',
+                color: 'color-mix(in srgb, var(--t2-accent, #9A8560), white 45%)',
                 textDecoration: 'none',
                 transition: 'opacity 0.2s ease',
               }}
