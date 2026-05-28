@@ -103,6 +103,11 @@ export default async function T3HomePage({ params }: PageProps) {
         fullName={agent?.full_name ?? agencyName}
         agencyName={agencyName}
         bio={agent?.bio}
+        stats={[
+          { value: '25', label: 'Years of experience' },
+          { value: '50+', label: 'Countries visited' },
+          { value: '1,000+', label: 'Trips designed' },
+        ]}
         eyebrow="04 — Your Advisor"
         photo="/media/team/agent-sarah-chen.png"
         photoAlt={agent?.full_name ?? agencyName}
