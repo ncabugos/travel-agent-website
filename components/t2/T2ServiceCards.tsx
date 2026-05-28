@@ -176,6 +176,7 @@ export function T2ServiceCards({ agentId, heading, subheading, cards }: T2Servic
                     padding: '32px 28px',
                     display: 'flex',
                     flexDirection: 'column',
+                    justifyContent: 'center',
                     zIndex: 2,
                   }}
                 >
@@ -199,7 +200,6 @@ export function T2ServiceCards({ agentId, heading, subheading, cards }: T2Servic
                         color: 'rgba(255,255,255,0.58)',
                         lineHeight: 1.65,
                         fontWeight: 300,
-                        flex: 1,
                       }}
                     >
                       {card.description}

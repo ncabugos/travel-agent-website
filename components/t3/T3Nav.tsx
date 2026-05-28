@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Menu, X, Phone, Mail } from 'lucide-react'
+import { filterNavByTier, type Tier } from '@/lib/tier-features'
 
 interface T3NavProps {
   agentId: string
@@ -12,6 +13,9 @@ interface T3NavProps {
   /** Optional advisor contact — surfaced in the mobile menu's bottom dock. */
   phone?: string
   email?: string
+  /** Subscription tier — filters default nav links to match what each tier
+      actually surfaces. Explicit `navLinks` overrides bypass this. */
+  tier?: Tier | null
 }
 
 const DEFAULT_LINKS = [
@@ -68,9 +72,13 @@ const MENU_CARDS: MenuCard[] = [
   },
 ]
 
-export function T3Nav({ agentId, agencyName, logoUrl, navLinks, phone, email }: T3NavProps) {
+export function T3Nav({ agentId, agencyName, logoUrl, navLinks, phone, email, tier }: T3NavProps) {
   const base = `/t3/${agentId}`
-  const links = (navLinks && navLinks.length > 0 ? navLinks : DEFAULT_LINKS).map(l => ({
+  // Explicit override wins. Otherwise filter defaults by tier.
+  const baseLinks = navLinks && navLinks.length > 0
+    ? navLinks
+    : filterNavByTier(DEFAULT_LINKS, tier)
+  const links = baseLinks.map(l => ({
     label: l.label,
     href: l.href.startsWith('http') ? l.href : `${base}${l.href.replace(/^\//, '/')}`,
   }))

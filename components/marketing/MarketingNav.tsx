@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const NAV_LINKS = [
   { label: 'Features', href: '#features' },
@@ -45,12 +46,14 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
           }}
         >
           {/* Brand */}
-          <Link href="/" onClick={close} style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+          <Link href="/" onClick={close} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
+            <Image
               src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
               alt="Elite Advisor Hub"
-              style={{ height: '26px', width: 'auto', display: 'block' }}
+              width={800}
+              height={134}
+              style={{ objectFit: 'contain', height: '32px', width: 'auto' }}
+              priority
             />
           </Link>
 

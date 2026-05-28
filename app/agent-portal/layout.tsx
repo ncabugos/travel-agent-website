@@ -19,8 +19,12 @@ export default function AgentPortalLayout({ children }: { children: React.ReactN
   const pathname = usePathname()
   const router = useRouter()
 
-  // Don't wrap login or onboarding pages in the dashboard shell
-  if (pathname === '/agent-portal/login' || pathname === '/agent-portal/onboarding') {
+  // Don't wrap login/register or onboarding pages in the dashboard shell
+  if (
+    pathname === '/agent-portal/login' ||
+    pathname === '/agent-portal/register' ||
+    pathname === '/agent-portal/onboarding'
+  ) {
     return <>{children}</>
   }
 

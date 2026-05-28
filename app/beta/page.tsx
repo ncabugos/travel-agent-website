@@ -38,7 +38,7 @@ const HIGHLIGHTS = [
 export default function BetaWaitlistPage() {
   return (
     <div style={{ fontFamily: SANS, color: '#111', background: '#fff' }}>
-      <MarketingNav minimal />
+      <MarketingNav />
 
       {/* ── Hero — full-bleed luxury hotel background (matches homepage) ── */}
       <section

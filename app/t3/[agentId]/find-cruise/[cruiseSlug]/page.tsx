@@ -1,4 +1,6 @@
 import { getCruiseLine, getAllCruiseLineSlugs } from '@/lib/cruise-lines'
+import { getSupplierPromo } from '@/lib/supplier-promos'
+import { T3PromoBanner } from '@/components/t3/T3PromoBanner'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -24,7 +26,10 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function T3CruiseLineDetailPage({ params }: PageProps) {
   const { agentId, cruiseSlug } = await params
-  const line = await getCruiseLine(cruiseSlug)
+  const [line, promo] = await Promise.all([
+    getCruiseLine(cruiseSlug),
+    getSupplierPromo('cruise_line', cruiseSlug),
+  ])
   if (!line) notFound()
 
   const base = `/t3/${agentId}`
@@ -127,6 +132,20 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
             {line.description && <p className="t3-body t3-body-lg">{line.description}</p>}
           </div>
         </div>
+      </section>
+
+      {/* ── Promo banner ───────────────────────────────────────────────── */}
+      <section className="t3-section">
+        <T3PromoBanner
+          promo={promo}
+          agentId={agentId}
+          fallback={{
+            headline: `Sail with ${line.name}`,
+            subheading: `Book through us and unlock exclusive Virtuoso Voyages benefits on every ${line.name} sailing — onboard credits, private receptions, and shore experiences unavailable through any other channel.`,
+            cta_label: 'Plan this voyage',
+            image_url: line.slider_images?.[0] ?? line.hero_image_url ?? undefined,
+          }}
+        />
       </section>
 
       {/* ── Virtuoso Voyages ───────────────────────────────────────────── */}

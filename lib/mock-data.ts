@@ -49,7 +49,8 @@ export const MOCK_AGENT: MockAgent = {
   full_name: 'John Oberacker',
   first_name: 'John',
   agency_name: 'Eden For Your World',
-  tagline: 'Curating the world\'s most extraordinary journeys — with precision, passion, and white-glove care.',
+  tagline: 'Luxury travel, personally planned — curating extraordinary journeys for a small list of clients each year.',
+  tier: 'custom',
   email: 'info@edenforyourworld.com',
   phone: '+1 (562) 856-8603',
   address: '5318 E. 2nd St. #520, Long Beach, CA 90803',
@@ -102,9 +103,10 @@ export const MOCK_AGENT: MockAgent = {
  */
 export const DEMO_T2_AGENT: MockAgent = {
   id: 't2-demo',
-  full_name: 'Your Travel Advisor',
+  full_name: 'Sarah Chen',
+  first_name: 'Sarah',
   agency_name: 'Luxury Travel Co.',
-  tagline: 'Curating the world\'s most extraordinary journeys — with precision, passion, and white-glove care.',
+  tagline: 'Luxury travel planning, personally curated — VIP perks, preferred hotel programs, and a single advisor on call.',
   email: 'hello@luxurytravelco.com',
   phone: '+1 (800) 555-0100',
   address: '123 Grand Avenue, Suite 400, Beverly Hills, CA 90210',
@@ -114,8 +116,9 @@ export const DEMO_T2_AGENT: MockAgent = {
   youtube_url: undefined,
   custom_domain: null,
   avatar_url: null,
-  // Canonical Vista/Growth demo — searchable directories, Experiences, etc.
-  tier: 'growth',
+  // Vista shows the Starter template aesthetic. Tier flag matches the
+  // homepage classification — feature gating still TODO (Wave 3).
+  tier: 'starter',
 }
 
 /**
@@ -126,7 +129,7 @@ export const DEMO_YTC_AGENT: MockAgent = {
   id: 'ytc-demo',
   full_name: 'Your Travel Center',
   agency_name: 'Your Travel Center',
-  tagline: 'Full-service global experiences — crafted by Spokane\'s most trusted travel experts.',
+  tagline: 'Full-service global travel planning — Spokane\'s most trusted advisors for luxury hotels, cruises, and bespoke trips.',
   email: 'spokane@ytc.com',
   phone: '(509) 327-9585',
   address: '27 E Augusta Ave. Spokane, WA 99207',
@@ -136,6 +139,7 @@ export const DEMO_YTC_AGENT: MockAgent = {
   youtube_url: undefined,
   custom_domain: null,
   avatar_url: null,
+  tier: 'agency',
   logo_url: '/assets/ytc/ytc-white-800.png',
   logo_url_dark: '/assets/ytc/ytc-black-800.png',
   nav_links: [
@@ -156,7 +160,8 @@ export const DEMO_T3_AGENT: MockAgent = {
   full_name: 'Eleanor Price',
   first_name: 'Eleanor',
   agency_name: 'Meridian Travel',
-  tagline: 'Quietly extraordinary journeys, considered down to the last detail.',
+  tagline: 'Luxury travel planning for a small list of clients — refined itineraries, preferred hotel programs, and VIP perks.',
+  tier: 'starter',
   email: 'hello@meridiantravel.com',
   phone: '+1 (800) 555-0103',
   address: '1 Beacon Street, Suite 1800, Boston, MA 02108',
@@ -215,7 +220,8 @@ export const DEMO_WWT_AGENT: MockAgent = {
   id: 'wwt-demo',
   full_name: 'Your Advisor',
   agency_name: 'Wine & Wellness Travel',
-  tagline: 'Journeys poured slowly. Lived wholly. Curated by hand for the conscious traveler.',
+  tagline: 'Slow-paced wine and wellness travel — private cellar dinners, spa retreats, and villa stays, personally planned.',
+  tier: 'custom',
   email: 'hello@wineandwellnesstravel.com',
   phone: '+1 (000) 000-0000',
   address: '[Your Business Address]',
@@ -273,19 +279,93 @@ export const DEMO_WWT_AGENT: MockAgent = {
 }
 
 /**
+ * Coast & Compass Travel — canonical T2 Vista (Growth) demo.
+ * Coastal escapes and small-ship voyage specialist. Persona-named
+ * slug paired with the standard Growth homepage composition; copy is
+ * branched in app/t2/[agentId]/page.tsx via a per-slug content map.
+ * Nav omits /book-villa: villas are a Custom-tier surface, not Growth.
+ */
+export const DEMO_COAST_COMPASS_AGENT: MockAgent = {
+  id: 'coast-compass-demo',
+  full_name: 'Marin Halloway',
+  first_name: 'Marin',
+  agency_name: 'Coast & Compass Travel',
+  tagline: 'Small-ship voyages and coastal escapes — composed for travelers who measure trips in moments, not miles.',
+  email: 'marin@coastandcompass.com',
+  phone: '+1 (415) 555-0142',
+  address: '88 Battery Street, Suite 1100, San Francisco, CA 94111',
+  cst_number: 'XXXXXXXX-XX',
+  instagram_url: 'https://www.instagram.com/coastandcompass',
+  facebook_url: 'https://www.facebook.com/coastandcompass',
+  youtube_url: undefined,
+  tiktok_url: undefined,
+  website_url: 'https://www.coastandcompass.com',
+  custom_domain: null,
+  avatar_url: null,
+  tier: 'growth',
+  bio: "I came to advisory work after a decade at sea — first as expedition staff on small-ship voyages in the Norwegian fjords and the Inside Passage, then as a guest-experience lead for a private-yacht operator in the Mediterranean and the Cyclades. I founded Coast & Compass because the best trips I helped pull off were never about the brochure: they were about the captain who knew which anchorage caught the morning light, the chef who quietly prepared an extra course because she remembered a guest's allergy, the tender driver who waited an extra fifteen minutes because someone wasn't ready to leave a particular cove. I plan small-ship voyages and coastal stays for a short list of clients each year, with Virtuoso access to every ship worth boarding and every harbor-side hotel worth knowing — and I am on call before, during, and after every journey, so you can stop planning and start being somewhere.",
+  travel_specialties: [
+    'Small-Ship Voyages',
+    'Yacht & Expedition Cruising',
+    'Coastal Escapes',
+    'River Cruising',
+    'Honeymoons & Romance',
+    'Multi-Generational Travel',
+  ],
+  destination_specialties: [
+    'Mediterranean',
+    'Norwegian Fjords',
+    'Dalmatian Coast & Cyclades',
+    'Galápagos & Antarctic Peninsula',
+    'Inside Passage & Alaska',
+    'Seychelles & Indian Ocean',
+  ],
+  preferred_suppliers: [
+    'Virtuoso',
+    'Aman at Sea',
+    'Belmond',
+    'Ponant',
+    'Seabourn',
+    'Silversea',
+    'Lindblad Expeditions',
+    'Orient Express Sailing Yachts',
+    'Scenic Eclipse',
+  ],
+  travel_types: [
+    'Small-Ship Voyages',
+    'Expedition Cruises',
+    'Private Yacht Charters',
+    'Coastal Hotel Stays',
+    'River Journeys',
+    'Bespoke Itineraries',
+  ],
+  nav_links: [
+    { label: 'About',       href: '/about' },
+    { label: 'Voyages',     href: '/experiences' },
+    { label: 'Hotels',      href: '/book-hotel' },
+    { label: 'Cruises',     href: '/find-cruise' },
+    { label: 'Plan a Trip', href: '/plan-a-trip' },
+    { label: 'Journal',     href: '/journal' },
+    { label: 'Contact',     href: '/contact' },
+  ],
+}
+
+/**
  * Casa Solis — T4 (Custom) demo. Quiet-luxury editorial for the Custom tier.
  */
 export const DEMO_CASA_SOLIS_AGENT: MockAgent = {
   id: 'casa-solis',
-  full_name: 'Casa Solis',
+  full_name: 'Alessandra Ricci',
+  first_name: 'Alessandra',
   agency_name: 'Casa Solis',
-  tagline: 'A quiet house of travel, arranged slowly — for the few who measure a trip in conversation, not logistics.',
+  tagline: 'Luxury travel, personally planned — for clients who value direct, dedicated service over logistics.',
   email: 'hello@casasolis.travel',
   phone: '+1 (000) 000-0000',
-  address: '[Studio address]',
+  address: '88 Battery Street, Suite 1200, San Francisco, CA 94111',
   cst_number: undefined,
   custom_domain: null,
   avatar_url: null,
+  tier: 'custom',
 }
 
 // ─── Suppliers ────────────────────────────────────────────────────────────────

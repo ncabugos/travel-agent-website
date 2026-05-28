@@ -94,15 +94,15 @@ export function T4Footer({
             {cstNumber && <FooterText>CST {cstNumber}</FooterText>}
           </FooterCol>
 
-          <FooterCol title="The House">
-            <FooterLink href={`${base}/atelier`} label="Atelier" />
+          <FooterCol title="About">
+            <FooterLink href={`${base}/atelier`} label="Our Story" />
             <FooterLink href={`${base}/press`} label="Press" />
             <FooterLink href={`${base}/journal`} label="Journal" />
           </FooterCol>
 
           <FooterCol title="Explore">
             <FooterLink href={`${base}/book-hotel`} label="Hotels" />
-            <FooterLink href={`${base}/find-cruise`} label="Voyages" />
+            <FooterLink href={`${base}/find-cruise`} label="Cruises" />
           </FooterCol>
 
           <FooterCol title="Follow">

@@ -69,25 +69,25 @@ export default async function T4HomePage({ params }: PageProps) {
         agentId={agentId}
         image="/media/hotel-programs/belmond-bellini-club/belmond-cap-1500.jpg"
         imageCaption="Belmond · Cap Ferrat"
-        eyebrow="A House of Travel"
-        headline={'Slowly, and\nquietly, arranged.'}
-        body="For two decades, Casa Solis has designed travel for a small number of families who value restraint as much as refinement — and who measure a trip in conversation, not logistics."
-        primaryCta={{ label: 'Begin a Journey', href: '/contact' }}
-        secondaryCta={{ label: 'Our Philosophy', href: '#philosophy' }}
+        eyebrow="Luxury Travel Advisors"
+        headline={'Luxury travel,\npersonally planned.'}
+        body="Casa Solis plans travel for a small number of clients each year. Every trip is designed by the advisor you first speak with — and that same person is on call from the first email to the last night."
+        primaryCta={{ label: 'Start Planning', href: '/contact' }}
+        secondaryCta={{ label: 'How We Work', href: '#philosophy' }}
       />
 
       {/* ── 02 · Manifesto / Philosophy ──────────────────────────────── */}
       <div id="philosophy">
         <T4Manifesto
           agentId={agentId}
-          eyebrow="The House"
-          headline={'We plan few trips.\nWe plan them entirely.'}
-          body="Casa Solis takes on a small number of clients each year. Every journey is planned by the advisor you first speak to, and it is that same person who answers your call from a bad connection in a remote village, at any hour, across any time zone. We are not a travel company with advisors. We are a small group of advisors, with a shared philosophy about how the world ought to be travelled."
+          eyebrow="Our Approach"
+          headline={'A small number of clients.\nEvery trip planned personally.'}
+          body="Casa Solis is a small advisory practice. We take on a limited number of clients each year, and every trip is planned by the advisor you first speak with — the same person who answers your call from a bad connection in a remote village, at any hour, across any time zone."
           signature="— Alessandra Ricci, Founder"
-          ctaLabel="Read the Atelier"
+          ctaLabel="About Casa Solis"
           ctaHref="/atelier"
           image="/media/hotel-programs/aman/aman-hero-2000.jpg"
-          imageCaption="The Studio · Solferino"
+          imageCaption="San Francisco Office"
         />
       </div>
 
@@ -115,8 +115,8 @@ export default async function T4HomePage({ params }: PageProps) {
         agentId={agentId}
         programs={programs}
         eyebrow="The Programs"
-        heading="Four houses, known by name."
-        body="These are the programs we know not just by brand, but by general manager, head sommelier, and turn-down concierge. Here are four we return to most."
+        heading="Exclusive Hotel Programs."
+        body="The programs we know best — by general manager, head sommelier, and turn-down concierge. Here are four we return to most."
         limit={4}
       />
 

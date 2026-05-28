@@ -92,6 +92,19 @@ export function T2CruisePartnersGrid({
                       transition: 'transform 0.9s ease',
                     }}
                   />
+                  <span style={{
+                    position: 'absolute', top: 14, left: 14,
+                    fontFamily: 'var(--t2-font-sans)',
+                    fontSize: 10, fontWeight: 600,
+                    letterSpacing: '0.2em', textTransform: 'uppercase',
+                    background: '#fff',
+                    color: 'var(--t2-text)',
+                    padding: '7px 14px',
+                    borderRadius: 2,
+                    boxShadow: '0 2px 12px rgba(0,0,0,0.18)',
+                  }}>
+                    {(line.cruise_types || [])[0] || 'Luxury'}
+                  </span>
                 </div>
               )}
               <div style={{ padding: '24px 24px 22px', flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -107,18 +120,6 @@ export function T2CruisePartnersGrid({
                     />
                   </div>
                 )}
-                <div
-                  style={{
-                    fontSize: 10,
-                    fontWeight: 500,
-                    letterSpacing: '0.22em',
-                    textTransform: 'uppercase',
-                    color: 'var(--t2-accent)',
-                    marginBottom: 8,
-                  }}
-                >
-                  {(line.cruise_types || []).join(' · ') || 'Luxury Cruise'}
-                </div>
                 <h3
                   style={{
                     fontFamily: 'var(--t2-font-serif)',

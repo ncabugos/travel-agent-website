@@ -29,8 +29,8 @@ export default async function T4BookHotelIndexPage({ params }: PageProps) {
         image="/media/hotel-programs/belmond-bellini-club/belmond-hero-2000.jpg"
         imageAlt="Hotel programs"
         eyebrow="Hotels"
-        title="A quieter list."
-        body="We do not work with every hotel. These are the programs we know — by general manager, by concierge, by turn-down attendant — and the ones we return to."
+        title="Exclusive access to the world's best properties."
+        body="The hotel programs we hold give our clients privileges that aren't available booking direct — room upgrades, daily breakfast, property credit, and personal recognition at every stay."
         imageCaption="Belmond · Venice"
       />
 

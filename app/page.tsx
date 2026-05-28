@@ -1,42 +1,38 @@
 import Link from 'next/link'
 import { Globe, FileText, Building2, Paintbrush, Lock, TrendingUp } from 'lucide-react'
+import { MarketingPricing } from '@/components/marketing/MarketingPricing'
 import { MarketingNav } from '@/components/marketing/MarketingNav'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
+import { HeroSlideshow } from '@/components/marketing/HeroSlideshow'
 import { MarketingBrandedWebsite } from '@/components/marketing/MarketingBrandedWebsite'
 import { MarketingSupplierPrograms } from '@/components/marketing/MarketingSupplierPrograms'
 import { MarketingReachSection } from '@/components/marketing/MarketingReachSection'
 import { MarketingCuratedEditorial } from '@/components/marketing/MarketingCuratedEditorial'
 import { MarketingAdvisorPortal } from '@/components/marketing/MarketingAdvisorPortal'
-import { MarketingPricing } from '@/components/marketing/MarketingPricing'
 
 export const metadata = {
-  title: 'Elite Advisor Hub — Websites for Elite Travel Advisors',
+  title: 'Elite Advisor Hub — For the Top 1% of Travel Advisors',
   description:
-    'A premium website platform for luxury travel advisors. Stunning templates, curated blog content, supplier integrations, and zero tech burden.',
+    'Infrastructure for advisors working at elite advisor standards — maintained hotel programs, a weekly editorial pipeline, and templates built for a $25,000 booking, not a $250 one.',
 }
 
 interface DemoCard {
   slug: string
   name: string
-  kind: 'Custom' | 'Standard' | 'Agency'
+  kind: 'Starter' | 'Growth' | 'Custom' | 'Agency'
   tagline: string
   href: string
   thumbnail: string
 }
 
+// Demos are grouped by tier (Starter → Growth → Custom → Agency) so they
+// read in the same order as the pricing tiers above.
 const DEMOS: DemoCard[] = [
-  {
-    slug: 'eden',
-    name: 'Eden',
-    kind: 'Custom',
-    tagline: 'An editorial custom build for a boutique advisor, designed from scratch.',
-    href: '/frontend/demo-agent',
-    thumbnail: '/demos/eden.png',
-  },
+  // ── Starter ─────────────────────────────────────────────────────────────────
   {
     slug: 'vista',
     name: 'Vista',
-    kind: 'Standard',
+    kind: 'Starter',
     tagline: 'Cinematic widescreen with bold serif typography and antique gold accents.',
     href: '/t2/t2-demo',
     thumbnail: '/demos/vista.png',
@@ -44,18 +40,28 @@ const DEMOS: DemoCard[] = [
   {
     slug: 'meridian',
     name: 'Meridian',
-    kind: 'Standard',
+    kind: 'Starter',
     tagline: 'Modern editorial in sans-serif — warm ivory, bronze italics, generous whitespace.',
     href: '/t3/t3-demo',
     thumbnail: '/demos/meridian.png',
   },
+  // ── Growth ──────────────────────────────────────────────────────────────────
   {
-    slug: 'ytc',
-    name: 'Your Travel Center',
-    kind: 'Agency',
-    tagline: 'A real Spokane agency, rebranded on the Vista template with custom identity.',
-    href: '/t2/ytc-demo',
-    thumbnail: '/demos/ytc.png',
+    slug: 'coast-and-compass',
+    name: 'Coast & Compass Travel',
+    kind: 'Growth',
+    tagline: 'Small-ship voyages and coastal escapes — Bodoni Moda serif, slideshow hero, editorial services index.',
+    href: '/t2/coast-compass-demo',
+    thumbnail: '/media/hero images/four-seasons-yacht-hero.jpg',
+  },
+  // ── Custom ──────────────────────────────────────────────────────────────────
+  {
+    slug: 'eden',
+    name: 'Eden',
+    kind: 'Custom',
+    tagline: 'An editorial custom build for a boutique advisor, designed from scratch.',
+    href: '/frontend/demo-agent',
+    thumbnail: '/demos/eden-thumb.jpg',
   },
   {
     slug: 'casa-solis',
@@ -64,6 +70,15 @@ const DEMOS: DemoCard[] = [
     tagline: 'Quiet-luxury editorial for the Custom tier — warm ivory, burnt ochre, Italian-atelier feel.',
     href: '/t4/casa-solis',
     thumbnail: '/demos/casa_solis.jpg',
+  },
+  // ── Agency ──────────────────────────────────────────────────────────────────
+  {
+    slug: 'ytc',
+    name: 'Your Travel Center',
+    kind: 'Agency',
+    tagline: 'A real Spokane agency, rebranded on the Vista template with custom identity.',
+    href: '/t2/ytc-demo',
+    thumbnail: '/demos/ytc.png',
   },
 ]
 
@@ -86,19 +101,8 @@ export default function EliteAdvisorHubHomePage() {
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {/* Background Image */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=2560&q=80"
-          alt=""
-          aria-hidden="true"
-          style={{
-            position: 'absolute', inset: 0,
-            width: '100%', height: '100%',
-            objectFit: 'cover',
-            zIndex: 0,
-          }}
-        />
+        {/* Background slideshow */}
+        <HeroSlideshow />
         {/* Dark gradient overlay */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: 1,
@@ -114,47 +118,50 @@ export default function EliteAdvisorHubHomePage() {
             marginBottom: '32px', textTransform: 'uppercase', letterSpacing: '0.05em',
             backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.15)',
           }}>
-            ✦ The Website Platform for Elite Travel Advisors
+            ✦ Built for the top 1% of travel advisors
           </div>
 
           <h1 style={{
-            fontSize: 'clamp(40px, 6vw, 72px)',
+            fontSize: 'clamp(36px, 5.5vw, 66px)',
             fontWeight: 800,
-            lineHeight: 1.1,
+            lineHeight: 1.12,
             letterSpacing: '-0.03em',
             margin: '0 0 24px',
-            maxWidth: '860px',
+            maxWidth: '900px',
             color: '#fff',
           }}>
-            Your clients dream.
-            <br />
+            Websites for{' '}
             <span style={{
               background: 'linear-gradient(135deg, #a5b4fc, #c4b5fd)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}>
-              Your website delivers.
+              Elite Travel Advisors
             </span>
           </h1>
 
           <p style={{
             fontSize: '18px', lineHeight: 1.7, color: 'rgba(255,255,255,0.82)',
-            maxWidth: '600px', margin: '0 auto 40px',
+            maxWidth: '620px', margin: '0 auto 40px',
           }}>
-            Elite Advisor Hub is the turn-key website platform built for luxury travel advisors —
-            stunning templates, curated editorial content, supplier integrations, and zero tech burden.
+            A website platform for independent travel advisors and boutique agencies. A curated network of luxury hotels, cruise lines, and more — kept current for you so you can spend the day selling travel.
           </p>
 
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <a
               href="#pricing"
+              className="eah-cta-primary"
               style={{
-                padding: '14px 32px', backgroundColor: '#fff', color: '#111',
+                padding: '14px 32px',
+                background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
+                color: '#fff',
                 borderRadius: '10px', fontSize: '15px', fontWeight: 600,
-                textDecoration: 'none', transition: 'transform 0.15s',
+                textDecoration: 'none',
+                boxShadow: '0 4px 24px rgba(124, 58, 237, 0.35)',
+                transition: 'transform 0.2s, box-shadow 0.2s',
               }}
             >
-              Get Started
+              Explore Tiers
             </a>
             <a
               href="#demos"
@@ -163,6 +170,7 @@ export default function EliteAdvisorHubHomePage() {
                 borderRadius: '10px', fontSize: '15px', fontWeight: 500,
                 textDecoration: 'none', border: '1px solid rgba(255,255,255,0.25)',
                 backdropFilter: 'blur(8px)',
+                transition: 'background 0.2s',
               }}
             >
               View Demos
@@ -180,31 +188,71 @@ export default function EliteAdvisorHubHomePage() {
             fontSize: '36px', fontWeight: 700, textAlign: 'center',
             letterSpacing: '-0.02em', margin: '0 0 12px',
           }}>
-            Everything you need, nothing you don&apos;t
+            The platform behind the practice
           </h2>
           <p style={{
             textAlign: 'center', fontSize: '16px', color: '#6b7280',
             margin: '0 0 60px', maxWidth: '520px', marginInline: 'auto',
           }}>
-            Focus on selling travel. We handle the technology.
+            Built by a working advisor. Maintained for practices that treat every booking as a credential.
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }} className="eah-features-grid">
             {[
-              { icon: <Globe size={28} strokeWidth={1.5} />, title: 'Branded Website', desc: 'A premium, branded website that mirrors the luxury experience you sell. Choose from editorial templates or commission a fully custom design.' },
-              { icon: <FileText size={28} strokeWidth={1.5} />, title: 'Curated Editorial', desc: 'Our in-house editorial team publishes destination guides and travel tips weekly. Choose the categories that appear on your site.' },
-              { icon: <Building2 size={28} strokeWidth={1.5} />, title: 'Supplier Integrations', desc: 'Showcase your preferred hotels, cruises, villas, and tour partners with rich media from our centralized supplier directory.' },
-              { icon: <Paintbrush size={28} strokeWidth={1.5} />, title: 'Zero Tech Burden', desc: 'No coding, no hosting, no maintenance. We handle updates, SEO, and performance so you can focus on clients.' },
-              { icon: <Lock size={28} strokeWidth={1.5} />, title: 'Advisor Portal', desc: 'Manage your content, submit edit requests, publish journal posts, and update your profile from a clean, intuitive dashboard.' },
-              { icon: <TrendingUp size={28} strokeWidth={1.5} />, title: 'Built to Scale', desc: 'From a single page to a full marketing hub. Upgrade tiers as your business grows — no migration, no re-design.' },
-            ].map((f) => (
-              <div key={f.title} style={{
-                padding: '32px', borderRadius: '16px', border: '1px solid #f3f4f6',
-                transition: 'border-color 0.2s, box-shadow 0.2s',
-              }}>
-                <div style={{ marginBottom: '16px', color: '#374151' }}>{f.icon}</div>
-                <h3 style={{ margin: '0 0 8px', fontSize: '16px', fontWeight: 600 }}>{f.title}</h3>
-                <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', lineHeight: 1.6 }}>{f.desc}</p>
+              {
+                icon: <Globe size={22} strokeWidth={1.5} />,
+                title: 'Branded Website',
+                desc: "Three editorial templates — Vista, Meridian, and Casa Solis — plus fully custom builds for advisors whose brand exists in their clients' minds before the site does.",
+              },
+              {
+                icon: <FileText size={22} strokeWidth={1.5} />,
+                title: 'Curated Editorial',
+                desc: 'Articles drafted by the editorial team and published to your journal weekly. Choose the categories — destinations, hotels, wellness, or wine — that reflect your niche.',
+              },
+              {
+                icon: <Building2 size={22} strokeWidth={1.5} />,
+                title: 'Supplier Programs',
+                desc: 'Hotel programs from Aman, Belmond, Rosewood, and Four Seasons — plus 30+ cruise partners. Each advisor selects the suppliers that match their actual book.',
+              },
+              {
+                icon: <Paintbrush size={22} strokeWidth={1.5} />,
+                title: 'Managed Infrastructure',
+                desc: 'No hosting fees, no developer retainers, no maintenance windows. SEO, performance, and platform updates are handled — so you stay in front of clients.',
+              },
+              {
+                icon: <Lock size={22} strokeWidth={1.5} />,
+                title: 'Advisor Portal',
+                desc: 'Submit edit requests, manage your journal, update preferred suppliers, and track site modifications from one dashboard. Changes are turned around within 24 hours.',
+              },
+              {
+                icon: <TrendingUp size={22} strokeWidth={1.5} />,
+                title: 'Built to Scale',
+                desc: 'Tiers stack — no rebuilds, no migrations. Add modules, upgrade your template, or expand to an agency plan as your practice grows. The site comes with you.',
+              },
+            ].map((f, i) => (
+              <div
+                key={f.title}
+                className="eah-feature-card"
+                style={{
+                  padding: '28px', borderRadius: '16px',
+                  border: '1px solid #f0eeff',
+                  background: '#fff',
+                  transition: 'border-color 0.25s, box-shadow 0.25s, transform 0.25s',
+                  animationDelay: `${i * 80}ms`,
+                }}
+              >
+                <div style={{
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  width: '44px', height: '44px', borderRadius: '12px',
+                  background: 'linear-gradient(135deg, rgba(139,92,246,0.12), rgba(196,181,253,0.12))',
+                  border: '1px solid rgba(139,92,246,0.15)',
+                  color: '#8b5cf6',
+                  marginBottom: '18px',
+                }}>
+                  {f.icon}
+                </div>
+                <h3 style={{ margin: '0 0 8px', fontSize: '15px', fontWeight: 600, letterSpacing: '-0.01em' }}>{f.title}</h3>
+                <p style={{ margin: 0, fontSize: '13.5px', color: '#6b7280', lineHeight: 1.65 }}>{f.desc}</p>
               </div>
             ))}
           </div>
@@ -236,8 +284,9 @@ export default function EliteAdvisorHubHomePage() {
             textAlign: 'center', fontSize: '16px', color: '#6b7280',
             margin: '0 0 60px', maxWidth: '580px', marginInline: 'auto',
           }}>
-            Four live demo sites built on Elite Advisor Hub — two standard templates,
-            one custom build, and one real agency example.
+            Seven live sites on Elite Advisor Hub, organized by tier — two Starter templates,
+            one Growth build, three Custom builds, and one Agency example. Each is live and
+            available to explore.
           </p>
 
           <div
@@ -261,15 +310,17 @@ export default function EliteAdvisorHubHomePage() {
                 }}
                 className="eah-demo-card"
               >
-                {/* Thumbnail */}
+                {/* Thumbnail — 2:1 cinematic crop. Source PNGs are 16:10 full-
+                    page screenshots; the 2:1 container forces object-fit:cover
+                    to scale them up and crop the bottom 20% (the lighter
+                    footer / testimonial area), keeping only each demo's hero. */}
                 <div
                   style={{
                     position: 'relative',
                     width: '100%',
-                    aspectRatio: '16 / 10',
+                    aspectRatio: '2 / 1',
                     overflow: 'hidden',
                     background: '#f3f4f6',
-                    borderBottom: '1px solid #f3f4f6',
                   }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -318,7 +369,7 @@ export default function EliteAdvisorHubHomePage() {
                     <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 700, letterSpacing: '-0.01em' }}>
                       {demo.name}
                     </h3>
-                    <span style={{ fontSize: '13px', color: '#111', fontWeight: 600 }}>
+                    <span className="eah-demo-cta" style={{ fontSize: '13px', color: '#8b5cf6', fontWeight: 600, transition: 'gap 0.2s' }}>
                       View Demo →
                     </span>
                   </div>
@@ -335,31 +386,70 @@ export default function EliteAdvisorHubHomePage() {
       {/* Global platform footer */}
       <MarketingFooter />
 
-      {/* Responsive + hover styles */}
       <style>{`
+        /* ── Keyframes ─────────────────────────────────────────── */
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes ctaPulse {
+          0%, 100% { box-shadow: 0 4px 24px rgba(124,58,237,0.35); }
+          50%       { box-shadow: 0 4px 36px rgba(124,58,237,0.55); }
+        }
+
+        /* ── Hero CTA ───────────────────────────────────────────── */
+        .eah-cta-primary {
+          animation: ctaPulse 3s ease-in-out infinite;
+        }
+        .eah-cta-primary:hover {
+          transform: translateY(-1px);
+          animation: none;
+          box-shadow: 0 6px 32px rgba(124,58,237,0.5) !important;
+        }
+
+        /* ── Feature cards ──────────────────────────────────────── */
+        .eah-feature-card {
+          animation: fadeUp 0.5s ease both;
+        }
+        .eah-feature-card:hover {
+          transform: translateY(-3px);
+          border-color: rgba(139,92,246,0.25) !important;
+          box-shadow: 0 8px 32px rgba(139,92,246,0.08);
+        }
+
+        /* ── Pricing cards ──────────────────────────────────────── */
+        .eah-pricing-card:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 12px 40px rgba(139,92,246,0.1);
+        }
+        .eah-pricing-popular:hover {
+          box-shadow: 0 12px 48px rgba(124,58,237,0.2) !important;
+        }
+
+        /* ── Demo cards ─────────────────────────────────────────── */
         .eah-demo-card:hover {
           transform: translateY(-4px);
-          border-color: #d1d5db !important;
-          box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+          border-color: rgba(139,92,246,0.3) !important;
+          box-shadow: 0 12px 40px rgba(139,92,246,0.1);
         }
         .eah-demo-card:hover .eah-demo-thumb {
           transform: scale(1.04);
         }
+
+        /* ── Responsive ─────────────────────────────────────────── */
         @media (max-width: 1200px) {
-          .eah-pricing-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
+          .eah-pricing-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
         @media (max-width: 900px) {
           .eah-features-grid,
-          .eah-demos-grid {
-            grid-template-columns: 1fr !important;
-          }
+          .eah-demos-grid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 640px) {
-          .eah-pricing-grid {
-            grid-template-columns: 1fr !important;
-          }
+          .eah-pricing-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .eah-feature-card,
+          .eah-cta-primary { animation: none !important; }
         }
       `}</style>
     </div>
@@ -368,8 +458,9 @@ export default function EliteAdvisorHubHomePage() {
 
 function kindBadgeBg(kind: DemoCard['kind']): string {
   switch (kind) {
+    case 'Starter':  return 'rgba(17, 17, 17, 0.92)'     // near-black
+    case 'Growth':   return 'rgba(184, 146, 106, 0.95)'  // antique gold
     case 'Custom':   return 'rgba(139, 92, 246, 0.92)'   // purple
-    case 'Standard': return 'rgba(17, 17, 17, 0.92)'     // near-black
     case 'Agency':   return 'rgba(22, 163, 74, 0.92)'    // green
   }
 }

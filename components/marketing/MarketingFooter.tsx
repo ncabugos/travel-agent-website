@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 /**
  * MarketingFooter
@@ -18,12 +19,14 @@ const PLATFORM_LINKS = [
   { label: 'Schedule a consultation', href: '/schedule-consultation' },
 ]
 
+// Ordered by tier — Starter → Growth → Custom → Agency
 const DEMO_LINKS = [
-  { label: 'Eden',                  href: '/frontend/demo-agent' },
-  { label: 'Vista',                 href: '/t2/t2-demo' },
-  { label: 'Meridian Travel',              href: '/t3/t3-demo' },
-  { label: 'Your Travel Center',    href: '/t2/ytc-demo' },
-  { label: 'Casa Solis',            href: '/t4/casa-solis' },
+  { label: 'Vista',                  href: '/t2/t2-demo' },
+  { label: 'Meridian Travel',        href: '/t3/t3-demo' },
+  { label: 'Coast & Compass Travel', href: '/t2/coast-compass-demo' },
+  { label: 'Eden',                   href: '/frontend/demo-agent' },
+  { label: 'Casa Solis',             href: '/t4/casa-solis' },
+  { label: 'Your Travel Center',     href: '/t2/ytc-demo' },
 ]
 
 const COMPANY_LINKS = [
@@ -63,12 +66,13 @@ export function MarketingFooter() {
 
           {/* Brand block */}
           <div>
-            <Link href="/" style={{ display: 'inline-block', marginBottom: 14 }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+            <Link href="/" style={{ display: 'inline-block', marginBottom: 12, textDecoration: 'none' }}>
+              <Image
                 src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
                 alt="Elite Advisor Hub"
-                style={{ height: 28, width: 'auto', display: 'block' }}
+                width={800}
+                height={134}
+                style={{ objectFit: 'contain', height: '28px', width: 'auto' }}
               />
             </Link>
             <p style={{

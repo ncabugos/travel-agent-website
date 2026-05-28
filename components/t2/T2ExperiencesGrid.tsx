@@ -229,7 +229,7 @@ export function T2ExperiencesGrid({
 function ProductCard({
   product,
   featured,
-  href,
+  href: rawHref,
   onEnquire,
   showCategoryBadge = true,
 }: {
@@ -240,6 +240,9 @@ function ProductCard({
   showCategoryBadge?: boolean
 }) {
   const imageHeight = featured ? 340 : 220
+  // Cruise cards route to the enquiry popup for now (no per-line landing yet);
+  // strip any href so the image and title don't navigate either.
+  const href = product.category === 'cruise' ? null : rawHref
 
   const imageContent = product.image_url && (
     <div style={{ position: 'relative', height: imageHeight }}>
@@ -386,8 +389,30 @@ function ProductCard({
             )}
           </div>
 
-          {/* CTA: navigate for brand pages, enquire modal for experiences */}
-          {href ? (
+          {/* CTA logic:
+              - Cruise → open enquiry drawer (label "View Cruise"). For now the
+                per-line cruise detail page isn't deep enough to deserve its own
+                landing, so we keep planning in-flow via the popup form.
+              - Hotel with brand href → navigate to the book-hotel brand filter.
+              - Experience/tour/anything-without-href → open enquiry drawer. */}
+          {product.category === 'cruise' ? (
+            <button
+              onClick={() => onEnquire(product)}
+              style={{
+                fontFamily: 'var(--t2-font-sans)', fontSize: 10, letterSpacing: '0.18em',
+                textTransform: 'uppercase', fontWeight: 500,
+                color: 'var(--t2-text)', background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+                display: 'flex', alignItems: 'center', gap: 6,
+                transition: 'color 0.2s ease',
+              }}
+              className="t2-exp-link"
+            >
+              View Cruise
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </button>
+          ) : href ? (
             <Link
               href={href}
               style={{

@@ -38,6 +38,7 @@ export default async function T3Layout({ children, params }: LayoutProps) {
         navLinks={agent?.nav_links}
         phone={agent?.phone ?? '+1 (800) 555-0103'}
         email={agent?.email ?? 'hello@meridiantravel.com'}
+        tier={agent?.tier ?? null}
       />
       <main>{children}</main>
       <T3Footer

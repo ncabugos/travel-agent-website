@@ -296,13 +296,15 @@ export function T4HotelDirectory({ agentId, countries, vibes, brands }: T4HotelD
         .t4-hd-vibe-badge {
           position: absolute; top: 14px; left: 14px;
           font-family: var(--t4-font-body);
-          font-size: 9.5px; font-weight: 500;
-          letter-spacing: 0.22em; text-transform: uppercase;
-          background: rgba(20, 17, 15, 0.66);
-          color: #fff; padding: 5px 11px;
-          backdrop-filter: blur(4px);
-          -webkit-backdrop-filter: blur(4px);
+          font-size: 10px; font-weight: 600;
+          letter-spacing: 0.2em; text-transform: uppercase;
+          background: #fff;
+          color: var(--t4-text);
+          padding: 7px 14px;
+          box-shadow: 0 2px 12px rgba(20,17,15,0.18);
+          transition: transform 0.3s ease;
         }
+        .t4-hd-card:hover .t4-hd-vibe-badge { transform: translateY(-2px); }
         .t4-hd-card-body { display: flex; flex-direction: column; }
         .t4-hd-card-brand {
           font-family: var(--t4-font-body);

@@ -46,7 +46,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   // ── Ultra-Luxury Ocean ──────────────────────────────────────────────────────
   {
     id: '1', name: 'Regent Seven Seas Cruises', slug: 'regent-seven-seas',
-    logo_url: '/media/cruises/regent-seven-seas/regent-black-500.jpg',
+    logo_url: '/assets/supplier logos/black transparent/cruise/regent-black-600.png',
     logo_url_white: '/media/cruises/regent-seven-seas/regent-white-600.png',
     hero_image_url: '/media/cruises/regent-seven-seas/Regent-hero-Tahiti-2500.jpg',
     tagline: 'The World\'s Most Luxurious Fleet™',
@@ -80,7 +80,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '2', name: 'Silversea Cruises', slug: 'silversea',
-    logo_url: '/assets/supplier logos/jpg/Silversea-Logo.jpg',
+    logo_url: '/assets/supplier logos/jpg/Silversea-Logo.png',
     logo_url_white: '/media/cruises/silversea/silversea-logo_white.png',
     hero_image_url: '/media/cruises/silversea/silversea-hero.jpg',
     tagline: 'Ultra-luxury. All-inclusive. Expedition.',
@@ -144,7 +144,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '4', name: 'Oceania Cruises', slug: 'oceania',
-    logo_url: '/media/cruises/oceania/oceania-cruises-logo-black-600.jpg',
+    logo_url: '/media/cruises/oceania/oceania-cruises-logo-black-600.png',
     logo_url_white: null,
     hero_image_url: '/media/cruises/oceania/oceania_cruises-oClass-Grand-Dining-Room-hero.jpg',
     tagline: 'Your world. Your way.',
@@ -175,7 +175,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '5', name: 'Azamara', slug: 'azamara',
-    logo_url: '/media/cruises/azamara/azamara-logo-black-600.jpg',
+    logo_url: '/media/cruises/azamara/azamara-logo-black-600.png',
     logo_url_white: '/media/cruises/azamara/azamara-logo-white-700.png',
     hero_image_url: '/media/cruises/azamara/azamara-hero-2200.jpg',
     tagline: 'Destination immersion. Enriched voyages.',
@@ -239,7 +239,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '7', name: 'Cunard', slug: 'cunard',
-    logo_url: '/assets/supplier logos/jpg/Cunard-black.jpg',
+    logo_url: '/assets/supplier logos/jpg/Cunard-black.png',
     logo_url_white: '/media/cruises/cunard/cunard-logo-white.png',
     hero_image_url: '/media/cruises/cunard/cunard-Grand-Lobby-dark-hero.jpg',
     tagline: 'The most famous ocean liners in the world.',
@@ -269,7 +269,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '8', name: 'Holland America Line', slug: 'holland-america',
-    logo_url: '/assets/supplier logos/jpg/Holland-America-black.jpg',
+    logo_url: '/assets/supplier logos/jpg/Holland-America-black.png',
     logo_url_white: '/media/cruises/holland-america/hal_white-logo-700.png',
     hero_image_url: '/media/cruises/holland-america/hal-hero-2400.jpg',
     tagline: '150 years of seafaring tradition.',
@@ -333,7 +333,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '10', name: 'Royal Caribbean', slug: 'royal-caribbean',
-    logo_url: '/assets/supplier logos/jpg/Royal-Caribbean-black.jpg',
+    logo_url: '/assets/supplier logos/jpg/Royal-Caribbean-black.png',
     logo_url_white: '/media/cruises/royal-caribbean/royal-caribbean-logo-white-700.png',
     hero_image_url: '/media/cruises/royal-caribbean/Hero_UltimateAbyss_Dark.jpg',
     tagline: 'Adventure at sea. Reimagined.',
@@ -369,7 +369,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '11', name: 'Princess Cruises', slug: 'princess',
-    logo_url: '/media/cruises/princess/princess-cruises-2020-black-600.jpg',
+    logo_url: '/media/cruises/princess/princess-cruises-2020-black-600.png',
     logo_url_white: '/media/cruises/princess/princess-cruises-white-600.png',
     hero_image_url: '/media/cruises/princess/princess-hero-2200.jpg',
     tagline: 'Come Back New.',
@@ -399,7 +399,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   // ── Expedition ──────────────────────────────────────────────────────────────
   {
     id: '12', name: 'Ponant', slug: 'ponant',
-    logo_url: '/assets/supplier logos/jpg/Scenic-black.jpg',
+    logo_url: '/assets/supplier logos/jpg/Scenic-black.png',
     logo_url_white: '/media/cruises/ponant/PONANT_Logo_white-500.png',
     hero_image_url: '/media/cruises/ponant/ponant-hero-2200.jpg',
     tagline: 'The French way of luxury expedition.',
@@ -428,7 +428,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '13', name: 'Lindblad Expeditions', slug: 'lindblad',
-    logo_url: '/assets/supplier logos/jpg/Lindblad-black.jpg',
+    logo_url: '/assets/supplier logos/jpg/Lindblad-black.png',
     logo_url_white: null,
     hero_image_url: '/media/cruises/lindblad/lindblad-antarctica-1920x1000.jpg',
     tagline: 'National Geographic. Expeditions at the edge of the world.',
@@ -458,7 +458,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '14', name: 'UnCruise Adventures', slug: 'uncruise',
-    logo_url: '/media/cruises/uncruise/uncruise-logo-black-540.jpg',
+    logo_url: '/media/cruises/uncruise/uncruise-logo-black-540.png',
     logo_url_white: '/media/cruises/uncruise/uncruise-logo-white-600.png',
     hero_image_url: '/media/cruises/uncruise/UnCruise-hero-1400x624-Snorkeling_Baja_California--Ellen-Barone.jpg',
     tagline: 'Small ships. Big adventures. Wild destinations.',
@@ -487,7 +487,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '15', name: 'Paul Gauguin Cruises', slug: 'paul-gauguin',
-    logo_url: '/assets/supplier logos/jpg/Paul-Gauguin-black.jpg',
+    logo_url: '/assets/supplier logos/jpg/Paul-Gauguin-black.png',
     logo_url_white: '/media/cruises/paul-gauguin/PGC-white-500.png',
     hero_image_url: '/media/cruises/paul-gauguin/pg-borabora-hero.jpg',
     tagline: 'French Polynesia\'s finest voyage.',
@@ -514,7 +514,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '16', name: 'Star Clippers', slug: 'star-clippers',
-    logo_url: '/assets/supplier logos/jpg/Star-Clippers-black.jpg',
+    logo_url: '/assets/supplier logos/jpg/Star-Clippers-black.png',
     logo_url_white: null,
     hero_image_url: '/media/cruises/star-clippers/star_clippers-hero-2000.jpg',
     tagline: 'The romance of sailing under canvas.',
@@ -543,7 +543,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '17', name: 'Scenic', slug: 'scenic',
-    logo_url: '/assets/supplier logos/jpg/Scenic-black.jpg',
+    logo_url: '/assets/supplier logos/jpg/Scenic-black.png',
     logo_url_white: '/media/cruises/scenic/scenic-white-logo.png',
     hero_image_url: '/media/cruises/scenic/Scenic-Eclipse-Antarctica-On-the-Ice---Emperor-hero-2000.jpg',
     tagline: 'Ultra-luxury. All the way to the poles.',
@@ -578,7 +578,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '18', name: 'Crystal Cruises', slug: 'crystal',
-    logo_url: '/media/cruises/crystal/crystal_cruises-black-600.jpg',
+    logo_url: '/media/cruises/crystal/crystal_cruises-black-600.png',
     logo_url_white: '/media/cruises/crystal/crystal_cruises-white-600.png',
     hero_image_url: '/media/cruises/crystal-cruises/crystal-cruises-gallery-1.png',
     tagline: 'The world\'s most awarded luxury cruise line. Reborn.',
@@ -648,7 +648,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   // ── River ───────────────────────────────────────────────────────────────────
   {
     id: '20', name: 'AmaWaterways', slug: 'amawaterways',
-    logo_url: '/media/cruises/ama-waterways/ama-waterways_540-black.jpg',
+    logo_url: '/media/cruises/ama-waterways/ama-waterways_540-black.png',
     logo_url_white: '/media/cruises/ama-waterways/AMA_white_400.png',
     hero_image_url: '/media/cruises/ama-waterways/amawaterways-amamagna-hero-2200.jpg',
     tagline: 'The most award-winning river cruise line in the world.',
@@ -712,8 +712,8 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   // ── Yacht ────────────────────────────────────────────────────────────────────
   {
     id: '22', name: 'Four Seasons Yachts', slug: 'four-seasons-yachts',
-    logo_url: '/media/hotel-programs/logos/four-seasons-preferred-partner.jpg',
-    logo_url_white: '/assets/supplier logos/white transparent/FS_preferred-600.webp',
+    logo_url: '/media/hotel-programs/logos/four-seasons-preferred-partner.png',
+    logo_url_white: '/assets/supplier logos/white transparent/FS_preferred-600.png',
     hero_image_url: '/media/cruises/four_seasons_yacht/YCT_207_aspect16x9.jpg',
     tagline: 'The Four Seasons experience, reimagined at sea.',
     description: 'Four Seasons Yachts brings legendary Four Seasons service to the sea. An intimate superyacht carrying just 96 guests with a 1:1 staff-to-guest ratio, four restaurants, and itineraries through the Caribbean and Mediterranean.',
@@ -774,7 +774,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '24', name: 'Windstar Cruises', slug: 'windstar',
-    logo_url: '/assets/supplier logos/jpg/Windstar-black.jpg',
+    logo_url: '/assets/supplier logos/jpg/Windstar-black.png',
     logo_url_white: null,
     hero_image_url: '/media/cruises/star-clippers/star_clippers-hero_v2-2000.jpg',
     tagline: '180° from ordinary.',

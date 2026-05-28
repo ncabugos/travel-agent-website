@@ -30,8 +30,8 @@ export default async function T3BookHotelPage({ params }: PageProps) {
         image="/media/hero images/four-seasons-CapFerrat-pool-hero.jpg"
         imageAlt="Hotels & Resorts"
         eyebrow="Hotel Programs"
-        title="A quieter list."
-        body="We do not work with every hotel brand. The ones below are the ones where our relationships still matter — where we can pick up the phone, ask for a favour, and have it happen."
+        title="Exclusive Hotel Programs"
+        body="A short list of preferred hotel programs where our relationships unlock the perks that matter — suite upgrades, complimentary breakfast, resort credit, and a personal welcome at check-in."
         imageCaption="Four Seasons Grand-Hôtel du Cap-Ferrat"
       />
 

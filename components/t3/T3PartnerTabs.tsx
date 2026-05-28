@@ -11,30 +11,30 @@ import type { HotelProgram } from '@/lib/hotel-programs'
 // a black variant (Ponant, Silversea, Virgin Voyages) we use the standard
 // brand mark — the grayscale(100%) filter applied below normalises them.
 const CRUISE_PARTNERS = [
-  { slug: 'regent-seven-seas',  name: 'Regent Seven Seas Cruises', logo: '/media/cruises/regent-seven-seas/regent-black-500.jpg' },
-  { slug: 'silversea',          name: 'Silversea Cruises',         logo: '/assets/supplier logos/jpg/Silversea-Logo.jpg' },
+  { slug: 'regent-seven-seas',  name: 'Regent Seven Seas Cruises', logo: '/assets/supplier logos/black transparent/cruise/regent-black-600.png' },
+  { slug: 'silversea',          name: 'Silversea Cruises',         logo: '/assets/supplier logos/jpg/Silversea-Logo.png' },
   { slug: 'seabourn',           name: 'Seabourn Cruises',          logo: '/media/cruises/seabourn/seabourn-black-600.png' },
-  { slug: 'oceania',            name: 'Oceania Cruises',           logo: '/media/cruises/oceania/oceania-cruises-logo-black-600.jpg' },
-  { slug: 'azamara',            name: 'Azamara',                   logo: '/media/cruises/azamara/azamara-logo-black-600.jpg' },
+  { slug: 'oceania',            name: 'Oceania Cruises',           logo: '/media/cruises/oceania/oceania-cruises-logo-black-600.png' },
+  { slug: 'azamara',            name: 'Azamara',                   logo: '/media/cruises/azamara/azamara-logo-black-600.png' },
   { slug: 'celebrity',          name: 'Celebrity Cruises',         logo: '/media/cruises/celebrity/Celebrity-Cruises-no-sub-black.png' },
-  { slug: 'cunard',             name: 'Cunard',                    logo: '/assets/supplier logos/jpg/Cunard-black.jpg' },
-  { slug: 'holland-america',    name: 'Holland America Line',      logo: '/assets/supplier logos/jpg/Holland-America-black.jpg' },
+  { slug: 'cunard',             name: 'Cunard',                    logo: '/assets/supplier logos/jpg/Cunard-black.png' },
+  { slug: 'holland-america',    name: 'Holland America Line',      logo: '/assets/supplier logos/jpg/Holland-America-black.png' },
   { slug: 'norwegian',          name: 'Norwegian Cruise Line',     logo: '/media/cruises/norwegian/NCL-logo-black.png' },
-  { slug: 'royal-caribbean',    name: 'Royal Caribbean',           logo: '/assets/supplier logos/jpg/Royal-Caribbean-black.jpg' },
-  { slug: 'princess',           name: 'Princess Cruises',          logo: '/media/cruises/princess/princess-cruises-2020-black-600.jpg' },
+  { slug: 'royal-caribbean',    name: 'Royal Caribbean',           logo: '/assets/supplier logos/jpg/Royal-Caribbean-black.png' },
+  { slug: 'princess',           name: 'Princess Cruises',          logo: '/media/cruises/princess/princess-cruises-2020-black-600.png' },
   { slug: 'ponant',             name: 'Ponant',                    logo: '/media/cruises/ponant/ponant-blue-600.jpg' },
-  { slug: 'lindblad',           name: 'Lindblad Expeditions',      logo: '/assets/supplier logos/jpg/Lindblad-black.jpg' },
-  { slug: 'uncruise',           name: 'UnCruise Adventures',       logo: '/media/cruises/uncruise/uncruise-logo-black-540.jpg' },
-  { slug: 'paul-gauguin',       name: 'Paul Gauguin Cruises',      logo: '/assets/supplier logos/jpg/Paul-Gauguin-black.jpg' },
-  { slug: 'star-clippers',      name: 'Star Clippers',             logo: '/assets/supplier logos/jpg/Star-Clippers-black.jpg' },
-  { slug: 'scenic',             name: 'Scenic',                    logo: '/assets/supplier logos/jpg/Scenic-black.jpg' },
-  { slug: 'crystal',            name: 'Crystal Cruises',           logo: '/media/cruises/crystal/crystal_cruises-black-600.jpg' },
+  { slug: 'lindblad',           name: 'Lindblad Expeditions',      logo: '/assets/supplier logos/jpg/Lindblad-black.png' },
+  { slug: 'uncruise',           name: 'UnCruise Adventures',       logo: '/media/cruises/uncruise/uncruise-logo-black-540.png' },
+  { slug: 'paul-gauguin',       name: 'Paul Gauguin Cruises',      logo: '/assets/supplier logos/jpg/Paul-Gauguin-black.png' },
+  { slug: 'star-clippers',      name: 'Star Clippers',             logo: '/assets/supplier logos/jpg/Star-Clippers-black.png' },
+  { slug: 'scenic',             name: 'Scenic',                    logo: '/assets/supplier logos/jpg/Scenic-black.png' },
+  { slug: 'crystal',            name: 'Crystal Cruises',           logo: '/media/cruises/crystal/crystal_cruises-black-600.png' },
   { slug: 'viking',             name: 'Viking',                    logo: '/media/cruises/viking/viking-cruises-black.png' },
-  { slug: 'amawaterways',       name: 'AmaWaterways',              logo: '/media/cruises/ama-waterways/ama-waterways_540-black.jpg' },
+  { slug: 'amawaterways',       name: 'AmaWaterways',              logo: '/media/cruises/ama-waterways/ama-waterways_540-black.png' },
   { slug: 'uniworld',           name: 'Uniworld',                  logo: '/media/cruises/uniworld/uniworld_river_cruises-black-500.png' },
-  { slug: 'four-seasons-yachts', name: 'Four Seasons Yachts',      logo: '/media/hotel-programs/logos/four-seasons-preferred-partner.jpg' },
+  { slug: 'four-seasons-yachts', name: 'Four Seasons Yachts',      logo: '/media/hotel-programs/logos/four-seasons-preferred-partner.png' },
   { slug: 'virgin-voyages',     name: 'Virgin Voyages',            logo: '/media/cruises/virgin-voyages/virgin-voyages-600.png' },
-  { slug: 'windstar',           name: 'Windstar Cruises',          logo: '/assets/supplier logos/jpg/Windstar-black.jpg' },
+  { slug: 'windstar',           name: 'Windstar Cruises',          logo: '/assets/supplier logos/jpg/Windstar-black.png' },
 ]
 
 interface T3PartnerTabsProps {
@@ -135,19 +135,18 @@ export function T3PartnerTabs({
               }}
               className="t3-partner-cell"
             >
-              {p.logo_url ? (
+              {(p.logo_url_black || p.logo_url) ? (
                 <Image
-                  src={p.logo_url}
+                  src={p.logo_url_black || p.logo_url || ''}
                   alt={p.name}
-                  width={234}
-                  height={84}
+                  width={320}
+                  height={110}
                   style={{
                     objectFit: 'contain',
                     maxWidth: '100%',
                     maxHeight: 110,
-                    opacity: 0.55,
-                    filter: 'grayscale(100%)',
-                    transition: 'opacity 0.3s ease, filter 0.3s ease',
+                    opacity: 0.88,
+                    transition: 'opacity 0.3s ease',
                   }}
                   className="t3-partner-logo"
                   unoptimized
@@ -198,13 +197,13 @@ export function T3PartnerTabs({
               <Image
                 src={c.logo}
                 alt={c.name}
-                width={286}
-                height={104}
+                width={340}
+                height={120}
                 style={{
                   objectFit: 'contain',
                   maxWidth: '100%',
                   maxHeight: 120,
-                  opacity: 0.55,
+                  opacity: 0.85,
                   filter: 'grayscale(100%)',
                   transition: 'opacity 0.3s ease, filter 0.3s ease',
                 }}
@@ -219,7 +218,6 @@ export function T3PartnerTabs({
       <style>{`
         .t3-partner-cell:hover .t3-partner-logo {
           opacity: 1 !important;
-          filter: grayscale(0%) !important;
         }
         @media (max-width: 1000px) {
           .t3-partner-grid {

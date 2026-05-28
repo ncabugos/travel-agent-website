@@ -201,7 +201,7 @@ export function MarketingCuratedEditorial() {
           className="eah-cadence-grid"
         >
           {[
-            { label: 'Starter', cadence: 'Not included', desc: 'Starter sites stay advisor-written. Upgrade to Growth to switch the curated stream on.' },
+            { label: 'Starter', cadence: '1 post / month', desc: 'A consistent drumbeat of content for emerging advisors.' },
             { label: 'Growth', cadence: '1 post / week', desc: 'A real content engine for SEO and client newsletters.' },
             { label: 'Custom & Agency', cadence: '2 posts / week', desc: 'Plus the ability to commission topics your clients are asking about.' },
           ].map((tier) => (

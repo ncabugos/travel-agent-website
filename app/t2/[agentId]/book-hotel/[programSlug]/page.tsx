@@ -15,6 +15,8 @@ interface PageProps {
   params: Promise<{ agentId: string; programSlug: string }>
 }
 
+export const revalidate = 3600
+
 export async function generateStaticParams() {
   const programs = await getHotelPrograms()
   return programs.map(p => ({ programSlug: p.slug }))
@@ -26,7 +28,7 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
     getHotelProgram(programSlug),
     getSupplierPromo('hotel_program', programSlug),
     getBlogPostsBySupplier(`hotel:${programSlug}`, agentId),
-    getProgramFeaturedHotels(programSlug),
+    getProgramFeaturedHotels(programSlug, 50),
   ])
   if (!program) notFound()
 

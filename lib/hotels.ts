@@ -140,6 +140,7 @@ export const PROGRAM_HOTEL_COMPANIES: Record<string, string> = {
   'rocco-forte-hotels':                   'Rocco Forte Hotels',
   'rosewood-elite':                       'Rosewood Hotels & Resorts',
   'shangri-la-hotels-the-luxury-circle':  'Shangri-La Group',
+  'dorchester-diamond-club':              'Dorchester Collection',
 }
 
 /**

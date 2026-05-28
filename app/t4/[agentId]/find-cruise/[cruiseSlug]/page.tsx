@@ -2,6 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getCruiseLine, getAllCruiseLineSlugs } from '@/lib/cruise-lines'
+import { getSupplierPromo } from '@/lib/supplier-promos'
+import { T4PromoBanner } from '@/components/t4/T4PromoBanner'
 
 interface PageProps {
   params: Promise<{ agentId: string; cruiseSlug: string }>
@@ -21,7 +23,10 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function T4CruiseLineDetailPage({ params }: PageProps) {
   const { agentId, cruiseSlug } = await params
-  const line = await getCruiseLine(cruiseSlug)
+  const [line, promo] = await Promise.all([
+    getCruiseLine(cruiseSlug),
+    getSupplierPromo('cruise_line', cruiseSlug),
+  ])
   if (!line) notFound()
 
   const base = `/t4/${agentId}`
@@ -140,6 +145,20 @@ export default async function T4CruiseLineDetailPage({ params }: PageProps) {
             .t4-cruise-overview { grid-template-columns: 1fr !important; gap: 32px !important; }
           }
         `}</style>
+      </section>
+
+      {/* Promo banner */}
+      <section className="t4-section">
+        <T4PromoBanner
+          promo={promo}
+          agentId={agentId}
+          fallback={{
+            headline: `Sail with ${line.name}`,
+            subheading: `Book through us and unlock exclusive Virtuoso Voyages benefits on every ${line.name} sailing — onboard credits, private receptions, and shore experiences unavailable through any other channel.`,
+            cta_label: 'Plan this voyage',
+            image_url: line.slider_images?.[0] ?? line.hero_image_url ?? undefined,
+          }}
+        />
       </section>
 
       {/* Virtuoso Voyages */}

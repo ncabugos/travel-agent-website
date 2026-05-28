@@ -5,16 +5,17 @@ import Link from 'next/link'
 import { useState } from 'react'
 import type { HotelProgram } from '@/lib/hotel-programs'
 
+// Black transparent PNGs from /public/assets/supplier logos/black transparent/cruise/
 const CRUISE_PARTNERS = [
-  { slug: 'regent-seven-seas', name: 'Regent Seven Seas Cruises', logo: '/media/cruises/regent-seven-seas/regent-black-500.jpg' },
-  { slug: 'silversea',         name: 'Silversea Cruises',         logo: '/assets/supplier logos/jpg/Silversea-Logo.jpg' },
-  { slug: 'seabourn',          name: 'Seabourn Cruises',          logo: '/media/cruises/seabourn/seabourn-black-600.png' },
-  { slug: 'cunard',            name: 'Cunard',                    logo: '/assets/supplier logos/jpg/Cunard-black.jpg' },
-  { slug: 'oceania',           name: 'Oceania Cruises',           logo: '/media/cruises/oceania/oceania-cruises-logo-black-600.jpg' },
-  { slug: 'ponant',            name: 'Ponant',                    logo: '/media/cruises/ponant/ponant-blue-600.jpg' },
-  { slug: 'viking',            name: 'Viking',                    logo: '/media/cruises/viking/viking-cruises-black.png' },
-  { slug: 'holland-america',   name: 'Holland America Line',      logo: '/assets/supplier logos/jpg/Holland-America-black.jpg' },
-  { slug: 'azamara',           name: 'Azamara',                   logo: '/media/cruises/azamara/azamara-logo-black-600.jpg' },
+  { slug: 'regent-seven-seas', name: 'Regent Seven Seas Cruises', logo: '/assets/supplier logos/black transparent/cruise/regent-black-600.png' },
+  { slug: 'silversea',         name: 'Silversea Cruises',         logo: '/assets/supplier logos/black transparent/cruise/silverSea-black-600.png' },
+  { slug: 'seabourn',          name: 'Seabourn Cruises',          logo: '/assets/supplier logos/black transparent/cruise/seabourn-black-600.png' },
+  { slug: 'cunard',            name: 'Cunard',                    logo: '/assets/supplier logos/black transparent/cruise/cunard-black-600.png' },
+  { slug: 'oceania',           name: 'Oceania Cruises',           logo: '/assets/supplier logos/black transparent/cruise/oceaniaCruises-black-600.png' },
+  { slug: 'ponant',            name: 'Ponant',                    logo: '/assets/supplier logos/black transparent/cruise/Ponant-black-600.png' },
+  { slug: 'viking',            name: 'Viking',                    logo: '/assets/supplier logos/black transparent/cruise/vikingCruises-black-600.png' },
+  { slug: 'holland-america',   name: 'Holland America Line',      logo: '/assets/supplier logos/jpg/Holland-America-black.png' },
+  { slug: 'azamara',           name: 'Azamara',                   logo: '/assets/supplier logos/black transparent/cruise/azamara-black-600.png' },
 ]
 
 interface T4PartnerTabsProps {
@@ -33,7 +34,7 @@ export function T4PartnerTabs({
   agentId,
   hotelPrograms,
   eyebrow = 'Exclusive Partnerships',
-  heading = 'The Houses We Know',
+  heading = 'Preferred Partners',
   body = 'Our standing with these programs unlocks privileges — upgrades, credits, priority — unavailable through any other channel.',
 }: T4PartnerTabsProps) {
   const [tab, setTab] = useState<'hotels' | 'cruises'>('hotels')
@@ -112,21 +113,21 @@ export function T4PartnerTabs({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  height: 110,
+                  height: 130,
                   textDecoration: 'none',
                 }}
               >
-                {p.logo_url && (
+                {(p.logo_url_black ?? p.logo_url) && (
                   <Image
-                    src={p.logo_url}
+                    src={p.logo_url_black ?? p.logo_url ?? ''}
                     alt={p.name}
-                    width={220}
-                    height={78}
+                    width={320}
+                    height={110}
                     style={{
                       objectFit: 'contain',
                       maxWidth: '100%',
-                      maxHeight: 100,
-                      opacity: 0.5,
+                      maxHeight: 115,
+                      opacity: 0.82,
                       filter: 'grayscale(100%) sepia(0.05)',
                       transition: 'opacity 0.3s var(--t4-ease), filter 0.3s var(--t4-ease)',
                     }}
@@ -161,20 +162,20 @@ export function T4PartnerTabs({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  height: 120,
+                  height: 140,
                   textDecoration: 'none',
                 }}
               >
                 <Image
                   src={c.logo}
                   alt={c.name}
-                  width={240}
-                  height={96}
+                  width={340}
+                  height={124}
                   style={{
                     objectFit: 'contain',
                     maxWidth: '100%',
-                    maxHeight: 110,
-                    opacity: 0.5,
+                    maxHeight: 125,
+                    opacity: 0.82,
                     filter: 'grayscale(100%) sepia(0.05)',
                     transition: 'opacity 0.3s var(--t4-ease), filter 0.3s var(--t4-ease)',
                   }}

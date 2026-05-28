@@ -160,7 +160,7 @@ export default async function YTCHomePage({ params }: PageProps) {
           {
             title: 'Book a Consultation',
             description: "Discover the world in a way you never knew was possible. Schedule a consultation with one of our expert advisors and let's design your journey.",
-            image: '/media/hero images/four-seasons-sayan-hero.jpg',
+            image: '',
             cta: { label: "Let's Chat", href: '/contact' },
           },
         ]}

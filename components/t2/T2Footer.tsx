@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { filterNavByTier, type Tier } from '@/lib/tier-features'
 
 interface T2FooterProps {
   agentId: string
@@ -10,7 +11,19 @@ interface T2FooterProps {
   cstNumber?: string
   bio?: string
   logoUrl?: string
+  /** Subscription tier — filters the Explore link list so villa/experiences
+      drop on tiers that don't include them. */
+  tier?: Tier | null
 }
+
+const FOOTER_EXPLORE_LINKS = [
+  { label: 'Plan a Trip',    href: '/plan-a-trip' },
+  { label: 'Book a Hotel',   href: '/book-hotel' },
+  { label: 'Private Villas', href: '/book-villa' },
+  { label: 'Cruises',        href: '/find-cruise' },
+  { label: 'Experiences',    href: '/experiences' },
+  { label: 'About',          href: '/about' },
+]
 
 export function T2Footer({
   agentId,
@@ -21,9 +34,11 @@ export function T2Footer({
   cstNumber,
   bio,
   logoUrl,
+  tier,
 }: T2FooterProps) {
   const year = new Date().getFullYear()
   const base = `/t2/${agentId}`
+  const exploreLinks = filterNavByTier(FOOTER_EXPLORE_LINKS, tier)
 
   return (
     <footer
@@ -121,14 +136,7 @@ export function T2Footer({
             Explore
           </h4>
           <nav style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            {[
-              { label: 'Plan a Trip', href: '/plan-a-trip' },
-              { label: 'Book a Hotel', href: '/book-hotel' },
-              { label: 'Private Villas', href: '/book-villa' },
-              { label: 'Cruises', href: '/find-cruise' },
-              { label: 'Experiences', href: '/experiences' },
-              { label: 'About', href: '/about' },
-            ].map(link => (
+            {exploreLinks.map(link => (
               <Link
                 key={link.label}
                 href={`${base}${link.href}`}

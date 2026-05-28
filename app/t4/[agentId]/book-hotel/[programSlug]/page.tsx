@@ -3,7 +3,10 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getHotelProgram, getHotelPrograms } from '@/lib/hotel-programs'
 import { getProgramFeaturedHotels } from '@/lib/hotels'
+import { getSupplierPromo } from '@/lib/supplier-promos'
 import { T4HotelGrid } from '@/components/t4/T4HotelGrid'
+import { T4HotelGallerySlideshow } from '@/components/t4/T4HotelGallerySlideshow'
+import { T4PromoBanner } from '@/components/t4/T4PromoBanner'
 
 interface PageProps {
   params: Promise<{ agentId: string; programSlug: string }>
@@ -25,9 +28,10 @@ export const revalidate = 3600
 
 export default async function T4HotelProgramDetailPage({ params }: PageProps) {
   const { agentId, programSlug } = await params
-  const [program, featuredHotels] = await Promise.all([
+  const [program, featuredHotels, promo] = await Promise.all([
     getHotelProgram(programSlug),
     getProgramFeaturedHotels(programSlug, 50),
+    getSupplierPromo('hotel_program', programSlug),
   ])
   if (!program) notFound()
 
@@ -234,46 +238,26 @@ export default async function T4HotelProgramDetailPage({ params }: PageProps) {
         </section>
       )}
 
-      {/* ── Gallery ────────────────────────────────────────────────────── */}
+      {/* ── Promo banner ───────────────────────────────────────────────── */}
+      {(promo || program.name) && (
+        <section className="t4-section">
+          <T4PromoBanner
+            promo={promo}
+            agentId={agentId}
+            fallback={{
+              headline: `Discover ${program.name}`,
+              subheading: `Book through us and unlock exclusive ${program.name} privileges — upgrades, daily breakfast, and VIP recognition unavailable through any other channel.`,
+              cta_label: 'Book through us',
+              image_url: program.slider_images?.[0] ?? program.image_url ?? undefined,
+            }}
+          />
+        </section>
+      )}
+
+      {/* ── Gallery (slideshow over all images) ────────────────────────── */}
       {program.slider_images && program.slider_images.length > 0 && (
         <section className="t4-section">
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: 12,
-            }}
-            className="t4-gallery-grid"
-          >
-            {program.slider_images.slice(0, 6).map((src, i) => (
-              <div
-                key={src}
-                style={{
-                  position: 'relative',
-                  aspectRatio: i === 0 ? '16 / 10' : '1 / 1',
-                  gridColumn: i === 0 ? 'span 3' : 'auto',
-                  overflow: 'hidden',
-                  background: 'var(--t4-bg-alt)',
-                }}
-              >
-                <Image
-                  src={src}
-                  alt={`${program.name} gallery ${i + 1}`}
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  sizes={i === 0 ? '100vw' : '(max-width: 900px) 50vw, 33vw'}
-                  priority={i === 0}
-                />
-              </div>
-            ))}
-          </div>
-
-          <style>{`
-            @media (max-width: 900px) {
-              .t4-gallery-grid { grid-template-columns: 1fr 1fr !important; }
-              .t4-gallery-grid > div { grid-column: auto !important; aspect-ratio: 1 / 1 !important; }
-            }
-          `}</style>
+          <T4HotelGallerySlideshow images={program.slider_images} alt={program.name} />
         </section>
       )}
 

@@ -11,6 +11,7 @@ const navItems: SidebarItem[] = [
   { href: '/admin/consultations', label: 'Consultations', icon: Icons.inbox },
   { href: '/admin/blog', label: 'Journal Posts', icon: Icons.edit },
   { href: '/admin/categories', label: 'Categories', icon: Icons.tag },
+  { href: '/admin/promos', label: 'Promo Banners', icon: Icons.tag },
   { href: '/admin/requests', label: 'Edit Requests', icon: Icons.inbox },
 ]
 
@@ -22,8 +23,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname()
   const router = useRouter()
 
-  // Don't wrap login page in the dashboard shell
-  if (pathname === '/admin/login') {
+  // Don't wrap the public auth pages in the dashboard shell
+  const isPublicAuthPage =
+    pathname === '/admin/login' ||
+    pathname === '/admin/forgot-password' ||
+    pathname === '/admin/reset-password'
+  if (isPublicAuthPage) {
     return <>{children}</>
   }
 
@@ -38,6 +43,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <Sidebar
         brand="Elite Advisor Hub"
         brandSub="Admin Console"
+        brandLogoSrc="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
         items={navItems}
         bottomItems={bottomItems}
         currentPath={pathname}

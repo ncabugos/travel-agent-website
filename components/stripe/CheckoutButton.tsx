@@ -5,10 +5,12 @@ import { Loader2 } from 'lucide-react'
 interface Props {
   tier: 'starter' | 'growth' | 'custom'
   popular?: boolean
+  /** Billing cycle for the recurring price. Defaults to 'monthly' for backward compatibility. */
+  billingCycle?: 'monthly' | 'annual'
   children?: React.ReactNode
 }
 
-export function CheckoutButton({ tier, popular, children }: Props) {
+export function CheckoutButton({ tier, popular, billingCycle = 'monthly', children }: Props) {
   const [loading, setLoading] = useState(false)
 
   const handleCheckout = async () => {
@@ -17,7 +19,7 @@ export function CheckoutButton({ tier, popular, children }: Props) {
       const res = await fetch('/api/stripe/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier }),
+        body: JSON.stringify({ tier, billingCycle }),
       })
       const data = await res.json()
       if (data.url) {

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { CheckoutButton } from '@/components/stripe/CheckoutButton'
 
@@ -43,13 +43,13 @@ const PRICING_TIERS: PricingTier[] = [
     setup: '$499',
     popular: false,
     blurb:
-      'A custom-branded site for advisors building toward Growth. Your domain, the full supplier catalog, the lead inbox, and a clean editor for your own journal posts. Upgrade to Growth when you want the curated editorial stream switched on.',
+      'A foothold on the platform. Curated supplier programs, your custom domain, the journal pipeline, and a portal that will scale with you. For advisors building toward Growth.',
     features: [
-      'Custom-branded website on your domain',
-      'Supplier catalog — Aman, Four Seasons, Belmond, and more',
+      'Advisor website with custom domain',
+      'Curated editorial & journal pipeline (1 post/month)',
+      'Advisor portal access',
+      'Hotel programs — Aman, Four Seasons, Belmond, and more',
       'Preferred cruise partners overview',
-      'Lead inbox + advisor portal',
-      'Journal editor for your own posts',
       'Email support',
     ],
     cta: 'checkout',
@@ -63,10 +63,10 @@ const PRICING_TIERS: PricingTier[] = [
     setup: '$1,499',
     popular: true,
     blurb:
-      "For advisors with an established book. Everything in Starter, plus the curated editorial stream that publishes to your site weekly, a searchable directory of 1,795+ luxury properties, and the social and experience modules that earn the bookings you sell.",
+      'For advisors with an established book — a searchable hotel directory of 1,795+ properties, cruise partners, an Instagram feed, and the Vista or Meridian template.',
     features: [
       'Everything in Starter',
-      'Curated editorial stream (1 post / week)',
+      'Vista or Meridian template',
       'Searchable hotel directory (1,795+ properties)',
       'Searchable cruise directory',
       'Experiences directory',
@@ -84,16 +84,16 @@ const PRICING_TIERS: PricingTier[] = [
     setup: '$2,999',
     popular: false,
     blurb:
-      "For advisors whose brand already exists in their clients' minds. We align the platform to it — typography, palette, premium modules, villa catalog, and the bespoke landing pages your referrals expect.",
+      "For advisors whose brand already exists in their clients' minds. We align the platform to it — typography, palette, premium modules, the bespoke landing pages your referrals expect.",
     features: [
       'Everything in Growth',
-      'Bespoke design built around your brand',
+      'Any template, including Casa Solis',
       'Villa catalog access',
-      'Curated editorial + topic requests (2 posts / week)',
-      'Premium modules + bespoke landing pages',
+      'Custom-branded topic requests (2 posts/week)',
+      'Bespoke landing pages',
       'Dedicated design consultation',
     ],
-    cta: 'consultation',
+    cta: 'checkout',
   },
   {
     name: 'Agency',
@@ -104,13 +104,13 @@ const PRICING_TIERS: PricingTier[] = [
     setup: 'from $4,999',
     popular: false,
     blurb:
-      'For boutique agencies managing multiple advisors under one brand. An agent directory with individual profiles, unified billing, shared content library, co-authored editorial, and lead routing built for practices that have outgrown a single site.',
+      'For boutique agencies managing multiple advisors under one brand — individual profiles, unified billing, shared content library, co-authored editorial, and lead routing built for practices that have outgrown a single site.',
     features: [
       'Everything in Custom',
-      'Agent directory — individual advisor profiles under one brand',
+      'Individual advisor profiles under one brand',
       'Agency-wide lead routing',
       'Unified billing',
-      'Co-authored editorial (2 posts / week per advisor)',
+      'Co-authored editorial (2 posts/week per advisor)',
       'Shared content library',
       'Team onboarding',
     ],
@@ -124,6 +124,17 @@ const usd = (n: number) =>
 
 export function MarketingPricing() {
   const [cycle, setCycle] = useState<BillingCycle>('monthly')
+
+  // Deep-linkable: visit /?cycle=annual#pricing (e.g. from the consultation
+  // page) and the Annual toggle is pre-selected. Read after mount to avoid
+  // needing a Suspense boundary; the initial render is monthly, then we
+  // flip to annual if the query param says so. Setting state inside a one-
+  // shot effect runs before the user can see flicker on a typical paint.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('cycle') === 'annual') setCycle('annual')
+  }, [])
 
   return (
     <section
@@ -405,30 +416,28 @@ function PricingCard({ plan, cycle }: PricingCardProps) {
 }
 
 // ── CTA ──────────────────────────────────────────────────────────────────────
-// Monthly self-serve tiers (Starter, Growth) → existing Stripe checkout.
-// Annual self-serve tiers → consultation form with ?billing=annual, since the
-// annual price IDs aren't wired in Stripe yet (intentional, per scope). The
-// operator handles annual onboarding manually until those IDs exist.
-// Custom + Agency always route to consultation regardless of cycle.
+// Self-serve checkout tiers (Starter, Growth, Custom) → Stripe checkout on
+// both cycles. The CheckoutButton sends billingCycle to /api/stripe/checkout,
+// which picks the right recurring price ID from TIER_PRICES[tier].monthly | .annual.
+// Agency stays /schedule-consultation regardless of cycle (custom-priced per seat).
 
 function PricingCta({ plan, cycle }: PricingCardProps) {
-  // Stripe checkout path — only when monthly AND the plan is a self-serve checkout tier.
-  if (cycle === 'monthly' && plan.cta === 'checkout') {
+  // Stripe checkout path — Starter, Growth, Custom on either cycle.
+  if (plan.cta === 'checkout') {
     return (
-      <CheckoutButton tier={plan.tier as 'starter' | 'growth'} popular={plan.popular}>
-        Begin Setup
+      <CheckoutButton
+        tier={plan.tier as 'starter' | 'growth' | 'custom'}
+        popular={plan.popular}
+        billingCycle={cycle}
+      >
+        {cycle === 'annual' ? 'Start Annual Plan' : 'Begin Setup'}
       </CheckoutButton>
     )
   }
 
-  // Annual signups for self-serve tiers route through consultation until the
-  // annual Stripe price IDs land. Custom and Agency always go this route.
-  const ctaLabel =
-    plan.cta === 'checkout' && cycle === 'annual'
-      ? 'Start Annual Plan'
-      : 'Schedule a Consultation'
-
+  // Consultation route for Agency on either cycle.
   const href = `/schedule-consultation?tier=${plan.tier}${cycle === 'annual' ? '&billing=annual' : ''}`
+  const ctaLabel = 'Schedule a Consultation'
 
   return (
     <Link

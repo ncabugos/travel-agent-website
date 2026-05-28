@@ -186,6 +186,7 @@ export function T3ServiceCards({
                     padding: '32px 28px',
                     display: 'flex',
                     flexDirection: 'column',
+                    justifyContent: 'center',
                     color: '#fff',
                   }}
                 >
@@ -207,7 +208,6 @@ export function T3ServiceCards({
                       fontSize: 13.5,
                       color: 'rgba(247, 245, 240, 0.62)',
                       lineHeight: 1.55,
-                      flex: 1,
                     }}
                   >
                     {card.description}

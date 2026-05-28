@@ -1,6 +1,9 @@
 import Image from 'next/image'
 import { getSupplierProducts } from '@/lib/collections'
 import { T2ExperiencesGrid } from '@/components/t2/T2ExperiencesGrid'
+import { getAgentProfile } from '@/lib/suppliers'
+import { tierAllows, type Tier } from '@/lib/tier-features'
+import { notFound } from 'next/navigation'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -8,6 +11,13 @@ interface PageProps {
 
 export default async function ExperiencesPage({ params }: PageProps) {
   const { agentId } = await params
+
+  // Experiences directory is a Growth+ feature. Return 404 on Starter.
+  const agent = await getAgentProfile(agentId)
+  if (!tierAllows(agent?.tier as Tier | null | undefined, 'experiences')) {
+    notFound()
+  }
+
   const products = await getSupplierProducts()
 
   // Wine & Wellness Travel: this page represents exclusive Hotel Programs
