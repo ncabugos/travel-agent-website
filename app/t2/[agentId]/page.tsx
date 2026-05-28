@@ -235,7 +235,7 @@ export default async function T2HomePage({ params }: PageProps) {
           agentId={agentId}
           h1="Bespoke journeys."
           h2="Designed in conversation. Handled to the last detail. The trips top advisors plan for their own families, opened to yours."
-          cta1={{ label: 'View Experiences', href: '/experiences' }}
+          cta1={{ label: 'Book a Hotel', href: '/book-hotel' }}
           cta2={{ label: 'Start Planning', href: '/contact' }}
           slides={[
             { image: '/media/hero images/four-seasons-CapFerrat-pool-hero.jpg', eyebrow: "Côte d'Azur" },

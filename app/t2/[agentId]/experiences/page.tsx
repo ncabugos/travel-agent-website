@@ -25,10 +25,15 @@ export default async function ExperiencesPage({ params }: PageProps) {
   // Rosewood Elite, etc.) — NOT the hotels themselves and NOT a mixed
   // cruise/hotel/experience list. Filter to hotel category and hide the
   // category tabs.
+  // This page is the Curated Experiences directory — bespoke private journeys
+  // and itineraries only. Cruises live on /find-cruise and hotel programs on
+  // /book-hotel, so we don't mix those categories in here (and there are no
+  // category tabs). WWT is the one exception: its "experiences" surface is its
+  // invite-only Hotel Programs list.
   const isWWT = agentId === 'wwt-demo'
   const visibleProducts = isWWT
     ? products.filter((p) => p.category === 'hotel')
-    : products
+    : products.filter((p) => p.category === 'experience')
 
   const hero = isWWT
     ? {
@@ -40,10 +45,10 @@ export default async function ExperiencesPage({ params }: PageProps) {
       }
     : {
         image: '/media/hotel-programs/four-seasons/fs-MAU_1261_original.jpg',
-        eyebrow: 'Supplier Partners',
+        eyebrow: 'Bespoke Travel',
         heading: 'Curated Experiences',
         body:
-          'Explore our hand-selected portfolio of luxury cruise voyages, hotel programs, and bespoke travel experiences — all bookable through your advisor.',
+          'A hand-selected portfolio of bespoke private journeys and curated itineraries — designed around you and arranged exclusively through your advisor.',
       }
 
   return (
@@ -85,8 +90,8 @@ export default async function ExperiencesPage({ params }: PageProps) {
           <T2ExperiencesGrid
             products={visibleProducts}
             agentId={agentId}
-            showCategoryTabs={!isWWT}
-            restLabel={isWWT ? 'More Hotel Programs' : 'All Partners'}
+            showCategoryTabs={false}
+            restLabel={isWWT ? 'More Hotel Programs' : 'More Experiences'}
           />
         </div>
       </section>
