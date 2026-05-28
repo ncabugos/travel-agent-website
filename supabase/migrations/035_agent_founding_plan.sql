@@ -1,5 +1,5 @@
 -- =============================================================================
--- Migration: 031_agent_founding_plan.sql
+-- Migration: 035_agent_founding_plan.sql
 -- Description: Adds founding-cohort billing fields to agents for the beta launch
 --              ("Founding Advisor" offer — $0 setup, 90-day free trial, then a
 --              locked founding monthly rate). See EAH_Beta_Launch_Build_Kit.md
