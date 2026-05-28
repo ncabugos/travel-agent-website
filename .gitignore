@@ -40,8 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# claude code session metadata
-.claude/
+# claude code session metadata (local-only state); skills/ + launch.json are project-shared
+.claude/worktrees/
+.claude/settings.local.json
 
 # Office temp lock files
 .~lock.*#
