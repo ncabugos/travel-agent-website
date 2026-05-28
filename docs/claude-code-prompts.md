@@ -156,7 +156,7 @@ Pattern:
 
 Constraints:
 - URLs go through lib/tenant-paths.ts. NEVER inline string-build a path. (CLAUDE.md §7.5)
-- If a write affects all advisor sites (operator broadcast post), revalidate the affected paths across all advisors who opted in — efficiently, not in a loop of 100 revalidations.
+- If a write affects all advisor sites (curated editorial post), revalidate the affected paths across all advisors who opted in — efficiently, not in a loop of 100 revalidations.
 
 Verification:
 - `npx tsc --noEmit` clean

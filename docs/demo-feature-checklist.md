@@ -99,7 +99,7 @@ A module is "must render" if a prospect would reasonably expect to see it after 
 - **M16 Plan-a-Trip** — structured intake form
 - **M17 Instagram Feed** — `T2InstagramFeed` / `T3InstagramFeed`
 - **M19 Testimonials** — `T2TestimonialsGrid` / `T3TestimonialsGrid`
-- **M32 Operator Broadcast** — at least one operator-authored post visible in the journal feed (cadence: 1/week)
+- **M32 Curated Editorial Stream** — at least one operator-authored curated post visible in the journal feed (Growth cadence: 1/week). Growth+ only; Starter is advisor-written.
 
 ### Optional / add-on (visible if purchased)
 
@@ -233,7 +233,7 @@ Run this against every demo slug before a coordinated push:
 2. **All required routes** for the demo's tier are present in the file system (see tier sections above).
 3. **All "must render" modules** appear on the home page in the canonical section order.
 4. **No "must NOT render" modules** appear — these mislead the prospect about what they're buying.
-5. **The journal has ≥3 posts**, including at least one operator broadcast at the tier's cadence (1/mo, 1/wk, 2/wk).
+5. **The journal has ≥3 posts.** Starter demos show advisor-written posts only (no curated/operator broadcast). Growth+ demos additionally carry at least one curated editorial post at the tier's cadence (1/wk Growth, 2/wk Custom & Agency).
 6. **Supplier data is real** — no Lorem Ipsum hotel names. The curated grids / searchable directories should reflect the real Virtuoso catalog.
 7. **The advisor profile** is plausible (headshot, bio, specialties, CST or equivalent shown where present).
 8. **The contact form submits** to the inquiries table without erroring.

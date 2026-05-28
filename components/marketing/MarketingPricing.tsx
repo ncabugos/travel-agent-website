@@ -43,10 +43,10 @@ const PRICING_TIERS: PricingTier[] = [
     setup: '$499',
     popular: false,
     blurb:
-      'A foothold on the platform. Curated supplier programs, your custom domain, the journal pipeline, and a portal that will scale with you. For advisors building toward Growth.',
+      'A foothold on the platform. A custom-branded site, the full supplier catalog, your lead inbox, and a clean editor for your own journal. A portal that scales with you, for advisors building toward Growth.',
     features: [
-      'Advisor website with custom domain',
-      'Curated editorial & journal pipeline (1 post/month)',
+      'Custom-branded site with your domain',
+      'Journal — write & publish your own posts',
       'Advisor portal access',
       'Hotel programs — Aman, Four Seasons, Belmond, and more',
       'Preferred cruise partners overview',
@@ -63,10 +63,10 @@ const PRICING_TIERS: PricingTier[] = [
     setup: '$1,499',
     popular: true,
     blurb:
-      'For advisors with an established book — a searchable hotel directory of 1,795+ properties, cruise partners, an Instagram feed, and the Vista or Meridian template.',
+      'For advisors with an established book — a searchable hotel directory of 1,795+ properties, cruise partners, an Instagram feed, and a curated editorial stream that publishes to your site every week.',
     features: [
       'Everything in Starter',
-      'Vista or Meridian template',
+      'Curated editorial stream (1 post/week)',
       'Searchable hotel directory (1,795+ properties)',
       'Searchable cruise directory',
       'Experiences directory',
@@ -87,7 +87,7 @@ const PRICING_TIERS: PricingTier[] = [
       "For advisors whose brand already exists in their clients' minds. We align the platform to it — typography, palette, premium modules, the bespoke landing pages your referrals expect.",
     features: [
       'Everything in Growth',
-      'Any template, including Casa Solis',
+      'Fully bespoke design built around your brand',
       'Villa catalog access',
       'Custom-branded topic requests (2 posts/week)',
       'Bespoke landing pages',
@@ -104,10 +104,10 @@ const PRICING_TIERS: PricingTier[] = [
     setup: 'from $4,999',
     popular: false,
     blurb:
-      'For boutique agencies managing multiple advisors under one brand — individual profiles, unified billing, shared content library, co-authored editorial, and lead routing built for practices that have outgrown a single site.',
+      'For boutique agencies managing multiple advisors under one brand — an agent directory of individual advisor profiles, agency-wide lead routing, unified billing, a shared content library, and co-authored editorial. Built for practices that have outgrown a single site.',
     features: [
       'Everything in Custom',
-      'Individual advisor profiles under one brand',
+      'Agent directory — individual advisor profiles under one brand',
       'Agency-wide lead routing',
       'Unified billing',
       'Co-authored editorial (2 posts/week per advisor)',

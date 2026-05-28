@@ -16,7 +16,7 @@ A prospect lands here from the pricing page after reading the Starter row. The d
 
 1. **"Is $89/month enough website for me to look credible to a luxury client?"** Yes — and the way the demo proves it is the brand-story prose, the Virtuoso lockup, and the supplier-programs grid on the home page.
 2. **"What am I giving up vs. Growth?"** No searchable hotel directory, no `/experiences`, no `/plan-a-trip`, no Instagram feed, no testimonials grid. The demo should _feel complete_ without those — so the prospect doesn't feel cheated, but also clearly sees the gap when they compare to a Growth demo on `t2-demo` or `t3-demo`.
-3. **"Can I see myself running this in 30 days?"** The blog has a real cadence (1 post/month operator broadcast + 1 advisor post), the inquiry form works, and the about page reads like a real advisor's about page.
+3. **"Can I see myself running this in 30 days?"** The blog shows the advisor's own posts (Starter is advisor-written only — the curated editorial stream is a Growth upgrade), the inquiry form works, and the about page reads like a real advisor's about page.
 
 ---
 
@@ -37,7 +37,7 @@ aspenalpinetravel.com  (custom domain → middleware → /frontend/starter-demo)
 │
 ├── /resources                        (Frontend-only soft page — bonus "what I offer" copy)
 │
-├── /media                            (Frontend-only soft page — operator broadcasts + press)
+├── /media                            (Frontend-only soft page — advisor posts + press)
 │
 ├── /contact                          (M20 Contact / inquiry form)
 │
@@ -129,16 +129,18 @@ Aman · Belmond · Cheval Blanc · Auberge · Four Seasons · Rosewood.
 
 **Posts to seed in this demo (8 total — enough that the archive feels lived-in):**
 
-1. **Operator broadcast (categories: Mountain Luxury)** — "The St. Regis Aspen vs. The Little Nell: how I'd choose for first-timers"
-2. **Operator broadcast (Wellness on the Mountain)** — "Why Vail's mid-week spa days outperform a Friday arrival"
-3. **Advisor original (Trip Reports)** — "What I learned planning a 14-day Aspen-Verbier-Niseko triple"
-4. **Operator broadcast (Cruise & Mountain)** — "The Alaska cruise → Banff land combo, paced for adults" _(operator pushes this — it's also a soft cross-sell for Growth tier)_
-5. **Advisor original (How I Work)** — "What goes into your itinerary before you ever see it"
-6. **Operator broadcast (Virtuoso Perks)** — "Five Belmond perks worth more than the room rate"
-7. **Advisor original (Destination)** — "Two days in Telluride that locals would book"
-8. **Operator broadcast (Seasonal)** — "When to book powder week 2027 (it's already this fall)"
+> **Starter is advisor-written only.** Every post below is an advisor original, written in the Tiptap editor. The operator-produced curated editorial stream does NOT flow to Starter sites — that's the Growth upgrade. These titles all read as the advisor's own voice; none are operator broadcasts.
 
-This gives Starter the right cadence — **1/month operator broadcast** is exactly 1/month over the prior 6–8 months, and 3 advisor originals sprinkled in. Don't exceed 1 operator broadcast per month or the cadence implies Growth.
+1. **Advisor original (categories: Mountain Luxury)** — "The St. Regis Aspen vs. The Little Nell: how I'd choose for first-timers"
+2. **Advisor original (Wellness on the Mountain)** — "Why Vail's mid-week spa days outperform a Friday arrival"
+3. **Advisor original (Trip Reports)** — "What I learned planning a 14-day Aspen-Verbier-Niseko triple"
+4. **Advisor original (Cruise & Mountain)** — "The Alaska cruise → Banff land combo, paced for adults"
+5. **Advisor original (How I Work)** — "What goes into your itinerary before you ever see it"
+6. **Advisor original (Virtuoso Perks)** — "Five Belmond perks worth more than the room rate"
+7. **Advisor original (Destination)** — "Two days in Telluride that locals would book"
+8. **Advisor original (Seasonal)** — "When to book powder week 2027 (it's already this fall)"
+
+Eight advisor originals over the prior 6–8 months reads as a credible self-publishing cadence for a solo advisor. Do NOT seed any operator broadcasts here — a curated stream on a Starter site mis-sells the tier (curated editorial begins at Growth).
 
 ### 3.6 Resources (`/resources`)
 
@@ -157,7 +159,7 @@ Frontend-only — softer than `/resources`, used by Eden today as a press / vide
 
 - 1–2 short founder videos (use `VideoEmbed` component, Mux player) — embed placeholder is fine for the demo
 - A "featured in" strip (Travel + Leisure, Forbes Travel Guide A-List — even if placeholder)
-- One operator broadcast linked from here as "EAH journal coverage"
+- One of the advisor's own journal posts linked from here as "recent writing"
 
 If video assets aren't ready for the demo, **remove `/media` from the nav entirely** rather than ship an empty page. A missing tertiary route is better than a Lorem Ipsum video block.
 
@@ -253,7 +255,7 @@ Select 16–24 programs from existing `hotel_programs` catalog. Suggested anchor
 Aman · Belmond · Cheval Blanc · Auberge · Four Seasons · Rosewood · Six Senses · Mandarin Oriental · Park Hyatt · Peninsula · Ritz-Carlton · St. Regis · COMO · Bulgari · Aman Niseko (cross-tag with skiing) · The Little Nell (Aspen) · Cheval Blanc Courchevel · Cheval Blanc St. Tropez (for shoulder season cross-sell).
 
 **Blog posts** (`blog_posts` + `agent_blog_preferences`):
-Seed the 8 posts listed in §3.5 above. Tag with `target_demo_slugs = ['starter-demo']` for operator broadcasts. Categories: Mountain Luxury · Wellness on the Mountain · Trip Reports · How I Work · Virtuoso Perks · Seasonal.
+Seed the 8 advisor-written posts listed in §3.5 above — authored by the demo advisor, NOT operator broadcasts (Starter does not receive the curated stream). Categories: Mountain Luxury · Wellness on the Mountain · Trip Reports · How I Work · Virtuoso Perks · Seasonal.
 
 **Testimonials:**
 Currently the `TestimonialsCarousel` reads from a hardcoded array. Either (a) keep the existing set if alpine-relatable, or (b) swap in 3 short alpine-flavored quotes via the component prop.
@@ -284,7 +286,7 @@ Common drift to watch for during build:
 - ❌ A multi-advisor team grid on `/about`. One advisor only — multi-advisor is an Agency signal.
 - ❌ A `/journal` route. The frontend template uses `/blog` — keep that. (T2/T3/T4 use `/journal`; it's a template difference, not a tier difference.)
 - ❌ A villa surface anywhere. Villa is Custom+. If the demo's nav, footer, or any content mentions villas, remove it.
-- ❌ More than ~1 operator broadcast per month in the blog. If the cadence implies Growth, the demo over-promises.
+- ❌ Any operator broadcast / curated editorial post in the blog. Starter is advisor-written only; a curated post on a Starter site mis-sells the tier (curated editorial begins at Growth).
 - ❌ A "Powered by Elite Advisor Hub" tag suppressed. White-label is a Custom add-on; Starter wears the EAH chrome.
 
 ---

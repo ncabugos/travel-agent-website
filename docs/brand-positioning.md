@@ -55,7 +55,7 @@ After: *"Four tiers. Every one of them assumes the advisor is the asset. The pla
 **Starter tier copy**
 
 Before: *"Perfect for solo advisors just getting started — get online fast with our most affordable plan."*
-After: *"A foothold on the platform. Curated supplier programs, your custom domain, the journal pipeline, and a portal that will scale with you. For advisors building toward Growth."*
+After: *"A foothold on the platform. A custom-branded site, the full supplier catalog, your lead inbox, and a clean editor for your own journal. A portal that scales with you, for advisors building toward Growth."*
 
 **Custom tier copy**
 
