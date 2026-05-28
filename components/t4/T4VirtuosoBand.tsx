@@ -113,33 +113,6 @@ export function T4VirtuosoBand({ agencyName, hostAgency }: T4VirtuosoBandProps) 
           >
             {intro}
           </p>
-
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: 28,
-              flexWrap: 'wrap',
-            }}
-          >
-            <Image
-              src="/assets/eden/2026_CONDE-NAST_CONDE-NAST-TRAVELER_TOP-TRAVEL-SPECIALISTS_LOGO_RGB.png"
-              alt="Condé Nast Traveler Top Travel Specialist 2026"
-              width={112}
-              height={112}
-              style={{ objectFit: 'contain', opacity: 0.78 }}
-              unoptimized
-            />
-            <Image
-              src="/assets/eden/2025-2026_CONDE-NAST_CONDE-NAST-TRAVELER_TOP-TRAVEL-SPECIALISTS_LOGO_RGB.png"
-              alt="Condé Nast Traveler Top Travel Specialist 2025–2026"
-              width={112}
-              height={112}
-              style={{ objectFit: 'contain', opacity: 0.78 }}
-              unoptimized
-            />
-          </div>
         </div>
 
         {/* Ornament */}

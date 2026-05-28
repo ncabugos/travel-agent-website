@@ -43,7 +43,10 @@ const PERKS = [
     icon: (
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none"
         stroke="var(--t3-accent)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+        <rect x="5" y="2" width="14" height="20" rx="2" />
+        <circle cx="12" cy="10" r="3" />
+        <path d="M12 7v6M9 10h6" />
+        <path d="M9.5 17.5h5" />
       </svg>
     ),
     title: 'VIP Experiences',
@@ -70,11 +73,13 @@ export function T3VirtuosoBand({
   return (
     <section
       style={{
-        background: 'var(--t3-dark-bg)',
-        color: 'var(--t3-dark-text)',
+        background: 'var(--t3-bg-alt)',
+        color: 'var(--t3-text)',
         padding: 'var(--t3-section-pad) 24px',
         position: 'relative',
         overflow: 'hidden',
+        borderTop: '1px solid var(--t3-divider)',
+        borderBottom: '1px solid var(--t3-divider)',
       }}
     >
       {/* Subtle radial accent */}
@@ -106,19 +111,19 @@ export function T3VirtuosoBand({
           </span>
           <h2
             className="t3-headline-xl"
-            style={{ color: 'var(--t3-dark-text)', marginTop: 24, marginBottom: 40 }}
+            style={{ color: 'var(--t3-text)', marginTop: 24, marginBottom: 40 }}
           >
             A Virtuoso Member
           </h2>
 
-          {/* Virtuoso logo */}
+          {/* Virtuoso logo — darkened so it reads on the light band */}
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 32 }}>
             <Image
               src="/assets/virtuoso-footer.png"
               alt="Virtuoso"
               width={180}
               height={48}
-              style={{ objectFit: 'contain', opacity: 0.82 }}
+              style={{ objectFit: 'contain', opacity: 0.7, filter: 'brightness(0)' }}
               unoptimized
             />
           </div>
@@ -128,41 +133,13 @@ export function T3VirtuosoBand({
               fontFamily: 'var(--t3-font-body)',
               fontSize: 16,
               lineHeight: 1.85,
-              color: 'rgba(247, 245, 240, 0.66)',
+              color: 'var(--t3-text-muted)',
               maxWidth: 640,
-              margin: '0 auto 32px',
+              margin: '0 auto',
             }}
           >
             {intro}
           </p>
-
-          {/* Condé Nast badges */}
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: 24,
-              flexWrap: 'wrap',
-            }}
-          >
-            <Image
-              src="/assets/eden/2026_CONDE-NAST_CONDE-NAST-TRAVELER_TOP-TRAVEL-SPECIALISTS_LOGO_RGB.png"
-              alt="Condé Nast Traveler Top Travel Specialist 2026"
-              width={108}
-              height={108}
-              style={{ objectFit: 'contain', opacity: 0.82 }}
-              unoptimized
-            />
-            <Image
-              src="/assets/eden/2025-2026_CONDE-NAST_CONDE-NAST-TRAVELER_TOP-TRAVEL-SPECIALISTS_LOGO_RGB.png"
-              alt="Condé Nast Traveler Top Travel Specialist 2025–2026"
-              width={108}
-              height={108}
-              style={{ objectFit: 'contain', opacity: 0.82 }}
-              unoptimized
-            />
-          </div>
         </div>
 
         {/* Perk columns */}
@@ -179,7 +156,7 @@ export function T3VirtuosoBand({
               key={col.title}
               style={{
                 padding: '40px 40px 48px',
-                borderLeft: i > 0 ? '1px solid rgba(166, 124, 79, 0.16)' : undefined,
+                borderLeft: i > 0 ? '1px solid var(--t3-divider)' : undefined,
               }}
             >
               <div style={{ marginBottom: 20, opacity: 0.92 }}>{col.icon}</div>
@@ -214,7 +191,7 @@ export function T3VirtuosoBand({
                       fontSize: 14,
                       fontWeight: 300,
                       lineHeight: 1.65,
-                      color: 'rgba(247, 245, 240, 0.55)',
+                      color: 'var(--t3-text-muted)',
                       letterSpacing: '0.01em',
                     }}
                   >
@@ -234,7 +211,7 @@ export function T3VirtuosoBand({
           }
           .t3-virtuoso-perks > div {
             border-left: none !important;
-            border-top: 1px solid rgba(166, 124, 79, 0.16);
+            border-top: 1px solid var(--t3-divider);
             padding: 36px 24px !important;
           }
           .t3-virtuoso-perks > div:first-child {

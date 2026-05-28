@@ -37,10 +37,13 @@ export function T2VirtuosoBand({ agencyName, hostAgency = 'Montecito Village Tra
     },
     {
       icon: (
-        // Star / sparkle — VIP, minimal 4-point
+        // Passport — VIP experiences
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
           stroke="var(--t2-accent)" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+          <rect x="5" y="2" width="14" height="20" rx="2" />
+          <circle cx="12" cy="10" r="3" />
+          <path d="M12 7v6M9 10h6" />
+          <path d="M9.5 17.5h5" />
         </svg>
       ),
       title: 'VIP Experiences',
@@ -104,26 +107,6 @@ export function T2VirtuosoBand({ agencyName, hostAgency = 'Montecito Village Tra
             consortium of luxury travel agencies. Our connections give you access to exclusive deals
             and privileges you won&apos;t find anywhere else.
           </p>
-
-          {/* Conde Nast badge row */}
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
-            <Image
-              src="/assets/eden/2026_CONDE-NAST_CONDE-NAST-TRAVELER_TOP-TRAVEL-SPECIALISTS_LOGO_RGB.png"
-              alt="Condé Nast Traveler Top Travel Specialist 2026"
-              width={110}
-              height={110}
-              style={{ objectFit: 'contain', opacity: 0.8 }}
-              unoptimized
-            />
-            <Image
-              src="/assets/eden/2025-2026_CONDE-NAST_CONDE-NAST-TRAVELER_TOP-TRAVEL-SPECIALISTS_LOGO_RGB.png"
-              alt="Condé Nast Traveler Top Travel Specialist 2025"
-              width={110}
-              height={110}
-              style={{ objectFit: 'contain', opacity: 0.8 }}
-              unoptimized
-            />
-          </div>
         </div>
 
 
