@@ -62,24 +62,6 @@ export default async function T2HotelDetailPage({ params }: PageProps) {
         )}
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.65))' }} />
 
-        {/* Breadcrumb / back link */}
-        <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0,
-          padding: '120px 32px 0', zIndex: 2,
-          maxWidth: 1280, margin: '0 auto',
-        }}>
-          <Link
-            href={`${base}/book-hotel#hotel-directory`}
-            style={{
-              fontFamily: 'var(--t2-font-sans)', fontSize: 11,
-              letterSpacing: '0.18em', textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.85)', textDecoration: 'none',
-            }}
-          >
-            ← Hotels
-          </Link>
-        </div>
-
         {/* Headline */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: 2,
