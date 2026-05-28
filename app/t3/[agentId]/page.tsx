@@ -70,28 +70,29 @@ export default async function T3HomePage({ params }: PageProps) {
         subheading="Every journey starts the same way — with a conversation. From there it becomes one of four things, depending on how you like to travel and what you're looking for this time."
         cards={[
           {
-            title: 'Luxury Hotels',
+            title: 'Hotels',
             description: 'Virtuoso-preferred stays with upgrades, breakfast, and the kind of welcome that starts the moment you arrive.',
             image: '/media/hero images/four-seasons-CapFerrat-pool-hero.jpg',
             cta: { label: 'Explore Hotels', href: '/book-hotel' },
           },
           {
-            title: 'Ocean & River Cruise',
+            title: 'Ocean Cruise',
             description: 'Sail with the world\u2019s finest small-ship and yacht brands — each with meaningful onboard perks for our clients.',
             image: '/media/cruises/regent-seven-seas/Regent-hero-Tahiti-2500.jpg',
             cta: { label: 'Explore Cruises', href: '/find-cruise' },
           },
           {
-            title: 'Private Villas',
-            description: 'Staffed homes, fincas, and estates — selected for the family who wants space without sacrificing service.',
-            image: '/media/hero images/four-seasons-sayan-hero.jpg',
-            cta: { label: 'Browse Villas', href: '/contact' },
+            title: 'River Cruise',
+            description: 'Glide through Europe and beyond aboard the most awarded river lines — intimate ships, all-inclusive, every excursion handled.',
+            image: '/media/cruises/ama-waterways/amawaterways-amamagna-hero-2200.jpg',
+            cta: { label: 'Explore Cruises', href: '/find-cruise' },
           },
           {
-            title: 'Bespoke Journeys',
+            // No image \u2192 renders as the solid dark "button-style" card.
+            title: 'Start a Trip',
             description: 'Tell us where you\u2019re going and we\u2019ll handle the rest \u2014 one advisor, one point of contact, one perfectly planned trip.',
-            image: '/media/hero images/four-seasons-taormina-suite-hero.jpg',
-            cta: { label: 'Start a Trip', href: '/contact' },
+            image: '',
+            cta: { label: 'Let\u2019s Chat', href: '/contact' },
           },
         ]}
       />
