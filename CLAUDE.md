@@ -274,3 +274,30 @@ all social presence has consolidated under Wine & Wellness Travel branding.
 **First paying client / brand ambassador:** Eden For Your World (John Oberacker, edenforyourworld.com,
 Growth tier on `frontend` template). When the user references "Eden" or "Eden's site," that's a
 real agent — NOT the legacy `demo-agent` slug, which is stale and should be renamed.
+
+---
+
+## 14. Working principles (always-on)
+
+Four behavioral guardrails for every task. Detailed version lives in the
+`karpathy-guidelines` skill (`.claude/skills/karpathy-guidelines/SKILL.md`).
+
+**Think before coding.** State assumptions explicitly. If multiple interpretations exist,
+surface them — don't pick silently. If something is unclear, stop and ask. Don't manage
+confusion silently.
+
+**Simplicity first.** Minimum code that solves the problem. No features beyond what was
+asked. No abstractions for single-use code. No "flexibility" or "configurability" that
+wasn't requested. If a senior engineer would call it overcomplicated, rewrite it.
+
+**Surgical changes.** Touch only what the request requires. Don't "improve" adjacent code,
+comments, or formatting. Don't refactor things that aren't broken. Match existing style.
+Clean up imports/variables your changes orphaned — leave pre-existing dead code alone
+unless asked. Every changed line should trace directly to the user's request.
+
+**Goal-driven execution.** Translate the task into verifiable success criteria before
+starting. "Add validation" → "tests for invalid inputs pass." "Fix the bug" → "test that
+reproduces it now passes." For multi-step work, state a brief plan with a verify step
+per item.
+
+For trivial tasks, use judgment — these guidelines bias toward caution over speed.
