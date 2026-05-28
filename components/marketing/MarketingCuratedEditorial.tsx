@@ -186,49 +186,12 @@ export function MarketingCuratedEditorial() {
         ))}
       </div>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
-        <div
-          style={{
-            marginTop: '32px',
-            padding: '32px 36px',
-            background: '#fff',
-            borderRadius: '16px',
-            border: '1px solid #ececec',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '32px',
-          }}
-          className="eah-cadence-grid"
-        >
-          {[
-            { label: 'Starter', cadence: '1 post / month', desc: 'A consistent drumbeat of content for emerging advisors.' },
-            { label: 'Growth', cadence: '1 post / week', desc: 'A real content engine for SEO and client newsletters.' },
-            { label: 'Custom & Agency', cadence: '2 posts / week', desc: 'Plus the ability to commission topics your clients are asking about.' },
-          ].map((tier) => (
-            <div key={tier.label}>
-              <p style={{ margin: 0, fontSize: '11px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9ca3af', marginBottom: '8px' }}>
-                {tier.label}
-              </p>
-              <h4 style={{ margin: '0 0 8px', fontSize: '20px', fontWeight: 600, letterSpacing: '-0.01em', color: '#0a0a0a' }}>
-                {tier.cadence}
-              </h4>
-              <p style={{ margin: 0, fontSize: '14px', color: '#71717a', lineHeight: 1.55 }}>
-                {tier.desc}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
       <style>{`
         .eah-journal-scroll::-webkit-scrollbar { height: 8px; }
         .eah-journal-scroll::-webkit-scrollbar-track { background: transparent; }
         .eah-journal-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 4px; }
         .eah-journal-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .eah-journal-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px -12px rgba(0,0,0,0.15); }
-        @media (max-width: 768px) {
-          .eah-cadence-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
-        }
       `}</style>
     </section>
   )
