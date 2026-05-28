@@ -142,66 +142,63 @@ export default async function T4CruiseLineDetailPage({ params }: PageProps) {
         `}</style>
       </section>
 
-      {/* Highlights */}
-      {line.highlights && line.highlights.length > 0 && (
-        <section
-          style={{
-            padding: 'var(--t4-section-pad) 48px',
-            background: 'var(--t4-bg-alt)',
-          }}
-        >
-          <div style={{ maxWidth: 'var(--t4-content-wide)', margin: '0 auto' }}>
-            <div style={{ maxWidth: 720, marginBottom: 72 }}>
-              <span className="t4-eyebrow">Why We Book This Line</span>
-              <h2 className="t4-headline-xl" style={{ marginTop: 28 }}>
-                Included on every voyage.
-              </h2>
-            </div>
-
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                columnGap: 80,
-                rowGap: 56,
-                borderTop: '1px solid var(--t4-divider)',
-                paddingTop: 56,
-              }}
-              className="t4-highlights-grid"
-            >
-              {line.highlights.map((h, i) => (
-                <div key={h.title}>
-                  <div
-                    style={{
-                      fontFamily: 'var(--t4-font-display)',
-                      fontSize: 44,
-                      fontWeight: 300,
-                      color: 'var(--t4-accent)',
-                      marginBottom: 16,
-                      letterSpacing: '-0.02em',
-                      lineHeight: 1,
-                    }}
-                  >
-                    {String(i + 1).padStart(2, '0')}
-                  </div>
-                  <h3 className="t4-headline-md" style={{ marginBottom: 12 }}>
-                    {h.title}
-                  </h3>
-                  <p className="t4-body" style={{ margin: 0 }}>
-                    {h.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <style>{`
-              @media (max-width: 700px) {
-                .t4-highlights-grid { grid-template-columns: 1fr !important; row-gap: 40px !important; }
-              }
-            `}</style>
+      {/* Virtuoso Voyages */}
+      <section style={{ padding: 'var(--t4-section-pad) 48px' }}>
+        <div style={{ maxWidth: 'var(--t4-content-wide)', margin: '0 auto' }}>
+          <div style={{ maxWidth: 720, marginBottom: 72 }}>
+            <span className="t4-eyebrow">Virtuoso Voyages</span>
+            <h2 className="t4-headline-xl" style={{ marginTop: 28 }}>
+              Benefits included on every booking.
+            </h2>
+            <p className="t4-body t4-body-lg" style={{ marginTop: 24 }}>
+              As a member of Virtuoso Voyages, we are able to offer our clients exclusive benefits on every sailing — arranged before you board and confirmed directly through us.
+            </p>
           </div>
-        </section>
-      )}
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              columnGap: 80,
+              rowGap: 56,
+              borderTop: '1px solid var(--t4-divider)',
+              paddingTop: 56,
+            }}
+            className="t4-voyages-grid"
+          >
+            {[
+              { title: 'Dedicated Onboard Host', description: 'A personal Virtuoso host sails with your group, present throughout the voyage to answer questions and ensure every detail runs exactly as planned.' },
+              { title: 'Private Welcome Reception', description: 'An exclusive cocktail reception at the start of each sailing, arranged solely for Virtuoso Voyages guests with introductions facilitated by your host.' },
+              { title: 'Shipboard Credit', description: '$100 per stateroom on voyages under 14 nights; $200 per stateroom on voyages of 14 nights or more, to spend freely on dining, spa, or excursions.' },
+              { title: 'Exclusive Shore Experience', description: 'A private shore excursion, VIP tour, or private car and driver whose itinerary is shaped entirely around your interests and pace — never a group schedule.' },
+              { title: 'Specialty Dining', description: 'Complimentary reservations at specialty restaurants on select sailings, including chef\'s tastings and curated wine pairings on participating vessels.' },
+              { title: 'Spa & Wellness Access', description: 'Select spa treatments, wellness credits, and onboard amenities included on participating voyages across our preferred cruise partners.' },
+            ].map((p, i) => (
+              <div key={p.title}>
+                <div style={{
+                  fontFamily: 'var(--t4-font-display)',
+                  fontSize: 44,
+                  fontWeight: 300,
+                  color: 'var(--t4-accent)',
+                  marginBottom: 16,
+                  letterSpacing: '-0.02em',
+                  lineHeight: 1,
+                }}>
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+                <h3 className="t4-headline-md" style={{ marginBottom: 12 }}>{p.title}</h3>
+                <p className="t4-body" style={{ margin: 0 }}>{p.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <style>{`
+          @media (max-width: 700px) {
+            .t4-voyages-grid { grid-template-columns: 1fr !important; row-gap: 40px !important; }
+          }
+        `}</style>
+      </section>
 
       {/* Fleet */}
       {line.ships && line.ships.length > 0 && (

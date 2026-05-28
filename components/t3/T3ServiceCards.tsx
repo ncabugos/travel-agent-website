@@ -64,98 +64,178 @@ export function T3ServiceCards({
         }}
         className="t3-service-grid"
       >
-        {cards.map((card) => (
-          <Link
-            key={card.title}
-            href={card.cta.href.startsWith('http') ? card.cta.href : `${base}${card.cta.href}`}
-            className="t3-service-card"
-            style={{
-              position: 'relative',
-              display: 'block',
-              overflow: 'hidden',
-              color: 'inherit',
-              textDecoration: 'none',
-              aspectRatio: '2 / 3',
-              background: 'var(--t3-bg-alt)',
-            }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={card.image}
-              alt={card.title}
-              className="t3-service-img"
+        {cards.map((card) => {
+          const isSolid = !card.image
+          return (
+            <Link
+              key={card.title}
+              href={card.cta.href.startsWith('http') ? card.cta.href : `${base}${card.cta.href}`}
+              className="t3-service-card"
               style={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                transition: 'transform 0.9s var(--t3-ease-out)',
-              }}
-            />
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background:
-                  'linear-gradient(to top, rgba(20,17,15,0.78) 0%, rgba(20,17,15,0.08) 58%)',
-              }}
-            />
-            <div
-              style={{
-                position: 'absolute',
-                left: 24,
-                right: 24,
-                bottom: 24,
-                color: '#fff',
+                position: 'relative',
+                display: 'block',
+                overflow: 'hidden',
+                color: 'inherit',
+                textDecoration: 'none',
+                aspectRatio: '4 / 5',
+                background: isSolid ? 'var(--t3-dark-bg, #1A1612)' : 'var(--t3-bg-alt)',
+                border: isSolid ? '1px solid rgba(255,255,255,0.10)' : 'none',
               }}
             >
-              <h3
-                style={{
-                  fontFamily: 'var(--t3-font-display)',
-                  fontSize: 'clamp(22px, 2vw, 28px)',
-                  fontWeight: 500,
-                  letterSpacing: '-0.01em',
-                  marginBottom: 12,
-                  lineHeight: 1.15,
-                }}
-              >
-                {card.title}
-              </h3>
-              <p
-                style={{
-                  fontFamily: 'var(--t3-font-body)',
-                  fontSize: 13.5,
-                  color: 'rgba(247, 245, 240, 0.78)',
-                  lineHeight: 1.55,
-                  marginBottom: 20,
-                }}
-              >
-                {card.description}
-              </p>
-              <span
-                className="t3-service-cta"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  fontFamily: 'var(--t3-font-body)',
-                  fontSize: 10,
-                  letterSpacing: '0.24em',
-                  textTransform: 'uppercase',
-                  fontWeight: 500,
-                  color: 'rgba(255,255,255,0.86)',
-                  transition: 'color 0.2s ease, gap 0.2s ease',
-                }}
-              >
-                {card.cta.label}
-                <span className="t3-service-arrow" style={{ transition: 'transform 0.25s ease' }}>
-                  →
-                </span>
-              </span>
-            </div>
-          </Link>
-        ))}
+              {!isSolid && (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={card.image}
+                    alt={card.title}
+                    className="t3-service-img"
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.9s var(--t3-ease-out)',
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background:
+                        'linear-gradient(to top, rgba(20,17,15,0.78) 0%, rgba(20,17,15,0.08) 58%)',
+                    }}
+                  />
+                </>
+              )}
+
+              {isSolid && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: 2,
+                    background: 'var(--t3-accent, #8B6F47)',
+                  }}
+                />
+              )}
+
+              {/* Image card: title + CTA pinned to bottom */}
+              {!isSolid && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: 24,
+                    right: 24,
+                    bottom: 24,
+                    color: '#fff',
+                  }}
+                >
+                  <h3
+                    style={{
+                      fontFamily: 'var(--t3-font-display)',
+                      fontSize: 'clamp(22px, 2vw, 28px)',
+                      fontWeight: 500,
+                      letterSpacing: '-0.01em',
+                      marginBottom: 12,
+                      lineHeight: 1.15,
+                    }}
+                  >
+                    {card.title}
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: 'var(--t3-font-body)',
+                      fontSize: 13.5,
+                      color: 'rgba(247, 245, 240, 0.78)',
+                      lineHeight: 1.55,
+                      marginBottom: 20,
+                    }}
+                  >
+                    {card.description}
+                  </p>
+                  <span
+                    className="t3-service-cta"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 8,
+                      fontFamily: 'var(--t3-font-body)',
+                      fontSize: 10,
+                      letterSpacing: '0.24em',
+                      textTransform: 'uppercase',
+                      fontWeight: 500,
+                      color: 'rgba(255,255,255,0.86)',
+                      transition: 'color 0.2s ease, gap 0.2s ease',
+                    }}
+                  >
+                    {card.cta.label}
+                    <span className="t3-service-arrow" style={{ transition: 'transform 0.25s ease' }}>→</span>
+                  </span>
+                </div>
+              )}
+
+              {/* Solid card: content flows top-down, CTA at bottom */}
+              {isSolid && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    padding: '32px 28px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    color: '#fff',
+                  }}
+                >
+                  <h3
+                    style={{
+                      fontFamily: 'var(--t3-font-display)',
+                      fontSize: 'clamp(22px, 2vw, 28px)',
+                      fontWeight: 500,
+                      letterSpacing: '-0.01em',
+                      marginBottom: 16,
+                      lineHeight: 1.15,
+                    }}
+                  >
+                    {card.title}
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: 'var(--t3-font-body)',
+                      fontSize: 13.5,
+                      color: 'rgba(247, 245, 240, 0.62)',
+                      lineHeight: 1.55,
+                      flex: 1,
+                    }}
+                  >
+                    {card.description}
+                  </p>
+                  <span
+                    className="t3-service-cta"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 8,
+                      fontFamily: 'var(--t3-font-body)',
+                      fontSize: 10,
+                      letterSpacing: '0.24em',
+                      textTransform: 'uppercase',
+                      fontWeight: 500,
+                      color: 'var(--t3-accent, #8B6F47)',
+                      transition: 'color 0.2s ease, gap 0.2s ease',
+                      marginTop: 24,
+                    }}
+                  >
+                    {card.cta.label}
+                    <span className="t3-service-arrow" style={{ transition: 'transform 0.25s ease' }}>→</span>
+                  </span>
+                </div>
+              )}
+            </Link>
+          )
+        })}
       </div>
 
       <style>{`

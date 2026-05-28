@@ -143,17 +143,13 @@ export default async function T3BookHotelPage({ params }: PageProps) {
                       overflow: 'hidden',
                     }}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={program.image_url}
                       alt={program.name}
+                      fill
                       className="t3-program-card-img"
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        transition: 'transform 0.9s var(--t3-ease-out)',
-                      }}
+                      style={{ objectFit: 'cover', transition: 'transform 0.9s var(--t3-ease-out)' }}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                   </div>
                 )}

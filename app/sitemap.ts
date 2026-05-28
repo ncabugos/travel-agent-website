@@ -7,43 +7,51 @@ const SITE_URL =
     : 'http://localhost:3000')
 
 /**
- * Public sitemap.
+ * Public marketing sitemap for the platform host (eliteadvisorhub.com).
  *
- * Only marketing + demo routes are listed. Advisor-portal and admin
- * routes are deliberately excluded because they require authentication.
- * Individual advisor sites at /frontend/[agentId] and /t2/[agentId] and
- * /t3/[agentId] are not auto-listed here — we rely on each advisor's
- * custom domain to own its own SEO footprint.
+ * Lists only real, indexable pages. In-page anchors (#features, #pricing)
+ * are excluded — Google collapses URL fragments into the homepage, so they
+ * are duplicate URLs, not pages. Admin and advisor-portal routes are excluded
+ * (auth-gated; also blocked in robots.ts).
+ *
+ * Individual advisor sites under /frontend|/t2|/t3|/t4 own their SEO via each
+ * tenant's custom domain + per-tenant sitemap. The entries below are the
+ * showcase demos linked from the homepage #demos section — keep this list in
+ * sync with the DEMOS array in app/page.tsx.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
 
   const marketing = [
     { path: '', priority: 1.0, changeFrequency: 'weekly' as const },
-    { path: '#features', priority: 0.7, changeFrequency: 'monthly' as const },
-    { path: '#pricing', priority: 0.9, changeFrequency: 'monthly' as const },
-    { path: '#demos', priority: 0.8, changeFrequency: 'monthly' as const },
+    { path: 'templates', priority: 0.9, changeFrequency: 'monthly' as const },
+    { path: 'schedule-consultation', priority: 0.8, changeFrequency: 'monthly' as const },
+    { path: 'support', priority: 0.4, changeFrequency: 'monthly' as const },
+    { path: 'privacy', priority: 0.3, changeFrequency: 'yearly' as const },
+    { path: 'terms', priority: 0.3, changeFrequency: 'yearly' as const },
   ]
 
   const demos = [
-    { path: '/frontend/demo-agent', priority: 0.6 },
-    { path: '/t2/t2-demo', priority: 0.6 },
-    { path: '/t3/t3-demo', priority: 0.6 },
-    { path: '/t2/ytc-demo', priority: 0.5 },
+    '/frontend/demo-agent',
+    '/t2/t2-demo',
+    '/t3/t3-demo',
+    '/t2/ytc-demo',
+    '/t4/casa-solis',
+    '/t2/wwt-demo',
   ]
 
   return [
     ...marketing.map((m) => ({
-      url: `${SITE_URL}/${m.path}`.replace(/\/$/, '') + (m.path.startsWith('#') ? '' : ''),
+      url: m.path ? `${SITE_URL}/${m.path}` : SITE_URL,
       lastModified: now,
       changeFrequency: m.changeFrequency,
       priority: m.priority,
     })),
-    ...demos.map((d) => ({
-      url: `${SITE_URL}${d.path}`,
+    ...demos.map((path) => ({
+      url: `${SITE_URL}${path}`,
       lastModified: now,
       changeFrequency: 'monthly' as const,
-      priority: d.priority,
+      priority: 0.6,
     })),
   ]
 }

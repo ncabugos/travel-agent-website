@@ -7,6 +7,7 @@ import { getAgentById } from '@/lib/supabase/admin'
 import { createServiceClient } from '@/lib/supabase/service'
 import { Icons } from '@/components/dashboard/Icons'
 import { AgentSubscriptionPanel } from '@/components/admin/AgentSubscriptionPanel'
+import { FoundingCheckoutPanel } from '@/components/admin/FoundingCheckoutPanel'
 import { CustomDomainField } from '@/components/admin/CustomDomainField'
 import { AgentProfileEditor } from '@/components/admin/AgentProfileEditor'
 import { AgentSelectionPanel } from '@/components/admin/AgentSelectionPanel'
@@ -132,6 +133,13 @@ export default async function AdminAgentDetailPage({ params }: PageProps) {
               invoices: invoicesResult.error,
             }}
             stripeCustomerId={agent.stripe_customer_id ?? null}
+          />
+        </div>
+
+        {/* Founding Advisor (invitation-only beta) checkout link generator */}
+        <div style={{ marginBottom: 24 }}>
+          <FoundingCheckoutPanel
+            agentName={agent.full_name ?? agent.agency_name ?? null}
           />
         </div>
 

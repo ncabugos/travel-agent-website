@@ -32,20 +32,31 @@ keyed on `agents.custom_domain → { agentId, template }`).
 
 ---
 
-## 3. Tier × template matrix (LOCKED May 2026)
+## 3. Tier × feature matrix (May 2026)
 
-| Tier | Monthly | Setup | Template options | Villa | Broadcast cadence |
+Every tier ships a **custom-branded site** — built to the advisor's identity, not handed a stock
+template. Tiers differ by features, not by which design they receive. (The internal template the
+build sits on is an implementation detail, not a marketing axis.)
+
+| Tier | Monthly | Setup | Curated editorial stream | Villa | Headline differentiator |
 |---|---|---|---|---|---|
-| Starter | $89 | $499 | `frontend` only | — | 1 post/month |
-| Growth | $179 | $1,499 | `t2 Vista` or `t3 Meridian` | — | 1 post/week |
-| Custom | $349 | $2,999 | any (incl. `t4 Casa Solis`) | included | 2 posts/week + topic requests |
-| Agency | from $899 | from $4,999 | typically `t2` | included | 2 posts/week per advisor, co-authored option |
+| Starter | $89 | $499 | — (advisor-written only; clean editor included) | — | Custom-branded site, supplier catalog, lead inbox, portal |
+| Growth | $179 | $1,499 | 1 post/week | — | + Curated editorial stream |
+| Custom | $349 | $2,999 | 2 posts/week + topic requests | included | + Villa module, custom features, premium modules, bespoke design |
+| Agency | from $899 | from $4,999 | 2 posts/week per advisor, co-authored option | included | + **Agent directory**, multi-advisor management, unified billing |
+
+**Curated editorials are hard-gated to Growth+.** Starter advisors get the journal module (M18) so
+they can publish their own pieces via the Tiptap editor, but the operator-produced curated stream
+does not flow to Starter sites. Upgrade to Growth is the only path in.
 
 **Core modules on every tier:** M05 Virtuoso · M06 Partner Tabs · M07 Hotel Programs teaser ·
-M09/M10 brand pages · M18 Journal teaser · M20 Contact.
+M09/M10 brand pages · M18 Journal (writeable on all tiers; curated stream Growth+) · M20 Contact.
 
 **Villa module** lives at Custom and above only. The villa catalog is being refined for specialized
 advisors; do not surface villas on Starter or Growth UIs.
+
+**Agent directory** is the Agency-tier differentiator — a unified listing of advisors under one
+agency brand, with individual profiles, agency-wide lead routing, and a shared content library.
 
 The Feature Matrix that drives this lives in `Elite_Advisor_Hub_Feature_Matrix.xlsx` at the repo
 root. **Source of truth for "which module is required on which tier."**

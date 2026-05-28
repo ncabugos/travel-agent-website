@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="supported-color-schemes" content="light dark" />
+    <title>Sign in to Elite Advisor Hub</title>
+    <style>
+      /* Dark-mode overrides — supported by Apple Mail, iOS Mail, recent Outlook */
+      @media (prefers-color-scheme: dark) {
+        body, .bg-page { background-color: #0b0b0f !important; }
+        .bg-card { background-color: #18181b !important; border-color: #27272a !important; }
+        .text-primary { color: #f4f4f5 !important; }
+        .text-secondary { color: #a1a1aa !important; }
+        .text-muted { color: #71717a !important; }
+        .divider { border-top-color: #27272a !important; }
+        .logo-light { display: none !important; }
+        .logo-dark { display: inline-block !important; }
+      }
+      /* Tighten on small screens */
+      @media only screen and (max-width: 480px) {
+        .card-padding { padding: 32px 24px !important; }
+        .h1 { font-size: 22px !important; }
+      }
+    </style>
+  </head>
+  <body
+    class="bg-page"
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f5;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    "
+  >
+    <!-- Preheader (hidden in body, shown in inbox preview) -->
+    <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">
+      Your sign-in link for Elite Advisor Hub. Valid for one hour.
+    </div>
+
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="bg-page" style="background-color:#f4f4f5;">
+      <tr>
+        <td align="center" style="padding: 48px 16px;">
+          <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:560px;">
+
+            <!-- Logo -->
+            <tr>
+              <td align="center" style="padding-bottom: 6px;">
+                <img
+                  class="logo-light"
+                  src="https://www.eliteadvisorhub.com/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
+                  width="180" height="auto" alt="Elite Advisor Hub"
+                  style="display:inline-block; width:180px; max-width:60%; height:auto; border:0;"
+                />
+                <!--[if !mso]><!-->
+                <img
+                  class="logo-dark"
+                  src="https://www.eliteadvisorhub.com/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-white.png"
+                  width="180" height="auto" alt="Elite Advisor Hub"
+                  style="display:none; width:180px; max-width:60%; height:auto; border:0;"
+                />
+                <!--<![endif]-->
+              </td>
+            </tr>
+
+            <!-- Thin purple rule -->
+            <tr>
+              <td align="center" style="padding-bottom: 28px;">
+                <div style="width:44px; height:2px; background-color:#7c3aed; margin:14px auto 0; line-height:2px; font-size:0;">&nbsp;</div>
+              </td>
+            </tr>
+
+            <!-- Card -->
+            <tr>
+              <td
+                class="bg-card card-padding"
+                style="
+                  background-color: #ffffff;
+                  border: 1px solid #e5e7eb;
+                  border-radius: 14px;
+                  padding: 44px 44px;
+                "
+              >
+                <h1
+                  class="h1 text-primary"
+                  style="
+                    margin: 0 0 16px;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                    font-size: 24px;
+                    line-height: 1.25;
+                    font-weight: 700;
+                    color: #111111;
+                    letter-spacing: -0.02em;
+                  "
+                >
+                  Sign in to your advisor portal.
+                </h1>
+
+                <p
+                  class="text-secondary"
+                  style="
+                    margin: 0 0 28px;
+                    font-size: 15px;
+                    line-height: 1.6;
+                    color: #4b5563;
+                  "
+                >
+                  Use the button below to open Elite Advisor Hub. The link is good for one hour and can be used once.
+                </p>
+
+                <!-- Bulletproof button -->
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td align="left">
+                      <!--[if mso]>
+                      <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
+                        href="{{ .ConfirmationURL }}" style="height:48px;v-text-anchor:middle;width:200px;" arcsize="20%" strokecolor="#7c3aed" fillcolor="#7c3aed">
+                        <w:anchorlock/>
+                        <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:15px;font-weight:600;">Sign in</center>
+                      </v:roundrect>
+                      <![endif]-->
+                      <!--[if !mso]><!-->
+                      <a
+                        href="{{ .ConfirmationURL }}"
+                        style="
+                          display: inline-block;
+                          background-color: #7c3aed;
+                          color: #ffffff !important;
+                          text-decoration: none;
+                          padding: 14px 32px;
+                          border-radius: 10px;
+                          font-size: 15px;
+                          font-weight: 600;
+                          letter-spacing: 0.01em;
+                          mso-padding-alt: 0;
+                        "
+                      >
+                        Sign in
+                      </a>
+                      <!--<![endif]-->
+                    </td>
+                  </tr>
+                </table>
+
+                <p
+                  class="text-muted"
+                  style="
+                    margin: 28px 0 0;
+                    font-size: 13px;
+                    line-height: 1.6;
+                    color: #6b7280;
+                  "
+                >
+                  If the button does not open, copy and paste this link into your browser:<br />
+                  <a
+                    href="{{ .ConfirmationURL }}"
+                    style="color: #7c3aed; text-decoration: none; word-break: break-all;"
+                  >{{ .ConfirmationURL }}</a>
+                </p>
+
+                <hr class="divider" style="border:none; border-top:1px solid #e5e7eb; margin: 32px 0;" />
+
+                <p
+                  class="text-muted"
+                  style="
+                    margin: 0;
+                    font-size: 13px;
+                    line-height: 1.6;
+                    color: #6b7280;
+                  "
+                >
+                  You are receiving this because someone requested a sign-in link for <strong style="color:#4b5563; font-weight:600;">{{ .Email }}</strong>. If that was not you, no action is needed — the link expires on its own.
+                </p>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td align="center" style="padding: 28px 16px 0;">
+                <p
+                  class="text-muted"
+                  style="
+                    margin: 0 0 6px;
+                    font-size: 12px;
+                    line-height: 1.6;
+                    color: #9ca3af;
+                  "
+                >
+                  Virtuoso-grade websites for the top travel advisors.
+                </p>
+                <p
+                  class="text-muted"
+                  style="
+                    margin: 0;
+                    font-size: 12px;
+                    line-height: 1.6;
+                    color: #9ca3af;
+                  "
+                >
+                  Elite Advisor Hub &nbsp;·&nbsp;
+                  <a href="https://www.eliteadvisorhub.com" style="color:#9ca3af; text-decoration:underline;">eliteadvisorhub.com</a>
+                </p>
+              </td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

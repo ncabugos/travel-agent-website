@@ -39,6 +39,16 @@ export async function POST(request: Request) {
       const stripeCustomerId = session.customer as string
       const stripeSubscriptionId = session.subscription as string
 
+      // Founding-cohort metadata is mirrored onto the session by the founding
+      // checkout (app/api/stripe/checkout/route.ts). Standard checkouts have no
+      // plan/cohort, so they fall back to the 'standard' default.
+      const plan = session.metadata?.plan === 'founding' ? 'founding' : 'standard'
+      const betaCohort = session.metadata?.cohort ?? null
+      // Founding subscriptions always start in a 90-day trial; standard ones are
+      // active immediately. customer.subscription.updated keeps status in sync
+      // afterward (e.g. when the trial converts to active on day 90).
+      const subscriptionStatus = plan === 'founding' ? 'trialing' : 'active'
+
       if (!email) {
         console.error('Checkout completed but no email found')
         break
@@ -52,18 +62,20 @@ export async function POST(request: Request) {
         .single()
 
       if (existing) {
-        // Update existing agent with Stripe IDs and tier
+        // Update existing agent with Stripe IDs, tier, and plan/cohort
         await supabase
           .from('agents')
           .update({
             tier,
+            plan,
+            beta_cohort: betaCohort,
             stripe_customer_id: stripeCustomerId,
             stripe_subscription_id: stripeSubscriptionId,
-            subscription_status: 'active',
+            subscription_status: subscriptionStatus,
           })
           .eq('id', existing.id)
 
-        console.log(`Updated agent ${existing.id} with Stripe subscription`)
+        console.log(`Updated agent ${existing.id} with Stripe subscription (plan=${plan})`)
       } else {
         // Create new agent record
         const { data: newAgent, error } = await supabase
@@ -73,10 +85,12 @@ export async function POST(request: Request) {
             full_name: customerName ?? email.split('@')[0],
             agency_name: customerName ? `${customerName}'s Agency` : 'My Agency',
             tier,
+            plan,
+            beta_cohort: betaCohort,
             template: tier === 'starter' ? 'frontend' : 't2',
             stripe_customer_id: stripeCustomerId,
             stripe_subscription_id: stripeSubscriptionId,
-            subscription_status: 'active',
+            subscription_status: subscriptionStatus,
             role: 'agent',
           })
           .select('id')
@@ -85,19 +99,24 @@ export async function POST(request: Request) {
         if (error) {
           console.error('Failed to create agent:', error)
         } else {
-          console.log(`Created new agent ${newAgent.id} for ${email}`)
+          console.log(`Created new agent ${newAgent.id} for ${email} (plan=${plan})`)
 
           // Notify admin
+          const planLabel = plan === 'founding'
+            ? `founding ${tier} (${betaCohort})`
+            : tier
           await supabase
             .from('admin_notifications')
             .insert({
               type: 'new_signup',
-              title: `New ${tier} signup: ${email}`,
-              body: `${customerName || email} just signed up for the ${tier} tier via Stripe.`,
+              title: `New ${planLabel} signup: ${email}`,
+              body: `${customerName || email} just signed up for the ${planLabel} plan via Stripe.`,
               metadata: {
                 agent_id: newAgent.id,
                 email,
                 tier,
+                plan,
+                beta_cohort: betaCohort,
                 stripe_customer_id: stripeCustomerId,
               },
             })
@@ -157,6 +176,25 @@ export async function POST(request: Request) {
       }
 
       console.log(`Subscription canceled for customer ${customerId}`)
+      break
+    }
+
+    // ── Trial ending soon (~3 days out) — founding 90-day trial ─────
+    case 'customer.subscription.trial_will_end': {
+      const subscription = event.data.object as Stripe.Subscription
+      const plan = subscription.metadata?.plan ?? 'standard'
+      const cohort = subscription.metadata?.cohort ?? null
+      const trialEnd = subscription.trial_end
+        ? new Date(subscription.trial_end * 1000).toISOString()
+        : 'unknown'
+
+      // Stripe fires this ~3 days before the 90-day founding trial converts to
+      // the locked founding rate.
+      // TODO: send the courtesy "your founding rate begins in 3 days" email via
+      // lib/email.ts once the Resend template is wired (Build Kit Part A).
+      console.log(
+        `Trial will end for subscription ${subscription.id} (customer ${subscription.customer}) — plan=${plan}, cohort=${cohort}, trial_end=${trialEnd}`,
+      )
       break
     }
 

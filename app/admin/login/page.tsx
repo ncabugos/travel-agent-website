@@ -75,7 +75,7 @@ function AdminLoginForm() {
             margin: 0, fontSize: '22px', fontWeight: 700, color: '#111',
             letterSpacing: '-0.02em',
           }}>
-            EliteAdvisorHub
+            Elite Advisor Hub
           </h1>
           <p style={{ margin: '6px 0 0', fontSize: '13px', color: '#6b7280' }}>
             Platform Administration

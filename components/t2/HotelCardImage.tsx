@@ -66,7 +66,6 @@ export function HotelCardImage({
       className="t2-card-image"
       style={{ objectFit: 'cover' }}
       sizes={sizes}
-      unoptimized
       onError={() => setErrored(true)}
     />
   )

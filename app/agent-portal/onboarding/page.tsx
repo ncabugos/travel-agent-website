@@ -234,7 +234,7 @@ export default function OnboardingPage() {
             <span style={{ color: '#fff', fontSize: '18px', fontWeight: 700 }}>L</span>
           </div>
           <h1 style={{ margin: '0 0 4px', fontSize: '22px', fontWeight: 700, color: '#111', letterSpacing: '-0.02em' }}>
-            Welcome to EliteAdvisorHub
+            Welcome to Elite Advisor Hub
           </h1>
           <p style={{ margin: 0, fontSize: '14px', color: '#6b7280' }}>
             Let's set up your profile — it only takes a few minutes.

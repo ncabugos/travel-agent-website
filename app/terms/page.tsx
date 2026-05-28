@@ -4,7 +4,7 @@ import { LegalDocPage } from '@/components/legal/LegalDocPage'
 export const metadata: Metadata = {
   title: 'Terms of Service',
   description:
-    'Terms of Service for the EliteAdvisorHub platform, operated by Elite Advisor Hub, LLC.',
+    'Terms of Service for the Elite Advisor Hub platform, operated by Elite Advisor Hub, LLC.',
 }
 
 export default function TermsPage() {

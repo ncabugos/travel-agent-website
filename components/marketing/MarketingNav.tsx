@@ -9,7 +9,7 @@ const NAV_LINKS = [
   { label: 'Demos',    href: '#demos'    },
 ]
 
-export function MarketingNav() {
+export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
   const [open, setOpen] = useState(false)
 
   const close = useCallback(() => setOpen(false), [])
@@ -45,30 +45,52 @@ export function MarketingNav() {
           }}
         >
           {/* Brand */}
-          <Link href="/" onClick={close} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <span style={{ fontSize: '16px', fontWeight: 700, letterSpacing: '-0.02em' }}>EliteAdvisorHub</span>
+          <Link href="/" onClick={close} style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
+              alt="Elite Advisor Hub"
+              style={{ height: '26px', width: 'auto', display: 'block' }}
+            />
           </Link>
 
           {/* Desktop links */}
-          <div className="marketing-nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-            {NAV_LINKS.map(({ label, href }) => (
-              <a key={label} href={href} style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}>
-                {label}
-              </a>
-            ))}
-            <Link
-              href="/agent-portal/login"
-              style={{
-                padding: '8px 20px', backgroundColor: '#111', color: '#fff',
-                borderRadius: '8px', fontSize: '13px', fontWeight: 600,
-                textDecoration: 'none',
-              }}
-            >
-              Agent Login
-            </Link>
-          </div>
+          {!minimal && (
+            <div className="marketing-nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+              {NAV_LINKS.map(({ label, href }) => (
+                <a key={label} href={href} style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}>
+                  {label}
+                </a>
+              ))}
+              <Link
+                href="/agent-portal/login"
+                style={{
+                  padding: '8px 18px',
+                  color: '#111',
+                  fontSize: '13px', fontWeight: 600,
+                  textDecoration: 'none',
+                }}
+              >
+                Agent Login
+              </Link>
+              <Link
+                href="/agent-portal/register"
+                style={{
+                  padding: '8px 20px',
+                  background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
+                  color: '#fff',
+                  borderRadius: '8px', fontSize: '13px', fontWeight: 600,
+                  textDecoration: 'none',
+                  boxShadow: '0 1px 2px rgba(124,58,237,0.25)',
+                }}
+              >
+                Sign Up Now
+              </Link>
+            </div>
+          )}
 
           {/* Mobile hamburger */}
+          {!minimal && (
           <button
             type="button"
             className="marketing-nav-hamburger"
@@ -120,10 +142,12 @@ export function MarketingNav() {
               />
             </div>
           </button>
+          )}
         </div>
       </nav>
 
       {/* Mobile sheet backdrop */}
+      {!minimal && (
       <div
         onClick={close}
         aria-hidden="true"
@@ -135,8 +159,10 @@ export function MarketingNav() {
           transition: 'opacity 0.25s ease',
         }}
       />
+      )}
 
       {/* Mobile sheet */}
+      {!minimal && (
       <div
         id="marketing-mobile-sheet"
         role="dialog"
@@ -184,12 +210,29 @@ export function MarketingNav() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
             <Link
+              href="/agent-portal/register"
+              onClick={close}
+              style={{
+                display: 'block', textAlign: 'center',
+                padding: '14px 20px',
+                background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
+                color: '#fff',
+                borderRadius: '10px',
+                fontSize: '15px', fontWeight: 600,
+                textDecoration: 'none',
+                boxShadow: '0 1px 2px rgba(124,58,237,0.25)',
+              }}
+            >
+              Sign Up Now
+            </Link>
+            <Link
               href="/agent-portal/login"
               onClick={close}
               style={{
                 display: 'block', textAlign: 'center',
                 padding: '14px 20px',
-                backgroundColor: '#111', color: '#fff',
+                backgroundColor: '#fff', color: '#111',
+                border: '1px solid rgba(0,0,0,0.12)',
                 borderRadius: '10px',
                 fontSize: '15px', fontWeight: 600,
                 textDecoration: 'none',
@@ -215,6 +258,7 @@ export function MarketingNav() {
           </div>
         </div>
       </div>
+      )}
 
       <style>{`
         @media (max-width: 768px) {

@@ -82,17 +82,19 @@ export function T2HotelProgramsGrid({
             >
               {program.image_url && (
                 <div style={{ position: 'relative', aspectRatio: '16 / 10', overflow: 'hidden' }}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={program.image_url}
                     alt={program.name}
+                    fill
                     className="t2-program-card-img"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      transition: 'transform 0.9s ease',
-                    }}
+                    style={{ objectFit: 'cover', transition: 'transform 0.9s ease' }}
+                    sizes={
+                      columns === 4
+                        ? '(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 25vw'
+                        : columns === 2
+                          ? '(max-width: 600px) 100vw, 50vw'
+                          : '(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw'
+                    }
                   />
                 </div>
               )}

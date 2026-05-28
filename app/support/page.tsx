@@ -6,7 +6,7 @@ import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 export const metadata: Metadata = {
   title: 'Customer Support',
   description:
-    'Get help with your EliteAdvisorHub account, billing, or technical issues. We respond within one business day.',
+    'Get help with your Elite Advisor Hub account, billing, or technical issues. We respond within one business day.',
 }
 
 export default function SupportPage() {
@@ -25,7 +25,7 @@ export default function SupportPage() {
             textDecoration: 'none',
           }}
         >
-          ← EliteAdvisorHub
+          ← Elite Advisor Hub
         </Link>
 
         <h1 style={{

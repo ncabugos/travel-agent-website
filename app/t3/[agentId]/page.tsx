@@ -38,9 +38,8 @@ export default async function T3HomePage({ params }: PageProps) {
         agentId={agentId}
         image="/media/hotel-programs/belmond-bellini-club/belmond-hero-2000.jpg"
         imageCaption="Belmond Hotel Cipriani · Venice"
-        eyebrow="A World Beyond"
-        headlineLine1="Quietly"
-        headlineLine2="extraordinary."
+        headlineLine1="Extraordinary"
+        headlineLine2="adventures."
         body="We design private journeys for travelers who know exactly what they don't want. No templated itineraries — only considered introductions to the places, stays, and people worth knowing."
         primaryCta={{ label: 'Plan a Trip', href: '/contact' }}
         secondaryCta={{ label: 'Our Philosophy', href: '#philosophy' }}

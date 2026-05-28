@@ -256,12 +256,13 @@ export default async function T4HotelProgramDetailPage({ params }: PageProps) {
                   background: 'var(--t4-bg-alt)',
                 }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={src}
                   alt={`${program.name} gallery ${i + 1}`}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  loading={i < 3 ? 'eager' : 'lazy'}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  sizes={i === 0 ? '100vw' : '(max-width: 900px) 50vw, 33vw'}
+                  priority={i === 0}
                 />
               </div>
             ))}

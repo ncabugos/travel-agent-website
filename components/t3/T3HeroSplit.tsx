@@ -4,7 +4,8 @@ interface T3HeroSplitProps {
   agentId: string
   image: string
   imageCaption?: string
-  eyebrow: string
+  /** Small uppercase line above the headline. Omit to render headline at the top. */
+  eyebrow?: string
   headlineLine1: string
   headlineLine2: string
   body: string
@@ -102,14 +103,16 @@ export function T3HeroSplit({
         className="t3-hero-panel"
       >
         <div style={{ maxWidth: 560 }}>
-          <span className="t3-eyebrow" style={{ marginBottom: 32, display: 'inline-flex' }}>
-            {eyebrow}
-          </span>
+          {eyebrow && (
+            <span className="t3-eyebrow" style={{ marginBottom: 32, display: 'inline-flex' }}>
+              {eyebrow}
+            </span>
+          )}
 
           <h1
             className="t3-headline-xl"
             style={{
-              marginTop: 24,
+              marginTop: eyebrow ? 24 : 0,
               marginBottom: 28,
             }}
           >

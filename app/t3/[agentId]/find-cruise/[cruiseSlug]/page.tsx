@@ -129,55 +129,53 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* ── Highlights / Advisor-only benefits ─────────────────────────── */}
-      {line.highlights && line.highlights.length > 0 && (
-        <section className="t3-section t3-section-alt">
-          <div style={{ maxWidth: 'var(--t3-content-narrow)', marginBottom: 'var(--t3-gap)' }}>
-            <span className="t3-eyebrow t3-eyebrow-plain">Why We Book This Line</span>
-            <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
-              Included on every voyage.
-            </h2>
-            <p className="t3-body t3-body-lg" style={{ marginTop: 24 }}>
-              These benefits apply to every {line.name} booking made through us —
-              advisor-arranged, confirmed before you sail.
-            </p>
-          </div>
+      {/* ── Virtuoso Voyages ───────────────────────────────────────────── */}
+      <section className="t3-section">
+        <div style={{ maxWidth: 'var(--t3-content-narrow)', marginBottom: 'var(--t3-gap)' }}>
+          <span className="t3-eyebrow t3-eyebrow-plain">Virtuoso Voyages</span>
+          <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
+            Benefits included on every booking.
+          </h2>
+          <p className="t3-body t3-body-lg" style={{ marginTop: 24 }}>
+            As a member of Virtuoso Voyages, we are able to offer our clients exclusive benefits on every sailing — arranged before you board and confirmed directly through us.
+          </p>
+        </div>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: 'var(--t3-gap)',
-              borderTop: '1px solid var(--t3-divider)',
-              paddingTop: 'var(--t3-gap)',
-            }}
-            className="t3-cruise-highlights-grid"
-          >
-            {line.highlights.map((h, i) => (
-              <div key={h.title}>
-                <div
-                  style={{
-                    fontFamily: 'var(--t3-font-display)',
-                    fontSize: 28,
-                    fontWeight: 400,
-                    color: 'var(--t3-accent)',
-                    marginBottom: 12,
-                    letterSpacing: '-0.02em',
-                  }}
-                >
-                  {String(i + 1).padStart(2, '0')}
-                </div>
-                <h3 className="t3-headline-md" style={{ marginBottom: 12, fontSize: 'clamp(18px, 1.6vw, 22px)' }}>
-                  {h.title}
-                </h3>
-                <p className="t3-body" style={{ fontSize: 'clamp(13.5px, 1vw, 14.5px)', margin: 0 }}>
-                  {h.description}
-                </p>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: 'var(--t3-gap)',
+            borderTop: '1px solid var(--t3-divider)',
+            paddingTop: 'var(--t3-gap)',
+          }}
+          className="t3-voyages-grid"
+        >
+          {[
+            { title: 'Dedicated Onboard Host', description: 'A personal Virtuoso host sails with your group, present throughout the voyage to answer questions and ensure every detail runs exactly as planned.' },
+            { title: 'Private Welcome Reception', description: 'An exclusive cocktail reception at the start of each sailing, arranged solely for Virtuoso Voyages guests with introductions facilitated by your host.' },
+            { title: 'Shipboard Credit', description: '$100 per stateroom on voyages under 14 nights; $200 per stateroom on voyages of 14 nights or more, to spend freely on dining, spa, or excursions.' },
+            { title: 'Exclusive Shore Experience', description: 'A private shore excursion, VIP tour, or private car and driver whose itinerary is shaped entirely around your interests and pace — never a group schedule.' },
+            { title: 'Specialty Dining', description: 'Complimentary reservations at specialty restaurants on select sailings, including chef\'s tastings and curated wine pairings on participating vessels.' },
+            { title: 'Spa & Wellness Access', description: 'Select spa treatments, wellness credits, and onboard amenities included on participating voyages across our preferred cruise partners.' },
+          ].map((p, i) => (
+            <div key={p.title}>
+              <div style={{
+                fontFamily: 'var(--t3-font-display)',
+                fontSize: 28,
+                fontWeight: 400,
+                color: 'var(--t3-accent)',
+                marginBottom: 12,
+                letterSpacing: '-0.02em',
+              }}>
+                {String(i + 1).padStart(2, '0')}
               </div>
-            ))}
-          </div>
-        </section>
-      )}
+              <h3 className="t3-headline-md" style={{ marginBottom: 12, fontSize: 'clamp(18px, 1.6vw, 22px)' }}>{p.title}</h3>
+              <p className="t3-body" style={{ fontSize: 'clamp(13.5px, 1vw, 14.5px)', margin: 0 }}>{p.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* ── Fleet ──────────────────────────────────────────────────────── */}
       {line.ships && line.ships.length > 0 && (

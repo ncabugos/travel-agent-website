@@ -142,6 +142,63 @@ export function canonicalUrl(agent: AgentProfile, pathBelowTenant = ''): string 
   return `${origin}${base}${trailing}`
 }
 
+/* ── Marketing (non-tenant) page metadata ───────────────────────────────── */
+
+interface MarketingMetadataInput {
+  /** Full <title> for the page. Brand suffix is up to the caller. */
+  title: string
+  description: string
+  /** Path under the platform host, e.g. 'templates'. Empty for the homepage. */
+  path?: string
+  /** OG/Twitter image (path under /public or absolute URL). */
+  image?: string
+  imageAlt?: string
+}
+
+/**
+ * Metadata for platform marketing pages (eliteadvisorhub.com/<path>) — e.g.
+ * /templates, /beta, /schedule-consultation. Unlike buildMetadata (which is
+ * tenant-scoped and needs an AgentProfile), this canonicalizes to the platform
+ * host. URLs are emitted relative so Next.js resolves them against the root
+ * layout's `metadataBase`, keeping canonicals in sync with app/sitemap.ts. The
+ * absolute title avoids doubling the layout's "· EliteAdvisorHub" suffix.
+ */
+export function buildMarketingMetadata({
+  title,
+  description,
+  path = '',
+  image,
+  imageAlt,
+}: MarketingMetadataInput): Metadata {
+  const canonical = path ? `/${path.replace(/^\/+/, '')}` : '/'
+  return {
+    title: { absolute: title },
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      siteName: 'EliteAdvisorHub',
+      type: 'website',
+      locale: 'en_US',
+      ...(image ? { images: [{ url: image, alt: imageAlt ?? title }] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      ...(image ? { images: [image] } : {}),
+    },
+    robots: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  }
+}
+
 /* ── Metadata builder ───────────────────────────────────────────────────── */
 
 interface BuildMetadataInput {

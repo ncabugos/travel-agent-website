@@ -24,7 +24,6 @@ const DEMO_LINKS = [
   { label: 'Meridian Travel',              href: '/t3/t3-demo' },
   { label: 'Your Travel Center',    href: '/t2/ytc-demo' },
   { label: 'Casa Solis',            href: '/t4/casa-solis' },
-  { label: 'Wine & Wellness Travel', href: '/t2/wwt-demo' },
 ]
 
 const COMPANY_LINKS = [
@@ -64,16 +63,13 @@ export function MarketingFooter() {
 
           {/* Brand block */}
           <div>
-            <Link href="/" style={{
-              fontSize: 18,
-              fontWeight: 700,
-              color: '#111',
-              textDecoration: 'none',
-              letterSpacing: '-0.01em',
-              display: 'inline-block',
-              marginBottom: 12,
-            }}>
-              EliteAdvisorHub
+            <Link href="/" style={{ display: 'inline-block', marginBottom: 14 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
+                alt="Elite Advisor Hub"
+                style={{ height: 28, width: 'auto', display: 'block' }}
+              />
             </Link>
             <p style={{
               fontSize: 13,

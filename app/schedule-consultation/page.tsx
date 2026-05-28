@@ -1,33 +1,36 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ConsultationForm } from '@/components/marketing/ConsultationForm'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 
 export const metadata = {
-  title: 'Schedule a Consultation — EliteAdvisorHub',
+  title: 'Schedule a Consultation — Elite Advisor Hub',
   description:
     'Talk to our team about a custom-designed advisor site or multi-advisor agency build.',
 }
 
 const ALLOWED_TIERS = ['starter', 'growth', 'custom', 'agency'] as const
 type TierValue = (typeof ALLOWED_TIERS)[number]
+type BillingCycle = 'monthly' | 'annual'
 
 interface PageProps {
-  searchParams: Promise<{ tier?: string }>
+  searchParams: Promise<{ tier?: string; billing?: string }>
 }
 
 export default async function ScheduleConsultationPage({ searchParams }: PageProps) {
-  const { tier } = await searchParams
+  const { tier, billing } = await searchParams
   const initialTier: TierValue = (ALLOWED_TIERS as readonly string[]).includes(tier ?? '')
     ? (tier as TierValue)
     : 'custom'
+  const initialBilling: BillingCycle = billing === 'annual' ? 'annual' : 'monthly'
 
   return (
     <div
       style={{
         minHeight: '100vh',
-        background: 'var(--cream, #FAFAF5)',
-        color: 'var(--charcoal, #1A1715)',
-        fontFamily: 'var(--font-sans)',
+        background: '#fafafa',
+        color: '#111',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
       }}
     >
       {/* Lightweight header — matches marketing homepage */}
@@ -54,43 +57,33 @@ export default async function ScheduleConsultationPage({ searchParams }: PagePro
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
               textDecoration: 'none',
               color: '#111',
             }}
           >
-            <div
-              style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '8px',
-                background: 'linear-gradient(135deg, #111 0%, #374151 100%)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+            <Image
+              src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
+              alt="Elite Advisor Hub"
+              width={800}
+              height={134}
+              priority
+              style={{ height: '26px', width: 'auto', display: 'block' }}
+            />
+          </Link>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+            <Link
+              href="/?cycle=annual#pricing"
+              style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}
             >
-              <span
-                style={{
-                  color: '#fff',
-                  fontSize: '16px',
-                  fontWeight: 700,
-                  letterSpacing: '-0.02em',
-                }}
-              >
-                E
-              </span>
-            </div>
-            <span style={{ fontSize: '16px', fontWeight: 700, letterSpacing: '-0.02em' }}>
-              EliteAdvisorHub
-            </span>
-          </Link>
-          <Link
-            href="/#pricing"
-            style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}
-          >
-            ← Back to pricing
-          </Link>
+              View annual plans →
+            </Link>
+            <Link
+              href="/#pricing"
+              style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}
+            >
+              ← Back to pricing
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -98,11 +91,11 @@ export default async function ScheduleConsultationPage({ searchParams }: PagePro
         <header style={{ textAlign: 'center', marginBottom: '56px' }}>
           <div
             style={{
-              fontFamily: 'var(--font-sans)',
+              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
               fontSize: '10px',
               letterSpacing: '0.3em',
               textTransform: 'uppercase',
-              color: 'var(--gold, #B49A5A)',
+              color: '#7c3aed',
               marginBottom: '20px',
             }}
           >
@@ -110,23 +103,23 @@ export default async function ScheduleConsultationPage({ searchParams }: PagePro
           </div>
           <h1
             style={{
-              fontFamily: 'var(--font-serif)',
+              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
               fontSize: 'clamp(36px, 5vw, 52px)',
-              fontWeight: 300,
-              letterSpacing: '-0.01em',
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
               lineHeight: 1.15,
               margin: '0 0 20px',
-              color: 'var(--charcoal, #1A1715)',
+              color: '#111',
             }}
           >
             Let&apos;s talk about your site.
           </h1>
           <p
             style={{
-              fontFamily: 'var(--font-sans)',
+              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
               fontSize: '16px',
               lineHeight: 1.7,
-              color: 'var(--warm-gray, #8A8279)',
+              color: '#6b7280',
               maxWidth: '560px',
               margin: '0 auto',
             }}
@@ -136,7 +129,7 @@ export default async function ScheduleConsultationPage({ searchParams }: PagePro
           </p>
         </header>
 
-        <ConsultationForm initialTier={initialTier} />
+        <ConsultationForm initialTier={initialTier} initialBilling={initialBilling} />
       </main>
 
       <MarketingFooter />

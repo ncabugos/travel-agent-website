@@ -36,7 +36,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <DashboardShell>
       <Sidebar
-        brand="EliteAdvisorHub"
+        brand="Elite Advisor Hub"
         brandSub="Admin Console"
         items={navItems}
         bottomItems={bottomItems}

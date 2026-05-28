@@ -1,5 +1,23 @@
 # Meridian (T3) UI overhaul — plan
 
+## Tier matrix change — May 2026 (logged for cross-session visibility)
+
+- **Curated editorials are now hard-gated to Growth+.** Starter no longer gets the 1-post/month
+  curated drumbeat; the journal module (M18) stays on Starter for advisor-written posts only.
+  Upgrade to Growth is the only path to the curated stream.
+- **Tiers are described by features, not by template.** Marketing surfaces should say
+  "custom-branded site, features per tier" — never "Starter gets the frontend template" or
+  "Growth gets Vista or Meridian." The internal template each build sits on is an implementation
+  detail.
+- **Agency's headline differentiator is the Agent Directory.** Call it out by name on every
+  surface that compares tiers.
+- Updated in this sweep: `CLAUDE.md` §3 · `Elite_Advisor_Hub_Feature_Matrix.xlsx` (Sheets 1 + 2,
+  M18 + M32) · `components/marketing/MarketingPricing.tsx` · `components/marketing/MarketingCuratedEditorial.tsx`
+  · `app/agent-portal/register/page.tsx` · `Beta_Invite_Personal_Email.md` ·
+  `EAH_Onboarding_Email_Templates.md` (Email 1).
+- Not touched: `app/templates/page.tsx` and `components/marketing/MarketingBrandedWebsite.tsx` —
+  those are template showcases by purpose, not tier explainers.
+
 ## Done already (committed `ea27673`)
 - [x] Removed "How to book" banner from program detail page
 - [x] Removed eyebrow `———` dashes on program detail page (added `t3-eyebrow-plain` modifier)
