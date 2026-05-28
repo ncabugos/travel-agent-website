@@ -4,6 +4,8 @@ import { getAgentProfile } from '@/lib/suppliers'
 import { TopBar } from '@/components/layout/TopBar'
 import { SiteNav } from '@/components/layout/SiteNav'
 import { SiteFooter } from '@/components/layout/SiteFooter'
+import { DemoSignupBanner } from '@/components/ui/DemoSignupBanner'
+import { isDemoSlug } from '@/lib/demo-agents'
 import { tenantBase } from '@/lib/tenant-paths'
 
 const cormorant = Cormorant_Garamond({
@@ -42,6 +44,7 @@ export default async function AgentFrontendLayout({ children, params }: LayoutPr
       className={`${cormorant.variable} ${dmSans.variable}`}
       style={{ background: 'var(--cream)', minHeight: '100vh' }}
     >
+      {isDemoSlug(agentId) && <DemoSignupBanner />}
       <TopBar
         phone={agent?.phone ?? '+1 (562) 856-8603'}
         instagram={social.instagram}

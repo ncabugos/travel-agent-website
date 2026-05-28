@@ -3,6 +3,8 @@ import type { ReactNode } from 'react'
 import { getAgentProfile } from '@/lib/suppliers'
 import { T2Nav } from '@/components/t2/T2Nav'
 import { T2Footer } from '@/components/t2/T2Footer'
+import { DemoSignupBanner } from '@/components/ui/DemoSignupBanner'
+import { isDemoSlug } from '@/lib/demo-agents'
 import '@/app/t2/globals-t2.css'
 
 const playfair = Playfair_Display({
@@ -40,6 +42,7 @@ export default async function T2Layout({ children, params }: LayoutProps) {
 
   return (
     <div className={`${playfair.variable} ${inter.variable} ${bodoniModa.variable} t2-page`}>
+      {isDemoSlug(agentId) && <DemoSignupBanner />}
       {/* Inject YTC theme override if this is the YTC demo */}
       {agentId === 'ytc-demo' && (
         <style>{`

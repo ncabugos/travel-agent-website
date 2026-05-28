@@ -66,7 +66,7 @@ export function SiteNav({ agentId, agencyName, base: baseProp }: SiteNavProps) {
 
   const navStyle: React.CSSProperties = {
     position: 'fixed',
-    top: '36px',
+    top: 'calc(var(--eah-banner-h, 0px) + 36px)',
     left: 0,
     right: 0,
     zIndex: 40,

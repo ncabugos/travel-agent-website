@@ -118,7 +118,7 @@ export function T3Nav({ agentId, agencyName, logoUrl, navLinks, phone, email, ti
     <>
       <header
         style={{
-          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
+          position: 'fixed', top: 'var(--eah-banner-h, 0px)', left: 0, right: 0, zIndex: 1000,
           background: solidNav ? 'rgba(247, 245, 240, 0.96)' : 'transparent',
           color: solidNav ? 'var(--t3-text)' : '#ffffff',
           borderBottom: solidNav ? '1px solid var(--t3-divider)' : '1px solid transparent',

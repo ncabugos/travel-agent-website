@@ -10,8 +10,9 @@ interface TopBarProps {
 export function TopBar({ phone, instagram, facebook, youtube }: TopBarProps) {
   return (
     <div
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6"
+      className="fixed left-0 right-0 z-50 flex items-center justify-between px-6"
       style={{
+        top: 'var(--eah-banner-h, 0px)',
         height: '36px',
         background: 'var(--charcoal)',
         fontFamily: 'var(--font-sans)',

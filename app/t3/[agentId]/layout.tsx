@@ -3,6 +3,8 @@ import type { ReactNode } from 'react'
 import { getAgentProfile } from '@/lib/suppliers'
 import { T3Nav } from '@/components/t3/T3Nav'
 import { T3Footer } from '@/components/t3/T3Footer'
+import { DemoSignupBanner } from '@/components/ui/DemoSignupBanner'
+import { isDemoSlug } from '@/lib/demo-agents'
 import '@/app/t3/globals-t3.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -30,6 +32,7 @@ export default async function T3Layout({ children, params }: LayoutProps) {
 
   return (
     <div className={`${spaceGrotesk.variable} ${inter.variable} t3-page`}>
+      {isDemoSlug(agentId) && <DemoSignupBanner />}
       <T3Nav
         agentId={agentId}
         agencyName={agent?.agency_name ?? 'Meridian Travel'}

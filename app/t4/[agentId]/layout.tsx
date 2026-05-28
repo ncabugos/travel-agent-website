@@ -3,6 +3,8 @@ import type { ReactNode } from 'react'
 import { getAgentProfile } from '@/lib/suppliers'
 import { T4Nav } from '@/components/t4/T4Nav'
 import { T4Footer } from '@/components/t4/T4Footer'
+import { DemoSignupBanner } from '@/components/ui/DemoSignupBanner'
+import { isDemoSlug } from '@/lib/demo-agents'
 import '@/app/t4/globals-t4.css'
 
 const cormorant = Cormorant_Garamond({
@@ -34,6 +36,7 @@ export default async function T4Layout({ children, params }: LayoutProps) {
 
   return (
     <div className={`${cormorant.variable} ${dmSans.variable} t4-page`}>
+      {isDemoSlug(agentId) && <DemoSignupBanner />}
       <T4Nav agentId={agentId} agencyName={agencyName} tier={agent?.tier ?? null} />
       <main>{children}</main>
       <T4Footer

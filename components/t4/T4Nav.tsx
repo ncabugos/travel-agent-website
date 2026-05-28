@@ -58,7 +58,7 @@ export function T4Nav({ agentId, agencyName, navLinks, tier }: T4NavProps) {
       <header
         style={{
           position: 'fixed',
-          top: 0, left: 0, right: 0,
+          top: 'var(--eah-banner-h, 0px)', left: 0, right: 0,
           zIndex: 1000,
           background: solid ? 'rgba(251, 248, 241, 0.94)' : 'transparent',
           color: solid ? 'var(--t4-text)' : '#fff',

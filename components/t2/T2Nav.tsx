@@ -60,7 +60,7 @@ export function T2Nav({ agentId, agencyName, tagline, logoUrl, logoUrlDark, navL
         aria-label="Main navigation"
         style={{
           position: 'fixed',
-          top: 0, left: 0, right: 0,
+          top: 'var(--eah-banner-h, 0px)', left: 0, right: 0,
           zIndex: 1000,
           transition: 'background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease',
           background: menuOpen
