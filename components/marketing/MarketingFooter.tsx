@@ -48,7 +48,6 @@ export function MarketingFooter() {
     <footer style={{
       borderTop: '1px solid #e5e7eb',
       background: '#fafafa',
-      marginTop: 64,
     }}>
       <div style={{
         maxWidth: 1200,
