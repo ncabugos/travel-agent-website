@@ -25,7 +25,7 @@ export function MarketingReachSection() {
           position: 'absolute',
           inset: 0,
           pointerEvents: 'none',
-          opacity: 0.55,
+          opacity: 0.9,
         }}
       >
         <DotGlobe
@@ -48,7 +48,7 @@ export function MarketingReachSection() {
           position: 'absolute',
           inset: 0,
           background:
-            'radial-gradient(ellipse at center, rgba(10,11,30,0) 0%, rgba(10,11,30,0.65) 75%, rgba(10,11,30,0.92) 100%)',
+            'radial-gradient(ellipse at center, rgba(10,11,30,0) 0%, rgba(10,11,30,0.35) 78%, rgba(10,11,30,0.78) 100%)',
           pointerEvents: 'none',
         }}
       />
