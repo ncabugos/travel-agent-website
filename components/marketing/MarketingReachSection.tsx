@@ -105,9 +105,7 @@ export function MarketingReachSection() {
           >
             The best in luxury travel are also the best connected — and that network is built into
             every Elite Advisor Hub site. A global portfolio of the world's finest hotels and the
-            major ocean and river cruise lines, with villa specialists across the Mediterranean, the
-            Caribbean, and beyond. It's the reach to curate extraordinary journeys anywhere your
-            clients want to go — live on your site from day one.
+            major ocean and river cruise lines.
           </p>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', maxWidth: '480px' }}>
