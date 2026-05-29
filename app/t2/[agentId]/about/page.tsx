@@ -270,7 +270,6 @@ export default async function AboutPage({ params }: { params: Promise<{ agentId:
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
       <section style={{ background: '#ffffff', padding: '100px 24px', textAlign: 'center' }}>
         <div style={{ maxWidth: 600, margin: '0 auto' }}>
-          <p className="t2-label" style={{ marginBottom: 16, letterSpacing: '0.2em' }}>Ready to Begin?</p>
           <h2 className="t2-heading t2-heading-lg" style={{ marginBottom: 20 }}>Let&rsquo;s Plan Your Journey</h2>
           <p style={{
             fontFamily: 'var(--t2-font-sans)', fontSize: 16, lineHeight: 1.9,

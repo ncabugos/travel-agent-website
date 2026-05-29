@@ -186,7 +186,6 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(16,16,16,0.95), rgba(16,16,16,0.4))' }} />
         </div>
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <p className="t2-label" style={{ color: 'var(--t2-accent)', marginBottom: 16 }}>Ready to Escape?</p>
           <h2 className="t2-heading t2-heading-lg" style={{ color: '#FFFFFF', marginBottom: 16 }}>
             Plan Your Stay
           </h2>

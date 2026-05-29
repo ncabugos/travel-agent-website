@@ -116,7 +116,6 @@ export default async function ExperiencesPage({ params }: PageProps) {
         }} />
 
         <div style={{ maxWidth: 640, margin: '0 auto', position: 'relative', zIndex: 2 }}>
-          <p className="t2-label" style={{ marginBottom: 16, color: 'var(--t2-accent)' }}>Ready to Travel</p>
           <h2 className="t2-heading t2-heading-lg" style={{ color: '#ffffff', marginBottom: 20 }}>
             Plan Your Perfect Journey
           </h2>
@@ -133,7 +132,7 @@ export default async function ExperiencesPage({ params }: PageProps) {
               fontFamily: 'var(--t2-font-sans)', fontSize: 11, letterSpacing: '0.2em',
               textTransform: 'uppercase', fontWeight: 500,
               padding: '16px 40px',
-              background: 'var(--t2-accent)', color: '#1c1917',
+              background: 'var(--t2-accent)', color: '#ffffff',
               textDecoration: 'none',
               transition: 'opacity 0.2s ease',
             }}
