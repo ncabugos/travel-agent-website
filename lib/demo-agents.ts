@@ -18,6 +18,7 @@ export const DEMO_AGENTS: DemoAgent[] = [
   { slug: 'ytc-demo',   label: 'Your Travel Center (T2)',  template: 't2' },
   { slug: 'wwt-demo',   label: 'Wine & Wellness (T2)',     template: 't2' },
   { slug: 'coast-compass-demo', label: 'Coast & Compass Travel (T2 Vista — Growth)', template: 't2' },
+  { slug: 'lido-collective', label: 'The Lido Collective (T2 — Agency)', template: 't2' },
   { slug: 'casa-solis', label: 'Casa Solis — Custom (T4)', template: 't4' },
 ]
 

@@ -80,6 +80,14 @@ const DEMOS: DemoCard[] = [
     href: '/t2/ytc-demo',
     thumbnail: '/demos/ytc.png',
   },
+  {
+    slug: 'lido-collective',
+    name: 'The Lido Collective',
+    kind: 'Agency',
+    tagline: 'An invitation-only collective — editorial white with navy accents, a scalable advisor directory, and a searchable cruise atelier.',
+    href: '/t2/lido-collective',
+    thumbnail: '/media/cruises/orient-express-sailing-yacht/Orient-Express-Sailing-Yachts-Corinthian-Exterior-Wind-Luxigon.jpg',
+  },
 ]
 
 export default function EliteAdvisorHubHomePage() {
@@ -285,7 +293,7 @@ export default function EliteAdvisorHubHomePage() {
             margin: '0 0 60px', maxWidth: '580px', marginInline: 'auto',
           }}>
             Seven live sites on Elite Advisor Hub, organized by tier — two Starter templates,
-            one Growth build, three Custom builds, and one Agency example. Each is live and
+            one Growth build, two Custom builds, and two Agency examples. Each is live and
             available to explore.
           </p>
 

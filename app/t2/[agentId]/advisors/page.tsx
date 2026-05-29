@@ -3,15 +3,25 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getAgencyAdvisors } from '@/lib/agency-advisors'
 import { T2AdvisorsDirectory } from '@/components/t2/T2AdvisorsDirectory'
+import { LidoAdvisorsDirectory } from '@/components/t2/LidoAdvisorsDirectory'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
 }
 
-export const metadata = {
-  title: 'Our Advisors | Your Travel Center',
-  description:
-    'Meet the YTC team — six specialist advisors covering Europe, Asia, the Americas, cruise, and celebration travel.',
+export async function generateMetadata({ params }: PageProps) {
+  const { agentId } = await params
+  if (agentId === 'lido-collective') {
+    return {
+      title: 'The Collective | The Lido Collective',
+      description: 'Meet the specialists of The Lido Collective — each an authority on one corner of the world.',
+    }
+  }
+  return {
+    title: 'Our Advisors | Your Travel Center',
+    description:
+      'Meet the YTC team — six specialist advisors covering Europe, Asia, the Americas, cruise, and celebration travel.',
+  }
 }
 
 export default async function T2AdvisorsPage({ params }: PageProps) {
@@ -20,6 +30,38 @@ export default async function T2AdvisorsPage({ params }: PageProps) {
   if (advisors.length === 0) notFound()
 
   const base = `/t2/${agentId}`
+
+  // The Lido Collective — clean white page, circular-headshot roster built to
+  // scale to a large team.
+  if (agentId === 'lido-collective') {
+    return (
+      <div style={{ background: 'var(--lido-bg)', color: 'var(--lido-text)' }}>
+        <div style={{ height: 'clamp(96px, 12vh, 150px)' }} aria-hidden />
+        <LidoAdvisorsDirectory
+          agentId={agentId}
+          advisors={advisors}
+          eyebrow="The Collective"
+          heading="Meet the advisors."
+          subheading="Click any profile to see their specialties, the destinations they know personally, and to reach out directly."
+        />
+        <section className="lido-band-grey">
+          <div className="lido-section" style={{ textAlign: 'center' }}>
+            <div style={{ maxWidth: 640, margin: '0 auto' }}>
+              <p className="lido-eyebrow" style={{ marginBottom: 18 }}>Not sure who to ask for?</p>
+              <h2 className="lido-display" style={{ fontSize: 'clamp(34px, 5vw, 52px)', marginBottom: 22 }}>
+                Start with a note. We&apos;ll route you.
+              </h2>
+              <p className="lido-body" style={{ fontSize: 16, margin: '0 auto 36px', maxWidth: 520 }}>
+                Tell us the trip you&apos;re imagining. We&apos;ll pair you with the right specialist and have them reach
+                out personally, usually within one business day.
+              </p>
+              <Link href={`${base}/contact`} className="lido-btn-fill">Start a Conversation</Link>
+            </div>
+          </div>
+        </section>
+      </div>
+    )
+  }
 
   return (
     <>

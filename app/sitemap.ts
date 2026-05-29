@@ -38,6 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/t2/ytc-demo',
     '/t4/casa-solis',
     '/t2/wwt-demo',
+    '/t2/lido-collective',
   ]
 
   return [

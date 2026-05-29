@@ -27,6 +27,7 @@ const DEMO_LINKS = [
   { label: 'Eden',                   href: '/frontend/demo-agent' },
   { label: 'Casa Solis',             href: '/t4/casa-solis' },
   { label: 'Your Travel Center',     href: '/t2/ytc-demo' },
+  { label: 'The Lido Collective',    href: '/t2/lido-collective' },
 ]
 
 const COMPANY_LINKS = [

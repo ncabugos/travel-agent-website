@@ -23,6 +23,7 @@ import { tierAllows, type Tier } from '@/lib/tier-features'
 import Link from 'next/link'
 import YTCHomePage from './ytc-home'
 import WWTHomePage from './wwt-home'
+import LidoHomePage from './lido-home'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -195,6 +196,11 @@ export default async function T2HomePage({ params }: PageProps) {
   // Route Wine & Wellness Travel to its Aethos-inspired bespoke homepage.
   if (agentId === 'wwt-demo') {
     return <WWTHomePage params={params} />
+  }
+
+  // Route The Lido Collective (Agency demo) to its type-driven navy homepage.
+  if (agentId === 'lido-collective') {
+    return <LidoHomePage params={params} />
   }
 
   const agent = await getAgentProfile(agentId)

@@ -285,6 +285,33 @@ export const DEMO_WWT_AGENT: MockAgent = {
  * branched in app/t2/[agentId]/page.tsx via a per-slug content map.
  * Nav omits /book-villa: villas are a Custom-tier surface, not Growth.
  */
+export const DEMO_LIDO_COLLECTIVE_AGENT: MockAgent = {
+  id: 'lido-collective',
+  full_name: 'The Lido Collective',
+  agency_name: 'The Lido Collective',
+  tagline: 'A collective of specialists. Aman. Four Seasons. Orient Express. The places that require knowing someone.',
+  tier: 'agency',
+  email: 'hello@lidocollective.com',
+  phone: '+1 (000) 000-0000',
+  address: undefined,
+  cst_number: undefined,
+  instagram_url: 'https://www.instagram.com/lidocollective',
+  facebook_url: undefined,
+  youtube_url: undefined,
+  tiktok_url: undefined,
+  website_url: 'https://www.lidocollective.com',
+  custom_domain: null,
+  avatar_url: null,
+  // Logo is rendered (with an invert filter) only inside the bespoke Lido nav.
+  // Left null here so T2Footer falls back to the serif wordmark on navy.
+  logo_url: null,
+  bio: "The Lido Collective is not a travel agency. It is a small group of independent specialists who happen to book the world's most unrepeatable journeys — Aman at sea, the Orient Express sailing yachts, expedition voyages to the ends of the earth. Each member owns one corner of the world. You work with the right person, not the next available one.",
+  preferred_suppliers: ['Virtuoso', 'Aman', 'Four Seasons', 'Belmond', 'Orient Express', 'Rosewood'],
+  destination_specialties: ['Mediterranean', 'Europe', 'Indian Ocean', 'Caribbean & Mexico', 'Asia Pacific'],
+  // Lido renders its own nav component, so no nav_links here.
+  nav_links: undefined,
+}
+
 export const DEMO_COAST_COMPASS_AGENT: MockAgent = {
   id: 'coast-compass-demo',
   full_name: 'Marin Halloway',

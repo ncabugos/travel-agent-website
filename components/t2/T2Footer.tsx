@@ -14,6 +14,11 @@ interface T2FooterProps {
   /** Subscription tier — filters the Explore link list so villa/experiences
       drop on tiers that don't include them. */
   tier?: Tier | null
+  /** When true, the Network column shows the Virtuoso MEMBER mark + affiliation
+      line instead of the plain text blurb. */
+  showVirtuosoLogo?: boolean
+  /** Optional affiliation line under the Virtuoso mark. */
+  affiliationLine?: string
 }
 
 const FOOTER_EXPLORE_LINKS = [
@@ -35,6 +40,8 @@ export function T2Footer({
   bio,
   logoUrl,
   tier,
+  showVirtuosoLogo,
+  affiliationLine,
 }: T2FooterProps) {
   const year = new Date().getFullYear()
   const base = `/t2/${agentId}`
@@ -172,18 +179,42 @@ export function T2Footer({
           >
             Network
           </h4>
-          <p
-            style={{
-              fontFamily: 'var(--t2-font-sans)',
-              fontSize: 13,
-              fontWeight: 300,
-              lineHeight: 1.9,
-              color: 'rgba(245,240,232,0.55)',
-            }}
-          >
-            Proud member of Virtuoso — the world&apos;s leading luxury travel consortium. Our
-            memberships unlock privileges unavailable elsewhere.
-          </p>
+          {showVirtuosoLogo ? (
+            <>
+              <Image
+                src="/assets/virtuoso-footer.png"
+                alt="Virtuoso Member"
+                width={595}
+                height={287}
+                style={{ width: 116, height: 'auto', opacity: 0.9, marginBottom: 18 }}
+                unoptimized
+              />
+              <p
+                style={{
+                  fontFamily: 'var(--t2-font-sans)',
+                  fontSize: 13,
+                  fontWeight: 300,
+                  lineHeight: 1.9,
+                  color: 'rgba(245,240,232,0.55)',
+                }}
+              >
+                {affiliationLine ?? 'A proud member of Virtuoso — the world’s leading luxury travel network.'}
+              </p>
+            </>
+          ) : (
+            <p
+              style={{
+                fontFamily: 'var(--t2-font-sans)',
+                fontSize: 13,
+                fontWeight: 300,
+                lineHeight: 1.9,
+                color: 'rgba(245,240,232,0.55)',
+              }}
+            >
+              Proud member of Virtuoso — the world&apos;s leading luxury travel consortium. Our
+              memberships unlock privileges unavailable elsewhere.
+            </p>
+          )}
         </div>
 
         {/* Col 4 — Contact */}

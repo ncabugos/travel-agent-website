@@ -354,3 +354,113 @@
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(6px); }
 }
+
+/* =============================================================================
+   The Lido Collective — Agency demo variant (light · editorial · navy accents)
+   ----------------------------------------------------------------------------
+   Applied as an ADDITIONAL class alongside .t2-page on the layout wrapper when
+   agentId === 'lido-collective'. The page reads on WHITE; navy is reserved for
+   the footer and a few dark "section modules" (SmartFlyer-style alternating
+   bands). Signature imagery uses ARCH / portal tops, sharp rectangles, and an
+   organic leaf shape — never uniform rounded corners. Remaps the shared --t2-*
+   chrome tokens so T2Footer renders navy. Template isolation preserved.
+   ============================================================================= */
+.lido-page {
+  /* ── Palette (light) ── */
+  --lido-bg:            #FFFFFF;
+  --lido-bg-warm:       #F6F3EE;
+  --lido-bg-grey:       #F1F0ED;
+  --lido-bg-dark:       #0D1A2E;
+  --lido-bg-deep:       #06101E;
+  --lido-text:          #14202F;
+  --lido-text-muted:    rgba(20, 32, 47, 0.58);
+  --lido-text-faint:    rgba(20, 32, 47, 0.42);
+  --lido-on-dark:       #EDEAE4;
+  --lido-on-dark-muted: rgba(237, 234, 228, 0.62);
+  --lido-line:          rgba(20, 32, 47, 0.14);
+  --lido-line-strong:   rgba(20, 32, 47, 0.26);
+  --lido-line-dark:     rgba(237, 234, 228, 0.16);
+  --lido-section-pad:   clamp(88px, 11vw, 150px);
+
+  /* ── Fonts — Bodoni (display, already loaded as --font-bodoni) + Inter ── */
+  --lido-font-display: var(--font-bodoni, 'Bodoni Moda', 'Didot', Georgia, serif);
+  --lido-font-body:    var(--font-inter, 'Inter', system-ui, sans-serif);
+
+  /* ── Shared T2 chrome remap (T2Footer renders navy) ── */
+  --t2-bg:           #FFFFFF;
+  --t2-bg-alt:       #F6F3EE;
+  --t2-text:         #14202F;
+  --t2-text-muted:   rgba(20, 32, 47, 0.6);
+  --t2-accent:       #7C8BA0;
+  --t2-accent-hover: #14202F;
+  --t2-divider:      rgba(20, 32, 47, 0.14);
+  --t2-dark-bg:      #0D1A2E;
+  --t2-dark-text:    #EDEAE4;
+  --t2-overlay:      rgba(6, 16, 30, 0.42);
+  --t2-font-serif:   var(--font-bodoni, 'Bodoni Moda', 'Didot', Georgia, serif);
+
+  background: var(--lido-bg);
+  color: var(--lido-text);
+  font-family: var(--lido-font-body);
+}
+
+/* ── Layout primitives ── */
+.lido-section { padding: var(--lido-section-pad) 48px; max-width: var(--t2-content-max, 1280px); margin: 0 auto; }
+
+/* Full-bleed tinted bands — wrap a .lido-section to vary the page rhythm. */
+.lido-band-grey { background: var(--lido-bg-grey); }
+.lido-band-warm { background: var(--lido-bg-warm); }
+
+.lido-display { font-family: var(--lido-font-display); font-weight: 400; line-height: 1.04; letter-spacing: -0.01em; }
+.lido-body { font-family: var(--lido-font-body); font-size: 15px; font-weight: 400; line-height: 1.8; color: var(--lido-text-muted); }
+.lido-eyebrow { font-family: var(--lido-font-body); font-size: 10px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--lido-text-muted); font-weight: 600; }
+
+/* Magazine-rule section header */
+.lido-header { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; border-top: 1px solid var(--lido-line-strong); padding-top: 20px; margin-bottom: 56px; flex-wrap: wrap; }
+
+/* Oversized transparent ordinal numeral */
+.lido-ordinal { font-family: var(--lido-font-display); font-weight: 400; line-height: 0.78; color: var(--lido-text); opacity: 0.07; pointer-events: none; user-select: none; }
+
+/* ── Image shapes (the signature) — arch / rectangle / leaf, never uniform ── */
+.lido-shape { position: relative; overflow: hidden; display: block; }
+.lido-shape > img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.9s var(--t2-ease-out); }
+.lido-shape:hover > img { transform: scale(1.04); }
+.lido-arch      { border-radius: 50% 50% 0 0 / 42% 42% 0 0; }
+.lido-arch-deep { border-radius: 50% 50% 0 0 / 50% 50% 0 0; }
+.lido-rect      { border-radius: 0; }
+.lido-soft      { border-radius: 12px; }
+.lido-leaf      { border-radius: 12px 12px 12px 46%; }
+
+/* ── Buttons ── */
+.lido-btn-fill, .lido-btn-line {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--lido-font-body); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none;
+  padding: 15px 32px; border-radius: 999px; cursor: pointer;
+  transition: background 0.3s var(--t2-ease), border-color 0.3s var(--t2-ease), color 0.3s var(--t2-ease);
+}
+.lido-btn-fill { color: var(--lido-on-dark); background: var(--lido-bg-dark); border: 1px solid var(--lido-bg-dark); }
+.lido-btn-fill:hover { background: var(--lido-bg-deep); border-color: var(--lido-bg-deep); }
+.lido-btn-line { color: var(--lido-text); background: transparent; border: 1px solid var(--lido-line-strong); }
+.lido-btn-line:hover { background: var(--lido-text); border-color: var(--lido-text); color: var(--lido-bg); }
+
+/* Text-with-arrow link */
+.lido-arrow { font-family: var(--lido-font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--lido-text); text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: gap 0.25s var(--t2-ease); }
+.lido-arrow:hover { gap: 16px; }
+
+/* ── Dark "section module" (navy band on the light page) ── */
+.lido-dark { background: var(--lido-bg-dark); color: var(--lido-on-dark); }
+.lido-dark .lido-eyebrow, .lido-dark .lido-body { color: var(--lido-on-dark-muted); }
+.lido-dark .lido-header { border-top-color: var(--lido-line-dark); }
+.lido-dark .lido-arrow, .lido-dark .lido-ordinal, .lido-dark .lido-display { color: var(--lido-on-dark); }
+.lido-dark .lido-btn-line { color: var(--lido-on-dark); border-color: var(--lido-line-dark); }
+.lido-dark .lido-btn-line:hover { background: var(--lido-on-dark); border-color: var(--lido-on-dark); color: var(--lido-bg-dark); }
+
+/* Hide the desktop Lido nav on mobile; the bottom bar takes over. */
+@media (max-width: 767px) { .lido-hide-on-mobile { display: none !important; } }
+@media (min-width: 768px) { .lido-show-on-mobile { display: none !important; } }
+
+@media (max-width: 768px) {
+  .lido-section { padding: clamp(56px, 12vw, 96px) 22px; }
+  .lido-header { margin-bottom: 36px; }
+}

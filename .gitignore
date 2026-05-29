@@ -47,3 +47,6 @@ next-env.d.ts
 # Office temp lock files
 .~lock.*#
 ~$*
+
+# local video/render exports (large binaries — not for git)
+exports/
