@@ -103,10 +103,11 @@ export function MarketingReachSection() {
               maxWidth: '540px',
             }}
           >
-            Elite Advisor Hub is built on top of the same supplier networks the world's best travel
-            advisors use — Virtuoso preferred-partner programs, the major luxury cruise lines, and
-            villa specialists across the Mediterranean, the Caribbean, and beyond. Your site renders
-            the full reach on day one.
+            The best in luxury travel are also the best connected — and that network is built into
+            every Elite Advisor Hub site. A global portfolio of the world's finest hotels and the
+            major ocean and river cruise lines, with villa specialists across the Mediterranean, the
+            Caribbean, and beyond. It's the reach to curate extraordinary journeys anywhere your
+            clients want to go — live on your site from day one.
           </p>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', maxWidth: '480px' }}>
