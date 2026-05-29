@@ -7,6 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "db:link": "supabase link --project-ref \"$SUPABASE_PROJECT_REF\"",
+    "db:status": "supabase migration list",
+    "db:push": "supabase db push",
+    "db:audit": "node scripts/audit-migrations.mjs",
     "mirror:hotel-images": "node scripts/mirror_hotel_images.js",
     "mirror:hotel-images:dry": "node scripts/mirror_hotel_images.js --dry-run"
   },
