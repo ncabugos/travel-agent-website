@@ -45,24 +45,22 @@ table doesn't know that. Mark the **live** ones (everything that came back
 them are NOT idempotent (`001, 002, 003, 009, 014, 015, 016, 017` use bare
 `CREATE TABLE`) and would error.
 
+**Audit result (2026-05-28): every migration is live in prod EXCEPT `033`.**
+So baseline everything else as applied, and let `db push` run `033`:
+
 ```bash
-# Mark the migrations whose effects ARE already in prod (edit to match audit):
 supabase migration repair --status applied \
   001 002 003 004 005 006 007 008 009 010 011 011b 012 013 014 015 016 017 \
-  018 019 020 021 022 023 024 025 026 027 028 029 030 031 032 034
-
-# Do NOT list the ones the audit reported as ✗ MISS — leave them so push runs
-# them. Based on the last review these are expected to be missing:
-#   033  (logo-variant columns + Explora .webp hero data patch)
-#   035  (agents.plan / beta_cohort — Founding Advisor billing)
-#   036  (consultation_requests.source)
-# Confirm against `npm run db:audit` before running.
+  018 019 020 021 022 023 024 025 026 027 028 029 030 031 032 034 035 036
+# 033 is intentionally omitted — it's the only one missing, so `db push`
+# (Step 4) will run it. Re-run `npm run db:audit` to confirm before you do this.
 ```
 
-> ⚠️ **Partial migrations:** `033` adds columns AND runs a data `UPDATE`. If the
-> audit shows the *columns* live but the *Explora hero* still `.jpg`, the file
-> only half-ran. Either split it, or hand-run just the missing `UPDATE` once and
-> then `repair --status applied 033`.
+> **`033` is fully missing, not partial** — both its columns
+> (`hotel_programs.logo_url_white` / `logo_url_black`) AND its Explora `.webp`
+> hero `UPDATE` are absent, so running the whole file is clean (no split needed).
+> Note: applying `033` will repoint Explora's cruise hero from the `.jpg` we
+> shipped to the original `.webp` (both files exist, so it stays working).
 
 ---
 
