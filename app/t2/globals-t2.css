@@ -405,7 +405,7 @@
 }
 
 /* ── Layout primitives ── */
-.lido-section { padding: var(--lido-section-pad) 48px; max-width: var(--t2-content-max, 1280px); margin: 0 auto; }
+.lido-section { padding: var(--lido-section-pad) 48px; max-width: var(--t2-content-max, 1280px); margin: 0 auto; position: relative; }
 
 /* Full-bleed tinted bands — wrap a .lido-section to vary the page rhythm. */
 .lido-band-grey { background: var(--lido-bg-grey); }
@@ -421,6 +421,41 @@
 /* Oversized transparent ordinal numeral */
 .lido-ordinal { font-family: var(--lido-font-display); font-weight: 400; line-height: 0.78; color: var(--lido-text); opacity: 0.07; pointer-events: none; user-select: none; }
 
+/* Ghost ordinal watermark behind a section header — alternates left/right. */
+.lido-ordinal-mark {
+  position: absolute; top: clamp(-18px, -1vw, -8px); z-index: 0;
+  font-family: var(--lido-font-display); font-weight: 400; line-height: 0.7;
+  font-size: clamp(140px, 22vw, 300px); color: var(--lido-text);
+  opacity: 0.05; pointer-events: none; user-select: none; white-space: nowrap;
+}
+.lido-ordinal-mark--left  { left: clamp(-8px, -0.5vw, 0px); }
+.lido-ordinal-mark--right { right: clamp(-8px, -0.5vw, 0px); }
+.lido-dark .lido-ordinal-mark { color: var(--lido-on-dark); opacity: 0.06; }
+/* Lift real section content above the ghost ordinal watermark. */
+.lido-section > *:not(.lido-ordinal-mark) { position: relative; z-index: 1; }
+
+/* Anything that sits above a watermark needs a stacking context. */
+.lido-above { position: relative; z-index: 1; }
+
+/* ── Scroll-reveal (gated by JS adding .lido-anim-ready to the page root) ──
+   Without JS the content renders normally; with JS it fades/rises into view.
+   Honour reduced-motion by skipping the transform entirely. */
+.lido-anim-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s var(--t2-ease-out), transform 0.9s var(--t2-ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.lido-anim-ready [data-reveal].is-revealed { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .lido-anim-ready [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* Subtle premium lift for interactive cards. */
+.lido-lift { transition: transform 0.5s var(--t2-ease-out), box-shadow 0.5s var(--t2-ease-out); }
+.lido-lift:hover { transform: translateY(-6px); }
+
 /* ── Image shapes (the signature) — arch / rectangle / leaf, never uniform ── */
 .lido-shape { position: relative; overflow: hidden; display: block; }
 .lido-shape > img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.9s var(--t2-ease-out); }
@@ -429,7 +464,8 @@
 .lido-arch-deep { border-radius: 50% 50% 0 0 / 50% 50% 0 0; }
 .lido-rect      { border-radius: 0; }
 .lido-soft      { border-radius: 12px; }
-.lido-leaf      { border-radius: 12px 12px 12px 46%; }
+/* Leaf: only the large bottom-left curve remains; the three smaller corners are square. */
+.lido-leaf      { border-radius: 0 0 0 46%; }
 
 /* ── Buttons ── */
 .lido-btn-fill, .lido-btn-line {

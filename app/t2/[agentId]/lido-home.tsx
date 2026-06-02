@@ -5,35 +5,48 @@ import { LIDO_DESTINATIONS, LIDO_JOURNAL } from '@/lib/lido-content'
 import { LidoPressBar } from '@/components/t2/LidoPressBar'
 import { LidoPartnerNetwork } from '@/components/t2/LidoPartnerNetwork'
 import { LidoInstagramMosaic } from '@/components/t2/LidoInstagramMosaic'
+import { LidoServices } from '@/components/t2/LidoServices'
+import { LidoReveal } from '@/components/t2/LidoReveal'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
 }
 
-/* ── Section header: magazine rule + ordinal + eyebrow + optional CTA ────── */
+/* ── Section header: ghost ordinal watermark + magazine rule + eyebrow + CTA ─
+   The watermark alternates side per section (left/right) to give the page a
+   left-to-right rhythm. It sits behind the content via .lido-ordinal-mark. */
 function MagazineHeader({
   ordinal,
   eyebrow,
   cta,
   base,
+  side = 'left',
 }: {
   ordinal?: string
   eyebrow: string
   cta?: { label: string; href: string }
   base: string
+  side?: 'left' | 'right'
 }) {
   return (
-    <div className="lido-header">
-      <span className="lido-eyebrow">
-        {ordinal ? `${ordinal} · ` : ''}
-        {eyebrow}
-      </span>
-      {cta && (
-        <Link href={`${base}${cta.href}`} className="lido-arrow">
-          {cta.label} <span aria-hidden>→</span>
-        </Link>
+    <>
+      {ordinal && (
+        <span className={`lido-ordinal-mark lido-ordinal-mark--${side}`} aria-hidden>
+          {ordinal}
+        </span>
       )}
-    </div>
+      <div className="lido-header" data-reveal>
+        <span className="lido-eyebrow">
+          {ordinal ? `${ordinal} · ` : ''}
+          {eyebrow}
+        </span>
+        {cta && (
+          <Link href={`${base}${cta.href}`} className="lido-arrow">
+            {cta.label} <span aria-hidden>→</span>
+          </Link>
+        )}
+      </div>
+    </>
   )
 }
 
@@ -58,16 +71,17 @@ export default async function LidoHomePage({ params }: PageProps) {
 
   return (
     <div style={{ background: 'var(--lido-bg)', color: 'var(--lido-text)' }}>
+      <LidoReveal />
       {/* ── Hero (traditional · white) ─────────────────────────────────── */}
       <section className="lido-hero">
         <div className="lido-hero-copy">
-          <p className="lido-eyebrow" style={{ marginBottom: 28 }}>A Collective of Specialists</p>
-          <h1 className="lido-display lido-hero-h1">Travel at its most uncompromising.</h1>
-          <p className="lido-body lido-hero-sub">
+          <p className="lido-eyebrow" style={{ marginBottom: 28 }} data-reveal>A Collective of Specialists</p>
+          <h1 className="lido-display lido-hero-h1" data-reveal style={{ ['--reveal-delay' as string]: '80ms' }}>Travel at its most uncompromising.</h1>
+          <p className="lido-body lido-hero-sub" data-reveal style={{ ['--reveal-delay' as string]: '160ms' }}>
             Aman. Four Seasons. Orient Express. The places that don&apos;t need to advertise — and the people who can
             still get you in.
           </p>
-          <div className="lido-hero-cta">
+          <div className="lido-hero-cta" data-reveal style={{ ['--reveal-delay' as string]: '240ms' }}>
             <Link href={`${base}/contact`} className="lido-btn-fill">Plan a Journey</Link>
             <Link href={`${base}/advisors`} className="lido-arrow">The Collective <span aria-hidden>→</span></Link>
           </div>
@@ -76,7 +90,12 @@ export default async function LidoHomePage({ params }: PageProps) {
         {/* Signature shape row */}
         <div className="lido-hero-shapes">
           {HERO_SHAPES.map((s, i) => (
-            <div key={i} className={`lido-shape ${s.shape}`} style={{ aspectRatio: s.ratio, marginTop: s.top }}>
+            <div
+              key={i}
+              className={`lido-shape ${s.shape}`}
+              data-reveal
+              style={{ aspectRatio: s.ratio, marginTop: s.top, ['--reveal-delay' as string]: `${300 + i * 110}ms` }}
+            >
               <Image src={s.image} alt="" fill priority={i < 2} sizes="(max-width: 760px) 50vw, 24vw" />
             </div>
           ))}
@@ -89,15 +108,14 @@ export default async function LidoHomePage({ params }: PageProps) {
       {/* ── 01 · Who we are (arch image + editorial) — grey band ───────── */}
       <div className="lido-band-grey">
       <section className="lido-section">
-        <MagazineHeader ordinal="01" eyebrow="Who We Are" base={base} />
+        <MagazineHeader ordinal="01" eyebrow="Who We Are" base={base} side="left" />
         <div className="lido-split-3070">
-          <div style={{ position: 'relative' }}>
-            <span className="lido-ordinal" style={{ fontSize: 170, position: 'absolute', top: -96, left: -10, zIndex: 0 }} aria-hidden>01.</span>
+          <div data-reveal>
             <div className="lido-shape lido-arch" style={{ aspectRatio: '4 / 5', position: 'relative', zIndex: 1 }}>
               <Image src="/media/hotel-programs/belmond-bellini-club/belmond-hero-2000.jpg" alt="" fill sizes="(max-width: 900px) 100vw, 30vw" />
             </div>
           </div>
-          <div>
+          <div data-reveal style={{ ['--reveal-delay' as string]: '120ms' }}>
             <h2 className="lido-display" style={{ fontSize: 'clamp(32px, 4vw, 48px)', marginBottom: 28 }}>
               Not a travel agency. A collective.
             </h2>
@@ -118,24 +136,10 @@ export default async function LidoHomePage({ params }: PageProps) {
       </section>
       </div>
 
-      {/* ── 02 · Services (cinematic, sharp rectangles) ────────────────── */}
+      {/* ── 02 · Services (interactive editorial index) ────────────────── */}
       <section className="lido-section">
-        <MagazineHeader ordinal="02" eyebrow="What We Do" base={base} />
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-          {SERVICES.map((s) => (
-            <Link key={s.name} href={`${base}${s.href}`} className="lido-shape lido-rect lido-service-card" style={{ aspectRatio: '21 / 9' }}>
-              <Image src={s.image} alt={s.name} fill sizes="(max-width: 1280px) 100vw, 1184px" />
-              <div className="lido-service-overlay">
-                <div>
-                  <span className="lido-eyebrow" style={{ color: 'rgba(237,234,228,0.8)' }}>{s.num}</span>
-                  <h3 className="lido-display" style={{ fontSize: 'clamp(28px, 4vw, 36px)', margin: '6px 0 8px', color: '#EDEAE4' }}>{s.name}</h3>
-                  <p style={{ fontFamily: 'var(--lido-font-body)', fontSize: 13, color: 'rgba(237,234,228,0.78)', margin: 0, maxWidth: 460 }}>{s.desc}</p>
-                </div>
-                <span className="lido-service-arrow" aria-hidden>→</span>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <MagazineHeader ordinal="02" eyebrow="What We Do" base={base} side="right" />
+        <LidoServices base={base} services={SERVICES} />
       </section>
 
       {/* ── Partner network (dark module · white logos · 2 filters) ────── */}
@@ -143,8 +147,8 @@ export default async function LidoHomePage({ params }: PageProps) {
 
       {/* ── 03 · Destinations (arch cards, labels below) ───────────────── */}
       <section className="lido-section">
-        <MagazineHeader ordinal="03" eyebrow="Destinations" cta={{ label: 'View All', href: '/destinations' }} base={base} />
-        <div className="lido-scroll-strip">
+        <MagazineHeader ordinal="03" eyebrow="Destinations" cta={{ label: 'View All', href: '/destinations' }} base={base} side="left" />
+        <div className="lido-scroll-strip" data-reveal>
           {LIDO_DESTINATIONS.map((d) => (
             <Link key={d.slug} href={`${base}/destinations/${d.slug}`} className="lido-dest-card">
               <div className="lido-shape lido-arch" style={{ aspectRatio: '3 / 4' }}>
@@ -163,8 +167,8 @@ export default async function LidoHomePage({ params }: PageProps) {
       {/* ── 04 · The Collective (advisor grid) — grey band ─────────────── */}
       <div className="lido-band-grey">
       <section className="lido-section">
-        <MagazineHeader ordinal="04" eyebrow="The Collective" cta={{ label: 'Meet the Collective', href: '/advisors' }} base={base} />
-        <div style={{ maxWidth: 720, marginBottom: 56 }}>
+        <MagazineHeader ordinal="04" eyebrow="The Collective" cta={{ label: 'Meet the Collective', href: '/advisors' }} base={base} side="right" />
+        <div style={{ maxWidth: 720, marginBottom: 56 }} data-reveal>
           <h2 className="lido-display" style={{ fontSize: 'clamp(32px, 4vw, 48px)', marginBottom: 20 }}>People, not pipelines.</h2>
           <p className="lido-body" style={{ fontSize: 16 }}>
             Each member of The Lido Collective specializes in one corner of the world. You work with the right person —
@@ -172,8 +176,8 @@ export default async function LidoHomePage({ params }: PageProps) {
           </p>
         </div>
         <div className="lido-advisor-grid">
-          {advisors.map((a) => (
-            <Link key={a.slug} href={`${base}/advisors/${a.slug}`} className="lido-advisor-card">
+          {advisors.map((a, i) => (
+            <Link key={a.slug} href={`${base}/advisors/${a.slug}`} className="lido-advisor-card" data-reveal style={{ ['--reveal-delay' as string]: `${i * 70}ms` }}>
               <div className="lido-advisor-photo">
                 <Image src={a.photo} alt={a.name} fill sizes="120px" style={{ objectFit: 'cover' }} />
               </div>
@@ -194,10 +198,10 @@ export default async function LidoHomePage({ params }: PageProps) {
 
       {/* ── 05 · Journal (editorial rows) ──────────────────────────────── */}
       <section className="lido-section">
-        <MagazineHeader ordinal="05" eyebrow="From the Field" cta={{ label: 'The Journal', href: '/journal' }} base={base} />
+        <MagazineHeader ordinal="05" eyebrow="From the Field" cta={{ label: 'The Journal', href: '/journal' }} base={base} side="left" />
         <div className="lido-journal-grid">
-          {LIDO_JOURNAL.map((post) => (
-            <Link key={post.slug} href={`${base}/journal`} className="lido-journal-card">
+          {LIDO_JOURNAL.map((post, i) => (
+            <Link key={post.slug} href={`${base}/journal`} className="lido-journal-card" data-reveal style={{ ['--reveal-delay' as string]: `${i * 90}ms` }}>
               <div className="lido-shape lido-rect" style={{ aspectRatio: '3 / 2', marginBottom: 20 }}>
                 <Image src={post.image} alt={post.title} fill sizes="(max-width: 900px) 100vw, 380px" />
               </div>
@@ -215,7 +219,7 @@ export default async function LidoHomePage({ params }: PageProps) {
 
       {/* ── CTA band (light) ───────────────────────────────────────────── */}
       <section className="lido-band-grey" style={{ padding: 'clamp(110px, 15vw, 190px) 48px', textAlign: 'center' }}>
-        <div style={{ maxWidth: 640, margin: '0 auto' }}>
+        <div style={{ maxWidth: 640, margin: '0 auto' }} data-reveal>
           <h2 className="lido-display" style={{ fontSize: 'clamp(40px, 6vw, 60px)', marginBottom: 24 }}>Ready to begin?</h2>
           <p className="lido-body" style={{ fontSize: 17, margin: '0 auto 44px', maxWidth: 520 }}>
             Conversations start with a note. We respond personally within 24 hours.
@@ -253,16 +257,6 @@ export default async function LidoHomePage({ params }: PageProps) {
         }
 
         .lido-split-3070 { display: grid; grid-template-columns: 1fr 2.2fr; gap: clamp(32px, 6vw, 88px); align-items: start; }
-
-        .lido-service-card { position: relative; }
-        .lido-service-overlay {
-          position: absolute; inset: 0; z-index: 2;
-          display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
-          padding: clamp(24px, 4vw, 48px);
-          background: linear-gradient(to top, rgba(6,16,30,0.74) 0%, rgba(6,16,30,0.16) 55%, rgba(6,16,30,0) 100%);
-        }
-        .lido-service-arrow { font-family: var(--lido-font-body); font-size: 22px; color: #EDEAE4; opacity: 0; transform: translateX(-8px); transition: opacity 0.3s ease, transform 0.3s ease; align-self: flex-end; }
-        .lido-service-card:hover .lido-service-arrow { opacity: 0.9; transform: translateX(0); }
 
         .lido-partner-name:hover { opacity: 0.95 !important; }
 
