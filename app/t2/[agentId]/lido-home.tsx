@@ -169,7 +169,7 @@ export default async function LidoHomePage({ params }: PageProps) {
       <section className="lido-section">
         <MagazineHeader ordinal="04" eyebrow="The Collective" cta={{ label: 'Meet the Collective', href: '/advisors' }} base={base} side="right" />
         <div style={{ maxWidth: 720, marginBottom: 56 }} data-reveal>
-          <h2 className="lido-display" style={{ fontSize: 'clamp(32px, 4vw, 48px)', marginBottom: 20 }}>People, not pipelines.</h2>
+          <h2 className="lido-display" style={{ fontSize: 'clamp(32px, 4vw, 48px)', marginBottom: 20 }}>People, not chatbots.</h2>
           <p className="lido-body" style={{ fontSize: 16 }}>
             Each member of The Lido Collective specializes in one corner of the world. You work with the right person —
             not the next available one.
