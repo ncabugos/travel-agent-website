@@ -106,7 +106,7 @@ export default async function AboutPage({ params }: { params: Promise<{ agentId:
 
       {/* ── Story ────────────────────────────────────────────────────────── */}
       <section style={{ background: '#ffffff', padding: '100px 24px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
+        <div className="about-story-grid" style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
 
           {/* Left — image */}
           <div style={{ position: 'relative', height: 540, borderRadius: 2, overflow: 'hidden' }}>
@@ -152,7 +152,7 @@ export default async function AboutPage({ params }: { params: Promise<{ agentId:
 
       {/* ── Accolades band ───────────────────────────────────────────────── */}
       <section style={{ background: 'var(--t2-bg)', borderTop: '1px solid var(--t2-divider)', borderBottom: '1px solid var(--t2-divider)', padding: '60px 24px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0 }}>
+        <div className="about-accolade-grid" style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0 }}>
           {ACCOLADES.map((item, i) => (
             <div
               key={i}
@@ -187,7 +187,7 @@ export default async function AboutPage({ params }: { params: Promise<{ agentId:
           </div>
 
           {/* Team grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 48 }}>
+          <div className="about-team-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 48 }}>
             {TEAM.map((member) => (
               <div key={member.name}>
                 {/* Photo */}
@@ -279,7 +279,7 @@ export default async function AboutPage({ params }: { params: Promise<{ agentId:
           </p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
             <Link
-              href={`/t2/demo/plan-a-trip`}
+              href={`/t2/${agentId}/plan-a-trip`}
               style={{
                 display: 'inline-block',
                 fontFamily: 'var(--t2-font-sans)', fontSize: 11, letterSpacing: '0.2em',
@@ -293,7 +293,7 @@ export default async function AboutPage({ params }: { params: Promise<{ agentId:
               Start Planning
             </Link>
             <Link
-              href={`/t2/demo/contact`}
+              href={`/t2/${agentId}/contact`}
               style={{
                 display: 'inline-block',
                 fontFamily: 'var(--t2-font-sans)', fontSize: 11, letterSpacing: '0.2em',

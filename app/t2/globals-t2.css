@@ -423,7 +423,7 @@
 }
 
 /* ── Layout primitives ── */
-.lido-section { padding: var(--lido-section-pad) 48px; max-width: var(--t2-content-max, 1280px); margin: 0 auto; position: relative; }
+.lido-section { padding: var(--lido-section-pad) 48px; max-width: var(--t2-content-max, 1280px); margin: 0 auto; position: relative; overflow-x: clip; }
 
 /* Full-bleed tinted bands — wrap a .lido-section to vary the page rhythm. */
 .lido-band-grey { background: var(--lido-bg-grey); }
