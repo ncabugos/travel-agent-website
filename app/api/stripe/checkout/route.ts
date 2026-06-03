@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     const origin = new URL(request.url).origin
 
     // ── Founding Advisor (invitation-only beta) checkout ──────────────────
-    // $0 setup, 90-day free trial, then the locked founding monthly rate. The
+    // $0 setup, 30-day free trial, then the locked founding monthly rate. The
     // discount is the founding *price* itself (not a coupon), so it never
     // expires. See EAH_Beta_Launch_Build_Kit.md, Part A.
     if (plan === 'founding') {
@@ -57,10 +57,10 @@ export async function POST(request: Request) {
         // Founding monthly price only — no setup-fee line item.
         line_items: [{ price: founding.monthly, quantity: 1 }],
         // Force card capture even though $0 is due today, so the subscription
-        // auto-converts at the founding rate when the trial ends on day 90.
+        // auto-converts at the founding rate when the trial ends on day 30.
         payment_method_collection: 'always',
         subscription_data: {
-          trial_period_days: 90,
+          trial_period_days: 30,
           metadata: { tier, plan: 'founding', cohort },
         },
         // Mirror onto the session so the webhook's checkout.session.completed

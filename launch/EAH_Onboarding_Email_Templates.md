@@ -53,7 +53,7 @@ I'm opening this with a small founding group of four advisors. Yours is one of t
 **Founding offer — only for this group:**
 
 - Setup fee waived (normally $499–$2,999, depending on tier)
-- First three months free
+- First month free, a 30-day trial
 - Locked founding rate after that — roughly a third below list — held for as long as you stay with us
 - The site is built directly by me
 
@@ -91,9 +91,9 @@ I'm thrilled to have you in the founding group. Here's exactly what to expect, a
 **Your Founding Advisor offer, confirmed:**
 
 - {{Tier}} tier — setup fee waived
-- First three months free
+- First month free, a 30-day trial
 - Founding rate after that, locked for as long as you stay with us
-- A card on file so billing is seamless when month four arrives — nothing is charged for 90 days
+- A card on file so billing is seamless when month two arrives, nothing is charged for the first 30 days
 
 I've attached a one-page Founding Advisor summary so everything is in writing.
 

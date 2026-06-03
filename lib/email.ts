@@ -277,8 +277,47 @@ function emailButton(label: string, href: string): string {
  * Shared branded shell: centered EAH logo, a thin purple rule, the letter body,
  * then the signature block + footer. `bodyHtml` is the per-email letter content.
  */
-function renderBrandedEmail(opts: { preheader: string; bodyHtml: string }): string {
-  const { preheader, bodyHtml } = opts
+function renderBrandedEmail(opts: { preheader: string; bodyHtml: string; heroImageUrl?: string }): string {
+  const { preheader, bodyHtml, heroImageUrl } = opts
+
+  const signature = `<hr style="border:none;border-top:1px solid #e5e7eb;margin:28px 0 20px;"/>
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+              <td valign="top" style="padding-right:14px;">
+                <img src="${EMAIL_ASSET_ORIGIN}/assets/email/nick-headshot.jpg" width="56" height="56" alt="Nick Cabugos" style="display:block;width:56px;height:56px;border-radius:50%;border:0;"/>
+              </td>
+              <td valign="top">
+                <p style="margin:0;font-size:14px;line-height:1.5;color:#111111;font-weight:700;">Nick Cabugos</p>
+                <p style="margin:0;font-size:13px;line-height:1.6;color:#6b7280;">Founder, Elite Advisor Hub</p>
+                <p style="margin:0;font-size:13px;line-height:1.6;color:#6b7280;"><a href="${EMAIL_ASSET_ORIGIN}" style="color:${ACCENT};text-decoration:none;">eliteadvisorhub.com</a></p>
+                <p style="margin:6px 0 0;font-size:12px;line-height:1.5;color:#9ca3af;font-style:italic;">Virtuoso-grade websites for the top travel advisors.</p>
+              </td>
+            </tr></table>
+            <p style="margin:18px 0 0;font-size:12px;line-height:1.6;color:#9ca3af;">Eden For Your World was the first advisor on board. Take a look: <a href="https://edenforyourworld.com" style="color:${ACCENT};text-decoration:none;">edenforyourworld.com</a></p>`
+
+  // Logo + thin rule, shown above the body card only when there is no hero image.
+  const logoHeader = `<tr><td align="center" style="padding-bottom:6px;">
+          <img src="${EAH_LOGO_URL}" width="170" alt="Elite Advisor Hub" style="display:inline-block;width:170px;max-width:60%;height:auto;border:0;"/>
+        </td></tr>
+        <tr><td align="center" style="padding-bottom:26px;">
+          <div style="width:44px;height:2px;background-color:${ACCENT};margin:14px auto 0;line-height:2px;font-size:0;">&nbsp;</div>
+        </td></tr>`
+
+  // Hero variant: image and body live in ONE rounded box with no gap. The image
+  // sits flush at the top; overflow:hidden clips it to the rounded corners.
+  const card = heroImageUrl
+    ? `<tr><td style="background-color:#ffffff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;">
+          <img src="${heroImageUrl}" width="560" alt="Elite Advisor Hub — Websites for Elite Travel Advisors" style="display:block;width:100%;max-width:560px;height:auto;border:0;"/>
+          <div style="padding:32px 40px;">
+            ${bodyHtml}
+            ${signature}
+          </div>
+        </td></tr>`
+    : `${logoHeader}
+        <tr><td style="background-color:#ffffff;border:1px solid #e5e7eb;border-radius:14px;padding:40px 40px 32px;">
+            ${bodyHtml}
+            ${signature}
+        </td></tr>`
+
   return `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/></head>
 <body style="margin:0;padding:0;background-color:#f4f4f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;">
@@ -286,24 +325,7 @@ function renderBrandedEmail(opts: { preheader: string; bodyHtml: string }): stri
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f4f5;">
     <tr><td align="center" style="padding:40px 16px;">
       <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:560px;">
-        <tr><td align="center" style="padding-bottom:6px;">
-          <img src="${EAH_LOGO_URL}" width="170" alt="Elite Advisor Hub" style="display:inline-block;width:170px;max-width:60%;height:auto;border:0;"/>
-        </td></tr>
-        <tr><td align="center" style="padding-bottom:26px;">
-          <div style="width:44px;height:2px;background-color:${ACCENT};margin:14px auto 0;line-height:2px;font-size:0;">&nbsp;</div>
-        </td></tr>
-        <tr><td style="background-color:#ffffff;border:1px solid #e5e7eb;border-radius:14px;padding:40px 40px 32px;">
-          ${bodyHtml}
-          <hr style="border:none;border-top:1px solid #e5e7eb;margin:28px 0 20px;"/>
-          <p style="margin:0;font-size:14px;line-height:1.5;color:#111111;font-weight:700;">Nick Cabugos</p>
-          <p style="margin:0;font-size:13px;line-height:1.6;color:#6b7280;">Founder, Elite Advisor Hub</p>
-          <p style="margin:0;font-size:13px;line-height:1.6;color:#6b7280;">
-            <a href="${EMAIL_ASSET_ORIGIN}" style="color:${ACCENT};text-decoration:none;">eliteadvisorhub.com</a>
-            &nbsp;·&nbsp;
-            <a href="mailto:${FOUNDER_REPLY_TO}" style="color:${ACCENT};text-decoration:none;">${FOUNDER_REPLY_TO}</a>
-          </p>
-          <p style="margin:10px 0 0;font-size:12px;line-height:1.5;color:#9ca3af;font-style:italic;">Virtuoso-grade websites for the top travel advisors.</p>
-        </td></tr>
+        ${card}
         <tr><td align="center" style="padding:24px 16px 0;">
           <p style="margin:0;font-size:12px;line-height:1.6;color:#9ca3af;">Elite Advisor Hub &nbsp;·&nbsp; <a href="${EMAIL_ASSET_ORIGIN}" style="color:#9ca3af;text-decoration:underline;">eliteadvisorhub.com</a></p>
         </td></tr>
@@ -319,14 +341,15 @@ async function sendFoundingEmail(opts: {
   subject: string
   preheader: string
   bodyHtml: string
+  heroImageUrl?: string
 }) {
-  const { to, subject, preheader, bodyHtml } = opts
+  const { to, subject, preheader, bodyHtml, heroImageUrl } = opts
   const { data, error } = await getResend().emails.send({
     from: FOUNDER_FROM_ADDRESS,
     to,
     replyTo: FOUNDER_REPLY_TO,
     subject,
-    html: renderBrandedEmail({ preheader, bodyHtml }),
+    html: renderBrandedEmail({ preheader, bodyHtml, heroImageUrl }),
   })
   if (error) {
     console.error(`[email] Failed to send founding email "${subject}":`, error)
@@ -343,31 +366,33 @@ export interface BetaInvitationEmailInput {
   /** {{Consult Link}} — scheduling link for the founding conversation. */
   consultLink: string
 }
-export async function sendBetaInvitationEmail(input: BetaInvitationEmailInput) {
-  const { to, firstName, brandName, consultLink } = input
+export function buildBetaInvitationEmail(input: BetaInvitationEmailInput): BuiltEmail {
+  const { firstName, brandName, consultLink } = input
   const bodyHtml = [
-    emailParagraph(`Hi ${firstName},`),
-    emailParagraph(`I've been following <strong>${brandName}</strong>, and the way you've built your client base is exactly the kind of work this is for — so I wanted you to be one of the first people I reached out to.`),
-    emailParagraph(`I built Elite Advisor Hub to solve a problem I kept running into as a travel advisor myself: the best advisors are running their brands on websites that don't come close to matching the quality of the trips they sell. EAH gives independent advisors a Virtuoso-grade website — beautiful, fast, SEO-ready, with a built-in journal and curated supplier content — live in days, not months.`),
-    emailParagraph(`I'm opening it with a small founding group of four advisors, and I'd like <strong>${brandName}</strong> to be one of them. As a <strong>Founding Advisor</strong>, you'd get:`),
+    emailParagraph(`Hi ${firstName}! Hope you're doing well, it's been too long.`),
+    emailParagraph(`Wanted to personally invite you to something I've been building, I think you'd want to see it. Wanted to get it in front of you before it goes wider.`),
+    emailParagraph(`I built Elite Advisor Hub to solve a problem I kept running into as a travel advisor myself: the best advisors are running their brands on websites that don't come close to matching the quality of the trips they sell. EAH gives independent advisors a Virtuoso-grade website, beautiful, fast, SEO-ready, with a built-in journal and curated supplier content, live in days, not months.`),
+    emailParagraph(`I'm opening it to a small founding group of advisors this month, and I'd love <strong>${brandName}</strong> to be one of them. As a <strong>Founding Advisor</strong>, you'd get:`),
     emailBullets([
       `Your setup fee waived completely`,
-      `Your first three months free`,
-      `A locked founding rate after that — roughly a third below standard — held for as long as you're with us`,
+      `Your first month free, basically a 30-day trial to see it in action`,
+      `A locked founding rate after that, roughly a third below standard, held for as long as you're with us`,
       `A site built and launched with my direct, hands-on attention`,
     ]),
-    emailParagraph(`In return, I'd ask for honest feedback, a testimonial once you've seen what it can do, and a couple of introductions to advisors you respect. That's it.`),
-    emailParagraph(`Would you be open to a short conversation this week? Just reply to this email, or grab a time here:`),
+    emailParagraph(`In return, I'd just ask for honest feedback and a testimonial once you've seen what it can do. That's it.`),
+    emailParagraph(`Easiest next step is a quick call so I can walk you through it on a brand close to yours. Just reply to this email, or grab a time here:`),
     emailButton('Book a conversation', consultLink),
-    emailParagraph(`I'd genuinely love to build this with you.`),
-    emailParagraph(`Warmly,`),
+    emailParagraph(`Hope to hear from you soon!`),
   ].join('')
-  return sendFoundingEmail({
-    to,
-    subject: `An invitation, ${firstName} — become a Founding Advisor on Elite Advisor Hub`,
-    preheader: `A Virtuoso-grade website for ${brandName}, built in days — and a founding offer I'd like to extend to you first.`,
+  return {
+    subject: `An invitation for you, ${firstName}`,
+    preheader: `A custom-branded, Virtuoso-grade website for ${brandName}, built by me in about a week.`,
     bodyHtml,
-  })
+    heroImageUrl: `${EMAIL_ASSET_ORIGIN}/assets/email/email-1-hero.jpg`,
+  }
+}
+export async function sendBetaInvitationEmail(input: BetaInvitationEmailInput) {
+  return sendFoundingEmail({ to: input.to, ...buildBetaInvitationEmail(input) })
 }
 
 /* ── Email 2 — Welcome & Register ───────────────────────────────────────── */
@@ -390,9 +415,9 @@ export async function sendWelcomeRegisterEmail(input: WelcomeRegisterEmailInput)
     emailParagraph(`<strong>Your Founding Advisor offer, confirmed:</strong>`),
     emailBullets([
       `${tier} tier — setup fee waived`,
-      `First three months free`,
+      `First month free, a 30-day trial`,
       `Founding rate after that, locked for as long as you stay with us`,
-      `A card on file so billing is seamless when month four arrives — nothing is charged for 90 days`,
+      `A card on file so billing is seamless when month two arrives, nothing is charged for the first 30 days`,
     ]),
     emailParagraph(`I've put together a one-page Founding Advisor summary so everything's in writing.`),
     emailParagraph(`<strong>Step one — create your portal account.</strong> This is where you'll manage your site, blog, and billing. It takes a minute and uses a secure magic link, so there's no password to remember:`),
@@ -590,4 +615,141 @@ export async function sendConsultationBookingEmail(input: ConsultationBookingEma
     preheader: `Custom and Agency sites start with a conversation. Here's the link to book it.`,
     bodyHtml,
   })
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * Warm launch sequence (known advisors)
+ *
+ * Emails 2-5 of the personal recruitment sequence for a warm list of advisors
+ * you already know. Email 1 is the existing sendBetaInvitationEmail. These reuse
+ * the same branded "from Nick" shell and reply-to, and drive to the homepage and
+ * the consultation booking page. Sent 1:1 by scripts/send-warm-sequence.ts.
+ * Not wired to any trigger. See marketing/launch-campaign/ for the plan + copy.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+const HOMEPAGE_LINK = 'https://eliteadvisorhub.com'
+const CONSULT_LINK = 'https://eliteadvisorhub.com/schedule-consultation'
+const WAITLIST_LINK = 'https://eliteadvisorhub.com/beta'
+
+export interface WarmSequenceEmailInput {
+  to: string
+  firstName: string
+  brandName: string
+}
+
+/** A fully composed email, before it is wrapped in the branded shell and sent. */
+export interface BuiltEmail {
+  subject: string
+  preheader: string
+  bodyHtml: string
+  /** Optional full-width hero banner shown in place of the logo header. */
+  heroImageUrl?: string
+}
+
+/**
+ * Render a built email to the full branded HTML, WITHOUT sending. Use this to
+ * preview the design (see scripts/preview-warm-sequence.ts).
+ */
+export function renderFoundingEmailHtml(built: BuiltEmail): string {
+  return renderBrandedEmail({
+    preheader: built.preheader,
+    bodyHtml: built.bodyHtml,
+    heroImageUrl: built.heroImageUrl,
+  })
+}
+
+/* ── Email 2 — How it works ─────────────────────────────────────────────── */
+export function buildWarmHowItWorksEmail(input: WarmSequenceEmailInput): BuiltEmail {
+  const { firstName, brandName } = input
+  const bodyHtml = [
+    emailParagraph(`Hi ${firstName},`),
+    emailParagraph(`Following up on my note about Elite Advisor Hub. The question I get most is simple: what do I actually get, and how fast?`),
+    emailParagraph(`Here's the short version. You get a custom-branded site built to your identity, not a stock template. It comes with your supplier catalog, a lead inbox, a self-service portal, and a journal that keeps fresh, curated content publishing to your site automatically. Most advisors are live within days, with my hands-on attention through the whole build.`),
+    emailParagraph(`No drawn-out agency project. No wrestling with a website builder at midnight. You stay focused on clients while I handle the site.`),
+    emailParagraph(`The best next step is a quick conversation:`),
+    emailButton('Book a consultation', CONSULT_LINK),
+    emailParagraph(`Or if you'd rather look around first, the homepage walks through it: <a href="${HOMEPAGE_LINK}" style="color:${ACCENT};">eliteadvisorhub.com</a>`),
+    emailParagraph(`Warmly,`),
+  ].join('')
+  return {
+    subject: `How ${brandName} could be live in days`,
+    preheader: `What you get, how fast it happens, and why advisors are switching.`,
+    bodyHtml,
+  }
+}
+export async function sendWarmHowItWorksEmail(input: WarmSequenceEmailInput) {
+  return sendFoundingEmail({ to: input.to, ...buildWarmHowItWorksEmail(input) })
+}
+
+/* ── Email 3 — Proof ────────────────────────────────────────────────────── */
+export function buildWarmProofEmail(input: WarmSequenceEmailInput): BuiltEmail {
+  const { firstName, brandName } = input
+  const bodyHtml = [
+    emailParagraph(`Hi ${firstName},`),
+    emailParagraph(`Rather than describe it again, I'd rather show you.`),
+    emailParagraph(`Eden For Your World is one of our advisors. Take a look at the site we built and judge the quality for yourself: <a href="https://edenforyourworld.com" style="color:${ACCENT};">edenforyourworld.com</a>`),
+    emailParagraph(`That is the standard. Clean, fast, genuinely premium, and built to bring in the right clients. The same care goes into every Founding Advisor build, including the founding offer: setup waived, your first month free as a 30-day trial, and a locked rate after that.`),
+    emailParagraph(`If you can picture ${brandName} looking like this, let's talk:`),
+    emailButton('Book a consultation', CONSULT_LINK),
+    emailParagraph(`Warmly,`),
+  ].join('')
+  return {
+    subject: `Here's one built for a real advisor`,
+    preheader: `A live Elite Advisor Hub site, so you can judge it for yourself.`,
+    bodyHtml,
+  }
+}
+export async function sendWarmProofEmail(input: WarmSequenceEmailInput) {
+  return sendFoundingEmail({ to: input.to, ...buildWarmProofEmail(input) })
+}
+
+/* ── Email 4 — The founding window ──────────────────────────────────────── */
+export function buildWarmFoundingWindowEmail(input: WarmSequenceEmailInput): BuiltEmail {
+  const { firstName, brandName } = input
+  const bodyHtml = [
+    emailParagraph(`Hi ${firstName},`),
+    emailParagraph(`A quick and honest note. I'm keeping the founding group small on purpose, because each site gets my direct attention and I won't compromise that. The spots are filling.`),
+    emailParagraph(`Here's exactly what a Founding Advisor gets:`),
+    emailBullets([
+      `Setup fee waived, in full`,
+      `Your first month free, a 30-day trial`,
+      `A locked founding rate after that, roughly a third below standard, held for as long as you stay`,
+      `A site built and launched with my hands-on attention`,
+    ]),
+    emailParagraph(`I'd like ${brandName} to have one of the remaining spots. The only next step is a short conversation so I can understand your brand and make sure it's a fit:`),
+    emailButton('Book your consultation', CONSULT_LINK),
+    emailParagraph(`If the timing isn't right, just reply and tell me. I read every response.`),
+    emailParagraph(`Warmly,`),
+  ].join('')
+  return {
+    subject: `The founding group is filling up`,
+    preheader: `What the founding offer includes, and why it won't stay open.`,
+    bodyHtml,
+  }
+}
+export async function sendWarmFoundingWindowEmail(input: WarmSequenceEmailInput) {
+  return sendFoundingEmail({ to: input.to, ...buildWarmFoundingWindowEmail(input) })
+}
+
+/* ── Email 5 — Last call ────────────────────────────────────────────────── */
+export function buildWarmLastCallEmail(input: WarmSequenceEmailInput): BuiltEmail {
+  const { firstName, brandName } = input
+  const bodyHtml = [
+    emailParagraph(`Hi ${firstName},`),
+    emailParagraph(`This is the last note I'll send about the founding group. I'm closing it to keep the cohort small and give each site the attention it deserves.`),
+    emailParagraph(`If a Virtuoso-grade site for ${brandName}, with the setup waived and your first month free, is something you want, now is the moment:`),
+    emailButton('Book your consultation', CONSULT_LINK),
+    emailParagraph(`And if the timing simply isn't right, no problem at all. Add yourself to the waitlist and I'll reach out when the next group opens:`),
+    emailButton('Join the waitlist', WAITLIST_LINK),
+    emailParagraph(`Thank you for reading this far. Whatever you decide, I wish you and ${brandName} a wonderful season ahead.`),
+    emailParagraph(`Warmly,`),
+  ].join('')
+  return {
+    subject: `Closing the founding group, ${firstName}`,
+    preheader: `Last call on the founding offer, plus an easy way to stay in touch.`,
+    bodyHtml,
+  }
+}
+export async function sendWarmLastCallEmail(input: WarmSequenceEmailInput) {
+  return sendFoundingEmail({ to: input.to, ...buildWarmLastCallEmail(input) })
 }

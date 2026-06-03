@@ -71,7 +71,7 @@ export function FoundingCheckoutPanel({ agentName }: Props) {
         {agentName ? (
           <> for <strong style={{ color: '#111' }}>{agentName}</strong></>
         ) : null}
-        . The link waives the setup fee, runs a 90-day free trial, then locks the
+        . The link waives the setup fee, runs a 30-day free trial, then locks the
         founding monthly rate. Paste it into the advisor&rsquo;s Welcome email —
         it is not available on any public page.
       </div>

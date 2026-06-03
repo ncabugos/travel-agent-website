@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Elite Advisor Hub — Brand Style Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=Bodoni+Moda:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAFAF5; --charcoal:#1A1715; --gold:#B49A5A; --gold-light:#C9B07A;
+    --warm-gray:#8A8279; --divider:#E8E4DC; --dark-footer:#131210;
+    --purple:#7C3AED; --violet:#a78bfa; --lav1:#a5b4fc; --lav2:#c4b5fd;
+    --sys:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:#e9e7e0;color:var(--charcoal);font-family:var(--sys);line-height:1.6;
+    -webkit-font-smoothing:antialiased;padding:32px 16px;}
+  .page{max-width:920px;margin:0 auto;background:var(--cream);border:1px solid var(--divider);
+    border-radius:16px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.10);}
+  .masthead{background:var(--charcoal);color:#fff;padding:40px 48px 34px;}
+  .masthead .kicker{font-size:11px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--gold-light);font-weight:600;margin:0 0 14px;}
+  .masthead h1{font-family:var(--sys);font-weight:800;letter-spacing:-0.03em;
+    font-size:clamp(30px,5vw,52px);line-height:1.08;margin:0;}
+  .masthead h1 .accent{background:linear-gradient(135deg,var(--lav1),var(--lav2));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .masthead p{margin:14px 0 0;color:rgba(255,255,255,.72);font-size:14px;max-width:560px;}
+  .body{padding:36px 48px 44px;}
+  section{margin:0 0 40px;}
+  h2{font-family:var(--sys);font-weight:800;letter-spacing:-0.02em;font-size:13px;
+    text-transform:uppercase;color:var(--warm-gray);margin:0 0 18px;
+    padding-bottom:10px;border-bottom:1px solid var(--divider);}
+  .row{display:flex;flex-wrap:wrap;gap:24px;}
+  .card{flex:1 1 240px;background:#fff;border:1px solid var(--divider);border-radius:12px;padding:22px 24px;}
+  .label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:0 0 6px;}
+  .meta{font-size:12px;color:var(--warm-gray);margin:8px 0 0;}
+  .meta code{background:var(--cream);border:1px solid var(--divider);border-radius:4px;padding:1px 6px;font-size:11px;}
+  .specimen{margin:4px 0 2px;line-height:1.05;color:var(--charcoal);}
+  .s-inter-h{font-family:'Inter',var(--sys);font-weight:800;letter-spacing:-0.03em;font-size:34px;}
+  .s-inter-b{font-family:'Inter',var(--sys);font-weight:400;font-size:15px;line-height:1.6;}
+  .s-cormorant{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:38px;}
+  .s-dmsans{font-family:'DM Sans',var(--sys);font-weight:400;font-size:15px;}
+  .s-bodoni{font-family:'Bodoni Moda',Didot,Georgia,serif;font-weight:500;font-size:36px;}
+  .s-space{font-family:'Space Grotesk',var(--sys);font-weight:700;font-size:32px;letter-spacing:-0.02em;}
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;}
+  .sw{border:1px solid var(--divider);border-radius:10px;overflow:hidden;background:#fff;}
+  .sw .chip{height:64px;}
+  .sw .info{padding:9px 11px;}
+  .sw .name{font-size:12px;font-weight:600;}
+  .sw .hex{font-size:11px;color:var(--warm-gray);font-family:ui-monospace,Menlo,monospace;}
+  .note{background:#faf5ff;border:1px solid #e9d5ff;border-radius:10px;padding:14px 16px;
+    font-size:13px;color:#5b2ea6;}
+  .note b{color:#4c1d95;}
+  ul.tight{margin:8px 0 0;padding-left:18px;font-size:13px;color:var(--charcoal);}
+  ul.tight li{margin:0 0 5px;}
+  .foot{padding:18px 48px 30px;border-top:1px solid var(--divider);font-size:11px;color:var(--warm-gray);}
+  a{color:var(--purple);}
+  @media print{body{background:#fff;padding:0;} .page{box-shadow:none;border:none;}}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="masthead">
+    <p class="kicker">✦ Brand Style Guide</p>
+    <h1>Websites for <span class="accent">Elite Travel Advisors</span></h1>
+    <p>Elite Advisor Hub. The premium website platform for the top 1% of luxury travel advisors. Quick-reference typography and color.</p>
+  </div>
+
+  <div class="body">
+
+    <section>
+      <h2>Primary Typeface — Marketing &amp; Brand</h2>
+      <div class="row">
+        <div class="card">
+          <p class="label">Headlines</p>
+          <div class="specimen s-inter-h">Websites for Elite Travel Advisors</div>
+          <p class="meta">Live site renders the <b>system UI font</b> (San Francisco on Apple, Segoe UI on Windows, Roboto on Android). For brand docs use <b>Inter</b> as the embeddable equivalent. Weight <code>800</code>, tracking <code>-0.03em</code>.</p>
+        </div>
+        <div class="card">
+          <p class="label">Body &amp; UI</p>
+          <div class="specimen s-inter-b">A website platform for independent travel advisors and boutique agencies. A curated network of luxury hotels and cruise lines, kept current for you.</div>
+          <p class="meta">System UI / <b>Inter</b>. Weights <code>400</code>–<code>600</code>.</p>
+        </div>
+      </div>
+      <p class="note" style="margin-top:18px;"><b>Why Inter?</b> The marketing site uses the OS system font, which cannot be embedded in decks, PDFs, or Canva, and Apple’s SF Pro license forbids marketing use. Inter (SIL Open Font License, free) is the closest match. Document it as the brand font everywhere a file needs an actual embedded typeface.</p>
+    </section>
+
+    <section>
+      <h2>Advisor-Site Template Fonts</h2>
+      <p class="meta" style="margin:0 0 16px;">Each client-site template owns its own pairing. These are the fonts on the advisor websites, not the marketing front door.</p>
+      <div class="row">
+        <div class="card">
+          <p class="label">Starter &amp; Casa Solis</p>
+          <div class="specimen s-cormorant">Quiet Luxury, Considered</div>
+          <div class="specimen s-dmsans" style="margin-top:6px;">Cormorant Garamond display, DM Sans body.</div>
+          <p class="meta"><b>Cormorant Garamond</b> + <b>DM Sans</b></p>
+        </div>
+        <div class="card">
+          <p class="label">Vista (T2)</p>
+          <div class="specimen s-bodoni">Cinematic &amp; Editorial</div>
+          <div class="specimen s-inter-b" style="margin-top:6px;">Bodoni Moda display, Inter body.</div>
+          <p class="meta"><b>Bodoni Moda</b> + <b>Inter</b></p>
+        </div>
+        <div class="card">
+          <p class="label">Meridian (T3)</p>
+          <div class="specimen s-space">Modern Grid</div>
+          <div class="specimen s-inter-b" style="margin-top:6px;">Space Grotesk display, Inter body.</div>
+          <p class="meta"><b>Space Grotesk</b> + <b>Inter</b></p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Color Palette</h2>
+      <p class="label" style="color:var(--warm-gray);">Accent</p>
+      <div class="swatches" style="margin-bottom:18px;">
+        <div class="sw"><div class="chip" style="background:linear-gradient(135deg,#a5b4fc,#c4b5fd);"></div><div class="info"><div class="name">Lavender Gradient</div><div class="hex">#A5B4FC → #C4B5FD</div></div></div>
+        <div class="sw"><div class="chip" style="background:#7C3AED;"></div><div class="info"><div class="name">Brand Purple</div><div class="hex">#7C3AED</div></div></div>
+        <div class="sw"><div class="chip" style="background:#a78bfa;"></div><div class="info"><div class="name">Violet</div><div class="hex">#A78BFA</div></div></div>
+        <div class="sw"><div class="chip" style="background:#B49A5A;"></div><div class="info"><div class="name">Gold</div><div class="hex">#B49A5A</div></div></div>
+        <div class="sw"><div class="chip" style="background:#C9B07A;"></div><div class="info"><div class="name">Gold Light</div><div class="hex">#C9B07A</div></div></div>
+      </div>
+      <p class="label" style="color:var(--warm-gray);">Neutrals</p>
+      <div class="swatches">
+        <div class="sw"><div class="chip" style="background:#FAFAF5;border-bottom:1px solid var(--divider);"></div><div class="info"><div class="name">Cream (bg)</div><div class="hex">#FAFAF5</div></div></div>
+        <div class="sw"><div class="chip" style="background:#1A1715;"></div><div class="info"><div class="name">Charcoal (text)</div><div class="hex">#1A1715</div></div></div>
+        <div class="sw"><div class="chip" style="background:#131210;"></div><div class="info"><div class="name">Dark Footer</div><div class="hex">#131210</div></div></div>
+        <div class="sw"><div class="chip" style="background:#8A8279;"></div><div class="info"><div class="name">Warm Gray</div><div class="hex">#8A8279</div></div></div>
+        <div class="sw"><div class="chip" style="background:#E8E4DC;"></div><div class="info"><div class="name">Divider</div><div class="hex">#E8E4DC</div></div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Where to Download</h2>
+      <div class="row">
+        <div class="card">
+          <p class="label">Use these (free, embeddable)</p>
+          <ul class="tight">
+            <li><b>Inter</b> — <a href="https://fonts.google.com/specimen/Inter">fonts.google.com/specimen/Inter</a></li>
+            <li><b>Cormorant Garamond</b> — <a href="https://fonts.google.com/specimen/Cormorant+Garamond">Google Fonts</a></li>
+            <li><b>DM Sans</b> — <a href="https://fonts.google.com/specimen/DM+Sans">Google Fonts</a></li>
+            <li><b>Space Grotesk</b> — <a href="https://fonts.google.com/specimen/Space+Grotesk">Google Fonts</a></li>
+            <li><b>Bodoni Moda</b> — <a href="https://fonts.google.com/specimen/Bodoni+Moda">Google Fonts</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="label">System font (reference only)</p>
+          <ul class="tight">
+            <li><b>SF Pro</b> — <a href="https://developer.apple.com/fonts/">developer.apple.com/fonts</a></li>
+          </ul>
+          <p class="note" style="margin-top:12px;">SF Pro is what the live marketing headers render on Apple devices, but its license permits Apple-platform UI only. <b>Do not use it in brand or marketing materials.</b> Use Inter instead.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="foot">Elite Advisor Hub · eliteadvisorhub.com · Brand style guide, generated June 2026. Color tokens sourced from app/globals.css; type from the marketing site and advisor templates.</div>
+
+</div>
+</body>
+</html>

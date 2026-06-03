@@ -16,21 +16,21 @@ Companion files: `EAH_Advisor_Onboarding_and_Beta_Launch_Strategy.docx`,
 
 ## The goal
 
-Deliver the beta offer: **$0 setup fee, 3 months free, then a locked founding rate held
+Deliver the beta offer: **$0 setup fee, first month free, then a locked founding rate held
 for the life of the subscription**, with a card on file from day one that auto-converts
-at month 4. Invitation-only — not claimable by the public.
+at month 2. Invitation-only — not claimable by the public.
 
-## The mechanism: dedicated founding prices + a 90-day Stripe trial
+## The mechanism: dedicated founding prices + a 30-day Stripe trial
 
 **Do not use coupons for this.** A Stripe coupon has a single duration — `once`,
-`repeating` (N months), or `forever`. It cannot express "100% off for 3 months, then
+`repeating` (N months), or `forever`. It cannot express "100% off for 1 month, then
 ~33% off forever." Stacking two coupons isn't cleanly supported in Checkout, and a
 percentage coupon would also discount the setup fee.
 
 Instead, the discount is not a discount at all — it is simply a different price:
 
 1. Create new recurring **founding prices** in Stripe at the discounted monthly rate.
-2. Start the subscription with a **90-day free trial** (`trial_period_days: 90`).
+2. Start the subscription with a **30-day free trial** (`trial_period_days: 30`).
 3. **Omit the setup-fee line item** entirely for founding checkouts.
 
 This makes "locked for life" automatic. The subscription sits on the founding price
@@ -107,12 +107,12 @@ Assuming the recommended cohort of **1 Starter + 2 Growth + 1 Custom**:
 
 | | Founding | Standard equivalent |
 |---|---|---|
-| Recurring / mo (after free quarter) | $546 | $796 |
+| Recurring / mo (after free month) | $546 | $796 |
 | Setup fees | $0 | $6,496 one-time |
-| First 90 days | Free | — |
+| First 30 days | Free | — |
 
 The beta "costs" roughly **$6,496 in forgone setup fees**, a **~$250/mo ongoing
-discount**, and **one free quarter (~$1,638 of value)**. That is the price of four
+discount**, and **one free month (~$546 of value)**. That is the price of four
 testimonials, two portfolio-grade case studies, up to eight referral introductions, and
 a validated onboarding system. It is a reasonable customer-acquisition investment, not a
 loss.
@@ -130,9 +130,9 @@ Stripe **test mode only** — never test against live. Use `stripe listen` for w
 
 1. Generate a test founding checkout link; confirm $0 due today and that a card is still
    captured.
-2. Confirm the subscription is created in `trialing`, with `trial_end` ~90 days out and
+2. Confirm the subscription is created in `trialing`, with `trial_end` ~30 days out and
    `plan`/`cohort` metadata present.
-3. Use a Stripe **test clock** to fast-forward 90 days; confirm the auto-charge lands at
+3. Use a Stripe **test clock** to fast-forward 30 days; confirm the auto-charge lands at
    the founding price and the subscription flips to `active`.
 4. Confirm the agent record shows `plan = 'founding'` and the correct `beta_cohort`.
 

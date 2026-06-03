@@ -31,7 +31,7 @@ Short version of what you'd get:
 Founding offer for this group only:
 
 - Setup fee waived (normally $499–$2,999)
-- First three months free
+- First month free, a 30-day trial
 - Locked founding rate after that — about a third below list — for as long as you stay
 - Site built directly by me, live in about a week
 

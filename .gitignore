@@ -50,3 +50,9 @@ next-env.d.ts
 
 # local video/render exports (large binaries — not for git)
 exports/
+
+# Launch contact lists & prospect outreach — personal data, never commit (public repo)
+scripts/warm-contacts*.csv
+scripts/warm-contacts*.pages
+launch/EAH_Email_ChrisWeatherhead.md
+launch/EAH_Advisor_Outreach_Email.html

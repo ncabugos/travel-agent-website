@@ -194,7 +194,7 @@ export default function TemplatesPage() {
           </h2>
           <p style={{ fontSize: '16px', color: '#6b7280', lineHeight: 1.7, margin: '0 0 32px' }}>
             Join the Founding Advisor beta — a Virtuoso-grade site with the setup fee
-            waived, three months free, and a locked founding rate.
+            waived, a free first month, and a locked founding rate.
           </p>
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link

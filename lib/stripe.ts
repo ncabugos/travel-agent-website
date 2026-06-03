@@ -74,7 +74,7 @@ export type TierName = keyof typeof TIER_PRICES
  * as the standard tiers, so revenue reporting stays unified. The founding
  * discount is the price itself (not a coupon), which is why it never expires —
  * the subscription simply sits on the founding price for the life of the
- * subscription. Founding checkouts charge no setup fee and run a 90-day trial.
+ * subscription. Founding checkouts charge no setup fee and run a 30-day trial.
  * See EAH_Beta_Launch_Build_Kit.md, Part A.
  *
  * Agency has no founding price (it is consultation-only / off-Stripe).
@@ -86,8 +86,8 @@ export type TierName = keyof typeof TIER_PRICES
  * NOTE: these are LIVE-MODE price IDs (confirmed). There is intentionally no
  * test-mode equivalent — the founding checkout runs against live Stripe only,
  * so it cannot be exercised in test mode or with a Stripe test clock. The
- * 90-day trial means $0 is charged at signup; a real founding subscription can
- * be cancelled before day 90 if a live end-to-end check is needed.
+ * 30-day trial means $0 is charged at signup; a real founding subscription can
+ * be cancelled before day 30 if a live end-to-end check is needed.
  */
 export const FOUNDING_PRICES = {
   starter: {

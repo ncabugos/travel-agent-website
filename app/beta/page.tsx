@@ -6,7 +6,7 @@ import { BetaWaitlistForm } from '@/components/marketing/BetaWaitlistForm'
 export const metadata = {
   title: 'Founding Advisor Beta — Elite Advisor Hub',
   description:
-    'Join the waitlist for the Elite Advisor Hub Founding Advisor beta: a Virtuoso-grade website with the setup fee waived, three months free, and a locked founding rate.',
+    'Join the waitlist for the Elite Advisor Hub Founding Advisor beta: a Virtuoso-grade website with the setup fee waived, a free first month, and a locked founding rate.',
 }
 
 // Match the marketing homepage exactly: system font stack, full-bleed hero
@@ -25,8 +25,8 @@ const HIGHLIGHTS = [
   },
   {
     icon: <CalendarCheck size={26} strokeWidth={1.5} />,
-    title: 'Three months free',
-    body: 'Your first 90 days are on us — nothing charged at signup.',
+    title: 'First month free',
+    body: 'Your first 30 days are on us, nothing charged at signup.',
   },
   {
     icon: <Lock size={26} strokeWidth={1.5} />,
@@ -320,7 +320,7 @@ export default function BetaWaitlistPage() {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '12px', fontSize: '14px' }}>
                   <Check size={16} strokeWidth={2.5} style={{ color: '#16a34a', flexShrink: 0 }} />
-                  <span style={{ color: '#374151' }}>First 3 months free</span>
+                  <span style={{ color: '#374151' }}>First month free</span>
                 </div>
               </div>
             ))}

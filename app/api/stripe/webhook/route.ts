@@ -44,9 +44,9 @@ export async function POST(request: Request) {
       // plan/cohort, so they fall back to the 'standard' default.
       const plan = session.metadata?.plan === 'founding' ? 'founding' : 'standard'
       const betaCohort = session.metadata?.cohort ?? null
-      // Founding subscriptions always start in a 90-day trial; standard ones are
+      // Founding subscriptions always start in a 30-day trial; standard ones are
       // active immediately. customer.subscription.updated keeps status in sync
-      // afterward (e.g. when the trial converts to active on day 90).
+      // afterward (e.g. when the trial converts to active on day 30).
       const subscriptionStatus = plan === 'founding' ? 'trialing' : 'active'
 
       if (!email) {
@@ -179,7 +179,7 @@ export async function POST(request: Request) {
       break
     }
 
-    // ── Trial ending soon (~3 days out) — founding 90-day trial ─────
+    // ── Trial ending soon (~3 days out) — founding 30-day trial ─────
     case 'customer.subscription.trial_will_end': {
       const subscription = event.data.object as Stripe.Subscription
       const plan = subscription.metadata?.plan ?? 'standard'
@@ -188,7 +188,7 @@ export async function POST(request: Request) {
         ? new Date(subscription.trial_end * 1000).toISOString()
         : 'unknown'
 
-      // Stripe fires this ~3 days before the 90-day founding trial converts to
+      // Stripe fires this ~3 days before the 30-day founding trial converts to
       // the locked founding rate.
       // TODO: send the courtesy "your founding rate begins in 3 days" email via
       // lib/email.ts once the Resend template is wired (Build Kit Part A).
