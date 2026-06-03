@@ -40,6 +40,9 @@ export async function submitContactForm(
   // arrives via /contact?hotel=<name> from a hotel detail page.
   // Tags the subject line and adds a prominent row in the advisor email.
   const hotelName  = get('hotel_name')
+  // Set by /contact?intent=advisor — a direct "connect with an advisor"
+  // request from a quick-access CTA. Tags the subject line.
+  const inquiryType = get('inquiry_type')
 
   // ── Spam protection ──────────────────────────────────────────────────
   // 1. Honeypot — hidden field that real users never fill.
@@ -126,7 +129,9 @@ export async function submitContactForm(
       // advisor knows the context without opening the email.
       const subjectTag = hotelName
         ? `[Hotel — ${hotelName}]`
-        : '[New enquiry]'
+        : inquiryType === 'advisor'
+          ? '[Advisor request]'
+          : '[New enquiry]'
       const subject = `${subjectTag} ${fullName}${
         !hotelName && destination ? ' — ' + destination : ''
       }`

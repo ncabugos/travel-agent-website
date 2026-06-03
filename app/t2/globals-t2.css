@@ -211,6 +211,24 @@
   .t2-grid-6 { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ── Contact layout (sidebar + form) — stacks on mobile ─────────────────── */
+.t2-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 64px;
+}
+.t2-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 768px) {
+  .t2-contact-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 480px) {
+  .t2-form-row { grid-template-columns: 1fr; }
+}
+
 /* ── Cards ────────────────────────────────────────────────────────────── */
 .t2-card {
   overflow: hidden;

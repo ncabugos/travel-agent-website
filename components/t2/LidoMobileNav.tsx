@@ -62,13 +62,14 @@ export function LidoMobileNav({ agentId }: LidoMobileNavProps) {
     display: 'inline-flex',
     alignItems: 'center',
     gap: 7,
-    background: 'rgba(237,234,228,0.09)',
-    border: '1px solid rgba(237,234,228,0.15)',
+    background: 'rgba(255,255,255,0.14)',
+    border: '1px solid rgba(255,255,255,0.28)',
+    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.3)',
     borderRadius: 10,
     padding: '7px 14px',
     fontSize: 11,
     letterSpacing: '0.1em',
-    color: 'var(--lido-text)',
+    color: 'var(--lido-on-dark)',
     textDecoration: 'none',
     fontFamily: 'var(--lido-font-body)',
     whiteSpace: 'nowrap',
@@ -130,7 +131,7 @@ export function LidoMobileNav({ agentId }: LidoMobileNavProps) {
                   fontSize: 'clamp(34px, 8vw, 50px)',
                   fontWeight: 400,
                   lineHeight: 1.1,
-                  color: 'var(--lido-text)',
+                  color: 'var(--lido-on-dark)',
                   textDecoration: 'none',
                   padding: '6px 0',
                   opacity: open ? 1 : 0,
@@ -155,19 +156,19 @@ export function LidoMobileNav({ agentId }: LidoMobileNavProps) {
             style={{
               flex: 1, height: 52, borderRadius: 14, border: '1px solid rgba(237,234,228,0.22)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-              color: 'var(--lido-text)', textDecoration: 'none', fontFamily: 'var(--lido-font-body)',
+              color: 'var(--lido-on-dark)', textDecoration: 'none', fontFamily: 'var(--lido-font-body)',
               fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase',
             }}
           >
             <IconBuilding /> Book a Hotel
           </Link>
           <Link
-            href={`${base}/advisors`}
+            href={`${base}/contact?intent=advisor`}
             onClick={() => setTimeout(() => setOpen(false), 100)}
             style={{
               flex: 1, height: 52, borderRadius: 14, border: '1px solid rgba(237,234,228,0.22)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-              color: 'var(--lido-text)', textDecoration: 'none', fontFamily: 'var(--lido-font-body)',
+              color: 'var(--lido-on-dark)', textDecoration: 'none', fontFamily: 'var(--lido-font-body)',
               fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', textAlign: 'center',
             }}
           >
@@ -191,12 +192,12 @@ export function LidoMobileNav({ agentId }: LidoMobileNavProps) {
           justifyContent: 'space-between',
           gap: 8,
           padding: '0 14px',
-          background: 'rgba(13,26,46,0.88)',
-          backdropFilter: 'blur(20px) saturate(1.4)',
-          WebkitBackdropFilter: 'blur(20px) saturate(1.4)',
-          border: '1px solid rgba(237,234,228,0.14)',
+          background: 'rgba(20,32,47,0.55)',
+          backdropFilter: 'blur(28px) saturate(1.8)',
+          WebkitBackdropFilter: 'blur(28px) saturate(1.8)',
+          border: '1px solid rgba(255,255,255,0.18)',
           borderRadius: 20,
-          boxShadow: '0 8px 40px rgba(6,16,30,0.7)',
+          boxShadow: '0 8px 40px rgba(6,16,30,0.55), inset 0 1px 0 rgba(255,255,255,0.22)',
         }}
       >
         {/* Left — menu / close trigger */}
@@ -205,8 +206,8 @@ export function LidoMobileNav({ agentId }: LidoMobileNavProps) {
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           style={{
-            background: 'none', border: 'none', cursor: 'pointer', color: 'var(--lido-text)',
-            opacity: open ? 1 : 0.75, padding: 8, lineHeight: 0, transition: 'opacity 0.18s ease',
+            background: 'none', border: 'none', cursor: 'pointer', color: 'var(--lido-on-dark)',
+            opacity: open ? 1 : 0.85, padding: 8, lineHeight: 0, transition: 'opacity 0.18s ease',
           }}
         >
           {open ? <IconX /> : <IconMenu />}
@@ -217,7 +218,7 @@ export function LidoMobileNav({ agentId }: LidoMobileNavProps) {
           <Link href={`${base}/book-hotel`} onClick={() => setOpen(false)} style={quickPill}>
             <IconBuilding /> HOTELS
           </Link>
-          <Link href={`${base}/advisors`} onClick={() => setOpen(false)} style={quickPill}>
+          <Link href={`${base}/contact?intent=advisor`} onClick={() => setOpen(false)} style={quickPill}>
             <IconUser /> ADVISOR
           </Link>
         </div>
@@ -227,7 +228,7 @@ export function LidoMobileNav({ agentId }: LidoMobileNavProps) {
           <button
             onClick={() => setOpen(false)}
             aria-label="Close menu"
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--lido-text)', padding: 8, lineHeight: 0 }}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--lido-on-dark)', padding: 8, lineHeight: 0 }}
           >
             <IconX />
           </button>

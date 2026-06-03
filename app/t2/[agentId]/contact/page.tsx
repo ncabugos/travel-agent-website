@@ -4,12 +4,13 @@ import Image from 'next/image'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
-  searchParams?: Promise<{ hotel?: string }>
+  searchParams?: Promise<{ hotel?: string; intent?: string }>
 }
 
 export default async function ContactPage({ params, searchParams }: PageProps) {
   const { agentId } = await params
-  const { hotel } = (await searchParams) ?? {}
+  const { hotel, intent } = (await searchParams) ?? {}
+  const advisorIntent = intent === 'advisor'
   const agent = await getAgentProfile(agentId)
 
   const phone = agent?.phone ?? '+1 (800) 555-0100'
@@ -35,20 +36,18 @@ export default async function ContactPage({ params, searchParams }: PageProps) {
             textAlign: 'center', padding: '0 24px',
           }}
         >
-          <p className="t2-label" style={{ marginBottom: 12, color: 'var(--t2-accent)' }}>Get in Touch</p>
-          <h1 className="t2-heading t2-heading-xl" style={{ color: '#FFFFFF' }}>Contact</h1>
+          <p className="t2-label" style={{ marginBottom: 12, color: 'var(--t2-accent)' }}>
+            {advisorIntent ? 'Connect with an Advisor' : 'Get in Touch'}
+          </p>
+          <h1 className="t2-heading t2-heading-xl" style={{ color: '#FFFFFF' }}>
+            {advisorIntent ? 'Connect with an Advisor' : 'Contact'}
+          </h1>
         </div>
       </section>
 
       {/* Contact info + form layout */}
       <section className="t2-section" style={{ maxWidth: 1000 }}>
-        <div
-          className="t2-grid-3"
-          style={{
-            gridTemplateColumns: '1fr 2fr',
-            gap: 64,
-          }}
-        >
+        <div className="t2-contact-grid">
           {/* Sidebar */}
           <div>
             <h3 className="t2-heading t2-heading-sm" style={{ marginBottom: 24 }}>
@@ -96,12 +95,14 @@ export default async function ContactPage({ params, searchParams }: PageProps) {
           {/* Form */}
           <div>
             <h3 className="t2-heading t2-heading-sm" style={{ marginBottom: 8 }}>
-              Send Us a Message
+              {advisorIntent ? 'Connect with an Advisor' : 'Send Us a Message'}
             </h3>
             <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 14, color: 'var(--t2-text-muted)', marginBottom: 24 }}>
-              Tell us about your next dream trip and we&apos;ll get back to you within 24 hours.
+              {advisorIntent
+                ? 'Tell us how you like to travel and we’ll match you with the right specialist. We respond within 24 hours.'
+                : 'Tell us about your next dream trip and we’ll get back to you within 24 hours.'}
             </p>
-            <T2ContactForm agentId={agentId} hotel={hotel} />
+            <T2ContactForm agentId={agentId} hotel={hotel} advisorIntent={advisorIntent} />
           </div>
         </div>
       </section>

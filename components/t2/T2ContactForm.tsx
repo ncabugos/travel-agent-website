@@ -7,6 +7,9 @@ interface T2ContactFormProps {
   agentId: string
   /** Pre-fills a hotel context chip + tags the advisor email. */
   hotel?: string
+  /** Arrived via /contact?intent=advisor — frames the form as a direct
+   *  "connect with an advisor" request and tags the advisor email. */
+  advisorIntent?: boolean
 }
 
 const initialState: ContactFormState = {}
@@ -21,7 +24,7 @@ const initialState: ContactFormState = {}
  * `?hotel=<name>` — surfaces it as a visible chip and as a hidden
  * `hotel_name` form field that becomes the advisor email's subject tag.
  */
-export function T2ContactForm({ agentId, hotel }: T2ContactFormProps) {
+export function T2ContactForm({ agentId, hotel, advisorIntent }: T2ContactFormProps) {
   const [state, formAction, isPending] = useActionState(submitContactForm, initialState)
   const [renderedAt] = useState<number>(() => Date.now())
 
@@ -42,6 +45,7 @@ export function T2ContactForm({ agentId, hotel }: T2ContactFormProps) {
       <input type="hidden" name="agent_id" value={agentId} />
       <input type="hidden" name="_rendered_at" value={String(renderedAt)} />
       {hotel && <input type="hidden" name="hotel_name" value={hotel} />}
+      {advisorIntent && <input type="hidden" name="inquiry_type" value="advisor" />}
 
       {/* Honeypot */}
       <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}>
@@ -90,7 +94,7 @@ export function T2ContactForm({ agentId, hotel }: T2ContactFormProps) {
         </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+      <div className="t2-form-row" style={{ marginBottom: 16 }}>
         <T2Input name="first_name" placeholder="First Name *" required error={state.fieldErrors?.first_name} />
         <T2Input name="last_name" placeholder="Last Name *" required error={state.fieldErrors?.last_name} />
       </div>
@@ -101,7 +105,9 @@ export function T2ContactForm({ agentId, hotel }: T2ContactFormProps) {
         name="message"
         placeholder={hotel
           ? `Anything else we should know about your stay at ${hotel}?`
-          : 'Tell us about your travel goals…'}
+          : advisorIntent
+            ? 'Where are you headed, and how do you like to travel?'
+            : 'Tell us about your travel goals…'}
         className="t2-input t2-textarea"
         style={{ marginBottom: 24 }}
         rows={4}
