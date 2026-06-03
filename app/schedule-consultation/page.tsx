@@ -72,12 +72,6 @@ export default async function ScheduleConsultationPage({ searchParams }: PagePro
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
             <Link
-              href="/?cycle=annual#pricing"
-              style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}
-            >
-              View annual plans →
-            </Link>
-            <Link
               href="/#pricing"
               style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}
             >
