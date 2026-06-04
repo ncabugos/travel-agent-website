@@ -34,6 +34,34 @@ function wordCount(html: string): number {
   return t ? t.split(' ').length : 0
 }
 
+/**
+ * Pretty-print Tiptap's single-line HTML for the source editor: each block on
+ * its own indented line. Container blocks (lists, tables, blockquote) nest;
+ * leaf blocks (p, headings, li, td/th) keep their inline content on one line so
+ * no stray whitespace is introduced. Round-trips cleanly — ProseMirror ignores
+ * the inter-block whitespace when it re-parses on toggle back to rich text.
+ */
+const CONTAINER = 'ul|ol|table|thead|tbody|tfoot|tr|blockquote|div|section|figure|dl|colgroup'
+const LEAF = 'p|h[1-6]|li|td|th|dd|dt|figcaption|caption'
+function formatHtml(input: string): string {
+  if (!input) return ''
+  const withBreaks = input
+    .replace(new RegExp(`<(${CONTAINER})(\\b[^>]*)?>`, 'g'), '\n<$1$2>')
+    .replace(new RegExp(`</(${CONTAINER})>`, 'g'), '\n</$1>')
+    .replace(new RegExp(`<(${LEAF})(\\b[^>]*)?>`, 'g'), '\n<$1$2>')
+  const reOpen = new RegExp(`^<(${CONTAINER})\\b`)
+  const reClose = new RegExp(`^</(${CONTAINER})>`)
+  const reSelf = new RegExp(`^<(${CONTAINER})\\b[^>]*>.*</\\1>$`)
+  let indent = 0
+  const out: string[] = []
+  for (const line of withBreaks.split('\n').map(l => l.trim()).filter(Boolean)) {
+    if (reClose.test(line)) indent = Math.max(0, indent - 1)
+    out.push('  '.repeat(indent) + line)
+    if (reOpen.test(line) && !reClose.test(line) && !reSelf.test(line)) indent++
+  }
+  return out.join('\n')
+}
+
 interface Props {
   post?: MarketingPost
   categories: MarketingCategory[]
@@ -134,7 +162,7 @@ export function MarketingPostEditor({ post, categories, isNew = false }: Props) 
   const toggleSourceMode = useCallback(() => {
     if (!editor) return
     if (sourceMode) { editor.commands.setContent(sourceHtml || '<p></p>', { emitUpdate: true }); setSourceMode(false) }
-    else { setSourceHtml(editor.getHTML()); setSourceMode(true) }
+    else { setSourceHtml(formatHtml(editor.getHTML())); setSourceMode(true) }
   }, [editor, sourceMode, sourceHtml])
 
   // FAQ helpers
