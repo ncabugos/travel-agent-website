@@ -5,7 +5,7 @@ import { MarketingNav } from '@/components/marketing/MarketingNav'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { articleGraph } from '@/lib/insights-schema'
-import { getPostBySlug, getPublishedPosts, autop, estimateReadMinutes } from '@/lib/marketing-blog'
+import { getPostBySlug, getPublishedPosts, autop, wrapTables, estimateReadMinutes } from '@/lib/marketing-blog'
 import { withUtm } from '@/lib/analytics'
 
 interface PageProps { params: Promise<{ slug: string }> }
@@ -49,7 +49,7 @@ export default async function InsightsPostPage({ params }: PageProps) {
   const fallback = all.filter(p => p.id !== post.id).slice(0, 3)
   const recommended = (related.length ? related : fallback)
 
-  const body = autop(post.body_html)
+  const body = wrapTables(autop(post.body_html))
   const readMin = post.read_minutes || estimateReadMinutes(post.body_html)
   const published = new Date(post.published_at)
   const updated = new Date(post.updated_at)
@@ -125,11 +125,11 @@ export default async function InsightsPostPage({ params }: PageProps) {
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <a
-              href={withUtm('/beta', { source: 'insights', medium: 'blog', campaign: 'post_cta', content: post.slug })}
-              data-event="insights_cta_click" data-prop-target="beta" data-prop-slug={post.slug}
+              href={withUtm('/agent-portal/register', { source: 'insights', medium: 'blog', campaign: 'post_cta', content: post.slug })}
+              data-event="insights_cta_click" data-prop-target="register" data-prop-slug={post.slug}
               style={{ padding: '13px 28px', background: 'linear-gradient(135deg, #7c3aed, #a78bfa)', color: '#fff', borderRadius: 10, fontSize: 15, fontWeight: 600, textDecoration: 'none' }}
             >
-              Join the waitlist
+              Sign up Now
             </a>
             <a
               href={withUtm('/schedule-consultation', { source: 'insights', medium: 'blog', campaign: 'post_cta', content: post.slug })}
@@ -178,9 +178,16 @@ export default async function InsightsPostPage({ params }: PageProps) {
         .insights-body a { color: #7c3aed; text-decoration: underline; }
         .insights-body img { max-width: 100%; height: auto; border-radius: 12px; margin: 28px 0; }
         .insights-body blockquote { border-left: 3px solid #7c3aed; padding: 4px 0 4px 22px; margin: 28px 0; font-style: italic; color: #3f3f46; font-size: 20px; }
-        .insights-body table { width: 100%; border-collapse: collapse; margin: 28px 0; font-size: 15px; }
-        .insights-body th, .insights-body td { border: 1px solid #e5e7eb; padding: 10px 14px; text-align: left; }
-        .insights-body th { background: #faf5ff; font-weight: 600; }
+        .insights-body .insights-table-wrap { overflow-x: auto; margin: 32px 0; -webkit-overflow-scrolling: touch; }
+        .insights-body table { width: 100%; border-collapse: collapse; margin: 0; font-size: 15px; line-height: 1.5; }
+        .insights-body th, .insights-body td { padding: 12px 16px; text-align: left; vertical-align: top; }
+        .insights-body td p, .insights-body th p { margin: 0; }
+        .insights-body th { background: #1a1a1a; color: #fff; font-weight: 600; }
+        .insights-body tbody td { border-bottom: 1px solid #ececec; }
+        .insights-body tbody tr:nth-child(even) { background: #faf7ff; }
+        .insights-body tbody tr:last-child { background: #f5f3ff; }
+        .insights-body tbody tr:last-child td { border-bottom: 2px solid #7c3aed; }
+        .insights-body tbody tr:last-child td:first-child { font-weight: 600; }
         .insights-body iframe { width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; border-radius: 12px; margin: 28px 0; }
         .eah-insights-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px -12px rgba(0,0,0,0.15); }
         details > summary::-webkit-details-marker { display: none; }

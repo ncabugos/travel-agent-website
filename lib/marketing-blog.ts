@@ -145,6 +145,18 @@ export function autop(html: string): string {
     .join('\n')
 }
 
+/**
+ * Wrap each <table> in a horizontally-scrollable container so wide tables
+ * scroll within the article column on mobile instead of forcing page overflow.
+ * Authors write bare <table> markup (the editor strips wrapper divs), so the
+ * wrapper is applied at render time. Tables never nest, so the non-greedy
+ * match is safe.
+ */
+export function wrapTables(html: string): string {
+  if (!html || !html.includes('<table')) return html
+  return html.replace(/<table[\s\S]*?<\/table>/g, m => `<div class="insights-table-wrap">${m}</div>`)
+}
+
 /** Estimate reading time from body HTML at ~225 wpm. Used when read_minutes is unset. */
 export function estimateReadMinutes(bodyHtml: string): number {
   const text = bodyHtml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()

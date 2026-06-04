@@ -16,9 +16,10 @@ import Link from '@tiptap/extension-link'
 import TiptapImage from '@tiptap/extension-image'
 import TextAlign from '@tiptap/extension-text-align'
 import Youtube from '@tiptap/extension-youtube'
+import { TableKit } from '@tiptap/extension-table'
 import {
   Code2, AlignLeft, AlignCenter, AlignRight, AlignJustify,
-  Link2, ImageIcon, Video, ListOrdered, Plus, Trash2,
+  Link2, ImageIcon, Video, ListOrdered, Table as TableIcon, Plus, Trash2,
 } from 'lucide-react'
 import { ImageUpload } from '@/components/admin/ImageUpload'
 import type { MarketingPost, MarketingCategory, InsightsFaq } from '@/types/index'
@@ -109,6 +110,7 @@ export function MarketingPostEditor({ post, categories, isNew = false }: Props) 
       TiptapImage.configure({ inline: false, allowBase64: false }),
       TextAlign.configure({ types: ['paragraph', 'heading'], alignments: ['left', 'center', 'right', 'justify'] }),
       Youtube.configure({ controls: true, nocookie: true, modestBranding: true, width: 640, height: 360 }),
+      TableKit.configure({ table: { resizable: false } }),
     ],
     content: post?.body_html ?? '',
     immediatelyRender: false,
@@ -157,6 +159,11 @@ export function MarketingPostEditor({ post, categories, isNew = false }: Props) 
     const url = window.prompt('YouTube URL:', 'https://www.youtube.com/watch?v=')
     if (!url) return
     editor.commands.setYoutubeVideo({ src: url, width: 640, height: 360 })
+  }, [editor])
+
+  const insertTable = useCallback(() => {
+    if (!editor) return
+    editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
   }, [editor])
 
   const toggleSourceMode = useCallback(() => {
@@ -289,6 +296,8 @@ export function MarketingPostEditor({ post, categories, isNew = false }: Props) 
               <Sep />
               <ToolBtn label="• List" title="Bullet list" onClick={() => editor?.chain().focus().toggleBulletList().run()} active={editor?.isActive('bulletList')} disabled={sourceMode} />
               <ToolBtn icon={<ListOrdered size={14} />} title="Numbered list" onClick={() => editor?.chain().focus().toggleOrderedList().run()} active={editor?.isActive('orderedList')} disabled={sourceMode} />
+              <Sep />
+              <ToolBtn icon={<TableIcon size={14} />} title="Insert 3×3 table (first row is the header)" onClick={insertTable} active={editor?.isActive('table')} disabled={sourceMode} />
               <div style={{ marginLeft: 'auto' }}>
                 <button onClick={toggleSourceMode} title={sourceMode ? 'Back to rich text' : 'Edit HTML'}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '5px 10px', border: '1px solid ' + (sourceMode ? '#1a1a1a' : '#e5e7eb'), background: sourceMode ? '#1a1a1a' : 'transparent', color: sourceMode ? '#fff' : '#374151', borderRadius: '6px', cursor: 'pointer', fontSize: '12px', fontWeight: 500 }}>
@@ -313,6 +322,15 @@ export function MarketingPostEditor({ post, categories, isNew = false }: Props) 
               .tiptap a{color:#B49A5A;text-decoration:underline}
               .tiptap img{max-width:100%;height:auto;border-radius:6px;margin:12px 0}
               .tiptap [data-youtube-video] iframe{max-width:100%;aspect-ratio:16/9;border-radius:6px}
+              .tiptap table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px;line-height:1.5;table-layout:fixed;overflow:hidden}
+              .tiptap table td,.tiptap table th{padding:10px 14px;vertical-align:top;border-bottom:1px solid #ececec;position:relative}
+              .tiptap table td>*,.tiptap table th>*{margin:0}
+              .tiptap table th{background:#1a1a1a;color:#fff;font-weight:600;text-align:left}
+              .tiptap table tbody tr:nth-child(even){background:#faf7ff}
+              .tiptap table tbody tr:last-child{background:#f5f3ff}
+              .tiptap table tbody tr:last-child td{border-bottom:2px solid #7c3aed}
+              .tiptap table tbody tr:last-child td:first-child{font-weight:600}
+              .tiptap .selectedCell:after{content:'';position:absolute;inset:0;background:rgba(124,58,237,0.08);pointer-events:none}
             `}</style>
           </Card>
 
