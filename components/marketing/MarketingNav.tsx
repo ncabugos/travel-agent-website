@@ -5,9 +5,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 const NAV_LINKS = [
-  { label: 'Features', href: '#features' },
-  { label: 'Pricing',  href: '#pricing'  },
-  { label: 'Demos',    href: '#demos'    },
+  { label: 'Features', href: '/#features' },
+  { label: 'Pricing',  href: '/#pricing'  },
+  { label: 'Demos',    href: '/#demos'    },
+  { label: 'Insights', href: '/insights'  },
 ]
 
 export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { getPublishedPosts, getCategories } from '@/lib/marketing-blog'
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??
@@ -19,12 +20,16 @@ const SITE_URL =
  * showcase demos linked from the homepage #demos section — keep this list in
  * sync with the DEMOS array in app/page.tsx.
  */
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()
+
+  const [posts, categories] = await Promise.all([getPublishedPosts(), getCategories()])
 
   const marketing = [
     { path: '', priority: 1.0, changeFrequency: 'weekly' as const },
     { path: 'templates', priority: 0.9, changeFrequency: 'monthly' as const },
+    { path: 'insights', priority: 0.8, changeFrequency: 'daily' as const },
+    { path: 'insights/author/nick', priority: 0.4, changeFrequency: 'monthly' as const },
     { path: 'schedule-consultation', priority: 0.8, changeFrequency: 'monthly' as const },
     { path: 'support', priority: 0.4, changeFrequency: 'monthly' as const },
     { path: 'privacy', priority: 0.3, changeFrequency: 'yearly' as const },
@@ -47,6 +52,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: m.changeFrequency,
       priority: m.priority,
+    })),
+    ...categories.map((c) => ({
+      url: `${SITE_URL}/insights/category/${c.slug}`,
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.5,
+    })),
+    ...posts.map((p) => ({
+      url: `${SITE_URL}/insights/${p.slug}`,
+      lastModified: new Date(p.updated_at),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
     })),
     ...demos.map((path) => ({
       url: `${SITE_URL}${path}`,

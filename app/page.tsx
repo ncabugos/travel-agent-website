@@ -9,6 +9,7 @@ import { MarketingSupplierPrograms } from '@/components/marketing/MarketingSuppl
 import { MarketingReachSection } from '@/components/marketing/MarketingReachSection'
 import { MarketingCuratedEditorial } from '@/components/marketing/MarketingCuratedEditorial'
 import { MarketingAdvisorPortal } from '@/components/marketing/MarketingAdvisorPortal'
+import { MarketingInsightsTeaser } from '@/components/marketing/MarketingInsightsTeaser'
 
 export const metadata = {
   title: 'Elite Advisor Hub — For the Top 1% of Travel Advisors',
@@ -390,6 +391,9 @@ export default function EliteAdvisorHubHomePage() {
           </div>
         </div>
       </section>
+
+      {/* Insights — latest from the EAH company blog (hidden until posts exist) */}
+      <MarketingInsightsTeaser />
 
       {/* Global platform footer */}
       <MarketingFooter />

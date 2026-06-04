@@ -16,6 +16,7 @@ import Image from 'next/image'
 const PLATFORM_LINKS = [
   { label: 'Pricing',      href: '/#pricing' },
   { label: 'Features',     href: '/#features' },
+  { label: 'Insights',     href: '/insights' },
   { label: 'Schedule a consultation', href: '/schedule-consultation' },
 ]
 

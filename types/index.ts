@@ -38,6 +38,49 @@ export interface BlogCategory {
   created_at: string
 }
 
+// ─── Marketing "Insights" blog (eliteadvisorhub.com) ─────────────────────────
+// Company-owned blog, completely separate from the advisor blog above. Never
+// surfaced on advisor tenant sites. See migration 043_marketing_blog.sql.
+export interface MarketingCategory {
+  id: string
+  slug: string
+  label: string
+  description: string | null
+  pillar_key: string | null
+  sort_order: number
+  is_active: boolean
+  created_at: string
+}
+
+export interface InsightsFaq {
+  q: string
+  a: string
+}
+
+export interface MarketingPost {
+  id: string
+  title: string
+  slug: string
+  status: 'draft' | 'published'
+  excerpt: string | null
+  body_html: string
+  cover_image_url: string | null
+  category_id: string | null
+  author_name: string
+  author_credentials: string
+  seo_title: string | null
+  seo_description: string | null
+  og_image_url: string | null
+  faq: InsightsFaq[]
+  read_minutes: number | null
+  featured: boolean
+  published_at: string
+  created_at: string
+  updated_at: string
+  /** Joined from marketing_categories for convenience on reads. */
+  category?: MarketingCategory | null
+}
+
 // ─── Destination ───────────────────────────────────────────────────────────
 export interface Destination {
   id: string
