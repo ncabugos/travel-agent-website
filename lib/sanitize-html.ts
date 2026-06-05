@@ -42,8 +42,10 @@ export function sanitizeRichText(html: string): string {
     ],
     allowProtocolRelative: false,
     // Links that open in a new tab must not leak window.opener.
+    // NOTE: merge=true (3rd arg) — must MERGE rel into existing attributes, not
+    // replace them, or the href is dropped and every link renders dead.
     transformTags: {
-      a: sanitizeHtml.simpleTransform('a', { rel: 'noopener noreferrer' }, false),
+      a: sanitizeHtml.simpleTransform('a', { rel: 'noopener noreferrer' }, true),
     },
   })
 }
