@@ -6,7 +6,7 @@
 --   1. agents UPDATE — the "agents: update own row" RLS policy (migration 001)
 --      allows a logged-in advisor to update ANY column on their own row via the
 --      public anon key, including role / tier / subscription_status / stripe_*
---      / custom_domain / template. RLS WITH CHECK cannot compare to OLD values,
+--      / custom_domain. RLS WITH CHECK cannot compare to OLD values,
 --      so we enforce the column denylist with a BEFORE UPDATE trigger. The
 --      service-role key (admin routes, Stripe webhook, seeders) bypasses it.
 --
@@ -36,16 +36,19 @@ BEGIN
   END IF;
 
   -- Self-service (authenticated advisor) updates may NOT touch these columns.
+  -- NOTE: `template` is intentionally NOT blocked — the onboarding flow
+  -- (app/api/agent-portal/onboarding/route.ts) lets the advisor pick their
+  -- template via the anon client, and template is a design choice, not a
+  -- privilege/billing field.
   IF NEW.role               IS DISTINCT FROM OLD.role
   OR NEW.tier               IS DISTINCT FROM OLD.tier
   OR NEW.subscription_status IS DISTINCT FROM OLD.subscription_status
   OR NEW.stripe_customer_id  IS DISTINCT FROM OLD.stripe_customer_id
   OR NEW.stripe_subscription_id IS DISTINCT FROM OLD.stripe_subscription_id
   OR NEW.custom_domain       IS DISTINCT FROM OLD.custom_domain
-  OR NEW.template            IS DISTINCT FROM OLD.template
   OR NEW.auth_user_id        IS DISTINCT FROM OLD.auth_user_id
   THEN
-    RAISE EXCEPTION 'Not authorized to modify privileged account fields (role, tier, subscription, stripe, domain, template)';
+    RAISE EXCEPTION 'Not authorized to modify privileged account fields (role, tier, subscription, stripe, custom_domain, auth_user_id)';
   END IF;
 
   RETURN NEW;
