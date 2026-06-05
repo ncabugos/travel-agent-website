@@ -9,16 +9,27 @@ Source: 3-agent security audit of eliteadvisorhub.com. Working through CRITICAL 
 - [x] C4. Migration 044: BEFORE UPDATE trigger blocks self-service edits to role/tier/subscription_status/stripe_*/custom_domain/template/auth_user_id (service role bypasses).
 - [x] C5. Migration 044: RLS enabled on `admin_notifications` (super_admin read only); defensive RLS on `inquiries` (public insert / advisor + super_admin read). **Migration must be APPLIED to prod Supabase — not auto-run.**
 
-## HIGH (next — not started)
-- [ ] H1. Harden Stripe webhook — remove unsigned-body fallback
-- [ ] H2. Stored-XSS sanitization for blog/journal/insights render paths
-- [ ] H3 (MEDIUM). getSession() → getUser() on privileged paths; escape beta-waitlist email fields
+## HIGH — DONE
+- [x] H1. Stripe webhook hardened — removed unsigned `JSON.parse` fallback; refuses requests with no signing secret / signature.
+- [x] H2. Stored-XSS fixed — new `lib/sanitize-html.ts` (sanitize-html allowlist) applied to final HTML of all 4 advisor templates (frontend/t2/t3/t4) + Insights blog before `dangerouslySetInnerHTML`.
+
+## MEDIUM — not started (optional follow-up)
+- [ ] H3. getSession() → getUser() on privileged paths; escape beta-waitlist email fields (lib/email.ts).
 
 ## Review
-- 19 files changed: 17 admin routes guarded + 2 neutralized stubs; 1 new migration (044); 1 tracking doc.
+- Branch `security/critical-hardening`, 2 commits:
+  - `0aefe20` security: route guards (17 files), 2 route deletions, webhook, sanitization, migration 044, sanitize lib.
+  - `b988d85` chore(deps): package-lock regen for sanitize-html (also absorbed large PRE-EXISTING lockfile drift from main — flagged for separate review).
+- Deletions: `app/api/debug-auth` + `app/api/admin/login` removed via `git rm` (0 tracked files remain).
 - No middleware change (codebase design = per-handler checks; avoids middleware-authz bypass risk).
-- Verified: `npx tsc --noEmit` exit 0, 0 errors. Guard is first statement in every handler.
-- NOT committed/pushed. NOT deployed. Migration NOT applied. Prod remains vulnerable until deploy + migration apply.
+- Verified: production `npm run build` exit 0 (clean). `tsc` clean except 2 stale `.next/dev/types` refs to the deleted routes — gitignored build cache, regenerate on next `next dev`.
+
+## STILL REQUIRED (operator action)
+- [ ] Apply migration `044_security_rls_hardening.sql` to the production Supabase DB (migrations do NOT auto-run).
+- [ ] Confirm `inquiries` RLS is on + contact form still inserts after applying 044.
+- [ ] Verify `STRIPE_WEBHOOK_SECRET` is set in prod (webhook now hard-fails without it).
+- [ ] Deploy the branch. Prod stays vulnerable until deployed + migration applied.
+- [ ] Consider the pre-existing package-lock drift as a separate cleanup.
 
 ## Notes
 - Architecture: middleware gates PAGE routes only; each `/api/admin/*` route must
