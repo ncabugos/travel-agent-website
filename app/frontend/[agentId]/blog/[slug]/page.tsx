@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getBlogPost, getBlogPosts, renderShortcodes } from '@/lib/blog'
+import { sanitizeRichText } from '@/lib/sanitize-html'
 import { getAgentProfile } from '@/lib/suppliers'
 import type { GalleryImage } from '@/types/index'
 import { JsonLd, articleSchema, breadcrumbSchema } from '@/components/seo/JsonLd'
@@ -70,7 +71,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   const rawBody = agent
     ? renderShortcodes(post.body_html, agent)
     : post.body_html
-  const renderedBody = autop(rawBody)
+  const renderedBody = sanitizeRichText(autop(rawBody))
 
   const gallery: GalleryImage[] = post.gallery_images ?? []
 

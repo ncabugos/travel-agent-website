@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { createServiceClient } from '@/lib/supabase/service'
 import { NextResponse } from 'next/server'
 import { sendAdminOnboardingNotification, sendAgentWelcomeEmail } from '@/lib/email'
 
@@ -52,8 +53,11 @@ export async function PUT(request: Request) {
       return NextResponse.json({ error: updateError.message }, { status: 500 })
     }
 
-    // Create admin notification so Nick can follow up
-    await (supabase
+    // Create admin notification so Nick can follow up. Uses the service role:
+    // admin_notifications is RLS-locked to super_admin reads (migration 044),
+    // so system inserts must bypass RLS.
+    const admin = createServiceClient()
+    await (admin
       .from('admin_notifications') as any)
       .insert({
         type: 'onboarding_complete',

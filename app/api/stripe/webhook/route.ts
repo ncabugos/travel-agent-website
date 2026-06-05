@@ -10,18 +10,23 @@ export async function POST(request: Request) {
   const body = await request.text()
   const sig = request.headers.get('stripe-signature')
 
-  // If webhook secret is set, verify the signature
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
+
+  // Never trust an unsigned body. Without the signing secret + signature header
+  // we cannot prove the event came from Stripe, so we refuse to process it —
+  // otherwise anyone could POST a forged "payment succeeded" / tier-upgrade.
+  if (!webhookSecret) {
+    console.error('STRIPE_WEBHOOK_SECRET is not set — refusing to process webhook')
+    return NextResponse.json({ error: 'Webhook not configured' }, { status: 500 })
+  }
+  if (!sig) {
+    return NextResponse.json({ error: 'Missing stripe-signature header' }, { status: 400 })
+  }
 
   let event: Stripe.Event
 
   try {
-    if (webhookSecret && sig) {
-      event = stripe.webhooks.constructEvent(body, sig, webhookSecret)
-    } else {
-      // In dev/test mode without webhook secret, parse the event directly
-      event = JSON.parse(body) as Stripe.Event
-    }
+    event = stripe.webhooks.constructEvent(body, sig, webhookSecret)
   } catch (err: any) {
     console.error('Webhook signature verification failed:', err.message)
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })

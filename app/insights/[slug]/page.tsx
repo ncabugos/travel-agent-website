@@ -6,6 +6,7 @@ import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { articleGraph } from '@/lib/insights-schema'
 import { getPostBySlug, getPublishedPosts, autop, wrapTables, estimateReadMinutes } from '@/lib/marketing-blog'
+import { sanitizeRichText } from '@/lib/sanitize-html'
 import { withUtm } from '@/lib/analytics'
 
 interface PageProps { params: Promise<{ slug: string }> }
@@ -49,7 +50,7 @@ export default async function InsightsPostPage({ params }: PageProps) {
   const fallback = all.filter(p => p.id !== post.id).slice(0, 3)
   const recommended = (related.length ? related : fallback)
 
-  const body = wrapTables(autop(post.body_html))
+  const body = wrapTables(autop(sanitizeRichText(post.body_html)))
   const readMin = post.read_minutes || estimateReadMinutes(post.body_html)
   const published = new Date(post.published_at)
   const updated = new Date(post.updated_at)

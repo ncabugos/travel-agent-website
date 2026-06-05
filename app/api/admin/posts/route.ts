@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/service'
+import { getCurrentSuperAdmin } from '@/lib/admin-auth'
 import { checkBlogPostWarnings } from '@/lib/blog-warnings'
 import type { BlogPost } from '@/types/index'
 
@@ -7,6 +8,11 @@ const ALL_COLUMNS =
   'id, agent_id, title, slug, published_at, excerpt, body_html, cover_image_url, categories, tags, status, is_broadcast, target_agent_ids, target_demo_slugs, gallery_images, supplier_tags'
 
 export async function GET(request: Request) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { searchParams } = new URL(request.url)
   const agentId = searchParams.get('agent_id')
 
@@ -26,6 +32,11 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const body = await request.json() as Partial<BlogPost>
   const supabase = createServiceClient()
 

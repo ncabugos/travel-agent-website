@@ -1,12 +1,18 @@
 // app/api/admin/marketing-posts/[id]/route.ts
 import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/service'
+import { getCurrentSuperAdmin } from '@/lib/admin-auth'
 import type { MarketingPost } from '@/types/index'
 import { revalidateInsights } from '../route'
 
 const SELECT = '*, category:marketing_categories(*)'
 
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { id } = await params
   const supabase = createServiceClient()
   const { data, error } = await supabase.from('marketing_posts').select(SELECT).eq('id', id).single()
@@ -15,6 +21,11 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
 }
 
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { id } = await params
   const body = (await request.json()) as Partial<MarketingPost>
   const supabase = createServiceClient()
@@ -58,6 +69,11 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
 }
 
 export async function DELETE(_req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { id } = await params
   const supabase = createServiceClient()
   const { data: prev } = await supabase

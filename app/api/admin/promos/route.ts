@@ -5,13 +5,24 @@ import {
   PROMO_LIMITS,
   type SupplierPromoInput,
 } from '@/lib/supplier-promos'
+import { getCurrentSuperAdmin } from '@/lib/admin-auth'
 
 export async function GET() {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const promos = await listSupplierPromos()
   return NextResponse.json({ promos })
 }
 
 export async function POST(request: Request) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const body = (await request.json()) as Partial<SupplierPromoInput>
 
   const validation = validatePromoInput(body)
