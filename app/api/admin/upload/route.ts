@@ -6,11 +6,17 @@
  */
 import { NextRequest, NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/service'
+import { getCurrentSuperAdmin } from '@/lib/admin-auth'
 
 const BUCKET = 'blog-assets'
 const MAX_SIZE = 10 * 1024 * 1024 // 10 MB
 
 export async function POST(req: NextRequest) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
     const formData = await req.formData()
     const file = formData.get('file') as File | null

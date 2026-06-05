@@ -4,6 +4,7 @@
 import { NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 import { createServiceClient } from '@/lib/supabase/service'
+import { getCurrentSuperAdmin } from '@/lib/admin-auth'
 import type { MarketingPost } from '@/types/index'
 
 const SELECT = '*, category:marketing_categories(*)'
@@ -19,6 +20,11 @@ function slugify(input: string): string {
 }
 
 export async function GET() {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const supabase = createServiceClient()
   const { data, error } = await supabase
     .from('marketing_posts')
@@ -29,6 +35,11 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const body = (await request.json()) as Partial<MarketingPost>
   const supabase = createServiceClient()
 

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/service'
+import { getCurrentSuperAdmin } from '@/lib/admin-auth'
 
 /**
  * POST /api/admin/agents/[agentId]/blog-categories
@@ -15,6 +16,11 @@ export async function POST(
   request: Request,
   { params }: { params: Promise<{ agentId: string }> }
 ) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { agentId } = await params
   const body = await request.json().catch(() => ({}))
 

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/service'
+import { getCurrentSuperAdmin } from '@/lib/admin-auth'
 import { checkBlogPostWarnings } from '@/lib/blog-warnings'
 import type { BlogPost } from '@/types/index'
 
@@ -7,6 +8,11 @@ const ALL_COLUMNS =
   'id, agent_id, title, slug, published_at, excerpt, body_html, cover_image_url, categories, tags, status, is_broadcast, target_agent_ids, target_demo_slugs, gallery_images, supplier_tags'
 
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { id } = await params
   const supabase = createServiceClient()
   const { data, error } = await supabase
@@ -16,6 +22,11 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
 }
 
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { id } = await params
   const body = await request.json() as Partial<BlogPost>
   const supabase = createServiceClient()
@@ -65,6 +76,11 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
 }
 
 export async function DELETE(_req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { id } = await params
   const supabase = createServiceClient()
   const { error } = await supabase.from('blog_posts').delete().eq('id', id)

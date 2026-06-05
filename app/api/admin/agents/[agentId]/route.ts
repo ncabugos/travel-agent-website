@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/service'
+import { getCurrentSuperAdmin } from '@/lib/admin-auth'
 
 /**
  * PATCH /api/admin/agents/[agentId]
@@ -10,6 +11,11 @@ export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ agentId: string }> }
 ) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { agentId } = await params
   const body = await request.json()
 

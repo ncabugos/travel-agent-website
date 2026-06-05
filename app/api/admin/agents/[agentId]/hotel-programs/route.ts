@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { replaceAgentHotelProgramSelections } from '@/lib/hotel-programs'
+import { getCurrentSuperAdmin } from '@/lib/admin-auth'
 
 /**
  * POST /api/admin/agents/[agentId]/hotel-programs
@@ -16,6 +17,11 @@ export async function POST(
   request: Request,
   { params }: { params: Promise<{ agentId: string }> }
 ) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { agentId } = await params
   const body = await request.json().catch(() => ({}))
 

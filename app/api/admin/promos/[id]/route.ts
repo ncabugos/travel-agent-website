@@ -6,12 +6,18 @@ import {
   updateSupplierPromo,
   type SupplierPromoInput,
 } from '@/lib/supplier-promos'
+import { getCurrentSuperAdmin } from '@/lib/admin-auth'
 
 interface Ctx {
   params: Promise<{ id: string }>
 }
 
 export async function GET(_req: Request, { params }: Ctx) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { id } = await params
   const promo = await getSupplierPromoById(id)
   if (!promo) return NextResponse.json({ error: 'Not found' }, { status: 404 })
@@ -19,6 +25,11 @@ export async function GET(_req: Request, { params }: Ctx) {
 }
 
 export async function PUT(request: Request, { params }: Ctx) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { id } = await params
   const body = (await request.json()) as Partial<SupplierPromoInput>
 
@@ -49,6 +60,11 @@ export async function PUT(request: Request, { params }: Ctx) {
 }
 
 export async function DELETE(_req: Request, { params }: Ctx) {
+  const adminUser = await getCurrentSuperAdmin()
+  if (!adminUser) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { id } = await params
   try {
     await deleteSupplierPromo(id)
