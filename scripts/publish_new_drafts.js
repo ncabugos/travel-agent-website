@@ -25,7 +25,8 @@ const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.
 
 // ── Files to publish (only these) ────────────────────────────────────────────
 const DRAFTS_DIR = path.join(process.cwd(), 'marketing/content-strategy/blog-drafts')
-const FILES = [
+const ARGV = process.argv.slice(2).map(a => path.basename(a))
+const FILES = ARGV.length ? ARGV : [
   '2026-06-18-squarespace-for-travel-agents.md',
   '2026-06-22-travel-advisor-website-guide.md',
   '2026-06-25-do-travel-agents-need-a-website.md',
@@ -37,7 +38,12 @@ const COVER_TITLE = {
   'squarespace-for-travel-agents': 'Squarespace for Travel Agents',
   'travel-advisor-website-guide': 'The Complete Guide to Travel Advisor Websites',
   'do-travel-agents-need-a-website': 'Do Travel Agents Still Need a Website?',
+  'supplier-catalog-is-the-moat': 'The Supplier Catalog Is the Moat',
+  'how-tiers-stack-modules': 'How the Tiers Stack',
+  'curated-editorial-stream': 'A Journal That Stays Alive',
 }
+// Fallback cover title: text before the first colon, else the full title.
+const coverTitle = (slug, title) => COVER_TITLE[slug] || title.split(':')[0].trim()
 
 // ── Markdown → post transforms (mirrors import_blog_drafts.js) ────────────────
 function parseFrontmatter(raw) {
@@ -136,7 +142,7 @@ async function main() {
     const categoryId = catId[PILLAR_SLUG[pillar]] ?? null
 
     // Cover
-    const buf = renderCover(COVER_TITLE[fm.slug] || fm.title, PILLAR_LABEL[pillar])
+    const buf = renderCover(coverTitle(fm.slug, fm.title), PILLAR_LABEL[pillar])
     const rel = `/media/insights/${fm.slug}.png`
     fs.writeFileSync(path.join(coverDir, `${fm.slug}.png`), buf)
 
