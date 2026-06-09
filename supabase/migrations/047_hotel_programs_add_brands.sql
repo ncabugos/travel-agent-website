@@ -3,15 +3,21 @@
 -- Purpose:   Add four supplier brands to the hotel_programs catalog so they
 --            render across every tenant site (and the marketing wall):
 --            Six Senses, Jumeirah Passport, Preferred Hotels & Resorts, Couture.
---            Logos only + brand-level copy; benefits are intentionally empty
+--            Logos only + brand-level copy; benefits intentionally empty
 --            (no fabricated perks) — fill via the admin editor once verified.
---            Run AFTER 046 (needs the logo_url_white/black columns). Idempotent.
+--            Run AFTER 046 (needs the logo_url_white/black columns). Idempotent
+--            via ON CONFLICT (slug).
+--
+--   NOTE: uses a direct multi-row INSERT … VALUES (not INSERT … SELECT FROM
+--   (VALUES …)). The `category` column is an enum; direct VALUES string
+--   literals are untyped and cast implicitly, whereas a SELECT-from-VALUES
+--   types them as `text` and the enum cast is rejected.
 -- =============================================================================
 
 INSERT INTO public.hotel_programs
   (slug, name, logo_url, logo_url_white, logo_url_black, tagline, description,
    category, property_count, benefits, sort_order, is_active)
-SELECT * FROM (VALUES
+VALUES
   (
     'six-senses', 'Six Senses',
     '/assets/supplier logos/black transparent/SixSenses-logo-black-600.png',
@@ -48,8 +54,4 @@ SELECT * FROM (VALUES
     'Couture is the most exclusive tier of the Preferred collection — a curated set of hotels with the highest level of partner recognition and privileges.',
     'invitation_only', NULL, '[]'::jsonb, 24, true
   )
-) AS v(slug, name, logo_url, logo_url_white, logo_url_black, tagline, description,
-       category, property_count, benefits, sort_order, is_active)
-WHERE NOT EXISTS (
-  SELECT 1 FROM public.hotel_programs hp WHERE hp.slug = v.slug
-);
+ON CONFLICT (slug) DO NOTHING;
