@@ -139,6 +139,7 @@ export function MarketingPricing() {
   return (
     <section
       id="pricing"
+      className="eah-section"
       style={{
         padding: '100px 24px',
         backgroundColor: '#fafafa',
@@ -154,7 +155,7 @@ export function MarketingPricing() {
             margin: '0 0 12px',
           }}
         >
-          Simple, transparent pricing
+          Four tiers. One path. No rebuilds.
         </h2>
         <p
           style={{
@@ -164,7 +165,7 @@ export function MarketingPricing() {
             margin: '0 0 32px',
           }}
         >
-          Choose the plan that fits your business.
+          Start where the practice is now. Stack modules as it grows — the site comes with you, every step. Custom domain, owned and exportable, from day one.
         </p>
 
         {/* Billing-cycle toggle */}

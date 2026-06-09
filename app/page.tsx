@@ -6,6 +6,8 @@ import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 import { HeroSlideshow } from '@/components/marketing/HeroSlideshow'
 import { MarketingBrandedWebsite } from '@/components/marketing/MarketingBrandedWebsite'
 import { MarketingSupplierPrograms } from '@/components/marketing/MarketingSupplierPrograms'
+import { MarketingTensionBeat } from '@/components/marketing/MarketingTensionBeat'
+import { MarketingClosingCTA } from '@/components/marketing/MarketingClosingCTA'
 import { MarketingReachSection } from '@/components/marketing/MarketingReachSection'
 import { MarketingCuratedEditorial } from '@/components/marketing/MarketingCuratedEditorial'
 import { MarketingAdvisorPortal } from '@/components/marketing/MarketingAdvisorPortal'
@@ -102,7 +104,7 @@ export default function EliteAdvisorHubHomePage() {
       <MarketingNav />
 
       {/* Hero */}
-      <section style={{
+      <section className="eah-section" style={{
         minHeight: '100vh',
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
         textAlign: 'center',
@@ -127,7 +129,7 @@ export default function EliteAdvisorHubHomePage() {
             marginBottom: '32px', textTransform: 'uppercase', letterSpacing: '0.05em',
             backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.15)',
           }}>
-            ✦ Built for the top 1% of travel advisors
+            ✦ For advisors selling the world&rsquo;s finest hotels
           </div>
 
           <h1 style={{
@@ -139,13 +141,13 @@ export default function EliteAdvisorHubHomePage() {
             maxWidth: '900px',
             color: '#fff',
           }}>
-            Websites for{' '}
+            The trips are extraordinary.{' '}
             <span style={{
               background: 'linear-gradient(135deg, #a5b4fc, #c4b5fd)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}>
-              Elite Travel Advisors
+              The websites rarely are.
             </span>
           </h1>
 
@@ -153,7 +155,7 @@ export default function EliteAdvisorHubHomePage() {
             fontSize: '18px', lineHeight: 1.7, color: 'rgba(255,255,255,0.82)',
             maxWidth: '620px', margin: '0 auto 40px',
           }}>
-            A website platform for independent travel advisors and boutique agencies. A curated network of luxury hotels, cruise lines, and more — kept current for you so you can spend the day selling travel.
+            Independent advisors sell Aman, Belmond, and Four Seasons — then send clients to a site built for a $250 booking, not a $25,000 one. Elite Advisor Hub closes the gap: a branded site as composed as the journeys you plan, with the supplier programs already in place and kept current for you.
           </p>
 
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -188,8 +190,11 @@ export default function EliteAdvisorHubHomePage() {
         </div>
       </section>
 
+      {/* Tension beat — names the problem, pivots into the feature grid */}
+      <MarketingTensionBeat />
+
       {/* Features */}
-      <section id="features" style={{
+      <section id="features" className="eah-section" style={{
         padding: '100px 24px', backgroundColor: '#fff',
       }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
@@ -197,7 +202,7 @@ export default function EliteAdvisorHubHomePage() {
             fontSize: '36px', fontWeight: 700, textAlign: 'center',
             letterSpacing: '-0.02em', margin: '0 0 12px',
           }}>
-            The platform behind the practice
+            What &ldquo;maintained for you&rdquo; actually means.
           </h2>
           <p style={{
             textAlign: 'center', fontSize: '16px', color: '#6b7280',
@@ -235,7 +240,7 @@ export default function EliteAdvisorHubHomePage() {
               },
               {
                 icon: <TrendingUp size={22} strokeWidth={1.5} />,
-                title: 'Built to Scale',
+                title: 'Grows with the practice',
                 desc: 'Tiers stack — no rebuilds, no migrations. Add modules, upgrade your template, or expand to an agency plan as your practice grows. The site comes with you.',
               },
             ].map((f, i) => (
@@ -279,7 +284,7 @@ export default function EliteAdvisorHubHomePage() {
       <MarketingPricing />
 
       {/* Demos */}
-      <section id="demos" style={{
+      <section id="demos" className="eah-section" style={{
         padding: '100px 24px', backgroundColor: '#fff',
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
@@ -287,7 +292,7 @@ export default function EliteAdvisorHubHomePage() {
             fontSize: '36px', fontWeight: 700, textAlign: 'center',
             letterSpacing: '-0.02em', margin: '0 0 12px',
           }}>
-            See it in action
+            Seven live sites. Not mockups.
           </h2>
           <p style={{
             textAlign: 'center', fontSize: '16px', color: '#6b7280',
@@ -395,6 +400,9 @@ export default function EliteAdvisorHubHomePage() {
       {/* Insights — latest from the EAH company blog (hidden until posts exist) */}
       <MarketingInsightsTeaser />
 
+      {/* Closing CTA band */}
+      <MarketingClosingCTA />
+
       {/* Global platform footer */}
       <MarketingFooter />
 
@@ -458,6 +466,13 @@ export default function EliteAdvisorHubHomePage() {
         }
         @media (max-width: 640px) {
           .eah-pricing-grid { grid-template-columns: 1fr !important; }
+          /* Compress the generous desktop section rhythm (100–120px) into a
+             tighter mobile cadence, and rein in body line-height that reads
+             loose on a narrow column. Longhand padding overrides only the
+             top/bottom of each section's inline shorthand, leaving the
+             horizontal gutters intact. */
+          .eah-section { padding-top: 60px !important; padding-bottom: 60px !important; }
+          .eah-section p { line-height: 1.55 !important; }
         }
         @media (prefers-reduced-motion: reduce) {
           .eah-feature-card,

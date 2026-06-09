@@ -56,6 +56,7 @@ const JOURNAL_CARDS: JournalCard[] = [
 export function MarketingCuratedEditorial() {
   return (
     <section
+      className="eah-section"
       style={{
         padding: '120px 0 100px',
         background: '#fafafa',
@@ -97,10 +98,10 @@ export function MarketingCuratedEditorial() {
               maxWidth: '640px',
             }}
           >
-            Our in-house editorial team publishes destination guides, hotel spotlights, and travel
-            tips on a weekly cadence. You pick the categories that fit your brand. Articles drop onto
-            your site automatically — no writing, no scheduling, no maintenance. Real content for
-            SEO and client emails.
+            A dead journal is the fastest way to look inactive. Ours doesn&rsquo;t go quiet. An
+            in-house editorial team publishes destination guides, hotel spotlights, and notes on a
+            weekly cadence — you pick the categories, the articles arrive on your site automatically.
+            Real content for search, and for the client email you were going to write anyway.
           </p>
         </div>
       </div>

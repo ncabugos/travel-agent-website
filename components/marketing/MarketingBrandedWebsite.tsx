@@ -35,6 +35,7 @@ const TEMPLATES: TemplateDemo[] = [
 export function MarketingBrandedWebsite() {
   return (
     <section
+      className="eah-section"
       style={{
         padding: '120px 24px',
         background: 'linear-gradient(180deg, #fafafa 0%, #ffffff 100%)',

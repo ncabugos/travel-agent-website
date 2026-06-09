@@ -13,7 +13,7 @@ export async function MarketingInsightsTeaser() {
   if (posts.length === 0) return null
 
   return (
-    <section style={{ padding: '100px 24px', background: '#fafafa', borderTop: '1px solid #f0f0f0' }}>
+    <section className="eah-section" style={{ padding: '100px 24px', background: '#fafafa', borderTop: '1px solid #f0f0f0' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 24, flexWrap: 'wrap', marginBottom: 48 }}>
           <div style={{ maxWidth: 640 }}>

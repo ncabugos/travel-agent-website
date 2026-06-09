@@ -10,6 +10,7 @@ const REACH_STATS = [
 export function MarketingReachSection() {
   return (
     <section
+      className="eah-section"
       style={{
         position: 'relative',
         padding: '120px 24px',
@@ -92,7 +93,7 @@ export function MarketingReachSection() {
               maxWidth: '600px',
             }}
           >
-            A network that travels with you, wherever the trip is.
+            A network it would take you years to assemble. Built into every site.
           </h2>
           <p
             style={{

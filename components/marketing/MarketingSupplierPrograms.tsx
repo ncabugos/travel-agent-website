@@ -39,6 +39,7 @@ const SAMPLE_BENEFITS = [
 export function MarketingSupplierPrograms() {
   return (
     <section
+      className="eah-section"
       style={{
         padding: '120px 24px',
         background: '#0a0a0a',

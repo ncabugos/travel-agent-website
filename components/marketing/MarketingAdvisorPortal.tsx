@@ -588,6 +588,7 @@ const FEATURES: PortalFeature[] = [
 export function MarketingAdvisorPortal() {
   return (
     <section
+      className="eah-section"
       style={{
         padding: '120px 24px',
         background: '#ffffff',
