@@ -102,20 +102,6 @@ export function T4HotelProgramsGrid({
               </div>
 
               <div style={{ order: i % 2 === 0 ? 2 : 1, padding: '0 16px' }}>
-                <div
-                  style={{
-                    fontFamily: 'var(--t4-font-body)',
-                    fontSize: 10,
-                    letterSpacing: '0.32em',
-                    textTransform: 'uppercase',
-                    color: 'var(--t4-accent)',
-                    marginBottom: 20,
-                    fontWeight: 500,
-                  }}
-                >
-                  {`No. ${String(i + 1).padStart(2, '0')}`}
-                </div>
-
                 {(program.logo_url_black ?? program.logo_url) && (
                   <div style={{ height: 52, marginBottom: 24 }}>
                     <Image

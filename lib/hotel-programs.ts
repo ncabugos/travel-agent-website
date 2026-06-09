@@ -48,8 +48,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/belmond-bellini-club/belmond-reids-1500.jpg',
       '/media/hotel-programs/belmond-bellini-club/belmond-siem-1500.jpg',
     ],
-    tagline: 'An invitation-only club for the world\'s finest travel advisors.',
-    description: 'Regarded as one of the finest travel agent recognition programmes, the Belmond Bellini Club develops closer relationships between Belmond and a handpicked selection of agencies worldwide. Membership is by invitation only and grants access to exclusive benefits not available through any other booking channel.',
+    tagline: 'The hotels, trains, and river cruises of Belmond — with you recognized at the door.',
+    description: 'As a handpicked Bellini Club member, we pass on privileges reserved for Belmond\'s closest partners — a complimentary upgrade on arrival, a resort credit, and a VIP welcome before you check in.',
     category: 'invitation_only',
     property_count: null,
     benefits: [

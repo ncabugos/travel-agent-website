@@ -13,8 +13,8 @@ values
 (
   'belmond-bellini-club',
   'Belmond Bellini Club',
-  'An invitation-only club for the world''s finest travel advisors.',
-  'Regarded as one of the finest travel agent recognition programmes, the Belmond Bellini Club develops closer relationships between Belmond and a handpicked selection of agencies worldwide. Membership is by invitation only and grants access to exclusive benefits not available through any other booking channel.',
+  'The hotels, trains, and river cruises of Belmond — with you recognized at the door.',
+  'As a handpicked Bellini Club member, we pass on privileges reserved for Belmond''s closest partners — a complimentary upgrade on arrival, a resort credit, and a VIP welcome before you check in.',
   'invitation_only',
   NULL,
   '[
