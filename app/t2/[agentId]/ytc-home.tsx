@@ -10,6 +10,7 @@ import { YTCPartnerTabs } from '@/components/t2/YTCPartnerTabs'
 import { getAgentProfile } from '@/lib/suppliers'
 import { getAgencyAdvisors } from '@/lib/agency-advisors'
 import { getAgentHotelPrograms } from '@/lib/hotel-programs'
+import { getCruiseLines } from '@/lib/cruise-lines'
 import { getBlogPosts } from '@/lib/blog'
 
 interface PageProps {
@@ -72,11 +73,12 @@ const YTC_TESTIMONIALS = [
 
 export default async function YTCHomePage({ params }: PageProps) {
   const { agentId } = await params
-  const [agent, advisors, posts, programs] = await Promise.all([
+  const [agent, advisors, posts, programs, cruises] = await Promise.all([
     getAgentProfile(agentId),
     getAgencyAdvisors(agentId),
     getBlogPosts(agentId),
     getAgentHotelPrograms(agentId),
+    getCruiseLines(),
   ])
 
   const agencyName = agent?.agency_name ?? 'Your Travel Center'
@@ -195,7 +197,7 @@ export default async function YTCHomePage({ params }: PageProps) {
               Our Virtuoso membership unlocks preferred benefits at these world-class brands — unavailable through any other booking channel.
             </p>
           </div>
-          <YTCPartnerTabs base={base} programs={programs} />
+          <YTCPartnerTabs base={base} programs={programs} cruises={cruises} />
         </div>
       </section>
 

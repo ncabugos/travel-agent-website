@@ -1,6 +1,7 @@
 import { getAgentProfile } from '@/lib/suppliers'
-import { getPropertiesDestinations, getFeaturedPartners } from '@/lib/collections'
+import { getPropertiesDestinations } from '@/lib/collections'
 import { getAgentHotelPrograms } from '@/lib/hotel-programs'
+import { getCruiseLines } from '@/lib/cruise-lines'
 import { getBlogPosts } from '@/lib/blog'
 import { T3HeroSplit } from '@/components/t3/T3HeroSplit'
 import { T3Philosophy } from '@/components/t3/T3Philosophy'
@@ -21,12 +22,11 @@ export default async function T3HomePage({ params }: PageProps) {
   const { agentId } = await params
 
   const agent = await getAgentProfile(agentId)
-  const [destinations, hotelPrograms, posts] = await Promise.all([
+  const [destinations, hotelPrograms, posts, cruises] = await Promise.all([
     getPropertiesDestinations(),
     getAgentHotelPrograms(agentId),
     getBlogPosts(agentId),
-    // partners marquee data retained for now in case it's wanted later
-    getFeaturedPartners(),
+    getCruiseLines(),
   ])
 
   const agencyName = agent?.agency_name ?? 'Meridian Travel'
@@ -121,6 +121,7 @@ export default async function T3HomePage({ params }: PageProps) {
         <T3PartnerTabs
           agentId={agentId}
           hotelPrograms={hotelPrograms}
+          cruises={cruises}
           eyebrow="06 — Exclusive Partnerships"
           headline="Our Partner Programs"
           body="Our Virtuoso membership unlocks preferred benefits at these world-class brands — unavailable through any other booking channel."

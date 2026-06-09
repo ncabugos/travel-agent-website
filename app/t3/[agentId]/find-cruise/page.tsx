@@ -140,10 +140,10 @@ export default async function T3FindCruisePage({ params }: PageProps) {
                 />
 
                 <div style={{ padding: '28px 28px 24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  {line.logo_url && (
+                  {(line.logo_url_black ?? line.logo_url) && (
                     <div style={{ height: 36, marginBottom: 16, display: 'flex', alignItems: 'center' }}>
                       <Image
-                        src={line.logo_url}
+                        src={line.logo_url_black ?? line.logo_url ?? ''}
                         alt={line.name}
                         width={150}
                         height={36}

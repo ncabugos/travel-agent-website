@@ -39,8 +39,8 @@ const PERKS = [
  */
 export function T4VirtuosoBand({ agencyName, hostAgency }: T4VirtuosoBandProps) {
   const intro = hostAgency
-    ? `${agencyName} is an affiliate of ${hostAgency}, and a member of Virtuoso — the world's leading network of luxury travel advisors. Our standing unlocks privileges that never appear on public rates.`
-    : `${agencyName} is a member of Virtuoso — the world's leading network of luxury travel advisors. Our standing unlocks privileges that never appear on public rates.`
+    ? `${agencyName} is an affiliate of ${hostAgency}, and a member of Virtuoso, the world's leading network of luxury travel advisors. Our standing turns a reservation into a welcome — privileges that never appear on public rates, arranged before you arrive.`
+    : `${agencyName} is a member of Virtuoso, the world's leading network of luxury travel advisors. Our standing turns a reservation into a welcome — privileges that never appear on public rates, arranged before you arrive.`
 
   return (
     <section

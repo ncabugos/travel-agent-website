@@ -7,7 +7,8 @@ export interface CruiseLine {
   name: string
   slug: string
   logo_url: string | null
-  logo_url_white: string | null   // transparent white version for dark hero
+  logo_url_white: string | null   // transparent white version for dark backgrounds
+  logo_url_black?: string | null  // transparent black version for light backgrounds
   hero_image_url: string | null
   description: string | null
   tagline: string | null
@@ -808,7 +809,10 @@ const MOCK_PROGRAM_PROPERTIES: ProgramFeaturedProperty[] = [
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-const hasSupabase = () => !!process.env.NEXT_PUBLIC_SUPABASE_URL
+// cruise_lines is the single source of truth; MOCK is only the offline fallback
+// when Supabase env is absent. createServiceClient needs both vars.
+const hasSupabase = () =>
+  !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.SUPABASE_SERVICE_ROLE_KEY
 
 // ─── Cruise Lines ─────────────────────────────────────────────────────────────
 
@@ -897,4 +901,43 @@ export async function getProgramFeaturedProperties(programSlug: string): Promise
     if (error || !data) return []
     return data as ProgramFeaturedProperty[]
   } catch { return [] }
+}
+
+// ─── Admin write ────────────────────────────────────────────────────────────────
+
+/**
+ * Update a single cruise line's editable fields (logos + client-facing copy).
+ * Used by the admin Cruise Lines editor. cruise_lines is the single source of
+ * truth, so a change reflects across every tenant site. Service-role only —
+ * the caller (an admin API route) must gate on super-admin. Whitelisted fields
+ * only, so a stray body key can never touch slug/ships/etc.
+ */
+export type CruiseLineUpdate = Partial<
+  Pick<CruiseLine, 'logo_url' | 'logo_url_white' | 'logo_url_black' | 'tagline' | 'description' | 'hero_image_url'>
+>
+
+export async function updateCruiseLine(
+  id: string,
+  fields: CruiseLineUpdate,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  client?: any
+) {
+  const supabase = client ?? createServiceClient()
+
+  const allowed: (keyof CruiseLineUpdate)[] = [
+    'logo_url',
+    'logo_url_white',
+    'logo_url_black',
+    'tagline',
+    'description',
+    'hero_image_url',
+  ]
+  const patch: Record<string, unknown> = {}
+  for (const k of allowed) {
+    if (fields[k] !== undefined) patch[k] = fields[k]
+  }
+  if (Object.keys(patch).length === 0) return
+
+  const { error } = await supabase.from('cruise_lines').update(patch).eq('id', id)
+  if (error) throw error
 }
