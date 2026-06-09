@@ -62,6 +62,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { title: 'Pre/Post Hotel Nights', description: 'Complimentary hotel nights before or after most voyages.' },
     ],
     ships: [
+      { name: 'Seven Seas Prestige', description: 'New Prestige-class flagship, 850 guests — enters service December 2026.' /* TODO: add image */ },
       { name: 'Seven Seas Splendor', description: '750 guests, all-suite, all-balcony pinnacle of luxury.', image: '/media/cruises/regent-seven-seas/splendor_suite-1500.jpg' },
       { name: 'Seven Seas Explorer', image: '/media/cruises/regent-seven-seas/seven-seas-explorer.jpg', description: 'The world\'s most luxurious ship on launch.' },
       { name: 'Seven Seas Grandeur', image: '/media/cruises/regent-seven-seas/seven-seas-grandeur.jpg', description: 'Newest fleet addition, launched 2023.' },
@@ -96,6 +97,8 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { title: 'Venetian Society Perks', description: 'Loyalty savings, priority boarding, and exclusive onboard recognition.' },
     ],
     ships: [
+      { name: 'Silver Nova', description: '728 Guests • Nova Class — debuted 2023' /* TODO: add image */ },
+      { name: 'Silver Ray', description: '728 Guests • Nova Class — debuted 2024' /* TODO: add image */ },
       { name: 'Silver Dawn', image: '/media/cruises/silversea/silver-dawn.jpg', description: '596 Guests • 411 Crew | Classic' },
       { name: 'Silver Moon', image: '/media/cruises/silversea/silver-moon.jpg', description: '596 Guests • 411 Crew | Classic' },
       { name: 'Silver Muse', image: '/media/cruises/silversea/silver-muse.jpg', description: '632 Guests • 415 Crew | Classic' },
@@ -133,7 +136,6 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { name: 'Seabourn Pursuit', image: '/media/cruises/seabourn/seabourn-pursuit.jpg', description: 'Sister expedition ship to Venture.' },
       { name: 'Seabourn Encore', image: '/media/cruises/seabourn/seabourn-encore.jpg', description: '600 guests, inspired by classic yachting.' },
       { name: 'Seabourn Ovation', image: '/media/cruises/seabourn/seabourn-ovation.jpg', description: 'Sister to Encore with expanded dining.' },
-      { name: 'Seabourn Sojourn', image: '/media/cruises/seabourn/seabourn-sojourn.jpg', description: '458 guests on worldwide itineraries.' },
     ],
     slider_images: [
       '/media/cruises/seabourn/seabourn-cruises-hero-2000.jpg',
@@ -148,7 +150,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     logo_url: '/media/cruises/oceania/oceania-cruises-logo-black-600.png',
     logo_url_white: null,
     hero_image_url: '/media/cruises/oceania/oceania_cruises-oClass-Grand-Dining-Room-hero.jpg',
-    tagline: 'Your world. Your way.',
+    tagline: 'Your World. Your Way.',
     description: 'Oceania Cruises is renowned for The Finest Cuisine at Sea — six specialty restaurants, farm-to-table menus, and a Culinary Center for hands-on classes. Their mid-size ships visit the most compelling ports in the world.',
     cruise_types: ['ocean'],
     highlights: [
@@ -161,7 +163,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     ],
     ships: [
       { name: 'Vista', description: 'New O-Class ship, 1,200 guests — launched 2023.', image: '/media/cruises/oceania/oceania_cruises-oClass-Grand-Dining-Room-hero.jpg' },
-      { name: 'Allura', image: '/media/cruises/oceania/oceania-allura.jpg', description: 'Sister to Vista, launching 2025.' },
+      { name: 'Allura', image: '/media/cruises/oceania/oceania-allura.jpg', description: 'Sister to Vista, delivered 2025.' },
       { name: 'Riviera', image: '/media/cruises/oceania/oceania-riviera.jpg', description: '1,250 guests, classic Italian design.' },
       { name: 'Marina', image: '/media/cruises/oceania/oceania-marina.jpg', description: '1,250 guests, Mediterranean elegance.' },
       { name: 'Regatta', image: '/media/cruises/oceania/oceania-regatta.jpg', description: '684 guests, boutique R-Class ship.' },
@@ -179,7 +181,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     logo_url: '/media/cruises/azamara/azamara-logo-black-600.png',
     logo_url_white: '/media/cruises/azamara/azamara-logo-white-700.png',
     hero_image_url: '/media/cruises/azamara/azamara-hero-2200.jpg',
-    tagline: 'Destination immersion. Enriched voyages.',
+    tagline: 'Destination Immersion®',
     description: 'Azamara specialises in destination immersion — staying longer in port, overnighting in iconic cities, and sailing where larger ships cannot go. Their mid-size ships carry fewer than 700 guests for a boutique, personal feel.',
     cruise_types: ['ocean'],
     highlights: [
@@ -209,7 +211,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     logo_url: '/media/cruises/celebrity/Celebrity-Cruises-no-sub-black.png',
     logo_url_white: null,
     hero_image_url: '/media/cruises/celebrity/celebrity-hero-2500.jpg',
-    tagline: 'Modern luxury. Bold design. Revolutionary at sea.',
+    tagline: 'Nothing Comes Close',
     description: 'Celebrity Cruises blends contemporary design with elevated service. Their Edge-class ships feature the iconic Magic Carpet platform, Infinite Verandas, and Michelin-pedigree dining — redefining modern luxury cruising.',
     cruise_types: ['ocean'],
     highlights: [
@@ -225,7 +227,8 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { name: 'Celebrity Apex', image: '/media/cruises/celebrity/celebrity-apex.jpg', description: 'The second ship in the highly-awarded Edge Series.' },
       { name: 'Celebrity Beyond', image: '/media/cruises/celebrity/celebrity-hero-2500.jpg', description: 'Taking the Edge Series further with expanded outdoor spaces.' },
       { name: 'Celebrity Ascent', image: '/media/cruises/celebrity/celebrity-ascent.jpg', description: 'The newest Edge Series ship, featuring the multi-deck Sunset Bar.' },
-      { name: 'Celebrity Xcel', image: '/media/cruises/celebrity/celebrity-ship-1500.jpg', description: 'The highly anticipated fifth Edge Series ship, debuting in 2025.' },
+      { name: 'Celebrity Xcel', image: '/media/cruises/celebrity/celebrity-ship-1500.jpg', description: 'The fifth Edge Series ship, debuted 2025.' },
+      { name: 'Celebrity Xcite', description: 'The sixth and final Edge Series ship, arriving 2028.' /* TODO: add image */ },
       { name: 'Celebrity Flora', image: '/media/cruises/celebrity/celebrity-flora_boat-1500.jpg', description: 'A 100-guest mega-yacht purpose-built for the Galapagos Islands.' },
     ],
     slider_images: [
@@ -243,7 +246,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     logo_url: '/assets/supplier logos/jpg/Cunard-black.png',
     logo_url_white: '/media/cruises/cunard/cunard-logo-white.png',
     hero_image_url: '/media/cruises/cunard/cunard-Grand-Lobby-dark-hero.jpg',
-    tagline: 'The most famous ocean liners in the world.',
+    tagline: 'Why cruise when you can Cunard',
     description: 'Cunard has defined ocean travel since 1839. White Star Service, celebrated Grand Lobbies, the iconic Queen Mary 2 transatlantic crossing, and a tradition of formal elegance make Cunard unlike any other cruise experience.',
     cruise_types: ['ocean'],
     highlights: [
@@ -273,7 +276,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     logo_url: '/assets/supplier logos/jpg/Holland-America-black.png',
     logo_url_white: '/media/cruises/holland-america/hal_white-logo-700.png',
     hero_image_url: '/media/cruises/holland-america/hal-hero-2400.jpg',
-    tagline: '150 years of seafaring tradition.',
+    tagline: 'Savor the Journey',
     description: 'Holland America Line has been sailing the world for more than 150 years, blending Dutch heritage with destination discovery, world-class entertainment, and generous onboard spaces that feel like a grand hotel at sea.',
     cruise_types: ['ocean'],
     highlights: [
@@ -302,7 +305,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     logo_url: '/media/cruises/norwegian/NCL-logo-black.png',
     logo_url_white: '/media/cruises/norwegian/NCL-logo-white.png',
     hero_image_url: '/media/cruises/norwegian/ncl-hawaii-paddleboarding-hero.jpg',
-    tagline: 'Freestyle Cruising. No schedules. Just freedom.',
+    tagline: 'It\'s Different Out Here',
     description: 'Norwegian Cruise Line pioneered Freestyle Cruising — the freedom to dine when and where you want, dress how you please, and enjoy a vacation entirely on your terms. Their newest ships feature record-breaking amenities.',
     cruise_types: ['ocean'],
     highlights: [
@@ -315,6 +318,8 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     ],
     ships: [
       { name: 'Norwegian Prima', description: 'New Prima-class, 3,215 guests — record-breaking amenities.', image: '/media/cruises/norwegian/ncl-hawaii-paddleboarding-hero.jpg' },
+      { name: 'Norwegian Aqua', description: 'First Prima Plus class, ~3,570 guests — debuted 2025.' /* TODO: add image */ },
+      { name: 'Norwegian Luna', description: 'Second Prima Plus class — debuts 2026.' /* TODO: add image */ },
       { name: 'Norwegian Viva', image: '/media/cruises/norwegian/norwegian-viva.jpg', description: 'Sister to Prima, launched 2023.' },
       { name: 'Norwegian Bliss', image: '/media/cruises/norwegian/norwegian-bliss.jpg', description: 'Breakaway Plus class, 4,004 guests.' },
       { name: 'Pride of America', image: '/media/cruises/norwegian/pride-of-america.jpg', description: 'Sailing Hawaii year-round.' },
@@ -337,7 +342,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     logo_url: '/assets/supplier logos/jpg/Royal-Caribbean-black.png',
     logo_url_white: '/media/cruises/royal-caribbean/royal-caribbean-logo-white-700.png',
     hero_image_url: '/media/cruises/royal-caribbean/Hero_UltimateAbyss_Dark.jpg',
-    tagline: 'Adventure at sea. Reimagined.',
+    tagline: 'It\'s Big Time',
     description: 'Royal Caribbean pushes the boundaries of what\'s possible at sea — from the world\'s largest cruise ships to zip lines, surf simulators, and the new Icon of the Seas, a record-breaking city on the water carrying 7,600 guests.',
     cruise_types: ['ocean'],
     highlights: [
@@ -350,6 +355,8 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     ],
     ships: [
       { name: 'Icon of the Seas', description: 'World\'s largest cruise ship, 7,600 guests — launched 2024.', image: '/media/cruises/royal-caribbean/icon-of-the-seas-night-aerial-aft-view-vertical.jpg' },
+      { name: 'Star of the Seas', description: 'Second Icon-class ship, ~7,600 guests — debuted 2025.' /* TODO: add image */ },
+      { name: 'Legend of the Seas', description: 'Third Icon-class ship — debuts 2026.' /* TODO: add image */ },
       { name: 'Utopia of the Seas', description: 'The ultimate weekend getaway, newest Oasis-class.', image: '/media/cruises/royal-caribbean/utopia-of-the-seas-daytime-aft-view-vertical.jpg' },
       { name: 'Wonder of the Seas', image: '/media/cruises/royal-caribbean/wonder-of-the-seas-cruise-ship-aerial-aft.jpg', description: '6,988 guests, Oasis-class award winner.' },
       { name: 'Symphony of the Seas', image: '/media/cruises/royal-caribbean/symphony-exterior-aerial-day-sailing-splash-away-bay-ship.jpg', description: '6,680 guests, Oasis-class.' },
@@ -386,6 +393,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     ],
     ships: [
       { name: 'Sun Princess', description: 'Brand new Sphere-class, 4,300 guests — launched 2024.', image: '/media/cruises/princess/princess-hero-2200.jpg' },
+      { name: 'Star Princess', description: 'Sphere-class, ~4,300 guests, LNG-capable — maiden voyage 2025.' /* TODO: add image */ },
       { name: 'Discovery Princess', image: '/media/cruises/princess/discovery-princess.jpg', description: 'Royal-class, 4,000 guests.' },
       { name: 'Sky Princess', image: '/media/cruises/princess/sky-princess.jpg', description: 'Mediterranean luxury.' },
       { name: 'Majestic Princess', image: '/media/cruises/princess/majestic-princess.jpg', description: 'Global sailings flagship.' },
@@ -400,25 +408,27 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   // ── Expedition ──────────────────────────────────────────────────────────────
   {
     id: '12', name: 'Ponant', slug: 'ponant',
-    logo_url: '/assets/supplier logos/jpg/Scenic-black.png',
+    logo_url: '/assets/supplier logos/black transparent/cruise/Ponant-black-600.png',
     logo_url_white: '/media/cruises/ponant/PONANT_Logo_white-500.png',
     hero_image_url: '/media/cruises/ponant/ponant-hero-2200.jpg',
     tagline: 'The French way of luxury expedition.',
-    description: 'Ponant is the world\'s leading luxury expedition company — combining polar expertise, extraordinary destinations, and refined Gallic elegance. Their Le Commandant Charcot is the world\'s first luxury nuclear-powered icebreaker.',
+    description: 'Ponant is the world\'s leading luxury expedition company — combining polar expertise, extraordinary destinations, and refined Gallic elegance. Their Le Commandant Charcot is the world\'s first luxury hybrid LNG-electric polar icebreaker.',
     cruise_types: ['ocean'],
     highlights: [
       { title: 'Polar Expertise', description: 'France\'s leading polar operator — Antarctica, Arctic, and remote archipelagos.' },
-      { title: 'Le Commandant Charcot', description: 'World\'s only luxury nuclear icebreaker — reaching the geographic North Pole.' },
+      { title: 'Le Commandant Charcot', description: 'World\'s only luxury hybrid LNG-electric icebreaker — reaching the geographic North Pole.' },
       { title: 'French Elegance', description: 'Refined Gallic cuisine, service, and design throughout.' },
       { title: 'Intimate Ships', description: '92–270 guests — true expedition intimacy with luxury comfort.' },
       { title: 'Virtuoso Benefit', description: '$300 shipboard credit and exclusive expedition briefing.' },
       { title: 'Le Ponant Yacht', description: '64-guest three-masted sailing yacht for the most intimate voyages.' },
     ],
     ships: [
-      { name: 'Le Commandant Charcot', description: 'World\'s only luxury icebreaker, 270 guests.', image: '/media/cruises/ponant/ponant-hero-2200.jpg' },
+      { name: 'Le Commandant Charcot', description: 'World\'s only luxury hybrid LNG-electric icebreaker, 245 guests.', image: '/media/cruises/ponant/ponant-hero-2200.jpg' },
       { name: 'Le Bellot', image: '/media/cruises/ponant/le-bellot.jpg', description: 'Explorer-class, 184 guests, polar.' },
       { name: 'Le Bougainville', image: '/media/cruises/ponant/le-bougainville.jpg', description: '184 guests, expedition luxury.' },
       { name: 'Le Ponant', image: '/media/cruises/ponant/le-ponant.jpg', description: '64 guests, three-masted sailing yacht.' },
+      { name: 'Spirit of Ponant', description: 'Ponant Yachting catamaran — 2024.' /* TODO: add image */ },
+      { name: 'La Désirade', description: 'Ponant Yachting catamaran — 2025.' /* TODO: add image */ },
     ],
     slider_images: [
       '/media/cruises/ponant/ponant-hero-2200.jpg',
@@ -474,10 +484,15 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { title: 'Expert Guides', description: 'Naturalists, historians, and guides with deep regional expertise.' },
     ],
     ships: [
-      { name: 'Safari Voyager', description: '36 guests, Baja and Panama voyages.', image: '/media/cruises/uncruise/UnCruise-hero-1400x624-Snorkeling_Baja_California--Ellen-Barone.jpg' },
-      { name: 'Wilderness Adventurer', image: '/media/cruises/uncruise/wilderness-adventurer.jpg', description: '60 guests, Alaska Inside Passage.' },
+      { name: 'Wilderness Legacy', description: '86 guests, flagship adventure vessel.' /* TODO: add image */ },
+      { name: 'Safari Endeavour', description: '84 guests, Alaska and Baja.' /* TODO: add image */ },
       { name: 'Wilderness Discoverer', image: '/media/cruises/uncruise/wilderness-discoverer.jpg', description: '76 guests, Alaska and Columbia River.' },
+      { name: 'Wilderness Explorer', description: '74 guests, Alaska Inside Passage.' /* TODO: add image */ },
+      { name: 'Safari Voyager', image: '/media/cruises/uncruise/UnCruise-hero-1400x624-Snorkeling_Baja_California--Ellen-Barone.jpg', description: '66 guests, Costa Rica and Panama.' },
+      { name: 'Wilderness Adventurer', image: '/media/cruises/uncruise/wilderness-adventurer.jpg', description: '60 guests, Alaska Inside Passage.' },
+      { name: 'La Pinta', description: '48 guests, Galápagos.' /* TODO: add image */ },
       { name: 'Safari Explorer', image: '/media/cruises/uncruise/safari-explorer.jpg', description: '36 guests, Hawaii and Alaska.' },
+      { name: 'Safari Quest', description: '22 guests, intimate small-ship adventure.' /* TODO: add image */ },
     ],
     slider_images: [
       '/media/cruises/uncruise/UnCruise-hero-1400x624-Snorkeling_Baja_California--Ellen-Barone.jpg',
@@ -582,7 +597,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     logo_url: '/media/cruises/crystal/crystal_cruises-black-600.png',
     logo_url_white: '/media/cruises/crystal/crystal_cruises-white-600.png',
     hero_image_url: '/media/cruises/crystal-cruises/crystal-cruises-gallery-1.png',
-    tagline: 'The world\'s most awarded luxury cruise line. Reborn.',
+    tagline: 'Ultra Luxury Cruises Worldwide — redefining luxury at sea.',
     description: 'Crystal Cruises returns as the world\'s most awarded luxury cruise line — reborn with Crystal Symphony and plans for an expanded fleet. Guests experience all-inclusive luxury, Nobu at Sea, and the legendary Crystal service that earned decades of awards.',
     cruise_types: ['ocean', 'river', 'yacht'],
     highlights: [
@@ -596,7 +611,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     ships: [
       { name: 'Crystal Symphony', description: 'Reborn ultra-luxury icon.', image: '/media/cruises/crystal-cruises/crystal-symphony.png' },
       { name: 'Crystal Serenity', description: 'Re-imagined for world voyages.', image: '/media/cruises/crystal-cruises/crystal-serenity.png' },
-      { name: 'Crystal Grace', description: 'The newest addition joining the fleet in 2028.', image: '/media/cruises/crystal-cruises/crystal-grace.png' }
+      { name: 'Crystal Grace', description: 'First newbuild in ~25 years, ~650 guests — debuts May 2028.', image: '/media/cruises/crystal-cruises/crystal-grace.png' }
     ],
     slider_images: [
       '/media/cruises/crystal-cruises/crystal-cruises-gallery-2.png',
@@ -635,6 +650,8 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     ships: [
       { name: 'Viking Polaris', description: 'First Viking expedition ship, 378 guests.', image: '/media/cruises/viking/Viking_Longship_hero.jpg' },
       { name: 'Viking Vela', image: '/media/cruises/viking/viking-vela.jpg', description: 'New ocean ship, 930 guests, 2024.' },
+      { name: 'Viking Vesta', description: 'Newest ocean ship, ~998 guests — delivered 2025.' /* TODO: add image */ },
+      { name: 'Viking Mira', description: 'Ocean ship — debuts 2026.' /* TODO: add image */ },
       { name: 'Viking Star', image: '/media/cruises/viking/viking-star.jpg', description: '930 guests, global itineraries.' },
       { name: 'Viking Longship', image: '/media/cruises/viking/viking-longship.jpg', description: 'Iconic river ship class, 300+ European voyages.' },
     ],
@@ -668,6 +685,8 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { name: 'AmaKristina', image: '/media/cruises/ama-waterways/amakristina.jpg', description: '158 guests, European rivers.' },
       { name: 'AmaSiena', image: '/media/cruises/ama-waterways/amasiena.jpg', description: 'Rhine, Moselle, and Danube.' },
       { name: 'AmaLea', image: '/media/cruises/ama-waterways/amalea.jpg', description: 'Italy\'s Po River and beyond.' },
+      { name: 'AmaSofia', description: 'New for 2026 — European rivers.' /* TODO: add image */ },
+      { name: 'AmaKaia', description: 'New for 2026 — Mekong River.' /* TODO: add image */ },
     ],
     slider_images: [
       '/media/cruises/ama-waterways/amawaterways-amamagna-hero-2200.jpg',
@@ -687,7 +706,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     logo_url: '/media/cruises/uniworld/uniworld_river_cruises-black-500.png',
     logo_url_white: null,
     hero_image_url: '/media/cruises/uniworld/uniworld-sunset-hero-2000.jpg',
-    tagline: 'The world\'s most luxurious all-inclusive river cruise line.',
+    tagline: 'The World\'s Most Awarded River Cruise Line',
     description: 'Uniworld Boutique River Cruise Collection operates the most lavish river ships in the world — handcrafted floating hotels inspired by the great châteaux of Europe, with 100% all-inclusive pricing and the highest staff-to-guest ratio in river cruising.',
     cruise_types: ['river'],
     highlights: [
@@ -703,6 +722,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { name: 'S.S. Joie de Vivre', image: '/media/cruises/uniworld/joie-de-vivre.jpg', description: 'Parisian chic on the Seine.' },
       { name: 'River Beatrice', image: '/media/cruises/uniworld/river-beatrice.jpg', description: 'Italian elegance on the Po.' },
       { name: 'S.S. Sacy', image: '/media/cruises/uniworld/ss-sacy.jpg', description: 'Luxury Nile immersion.' },
+      { name: 'S.S. Emilie', description: 'Newest Super Ship — debuts 2026.' /* TODO: add image */ },
     ],
     slider_images: [
       '/media/cruises/uniworld/uniworld-sunset-hero-2000.jpg',
@@ -717,7 +737,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     logo_url_white: '/assets/supplier logos/white transparent/FS_preferred-600.png',
     hero_image_url: '/media/cruises/four_seasons_yacht/YCT_207_aspect16x9.jpg',
     tagline: 'The Four Seasons experience, reimagined at sea.',
-    description: 'Four Seasons Yachts brings legendary Four Seasons service to the sea. An intimate superyacht carrying just 96 guests with a 1:1 staff-to-guest ratio, four restaurants, and itineraries through the Caribbean and Mediterranean.',
+    description: 'Four Seasons Yachts brings legendary Four Seasons service to the sea. An intimate superyacht with 95 all-suite accommodations (max ~190 guests) and a near 1:1 staff-to-guest ratio, eleven restaurants and lounges, and itineraries through the Mediterranean and Caribbean.',
     cruise_types: ['yacht'],
     highlights: [
       { title: '1:1 Staff-to-Guest Ratio', description: 'One team member per guest — extraordinary personalised service.' },
@@ -728,7 +748,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { title: 'Ultra-Bespoke', description: 'Private island excursions and helicopter transfers arranged exclusively.' },
     ],
     ships: [
-      { name: 'Four Seasons I', description: '96 guests, the inaugural superyacht.', image: '/media/cruises/four_seasons_yacht/YCT_207_aspect16x9.jpg' },
+      { name: 'Four Seasons I', description: '95 suites (~190 guests), inaugural superyacht — launched March 2026.', image: '/media/cruises/four_seasons_yacht/YCT_207_aspect16x9.jpg' },
     ],
     slider_images: [
       '/media/cruises/four_seasons_yacht/YCT_207_aspect16x9.jpg',
@@ -742,7 +762,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     logo_url: '/media/cruises/virgin-voyages/virgin-voyages-600.png',
     logo_url_white: '/media/cruises/virgin-voyages/virgin-voyages-600.png',
     hero_image_url: '/media/cruises/virgin-voyages/IMG-DEST-costa-maya-mahahual-beach-sunset-v1-01-913747024-1092x1024.jpg',
-    tagline: 'Brilliant at sea. Always adult.',
+    tagline: 'An Epic Sea Change For All',
     description: 'Virgin Voyages is Richard Branson\'s adults-only cruise line — bold, rebellious, and surprisingly luxurious. No buffets, no formal nights, no kids. Instead: 20+ restaurants, all dining included in every fare.',
     cruise_types: ['ocean'],
     highlights: [
@@ -757,7 +777,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { name: 'Scarlet Lady', description: '2,770 guests, Caribbean flagship.', image: '/media/cruises/virgin-voyages/scarlet lady-2252x1266.avif' },
       { name: 'Valiant Lady', image: '/media/cruises/virgin-voyages/Valiant lady-2252x1266.avif', description: 'Mediterranean and Transatlantic.' },
       { name: 'Resilient Lady', image: '/media/cruises/virgin-voyages/Resilient lady-2252x1266.avif', description: 'Greek Isles and Europe.' },
-      { name: 'Brilliant Lady', image: '/media/cruises/virgin-voyages/Brilliant lady-2252x1266.avif', description: 'Newest addition, US East Coast.' },
+      { name: 'Brilliant Lady', image: '/media/cruises/virgin-voyages/Brilliant lady-2252x1266.avif', description: 'Fourth and final ship, launched 2025 — US East Coast and Alaska.' },
     ],
     slider_images: [
       '/media/cruises/virgin-voyages/IMG-DEST-costa-maya-mahahual-beach-sunset-v1-01-913747024-1092x1024.jpg',
@@ -777,12 +797,12 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     id: '24', name: 'Windstar Cruises', slug: 'windstar',
     logo_url: '/assets/supplier logos/jpg/Windstar-black.png',
     logo_url_white: null,
-    hero_image_url: '/media/cruises/star-clippers/star_clippers-hero_v2-2000.jpg',
+    hero_image_url: '/media/cruises/windstar/star-legend.jpg',   // TODO: source a proper Windstar hero (wide scenic)
     tagline: '180° from ordinary.',
     description: 'Windstar Cruises operates intimate sailing yachts and small motor yachts that anchor in harbours where larger ships cannot go. With 148–342 guests, Windstar delivers a personal, adventure-rich sailing experience across the Mediterranean, Caribbean, and Arctic.',
     cruise_types: ['yacht', 'ocean'],
     highlights: [
-      { title: 'Sailing Yachts', description: 'Original three masted sailing yachts — Wind Star, Wind Spirit, Wind Song.' },
+      { title: 'Sailing Yachts', description: 'Original sailing yachts — Wind Star, Wind Spirit, and 5-masted flagship Wind Surf.' },
       { title: 'Star-Class Motor Yachts', description: 'Three Star-class yachts for expanded capacity and new itineraries.' },
       { title: 'All In Fares', description: 'Beverages, Wi-Fi, and tips included option.' },
       { title: 'Unique Port Access', description: 'Anchor in bays and coves unreachable by large ships.' },
@@ -790,13 +810,17 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { title: 'Open Bridge Policy', description: 'Guests welcome to visit the bridge and learn to sail.' },
     ],
     ships: [
+      { name: 'Wind Surf', description: '342 guests, 5-masted flagship sailing yacht.' /* TODO: add image */ },
       { name: 'Wind Star', image: '/media/cruises/windstar/wind-star.jpg', description: '148 guests, iconic four-masted sailing yacht.' },
       { name: 'Wind Spirit', image: '/media/cruises/windstar/wind-spirit.jpg', description: '148 guests, Mediterranean and Caribbean.' },
-      { name: 'Star Breeze', image: '/media/cruises/windstar/star-breeze.jpg', description: '312 guests, expanded Star Class.' },
+      { name: 'Star Breeze', image: '/media/cruises/windstar/star-breeze.jpg', description: '312 guests, Star Plus motor yacht.' },
       { name: 'Star Legend', image: '/media/cruises/windstar/star-legend.jpg', description: '312 guests, Arctic and Caribbean.' },
+      { name: 'Star Pride', description: '312 guests, Star Plus motor yacht.' /* TODO: add image */ },
+      { name: 'Star Seeker', description: 'First newbuild in ~30 years — 112 all-suite, ice-capable. Debuts 2026.' /* TODO: add image */ },
+      { name: 'Star Explorer', description: 'All-suite newbuild — debuts December 2026.' /* TODO: add image */ },
     ],
     slider_images: [
-      '/media/cruises/star-clippers/star_clippers-hero_v2-2000.jpg',
+      '/media/cruises/windstar/star-legend.jpg',   // TODO: source proper Windstar slider images
     ],
     sort_order: 24,
   },
