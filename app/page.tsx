@@ -200,7 +200,7 @@ export default function EliteAdvisorHubHomePage() {
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
           <h2 style={{
             fontSize: '36px', fontWeight: 700, textAlign: 'center',
-            letterSpacing: '-0.02em', margin: '0 0 12px',
+            letterSpacing: '-0.02em', lineHeight: 1.1, margin: '0 0 12px',
           }}>
             What &ldquo;maintained for you&rdquo; actually means.
           </h2>
@@ -290,7 +290,7 @@ export default function EliteAdvisorHubHomePage() {
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{
             fontSize: '36px', fontWeight: 700, textAlign: 'center',
-            letterSpacing: '-0.02em', margin: '0 0 12px',
+            letterSpacing: '-0.02em', lineHeight: 1.1, margin: '0 0 12px',
           }}>
             Seven live sites. Not mockups.
           </h2>
