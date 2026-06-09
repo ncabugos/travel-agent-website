@@ -3,30 +3,18 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
+import type { HotelProgram } from '@/lib/hotel-programs'
 
 interface LidoPartnerNetworkProps {
   /** Tenant base path, e.g. /t2/lido-collective */
   base: string
+  /** DB-driven hotel programs — white logos for the dark band */
+  programs: HotelProgram[]
 }
 
 type Logo = { name: string; src: string }
 
 const WHITE = '/assets/supplier logos/white transparent'
-
-const HOTEL_PROGRAMS: Logo[] = [
-  { name: 'Aman',                       src: `${WHITE}/Aman-white-600.png` },
-  { name: 'Belmond Bellini Club',       src: `${WHITE}/belmond-bellini_club.png` },
-  { name: 'Four Seasons Preferred',     src: `${WHITE}/FS_preferred-600.png` },
-  { name: 'Rosewood Elite',             src: `${WHITE}/rosewood-elite-white.png` },
-  { name: 'Mandarin Oriental Fan Club', src: `${WHITE}/mandarin-oriental-fan-club-Mandarin-white-600.png` },
-  { name: 'Ritz-Carlton STARS',         src: `${WHITE}/ritz-carlton-stars-white.png` },
-  { name: 'Oetker Collection',          src: `${WHITE}/oetker-pearl-white-600.png` },
-  { name: 'Rocco Forte',                src: `${WHITE}/Rocco_Forte-White-600.png` },
-  { name: 'The Peninsula PenClub',      src: `${WHITE}/Peninsula_PenClub-white-600.png` },
-  { name: 'COMO Hotels',                src: `${WHITE}/como-hotels-white.png` },
-  { name: 'Six Senses',                 src: `${WHITE}/SixSenses-logo-white-600.png` },
-  { name: 'One&Only',                   src: `${WHITE}/one&only-white-600.png` },
-]
 
 const CRUISE_PARTNERS: Logo[] = [
   { name: 'Aman at Sea',                    src: `${WHITE}/cruise/aman_at_sea-white-600.png` },
@@ -43,19 +31,22 @@ const CRUISE_PARTNERS: Logo[] = [
   { name: 'Windstar',                       src: `${WHITE}/cruise/windstarCruises-white-600.png` },
 ]
 
-const FILTERS = [
-  { key: 'hotels',  label: 'Hotel Programs', logos: HOTEL_PROGRAMS, href: '/book-hotel' },
-  { key: 'cruise',  label: 'Cruise Partners', logos: CRUISE_PARTNERS, href: '/find-cruise' },
-] as const
-
 /**
  * The Lido Collective partner network — a dark navy band showing the white
  * supplier marks behind the collective's access, split by two filters:
  * Hotel Programs and Cruise Partners. The filter is a sliding toggle; the logo
  * grid crossfades between the two sets. Click a logo to jump to that catalog.
  */
-export function LidoPartnerNetwork({ base }: LidoPartnerNetworkProps) {
+export function LidoPartnerNetwork({ base, programs }: LidoPartnerNetworkProps) {
   const [active, setActive] = useState<'hotels' | 'cruise'>('hotels')
+  // Hotel marks come from the DB-driven hotel_programs catalog (white variant).
+  const hotelLogos: Logo[] = programs
+    .map((p) => ({ name: p.name, src: p.logo_url_white ?? '' }))
+    .filter((l) => l.src)
+  const FILTERS = [
+    { key: 'hotels' as const, label: 'Hotel Programs',  logos: hotelLogos,      href: '/book-hotel' },
+    { key: 'cruise' as const, label: 'Cruise Partners', logos: CRUISE_PARTNERS, href: '/find-cruise' },
+  ]
   const current = FILTERS.find((f) => f.key === active)!
   const activeIndex = FILTERS.findIndex((f) => f.key === active)
 

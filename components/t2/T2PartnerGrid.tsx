@@ -3,11 +3,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import { MOCK_HOTEL_PROGRAMS } from '@/lib/hotel-programs'
+import type { HotelProgram } from '@/lib/hotel-programs'
 import type { FeaturedPartner } from '@/lib/collections'
 
 interface T2PartnerGridProps {
-  partners: FeaturedPartner[]
+  programs: HotelProgram[]
   agentId: string
 }
 
@@ -29,25 +29,21 @@ const FALLBACK_CRUISES: FeaturedPartner[] = [
   { id: 'c9', name: 'Viking',             slug: 'viking',            logo_url: '/media/cruises/viking/viking-cruises-black.png',            category: 'cruise', is_preferred: true, sort_order: 9 },
 ]
 
-// ─── Hotel fallback — built from the canonical MOCK_HOTEL_PROGRAMS list ───────
-const FALLBACK_HOTELS: FeaturedPartner[] = MOCK_HOTEL_PROGRAMS.map((p, i) => ({
-  id: `h${i + 1}`,
-  name: p.name,
-  slug: p.slug,
-  logo_url: p.logo_url,
-  category: 'hotel',
-  is_preferred: true,
-  sort_order: i + 10,
-}))
-
-const FALLBACK_PARTNERS = [...FALLBACK_HOTELS, ...FALLBACK_CRUISES]
-
-export function T2PartnerGrid({ partners, agentId }: T2PartnerGridProps) {
+export function T2PartnerGrid({ programs, agentId }: T2PartnerGridProps) {
   const [activeTab, setActiveTab] = useState('hotel')
 
-  // Always use the canonical program list — never the DB featured_partners table
-  // (DB table has stale/partial data that causes missing rows and broken slugs)
-  const filtered = FALLBACK_PARTNERS.filter(p => p.category === activeTab)
+  // Hotels come from the DB-driven hotel_programs catalog (black logos on the
+  // white grid — black/white only); cruises use the static fallback above.
+  const hotelPartners: FeaturedPartner[] = programs.map((p, i) => ({
+    id: `h${i + 1}`,
+    name: p.name,
+    slug: p.slug,
+    logo_url: p.logo_url_black ?? p.logo_url,
+    category: 'hotel',
+    is_preferred: true,
+    sort_order: i + 10,
+  }))
+  const filtered = activeTab === 'hotel' ? hotelPartners : FALLBACK_CRUISES
 
   const base = `/t2/${agentId}`
 

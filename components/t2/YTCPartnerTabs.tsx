@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import { MOCK_HOTEL_PROGRAMS } from '@/lib/hotel-programs'
+import type { HotelProgram } from '@/lib/hotel-programs'
 
 // ─── Cruise lines to feature — black logos, link to landing pages ─────────────
 const CRUISE_PARTNERS = [
@@ -20,9 +20,10 @@ const CRUISE_PARTNERS = [
 
 interface Props {
   base: string
+  programs: HotelProgram[]
 }
 
-export function YTCPartnerTabs({ base }: Props) {
+export function YTCPartnerTabs({ base, programs }: Props) {
   const [activeTab, setActiveTab] = useState<'hotels' | 'cruises'>('hotels')
 
   const tabStyle = (active: boolean): React.CSSProperties => ({
@@ -67,7 +68,7 @@ export function YTCPartnerTabs({ base }: Props) {
           }}
           className="ytc-partner-grid"
         >
-          {MOCK_HOTEL_PROGRAMS.map(p => (
+          {programs.map(p => (
             <Link
               key={p.slug}
               href={`${base}/book-hotel/${p.slug}`}
@@ -80,9 +81,9 @@ export function YTCPartnerTabs({ base }: Props) {
               }}
               className="ytc-partner-cell"
             >
-              {p.logo_url ? (
+              {(p.logo_url_black ?? p.logo_url) ? (
                 <Image
-                  src={p.logo_url}
+                  src={p.logo_url_black ?? p.logo_url ?? ''}
                   alt={p.name}
                   width={360}
                   height={120}

@@ -1,31 +1,5 @@
 import Image from 'next/image'
-
-const SUPPLIER_LOGOS = [
-  { name: 'Aman', src: '/assets/supplier logos/black transparent/Aman-black-600.png' },
-  { name: 'Belmond Bellini Club', src: '/assets/supplier logos/black transparent/belmond_bellini-logo-black-600.png' },
-  { name: 'Dorchester Diamond Club', src: '/assets/supplier logos/black transparent/dorchester_diamond-logo-black-600.png' },
-  { name: 'Four Seasons Preferred Partner', src: '/assets/supplier logos/black transparent/FS_preferred-600-black.png' },
-  { name: 'Rosewood Elite', src: '/assets/supplier logos/black transparent/rosewood_elite-black-600.png' },
-  { name: 'Mandarin Oriental Fan Club', src: '/assets/supplier logos/black transparent/mandarin-oriental-fan-club-Mandarin-black-600.png' },
-  { name: 'Ritz-Carlton Stars', src: '/assets/supplier logos/black transparent/ritz-carlton-stars-black-600.png' },
-  { name: 'Marriott Stars & Luminous', src: '/assets/supplier logos/black transparent/Marriott_stars_luminous-black-600.png' },
-  { name: 'Hyatt Privé', src: '/assets/supplier logos/black transparent/HyattPrive-black-600.png' },
-  { name: 'Rocco Forte', src: '/assets/supplier logos/black transparent/Rocco_Forte-black-600.png' },
-  { name: 'Peninsula Pen Club', src: '/assets/supplier logos/black transparent/Peninsula_PenClub-black-600.png' },
-  { name: 'Shangri-La Luxury Circle', src: '/assets/supplier logos/black transparent/ShangriLa-black-600.png' },
-  { name: 'Six Senses', src: '/assets/supplier logos/black transparent/SixSenses-logo-black-600.png' },
-  { name: 'Auberge Resorts', src: '/assets/supplier logos/black transparent/auberge-logo-black-600.png' },
-  { name: 'Como Hotels', src: '/assets/supplier logos/black transparent/como-hotels-black-600.png' },
-  { name: 'Montage', src: '/assets/supplier logos/black transparent/montage-black-600.png' },
-  { name: 'One&Only', src: '/assets/supplier logos/black transparent/one&only-black-600.png' },
-  { name: 'Oetker Collection Pearl', src: '/assets/supplier logos/black transparent/oetker-pearl-black-600.png' },
-  { name: 'Leading Hotels of the World', src: '/assets/supplier logos/black transparent/LeadingHotels-black-600.png' },
-  { name: 'Kempinski Club 1897', src: '/assets/supplier logos/black transparent/Kempinski-Club1897-black-600.png' },
-  { name: 'Jumeirah Passport', src: '/assets/supplier logos/black transparent/jumeirah_passport-black-600.png' },
-  { name: 'Preferred Hotels & Resorts', src: '/assets/supplier logos/black transparent/preferredHotels-logo-black-600.png' },
-  { name: 'Accor Hera', src: '/assets/supplier logos/black transparent/accor-hera-black-600.png' },
-  { name: 'Couture', src: '/assets/supplier logos/black transparent/couture-logo-black-600.png' },
-]
+import { getHotelPrograms } from '@/lib/hotel-programs'
 
 const SAMPLE_BENEFITS = [
   'Upgrade on arrival',
@@ -36,7 +10,14 @@ const SAMPLE_BENEFITS = [
   'VIP recognition',
 ]
 
-export function MarketingSupplierPrograms() {
+export async function MarketingSupplierPrograms() {
+  // Single source of truth: the hotel_programs catalog. Black logos on the
+  // white grid (black/white-only). Falls back to MOCK offline.
+  const programs = await getHotelPrograms()
+  const SUPPLIER_LOGOS = programs
+    .map((p) => ({ name: p.name, src: p.logo_url_black ?? p.logo_url ?? '' }))
+    .filter((l) => l.src)
+
   return (
     <section
       className="eah-section"
