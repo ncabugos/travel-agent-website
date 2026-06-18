@@ -38,7 +38,7 @@ const DEMOS: DemoCard[] = [
     kind: 'Starter',
     tagline: 'Cinematic widescreen with bold serif typography and antique gold accents.',
     href: '/t2/t2-demo',
-    thumbnail: '/demos/vista.png',
+    thumbnail: '/demos/demo-homepage-thumbs-web-optimized/demo-luxuryTravel-homepage-thumbs-1.webp',
   },
   {
     slug: 'meridian',
@@ -46,7 +46,7 @@ const DEMOS: DemoCard[] = [
     kind: 'Starter',
     tagline: 'Modern editorial in sans-serif — warm ivory, bronze italics, generous whitespace.',
     href: '/t3/t3-demo',
-    thumbnail: '/demos/meridian.png',
+    thumbnail: '/demos/demo-homepage-thumbs-web-optimized/demo-meridian-homepage-thumbs-3.webp',
   },
   // ── Growth ──────────────────────────────────────────────────────────────────
   {
@@ -55,7 +55,7 @@ const DEMOS: DemoCard[] = [
     kind: 'Growth',
     tagline: 'Small-ship voyages and coastal escapes — Bodoni Moda serif, slideshow hero, editorial services index.',
     href: '/t2/coast-compass-demo',
-    thumbnail: '/media/hero images/four-seasons-yacht-hero.jpg',
+    thumbnail: '/demos/demo-homepage-thumbs-web-optimized/demo-CoastCompass-homepage-thumbs-4.webp',
   },
   // ── Custom ──────────────────────────────────────────────────────────────────
   {
@@ -72,7 +72,7 @@ const DEMOS: DemoCard[] = [
     kind: 'Custom',
     tagline: 'Quiet-luxury editorial for the Custom tier — warm ivory, burnt ochre, Italian-atelier feel.',
     href: '/t4/casa-solis',
-    thumbnail: '/demos/casa_solis.jpg',
+    thumbnail: '/demos/demo-homepage-thumbs-web-optimized/demo-casaSolis-homepage-thumbs-2.webp',
   },
   // ── Agency ──────────────────────────────────────────────────────────────────
   {

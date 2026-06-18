@@ -37,7 +37,7 @@ const TEMPLATES: TemplateCard[] = [
     description:
       'Cinematic widescreen with bold serif typography and antique gold accents — dramatic, editorial, unmistakably luxury.',
     href: templatePath('t2', 't2-demo'),
-    thumbnail: '/demos/vista.png',
+    thumbnail: '/demos/demo-homepage-thumbs-web-optimized/demo-luxuryTravel-homepage-thumbs-1.webp',
   },
   {
     name: 'Meridian',
@@ -46,7 +46,7 @@ const TEMPLATES: TemplateCard[] = [
     description:
       'Modern editorial in clean sans-serif — warm ivory, bronze italics, and generous whitespace for a quietly confident feel.',
     href: templatePath('t3', 't3-demo'),
-    thumbnail: '/demos/meridian.png',
+    thumbnail: '/demos/demo-homepage-thumbs-web-optimized/demo-meridian-homepage-thumbs-3.webp',
   },
   {
     name: 'Casa Solis',
@@ -55,7 +55,7 @@ const TEMPLATES: TemplateCard[] = [
     description:
       'Quiet-luxury editorial for the Custom tier — warm ivory, burnt ochre, and an Italian-atelier feel built for boutique advisors.',
     href: templatePath('t4', 'casa-solis'),
-    thumbnail: '/demos/casa_solis.jpg',
+    thumbnail: '/demos/demo-homepage-thumbs-web-optimized/demo-casaSolis-homepage-thumbs-2.webp',
   },
 ]
 
