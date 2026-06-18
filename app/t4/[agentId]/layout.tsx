@@ -1,6 +1,8 @@
 import { Cormorant_Garamond, DM_Sans } from 'next/font/google'
 import type { ReactNode } from 'react'
 import { getAgentProfile } from '@/lib/suppliers'
+import { getAgentGaMeasurementId } from '@/lib/agent-ga'
+import TenantAnalyticsConfig from '@/components/analytics/TenantAnalyticsConfig'
 import { T4Nav } from '@/components/t4/T4Nav'
 import { T4Footer } from '@/components/t4/T4Footer'
 import { DemoSignupBanner } from '@/components/ui/DemoSignupBanner'
@@ -29,13 +31,17 @@ interface LayoutProps {
 
 export default async function T4Layout({ children, params }: LayoutProps) {
   const { agentId } = await params
-  const agent = await getAgentProfile(agentId)
+  const [agent, gaMeasurementId] = await Promise.all([
+    getAgentProfile(agentId),
+    getAgentGaMeasurementId(agentId),
+  ])
 
   const agencyName = agent?.agency_name ?? 'Casa Solis'
   const tagline = agent?.tagline ?? 'Slow travel, quietly arranged.'
 
   return (
     <div className={`${cormorant.variable} ${dmSans.variable} t4-page`}>
+      {gaMeasurementId && <TenantAnalyticsConfig measurementId={gaMeasurementId} />}
       {isDemoSlug(agentId) && <DemoSignupBanner />}
       <T4Nav agentId={agentId} agencyName={agencyName} tier={agent?.tier ?? null} />
       <main>{children}</main>
