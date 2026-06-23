@@ -247,6 +247,28 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   // ── Ultra-Luxury Ocean ──────────────────────────────────────────────────────
   {
     id: '1', name: 'Regent Seven Seas Cruises', slug: 'regent-seven-seas',
+    intro: {
+      eyebrow: 'Regent Seven Seas Cruises',
+      heading: 'The most luxurious fleet at sea',
+      body: 'Regent sails an all-suite, all-balcony fleet on the most genuinely all-inclusive terms in luxury cruising — roundtrip business-class air, unlimited shore excursions at every port, fine dining across a half-dozen restaurants, premium beverages, gratuities, and butler service all folded into one fare. The result is a way of seeing the world where nothing is counted twice and nothing is left to chance.',
+    },
+    destinations: [
+      { name: 'Tahiti & the South Pacific', blurb: 'The lagoons of Bora Bora and the Society Islands, where the ship becomes your floating overwater suite between turquoise anchorages.', image_url: '/media/cruises/regent-seven-seas/Regent-hero-Tahiti-2500.jpg' },
+      { name: 'The Mediterranean', blurb: 'The Riviera, the Cinque Terre, and the Greek Isles — explored on unlimited included excursions shaped around your interests.', image_url: '/media/cruises/regent-seven-seas/regent-experience-1500.jpg' },
+      { name: 'Asia & the Far East', blurb: 'From the rice terraces of Vietnam to the temples of Japan, on longer voyages that linger where the journey deepens.', image_url: '/media/cruises/regent-seven-seas/regent-emmersive-explore-1500.jpg' },
+    ],
+    experiences: [
+      { title: 'The Grand Atrium', blurb: 'Sweeping staircases, chandeliers, and public rooms finished to the standard of a grand hotel — the everyday backdrop of a Regent voyage.', image_url: '/media/cruises/regent-seven-seas/splendor_atrium-1500.jpg' },
+      { title: 'Life on Your Veranda', blurb: 'Every suite opens onto a private balcony, and butler service means morning coffee or evening champagne arrives exactly when you wish.', image_url: '/media/cruises/regent-seven-seas/suite_balcony-1500.jpg' },
+    ],
+    suites: [
+      { name: 'All-Suite, All-Balcony', blurb: 'Spacious suites with private terraces, walk-in closets, and marble baths — every category includes butler service and 24-hour in-suite dining.', image_url: '/media/cruises/regent-seven-seas/splendor_suite-1500.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'Society Islands & Tahiti', nights: '10 nights', route: 'Papeete · Moorea · Taha\'a · Bora Bora · Rangiroa', blurb: 'French Polynesia with unlimited excursions and overwater days at anchor.' },
+      { name: 'The Mediterranean', nights: '7 nights', route: 'Rome · Florence · Monte Carlo · Portofino · Barcelona', blurb: 'The classic Riviera and Italy, with included tours at every storied port.' },
+      { name: 'Northern Europe', nights: '11 nights', route: 'Copenhagen · the Norwegian Fjords · Bergen · the Baltic capitals', blurb: 'Long northern light and dramatic coastlines, all-inclusive throughout.' },
+    ],
     logo_url: '/assets/supplier logos/black transparent/cruise/regent-black-600.png',
     logo_url_white: '/media/cruises/regent-seven-seas/regent-white-600.png',
     hero_image_url: '/media/cruises/regent-seven-seas/Regent-hero-Tahiti-2500.jpg',
@@ -282,6 +304,24 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '2', name: 'Silversea Cruises', slug: 'silversea',
+    intro: {
+      eyebrow: 'Silversea',
+      heading: 'Ultra-luxury to all seven continents',
+      body: 'Silversea pairs all-suite, all-inclusive ocean voyages with the most capable expedition fleet in luxury cruising — intimate ships of fewer than 600 guests that reach the Mediterranean and the poles alike. Butler service comes with every suite, and the S.A.L.T. culinary program turns each destination into a meal. From the Galápagos to Antarctica, no continent is out of reach.',
+    },
+    destinations: [
+      { name: 'The South Pacific', blurb: 'Bora Bora and the islands of French Polynesia, with the calm of an intimate ship at anchor in the lagoon.', image_url: '/media/cruises/silversea/silversea-southpacific-1500.jpg' },
+      { name: 'Vietnam & Asia', blurb: 'The junks of Halong Bay and the temples beyond, on destination-rich voyages built around the S.A.L.T. table.', image_url: '/media/cruises/silversea/silversea-vietnam-1200x700.jpg' },
+      { name: 'Antarctica', blurb: 'The white continent by Zodiac and expedition team — the polar extreme, reached in ultra-luxury comfort.', image_url: '/media/cruises/silversea/silversea-expedition-2021-world_cruise.jpg' },
+    ],
+    experiences: [
+      { title: 'Expeditions to Every Continent', blurb: 'A purpose-built expedition fleet, an expert team, and a Zodiac for every landing — the wild places, without giving up the suite, the butler, or the cellar.', image_url: '/media/cruises/silversea/silversea-expeditions-1200x700.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'Antarctica', nights: '10 nights', route: 'Ushuaia · the Drake Passage · the Antarctic Peninsula', blurb: 'Ice, wildlife, and silence at the bottom of the world in all-suite comfort.' },
+      { name: 'The Galápagos', nights: '7 nights', route: 'Baltra · Santa Cruz · Isabela · Fernandina · San Cristóbal', blurb: 'The enchanted islands aboard the 100-guest, Galápagos-dedicated Silver Origin.' },
+      { name: 'The Mediterranean', nights: '9 nights', route: 'Athens · the Cyclades · Sicily · Amalfi · Rome', blurb: 'Storied coastlines with the destination-driven S.A.L.T. dining at the centre.' },
+    ],
     logo_url: '/assets/supplier logos/jpg/Silversea-Logo.png',
     logo_url_white: '/media/cruises/silversea/silversea-logo_white.png',
     hero_image_url: '/media/cruises/silversea/silversea-hero.jpg',
@@ -317,6 +357,24 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '3', name: 'Seabourn Cruises', slug: 'seabourn',
+    intro: {
+      eyebrow: 'Seabourn',
+      heading: 'Ultra-luxury, intimate by design',
+      body: 'Seabourn sails small, all-suite, and all-inclusive, with a staff-to-guest ratio that makes the service feel personal rather than performed. Thomas Keller shapes the dining, caviar appears in the surf off the marina, and the Spa with Dr. Andrew Weil tends to the rest. It is ultra-luxury in a quieter key — warmth and ease where larger ships offer scale.',
+    },
+    destinations: [
+      { name: 'The Mediterranean & Adriatic', blurb: 'The Riviera and the Dalmatian Coast at an intimate ship\'s pace, anchoring off towns the big ships can only pass.', image_url: '/media/cruises/seabourn/seabourn-cruises-hero-2000.jpg' },
+    ],
+    experiences: [
+      { title: 'Sea, Sun & the Pool Deck', blurb: 'Whirlpools at the rail, loungers in the sun, and a glass of something cold as the coastline drifts by — the rhythm of a Seabourn day.', image_url: '/media/cruises/seabourn/Seabourn-featured-t1200x628.jpg' },
+      { title: 'Caviar in the Surf & the Marina', blurb: 'A retractable marina opens off the stern for swims and watersports — and the signature Caviar in the Surf, served at the water\'s edge.', image_url: '/media/cruises/seabourn/seabourn-cruises-venture-video-content.jpg' },
+      { title: 'An Ultra-Luxury Way of Life', blurb: 'Thomas Keller dining, an open bar, and a near one-to-one staff ratio — the details handled before you think to ask.', image_url: '/media/cruises/seabourn/seabourn-cruises-difference-video-banner.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'The Mediterranean', nights: '7 nights', route: 'Athens · the Greek Isles · the Amalfi Coast · Rome', blurb: 'Intimate harbours and storied coastlines, with caviar off the marina between.' },
+      { name: 'The Caribbean', nights: '7 nights', route: 'Barbados · the Grenadines · St Barths · Antigua', blurb: 'Private anchorages and beach days, the marina lowered into the warm sea.' },
+      { name: 'Northern Europe', nights: '11 nights', route: 'Copenhagen · the Norwegian Fjords · the Baltic capitals', blurb: 'Long summer light along dramatic coasts, ultra-luxury throughout.' },
+    ],
     logo_url: '/media/cruises/seabourn/seabourn-black-600.png',
     logo_url_white: '/media/cruises/seabourn/seabourn-600.png',
     hero_image_url: '/media/cruises/seabourn/seabourn-cruises-hero-2000.jpg',
@@ -347,6 +405,24 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '4', name: 'Oceania Cruises', slug: 'oceania',
+    intro: {
+      eyebrow: 'Oceania Cruises',
+      heading: 'The finest cuisine at sea',
+      body: 'Oceania built its reputation on the plate — a half-dozen specialty restaurants, farm-to-table menus, and a hands-on Culinary Center, all on mid-size ships that slip into the most compelling ports in the world. Polo Grill, Toscana, Red Ginger, and the Grand Dining Room sit at the heart of every voyage, with the Aquamar Spa and an unhurried pace to match.',
+    },
+    experiences: [
+      { title: 'The Finest Cuisine at Sea', blurb: 'Up to six specialty restaurants at no surcharge — Polo Grill, Toscana, Red Ginger — alongside the chandeliered Grand Dining Room and a hands-on Culinary Center.', image_url: '/media/cruises/oceania/oceania_cruises-oClass-Grand-Dining-Room-hero.jpg' },
+      { title: 'Aquamar Spa & Wellness', blurb: 'Sea-facing treatment rooms, a vitality pool, and wellness programming that runs from poolside yoga to spa days at anchor.', image_url: '/media/cruises/oceania/oceania_cruises-spa-video-banner.jpg' },
+      { title: 'The Library & Lounges', blurb: 'Leather chairs, full bookshelves, and quiet public rooms designed for the long sea day — the feel of a private club afloat.', image_url: '/media/cruises/oceania/oceania_cruises-next-video-content.jpg' },
+    ],
+    suites: [
+      { name: 'Veranda Staterooms', blurb: 'Light-filled staterooms opening onto a private balcony, finished in a calm, residential palette with a marble-accented bath.', image_url: '/media/cruises/oceania/oceania-feautred-1200x628.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'The Mediterranean', nights: '10 nights', route: 'Barcelona · Provence · the Riviera · Florence · Rome', blurb: 'Port-rich days built around the table, with overnights in the great food cities.' },
+      { name: 'Northern Europe', nights: '12 nights', route: 'London · Bruges · Copenhagen · the Baltic · the Norwegian Fjords', blurb: 'Capitals and coastlines at a mid-size ship\'s unhurried pace.' },
+      { name: 'Asia & the Far East', nights: '14 nights', route: 'Tokyo · Kyoto · Shanghai · Hong Kong · Singapore', blurb: 'A deep voyage through Asia, the cuisine following the coastline ashore and aboard.' },
+    ],
     logo_url: '/media/cruises/oceania/oceania-cruises-logo-black-600.png',
     logo_url_white: null,
     hero_image_url: '/media/cruises/oceania/oceania_cruises-oClass-Grand-Dining-Room-hero.jpg',
@@ -378,6 +454,24 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '5', name: 'Azamara', slug: 'azamara',
+    intro: {
+      eyebrow: 'Azamara',
+      heading: 'Destination immersion',
+      body: 'Azamara is built around the place, not the ship — staying longer in port, overnighting in iconic cities, and sailing where larger ships cannot go. The mid-size fleet carries fewer than 700 guests, and every voyage includes an AzAmazing Evening, a complimentary destination event ashore. It is cruising for travellers who came for the country, not the cabin.',
+    },
+    destinations: [
+      { name: 'The Mediterranean', blurb: 'The Amalfi Coast, the Riviera, and the Greek Isles — with the late departures and overnights that let you stay for dinner ashore.', image_url: '/media/cruises/azamara/azamara-featured-1200x628.jpg' },
+      { name: 'Northern Europe & the British Isles', blurb: 'Edinburgh, the Norwegian coast, and the harbours of the north, explored in depth rather than glimpsed in passing.', image_url: '/media/cruises/azamara/pr-6-july-2020-edinburgh-scotland.jpg' },
+      { name: 'Iconic Overland', blurb: 'Extended stays that reach the marquee land icons — Machu Picchu, Petra, the Holy Land — by way of the sea.', image_url: '/media/cruises/azamara/azamara-video-content.jpg' },
+    ],
+    experiences: [
+      { title: 'AzAmazing Evenings', blurb: 'A complimentary, destination-immersive event on every voyage — a private concert in a historic square, a cultural performance found nowhere on the brochure.', image_url: '/media/cruises/azamara/azamara-hero-2200.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'Greek Isles & Overnights', nights: '8 nights', route: 'Athens · Mykonos · Santorini · Rhodes · Kuşadası', blurb: 'Late nights ashore in the islands, with overnights where the evening matters most.' },
+      { name: 'The British Isles', nights: '12 nights', route: 'London · Edinburgh · the Hebrides · Dublin · the Channel Islands', blurb: 'A slow circumnavigation, deep into the harbours and history of the isles.' },
+      { name: 'The Holy Land & Eastern Mediterranean', nights: '10 nights', route: 'Athens · Cyprus · Jerusalem · the Cyclades', blurb: 'Overnights that open the great land icons of the eastern Mediterranean.' },
+    ],
     logo_url: '/media/cruises/azamara/azamara-logo-black-600.png',
     logo_url_white: '/media/cruises/azamara/azamara-logo-white-700.png',
     hero_image_url: '/media/cruises/azamara/azamara-hero-2200.jpg',
@@ -408,6 +502,34 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '6', name: 'Celebrity Cruises', slug: 'celebrity',
+    intro: {
+      eyebrow: 'Celebrity Cruises',
+      heading: 'Nothing comes close',
+      body: 'Celebrity\'s Edge-class ships rewrote what a modern cruise looks like — the cantilevered Magic Carpet that moves up the hull, Infinite Veranda staterooms that open the wall to the sea, and the sculptural Rooftop Garden and Grand Plaza at the centre of the ship. The Retreat suite enclave runs its own restaurant, lounge, and sundeck, while the 100-guest Celebrity Flora reimagines the Galápagos entirely.',
+    },
+    destinations: [
+      { name: 'The Caribbean', blurb: 'Turquoise islands and beach days across the Eastern and Southern Caribbean, the Magic Carpet hanging out over the water.', image_url: '/media/cruises/celebrity/celebrity-tropical-ship-1500.jpg' },
+      { name: 'Bermuda', blurb: 'Pink sand and the Royal Naval Dockyard, on short, design-forward voyages from the US East Coast.', image_url: '/media/cruises/celebrity/celebrity-destinations-1500.jpg' },
+      { name: 'The Galápagos', blurb: 'The enchanted islands aboard the 100-guest, purpose-built Celebrity Flora — naturalists, Zodiacs, and a glass-walled mega-yacht.', image_url: '/media/cruises/celebrity/celebrity-flora_boat-1500.jpg' },
+    ],
+    experiences: [
+      { title: 'The Magic Carpet', blurb: 'A cantilevered platform that rises fifteen decks up the side of the ship — a dining room, a bar, and a tender platform, suspended over the sea.', image_url: '/media/cruises/celebrity/celebrity-magic_carpet_club-1500.jpg' },
+      { title: 'The Rooftop Garden', blurb: 'Sculptural canopies, real lawns, and an open-air theatre on the top deck — a park at sea, designed rather than decorated.', image_url: '/media/cruises/celebrity/celebrity-rooftop-1500.jpg' },
+      { title: 'The Grand Plaza', blurb: 'A three-deck atrium beneath a chandelier-tree, where the martini bar and live music gather the ship each evening.', image_url: '/media/cruises/celebrity/celebrity-center-1500.jpg' },
+      { title: 'The Resort Deck', blurb: 'Pools, sculptures, and cabanas under the sun by day, lit like a resort by night — the social heart of an Edge-class ship.', image_url: '/media/cruises/celebrity/celebrity-hero-2500.jpg' },
+      { title: 'Wellness, Reimagined', blurb: 'A Canyon Ranch-pedigree spa, Peloton bikes against Infinite Veranda windows, and wellness programming throughout.', image_url: '/media/cruises/celebrity/celebrity-pelaton-1500.jpg' },
+    ],
+    suites: [
+      { name: 'The Retreat', blurb: 'A suite-class enclave with its own restaurant (Luminae), lounge, and private sundeck — a ship within the ship.', image_url: '/media/cruises/celebrity/celebrity-suite-living-1500.jpg' },
+      { name: 'The Iconic Suite', blurb: 'The pinnacle of the fleet — a private plunge pool, wraparound views, and floor space that rivals a villa ashore.', image_url: '/media/cruises/celebrity/celebrity-villa-1500.jpg' },
+      { name: 'The Suite Sundeck', blurb: 'Upper suites with private outdoor terraces and hot tubs, perched high above the water.', image_url: '/media/cruises/celebrity/celebrity-architecture_villa-1500.jpg' },
+      { name: 'Edge Staterooms', blurb: 'The Infinite Veranda turns the whole stateroom into a balcony at the touch of a button, opening the wall to the sea.', image_url: '/media/cruises/celebrity/celebrity-flora-suite-1500.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'The Caribbean', nights: '7 nights', route: 'Fort Lauderdale · San Juan · St Thomas · St Maarten', blurb: 'Design-forward sailing through the Eastern Caribbean, beach days throughout.' },
+      { name: 'The Mediterranean', nights: '10 nights', route: 'Rome · the Amalfi Coast · Santorini · Mykonos · Athens', blurb: 'The classic Mediterranean, the Magic Carpet over the water at every port.' },
+      { name: 'The Galápagos', nights: '7 nights', route: 'Baltra · Santa Cruz · Isabela · Fernandina · San Cristóbal', blurb: 'The islands aboard Celebrity Flora, with naturalists and daily Zodiac landings.' },
+    ],
     logo_url: '/media/cruises/celebrity/Celebrity-Cruises-no-sub-black.png',
     logo_url_white: null,
     hero_image_url: '/media/cruises/celebrity/celebrity-hero-2500.jpg',
@@ -443,6 +565,24 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '7', name: 'Cunard', slug: 'cunard',
+    intro: {
+      eyebrow: 'Cunard',
+      heading: 'The grand tradition of ocean travel',
+      body: 'Cunard keeps the great age of the ocean liner alive. Queen Mary 2 remains the only true liner in service, built to cross the Atlantic between Southampton and New York the way it was always meant to be crossed. White Star Service, the Queens Room ballroom, and the grills restaurants give the fleet of Queens a sense of occasion no other line attempts — a voyage that is itself the destination.',
+    },
+    destinations: [
+      { name: 'The Transatlantic Crossing', blurb: 'Seven nights between Southampton and New York aboard Queen Mary 2 — the last regular ocean-liner crossing, gala nights and all.', image_url: '/media/cruises/cunard/cunard-featured-new_york-1200x628.jpg' },
+      { name: 'Alaska & Beyond', blurb: 'Glaciers and the far north in the grand style, alongside Northern Europe, the Mediterranean, and full world voyages.', image_url: '/media/cruises/cunard/cunard-alaska-video-content.jpg' },
+    ],
+    experiences: [
+      { title: 'The Grand Lobby', blurb: 'Sweeping staircases, marble, and a sense of arrival that begins the moment you step aboard — the theatre of the ocean liner.', image_url: '/media/cruises/cunard/cunard-Grand-Lobby-hero.jpg' },
+      { title: 'Dining in the Grand Style', blurb: 'Multi-deck dining rooms and the grills restaurants, where gala evenings and White Star Service are part of the ritual.', image_url: '/media/cruises/cunard/queen-anne.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'The Transatlantic Crossing', nights: '7 nights', route: 'Southampton · New York', blurb: 'The classic liner crossing — gala nights, the Queens Room, and the open Atlantic.' },
+      { name: 'Northern Europe & the British Isles', nights: '12 nights', route: 'Southampton · the Norwegian Fjords · the Baltic capitals', blurb: 'The grand fleet through the harbours of the north.' },
+      { name: 'A World Voyage Segment', nights: 'Segments available', route: 'Across continents aboard a single grand voyage', blurb: 'The full world voyage tradition, bookable in legs.' },
+    ],
     logo_url: '/assets/supplier logos/jpg/Cunard-black.png',
     logo_url_white: '/media/cruises/cunard/cunard-logo-white.png',
     hero_image_url: '/media/cruises/cunard/cunard-Grand-Lobby-dark-hero.jpg',
@@ -473,6 +613,21 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '8', name: 'Holland America Line', slug: 'holland-america',
+    intro: {
+      eyebrow: 'Holland America Line',
+      heading: 'Savor the journey',
+      body: 'A century and a half of Dutch seafaring stands behind Holland America\'s mid-size Pinnacle-class ships. The line is a master of Alaska and the great Grand Voyages, with a Music Walk of live venues — B.B. King\'s Blues Club, Rolling Stone Rock Room, Lincoln Center Stage — running through every evening. Classic, unhurried, and built for travellers who measure a cruise by the places it reaches.',
+    },
+    destinations: [
+      { name: 'Alaska', blurb: 'Glacier Bay and the Inside Passage — a region Holland America has sailed for generations, with naturalists and a glacier on the bow.', image_url: '/media/cruises/holland-america/HAL-featured-1200x628.jpg' },
+      { name: 'The Norwegian Fjords', blurb: 'Deep blue water and sheer cliffs along the Norwegian coast, the ship threading harbours the way the old liners did.', image_url: '/media/cruises/holland-america/hal-hero-2400.jpg' },
+      { name: 'Japan & the Far East', blurb: 'Cherry-blossom coastlines and ancient ports, on longer voyages that lean into the journey.', image_url: '/media/cruises/holland-america/HAL-video-banner.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'Alaska Inside Passage', nights: '7 nights', route: 'Vancouver · Juneau · Glacier Bay · Ketchikan · Skagway', blurb: 'The classic Alaska week, with cruising days deep into Glacier Bay.' },
+      { name: 'The Norwegian Fjords', nights: '14 nights', route: 'Amsterdam · Bergen · Geirangerfjord · the North Cape', blurb: 'The dramatic Norwegian coast and the land of the midnight sun.' },
+      { name: 'A Grand World Voyage Segment', nights: 'Segments available', route: 'Continent to continent across one extended voyage', blurb: 'The multi-month Grand Voyage tradition, bookable in legs.' },
+    ],
     logo_url: '/assets/supplier logos/jpg/Holland-America-black.png',
     logo_url_white: '/media/cruises/holland-america/hal_white-logo-700.png',
     hero_image_url: '/media/cruises/holland-america/hal-hero-2400.jpg',
@@ -502,6 +657,26 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '9', name: 'Norwegian Cruise Line', slug: 'norwegian',
+    intro: {
+      eyebrow: 'Norwegian Cruise Line',
+      heading: 'Freestyle cruising',
+      body: 'Norwegian invented Freestyle Cruising — no fixed dining times, no formal nights, no assigned seats. The Prima-class ships add the thrills: go-kart racetracks, free-fall slides, and the largest ropes courses at sea, alongside twenty-plus restaurants and The Haven, a private suite enclave with its own pool and restaurant. And Pride of America sails Hawaii inter-island year-round, the only ship that does.',
+    },
+    destinations: [
+      { name: 'Hawaii', blurb: 'Four islands in a week aboard the US-flagged Pride of America — the Na Pali Coast, volcanoes, and inter-island sailing no other line offers.', image_url: '/media/cruises/norwegian/NCL-hawaii-couple-sunset-deck-1500.jpg' },
+      { name: 'The Caribbean & Beyond', blurb: 'Pink-sand beaches and warm-water ports, plus Alaska and the Mediterranean across the wider fleet.', image_url: '/media/cruises/norwegian/ncl-couple_beach-1080x1350.jpg' },
+    ],
+    experiences: [
+      { title: 'Freestyle Dining', blurb: 'Twenty-plus restaurants with no fixed times or seats — from teppanyaki tableside to French bistro, dine when and where you please.', image_url: '/media/cruises/norwegian/NCL-restaurant-teppanyaki-habachi-1500.jpg' },
+      { title: 'Race the Top Deck', blurb: 'Multi-level go-kart racetracks high above the sea — the signature thrill of the Prima-class ships.', image_url: '/media/cruises/norwegian/NCL-bliss-racetrack-1500.jpg' },
+      { title: 'The Haven', blurb: 'A private ship-within-a-ship of suites with a keycard-only pool, sundeck, restaurant, and butler service.', image_url: '/media/cruises/norwegian/NCL-the_haven-top_deck-1500.jpg' },
+      { title: 'Pools & Thrills', blurb: 'Free-fall slides, ropes courses, and sun decks built for energy — the active heart of a Norwegian ship.', image_url: '/media/cruises/norwegian/ncl-ship-sunset-1080x1350.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'Hawaii Inter-Island', nights: '7 nights', route: 'Honolulu · Maui · Hilo · Kona · Kauai', blurb: 'Four islands round-trip from Honolulu aboard Pride of America.' },
+      { name: 'Alaska', nights: '7 nights', route: 'Seattle · Juneau · Skagway · Glacier Bay · Ketchikan', blurb: 'Glaciers and wilderness with the freedom of Freestyle dining.' },
+      { name: 'Eastern Caribbean', nights: '7 nights', route: 'Miami · Puerto Plata · St Thomas · Tortola', blurb: 'Beaches and warm water, the thrills of a Prima-class ship between.' },
+    ],
     logo_url: '/media/cruises/norwegian/NCL-logo-black.png',
     logo_url_white: '/media/cruises/norwegian/NCL-logo-white.png',
     hero_image_url: '/media/cruises/norwegian/ncl-hawaii-paddleboarding-hero.jpg',
@@ -539,6 +714,27 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '10', name: 'Royal Caribbean', slug: 'royal-caribbean',
+    intro: {
+      eyebrow: 'Royal Caribbean',
+      heading: 'Adventure at its biggest',
+      body: 'Royal Caribbean builds the largest cruise ships in the world — floating cities led by Icon of the Seas, with neighbourhoods, a central park, and record-breaking thrills. The Ultimate Abyss, the FlowRider surf simulator, and the North Star observation capsule sit alongside Perfect Day at CocoCay, the line\'s private Bahamas island. For families and first-timers, nothing else has this much to do.',
+    },
+    destinations: [
+      { name: 'Perfect Day at CocoCay', blurb: 'The line\'s private Bahamas island — a waterpark, the tallest slide in North America, an overwater cabana, and a freshwater pool.', image_url: '/media/cruises/royal-caribbean/featured-image-RC.jpg' },
+      { name: 'The Caribbean', blurb: 'St Lucia\'s Pitons, turquoise reefs, and beach days across the Eastern and Southern Caribbean.', image_url: '/media/cruises/royal-caribbean/rc-destinations-1500.jpg' },
+      { name: 'The Mediterranean', blurb: 'The Amalfi Coast, Croatia, and the Greek Isles — the great European ports at the scale only Royal Caribbean attempts.', image_url: '/media/cruises/royal-caribbean/royal_caribbean-italy-hero-1900.jpg' },
+    ],
+    experiences: [
+      { title: 'The Ultimate Abyss', blurb: 'The tallest slide at sea drops ten decks down the stern — one of dozens of firsts engineered into the Oasis- and Icon-class ships.', image_url: '/media/cruises/royal-caribbean/Hero_UltimateAbyss_Dark.jpg' },
+      { title: 'North Star & the Pool Decks', blurb: 'A jewel-shaped capsule lifts you 300 feet above the sea, while pools, the AquaTheater, and the FlowRider fill the decks below.', image_url: '/media/cruises/royal-caribbean/rc-odyssey-1500.jpg' },
+      { title: 'Sport at Sea', blurb: 'Mini-golf, rock-climbing, zip lines, and surf simulators — the most active top decks afloat.', image_url: '/media/cruises/royal-caribbean/symphony-of-the-seas.jpg' },
+      { title: 'An Icon at Sea', blurb: 'Eight distinct neighbourhoods, a central park of living plants, and more than twenty pools and whirlpools on a single ship.', image_url: '/media/cruises/royal-caribbean/aerial-view-odyssey-of-the-seas-full-ship.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'Bahamas & Perfect Day', nights: '7 nights', route: 'Miami · Perfect Day at CocoCay · Nassau · the Eastern Bahamas', blurb: 'The private-island showcase, round-trip from Florida.' },
+      { name: 'Eastern Caribbean', nights: '7 nights', route: 'Fort Lauderdale · St Thomas · St Maarten · Perfect Day at CocoCay', blurb: 'Beaches, reefs, and the full thrill deck between ports.' },
+      { name: 'The Mediterranean', nights: '7 nights', route: 'Barcelona · Naples · Rome · Florence · the French Riviera', blurb: 'The great European ports aboard an Oasis-class ship.' },
+    ],
     logo_url: '/assets/supplier logos/jpg/Royal-Caribbean-black.png',
     logo_url_white: '/media/cruises/royal-caribbean/royal-caribbean-logo-white-700.png',
     hero_image_url: '/media/cruises/royal-caribbean/Hero_UltimateAbyss_Dark.jpg',
@@ -577,6 +773,24 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '11', name: 'Princess Cruises', slug: 'princess',
+    intro: {
+      eyebrow: 'Princess Cruises',
+      heading: 'Come back new',
+      body: 'Princess pairs big-ship range with a personal touch through MedallionClass — a wearable device that orders a drink to wherever you are, unlocks your door, and finds your party across the ship. The Sphere-class Sun Princess leads a fleet strong in Alaska, the Caribbean, and the Mediterranean, with The Sanctuary adults-only retreat and Movies Under the Stars among its signatures.',
+    },
+    destinations: [
+      { name: 'Alaska', blurb: 'Glaciers, fjords, and wilderness — a region Princess has built its reputation on, with cruisetours deep into Denali.', image_url: '/media/cruises/princess/princess-video-bg.jpg' },
+      { name: 'The Caribbean & Mexico', blurb: 'Warm-water beaches and lively ports across the Caribbean and the Mexican Riviera, at an easy, sun-filled pace.', image_url: '/media/cruises/princess/princess-gallery-woman.jpg' },
+    ],
+    experiences: [
+      { title: 'The Sanctuary', blurb: 'An adults-only retreat of shaded loungers, attentive service, and sea views — a calm deck apart from the rest of the ship.', image_url: '/media/cruises/princess/princess-hero-2200.jpg' },
+      { title: 'MedallionClass', blurb: 'A wearable medallion that orders, unlocks, locates, and pays — the ship anticipating you rather than the other way around.', image_url: '/media/cruises/princess/princess-video-bg-content.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'Alaska', nights: '7 nights', route: 'Vancouver · Ketchikan · Juneau · Skagway · Glacier Bay', blurb: 'The classic Alaska week, with the option to extend overland to Denali.' },
+      { name: 'The Mediterranean', nights: '10 nights', route: 'Barcelona · Provence · the Riviera · Florence · Rome', blurb: 'The great Mediterranean ports at a relaxed big-ship pace.' },
+      { name: 'The Mexican Riviera', nights: '7 nights', route: 'Los Angeles · Cabo San Lucas · Mazatlán · Puerto Vallarta', blurb: 'Sun, beaches, and easy Pacific-coast ports round-trip from California.' },
+    ],
     logo_url: '/media/cruises/princess/princess-cruises-2020-black-600.png',
     logo_url_white: '/media/cruises/princess/princess-cruises-white-600.png',
     hero_image_url: '/media/cruises/princess/princess-hero-2200.jpg',
@@ -653,6 +867,25 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '13', name: 'Lindblad Expeditions', slug: 'lindblad',
+    intro: {
+      eyebrow: 'Lindblad Expeditions–National Geographic',
+      heading: 'Expeditions at the edge of the world',
+      body: 'Lindblad pioneered expedition travel, and its partnership with National Geographic still defines the genre. Purpose-built polar ships carry just over a hundred guests alongside naturalists, undersea specialists, and Nat Geo photographers. From more Antarctic departures than any operator to the wildlife of the Galápagos, this is exploration with the experts who wrote the field guide.',
+    },
+    destinations: [
+      { name: 'Antarctica', blurb: 'The white continent by Zodiac and kayak, with the most departures of any expedition operator and a naturalist for every landing.', image_url: '/media/cruises/lindblad/lindblad-antarctica-1920x1000.jpg' },
+      { name: 'The Galápagos', blurb: 'Sea lions, blue-footed boobies, and giant tortoises — the islands that shaped Darwin, walked with Nat Geo-certified guides.', image_url: '/media/cruises/lindblad/lindblad-natgeo-video-content.jpg' },
+      { name: 'The Arctic & Baja', blurb: 'Polar bears off Svalbard and grey whales in Baja — the planet\'s great wildlife theatres, north and south.', image_url: '/media/cruises/lindblad/lindblad-natgeo-featured-1200x628.jpg' },
+    ],
+    experiences: [
+      { title: 'Expedition by Zodiac', blurb: 'A fleet of Zodiacs, kayaks, and an undersea program puts you in the landscape — among the ice and the wildlife, not just passing by.', image_url: '/media/cruises/lindblad/011520-home-antarctica-1920x1000.jpg' },
+      { title: 'Exploring with National Geographic', blurb: 'Naturalists, an undersea specialist, and a Nat Geo photographer sail aboard — the expertise that turns a sighting into an understanding.', image_url: '/media/cruises/lindblad/lindblad-natgeo-video-banner.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'Antarctica', nights: '14 nights', route: 'Buenos Aires · Ushuaia · the Drake Passage · the Antarctic Peninsula', blurb: 'The white continent in depth, with daily Zodiac and kayak excursions.' },
+      { name: 'The Galápagos', nights: '10 nights', route: 'Guayaquil · the central & western Galápagos islands', blurb: 'Two weeks among the wildlife, with naturalists and a flexible itinerary.' },
+      { name: 'Arctic Svalbard', nights: '11 nights', route: 'Oslo · Longyearbyen · the pack ice · the Svalbard archipelago', blurb: 'In search of polar bears and walrus at the top of the world.' },
+    ],
     logo_url: '/assets/supplier logos/jpg/Lindblad-black.png',
     logo_url_white: null,
     hero_image_url: '/media/cruises/lindblad/lindblad-antarctica-1920x1000.jpg',
@@ -683,6 +916,23 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '14', name: 'UnCruise Adventures', slug: 'uncruise',
+    intro: {
+      eyebrow: 'UnCruise Adventures',
+      heading: 'Small ships, big wilderness',
+      body: 'UnCruise sails the smallest ships in the adventure fleet — 22 to 90 guests — straight into the places the big ships sail past. Days are spent off the vessel: kayaking, skiffing, hiking, and snorkelling, with everything included and a naturalist always close. From the bays of Alaska\'s Inside Passage to the Sea of Cortez, this is the wild, active end of cruising.',
+    },
+    destinations: [
+      { name: "Alaska's Inside Passage", blurb: 'Glaciers, whales, and forested fjords reached by kayak and skiff — the most intimate way to sail Southeast Alaska.', image_url: '/media/cruises/uncruise/uncruise-featured.jpg' },
+      { name: 'Baja & the Sea of Cortez', blurb: 'Snorkelling with sea lions and watching grey whales in the "aquarium of the world," off a ship small enough to anchor anywhere.', image_url: '/media/cruises/uncruise/UnCruise-hero-1400x624-Snorkeling_Baja_California--Ellen-Barone.jpg' },
+    ],
+    experiences: [
+      { title: 'Wild by Nature', blurb: 'Whales off the bow, hikes into old-growth forest, and an all-inclusive deck of kayaks and paddleboards — the day shaped by the wildlife, not the schedule.', image_url: '/media/cruises/uncruise/uncruise-video-content.jpg' },
+    ],
+    sample_journeys: [
+      { name: "Alaska's Inside Passage", nights: '7 nights', route: 'Juneau · Glacier Bay · the Tongass · Frederick Sound', blurb: 'Kayak, skiff, and hike through the bays and fjords of Southeast Alaska.' },
+      { name: 'Baja & the Sea of Cortez', nights: '7 nights', route: 'La Paz · Espíritu Santo · Los Islotes · Magdalena Bay', blurb: 'Snorkel with sea lions and watch grey whales in the Sea of Cortez.' },
+      { name: 'Columbia & Snake Rivers', nights: '7 nights', route: 'Portland · the Columbia Gorge · the Snake River · Hells Canyon', blurb: 'Following Lewis & Clark through the Pacific Northwest, vineyard to canyon.' },
+    ],
     logo_url: '/media/cruises/uncruise/uncruise-logo-black-540.png',
     logo_url_white: '/media/cruises/uncruise/uncruise-logo-white-600.png',
     hero_image_url: '/media/cruises/uncruise/UnCruise-hero-1400x624-Snorkeling_Baja_California--Ellen-Barone.jpg',
@@ -806,6 +1056,31 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '17', name: 'Scenic', slug: 'scenic',
+    intro: {
+      eyebrow: 'Scenic',
+      heading: 'Ultra-luxury, all the way to the poles',
+      body: 'Scenic sails ultra-luxury, all-inclusive "Discovery Yachts" — Scenic Eclipse and Eclipse II carry their own submarine and helicopters to the ends of the earth. Every accommodation is a butler-served suite, the Senses Spa is an ESPA partnership, and up to ten dining venues span the voyage. The same all-inclusive philosophy runs Scenic\'s celebrated river fleet through the heart of Europe.',
+    },
+    destinations: [
+      { name: 'Antarctica', blurb: 'The white continent aboard a Discovery Yacht equipped with a submarine and helicopters — among penguins and ice at the bottom of the world.', image_url: '/media/cruises/scenic/Scenic-Eclipse-Antarctica-On-the-Ice---Emperor-hero-2000.jpg' },
+      { name: 'The Arctic & Fjords', blurb: 'Svalbard, Greenland, and the Norwegian fjords — sheer cliffs, glassy water, and the far north in ultra-luxury comfort.', image_url: '/media/cruises/scenic/scenic-antarctica-1500.jpg' },
+      { name: "Europe's Rivers", blurb: 'The Danube, Rhine, and Rhône aboard all-inclusive Space-Ships — palaces, vineyards, and capitals at the water\'s edge.', image_url: '/media/cruises/scenic/scenic-land_tours-1500.jpg' },
+    ],
+    experiences: [
+      { title: 'The Submarine', blurb: 'A custom submarine descends beneath the ice and the waves — an expedition tool no other luxury line carries as standard.', image_url: '/media/cruises/scenic/scenic-sub-1500.jpg' },
+      { title: 'Helicopter Flightseeing', blurb: 'Onboard helicopters lift off the helipad for flightseeing over ice fields and coastlines few ever witness from above.', image_url: '/media/cruises/scenic/scenic-chopper-1080x1350.jpg' },
+      { title: 'Senses Spa', blurb: 'An ESPA-partnered spa with treatment rooms, a plunge pool, and wellness spaces — restoration between landings.', image_url: '/media/cruises/scenic/scenic-spa-1500.jpg' },
+      { title: 'Up to Ten Dining Experiences', blurb: 'From fine-dining tableside theatre to relaxed all-day venues — every meal, and every drink, included.', image_url: '/media/cruises/scenic/scenic-dining--1500.jpg' },
+    ],
+    suites: [
+      { name: 'Spa-Inspired Suites', blurb: 'Butler-served suites with ocean-view spa baths and freestanding tubs — calm, residential, and finished to the millimetre.', image_url: '/media/cruises/scenic/scenic-bathroom-1500.jpg' },
+      { name: 'Ocean & River Suites', blurb: 'Private balconies on the Discovery Yachts and full-wall windows on the river Space-Ships — the suite as a vantage point.', image_url: '/media/cruises/scenic/scenic-river-suite-couple-1500.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'Antarctica', nights: '11 nights', route: 'Buenos Aires · Ushuaia · the Drake Passage · the Antarctic Peninsula', blurb: 'The white continent with submarine dives and helicopter flightseeing.' },
+      { name: 'The Arctic & Fjords', nights: '12 nights', route: 'Reykjavík · Greenland · Svalbard · the Norwegian coast', blurb: 'Glaciers and far-northern light in butler-served, all-inclusive comfort.' },
+      { name: 'The Danube', nights: '8 nights', route: 'Budapest · Vienna · the Wachau Valley · Passau · Nuremberg', blurb: 'The heart of Europe aboard an all-inclusive river Space-Ship.' },
+    ],
     logo_url: '/assets/supplier logos/jpg/Scenic-black.png',
     logo_url_white: '/media/cruises/scenic/scenic-white-logo.png',
     hero_image_url: '/media/cruises/scenic/Scenic-Eclipse-Antarctica-On-the-Ice---Emperor-hero-2000.jpg',
@@ -841,6 +1116,29 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '18', name: 'Crystal Cruises', slug: 'crystal',
+    intro: {
+      eyebrow: 'Crystal',
+      heading: 'The legend, reborn',
+      body: 'Crystal returns as one of the most awarded names in luxury cruising — reborn with Crystal Symphony and Crystal Serenity, refined and reimagined. Butler service comes with every suite, the fare is all-inclusive, and Umi Uma remains the only Nobu Matsuhisa restaurant at sea. It is the legendary Crystal service, carried into a new era.',
+    },
+    destinations: [
+      { name: 'The Mediterranean', blurb: 'Santorini\'s caldera, the Riviera, and the Adriatic — the classic luxury circuit, sailed at an intimate ship\'s pace.', image_url: '/media/cruises/crystal/crystal-santorini-yachting.jpg' },
+    ],
+    experiences: [
+      { title: 'Umi Uma by Nobu', blurb: 'The only Nobu restaurant at sea — Nobu Matsuhisa\'s celebrated Japanese-Peruvian cuisine, served across the voyage.', image_url: '/media/cruises/crystal/voyage-onboardexp-2.png' },
+      { title: 'Open-Air Dining', blurb: 'Sea-facing terraces and casual all-day venues where the meal follows the light and the coastline.', image_url: '/media/cruises/crystal-cruises/crystal-cruises-gallery-2.png' },
+      { title: 'The Crystal Life', blurb: 'Champagne welcomes, white-glove service, and a high space-to-guest ratio — the unhurried, celebrated way of a Crystal voyage.', image_url: '/media/cruises/crystal/world-cruise-welcome-celebration-champagne.jpg' },
+    ],
+    suites: [
+      { name: 'Suite Living', blurb: 'Residential living spaces with sea-view balconies, finished in a warm, contemporary palette — butler service in every category.', image_url: '/media/cruises/crystal-cruises/crystal-cruises-gallery-6.jpg' },
+      { name: 'The Bedroom', blurb: 'Calm, light-filled bedrooms with rich textiles and a private terrace beyond the glass.', image_url: '/media/cruises/crystal-cruises/crystal-cruises-gallery-5.jpg' },
+      { name: 'Marble Baths', blurb: 'Spa-like marble bathrooms — a quiet luxury that defined Crystal\'s reputation and survives its rebirth.', image_url: '/media/cruises/crystal-cruises/crystal-cruises-gallery-7.png' },
+    ],
+    sample_journeys: [
+      { name: 'The Mediterranean', nights: '9 nights', route: 'Athens · the Greek Isles · Sicily · the Amalfi Coast · Rome', blurb: 'The classic luxury circuit, Umi Uma and butler service throughout.' },
+      { name: 'Northern Europe', nights: '12 nights', route: 'Copenhagen · the Baltic capitals · the Norwegian Fjords', blurb: 'Long northern light along dramatic coasts, all-inclusive and unhurried.' },
+      { name: 'The World Cruise', nights: 'Segments available', route: 'Continent to continent across a single grand voyage', blurb: 'The grand tradition Crystal is known for, bookable in segments.' },
+    ],
     logo_url: '/media/cruises/crystal/crystal_cruises-black-600.png',
     logo_url_white: '/media/cruises/crystal/crystal_cruises-white-600.png',
     hero_image_url: '/media/cruises/crystal-cruises/crystal-cruises-gallery-1.png',
@@ -880,6 +1178,26 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '19', name: 'Viking', slug: 'viking',
+    intro: {
+      eyebrow: 'Viking',
+      heading: 'Exploring the world in comfort',
+      body: 'Viking is the destination-focused, small-ship line for thinking travellers — number one on the rivers, and now top-rated on the ocean and in expedition too. Adults-only, with no casinos and no nickel-and-diming, every voyage includes a shore excursion in each port. The signature Aquavit Terrace opens the bow to the passing landscape, and a Nordic spa waits below. Less spectacle, more place.',
+    },
+    destinations: [
+      { name: 'The Rhine', blurb: 'Castles, vineyards, and storybook towns along the Rhine Gorge, the Aquavit Terrace open to the passing banks.', image_url: '/media/cruises/viking/Viking_Longship_hero.jpg' },
+      { name: 'The Danube', blurb: 'Budapest, Vienna, and the Wachau Valley — the great river capitals of Central Europe at the water\'s edge.', image_url: '/media/cruises/viking/featured-image-Viking.jpg' },
+      { name: 'The Seine & Paris', blurb: 'From the heart of Paris to the beaches of Normandy, the Seine winding past Monet\'s gardens and medieval towns.', image_url: '/media/cruises/viking/viking-longship.jpg' },
+      { name: 'Egypt & the Nile', blurb: 'The temples of the pharaohs and the Valley of the Kings, sailed aboard Viking\'s own ships on the Nile.', image_url: '/media/cruises/viking/egypt-sphinx.jpg' },
+    ],
+    experiences: [
+      { title: 'Included, In Every Port', blurb: 'A guided excursion comes with every stop, alongside privileged cultural access and enrichment lectures — the destination is the point.', image_url: '/media/cruises/viking/swiss-alps.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'Rhine Getaway', nights: '7 nights', route: 'Amsterdam · Kinderdijk · Cologne · the Rhine Gorge · Basel', blurb: 'The classic Rhine, castle to castle through four countries.' },
+      { name: 'Danube Waltz', nights: '7 nights', route: 'Budapest · Vienna · the Wachau Valley · Passau · Regensburg', blurb: 'The river capitals of Central Europe, with an evening in Vienna.' },
+      { name: 'Paris & Normandy', nights: '7 nights', route: 'Paris · Vernon (Giverny) · Rouen · the D-Day beaches', blurb: 'The Seine from the Eiffel Tower to the beaches of Normandy.' },
+      { name: 'Pharaohs & Pyramids', nights: '11 nights', route: 'Cairo · Luxor · the Valley of the Kings · Aswan', blurb: 'Egypt by land and by Nile aboard Viking\'s own river ships.' },
+    ],
     logo_url: '/media/cruises/viking/viking-cruises-black.png',
     logo_url_white: '/media/cruises/viking/viking-cruises_white@3x.png',
     hero_image_url: '/media/cruises/viking/Viking_Longship_hero.jpg',
@@ -913,8 +1231,32 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   // ── River ───────────────────────────────────────────────────────────────────
   {
     id: '20', name: 'AmaWaterways', slug: 'amawaterways',
+    intro: {
+      eyebrow: 'AmaWaterways',
+      heading: 'The most awarded river cruise line',
+      body: 'Named the World\'s Best River Cruise Line for more than a decade, AmaWaterways pairs twin-balcony staterooms with an active, wellness-minded way of sailing — guided bike tours and hikes in every port, a wellness host aboard, and the double-width flagship AmaMagna with four restaurants. The Chef\'s Table specialty dinner and regional wine pairings make the table as much a destination as the river.',
+    },
+    destinations: [
+      { name: 'The Danube & the Wachau', blurb: 'Vienna, the blue church of Dürnstein, and terraced vineyards along the Wachau\'s great river bend.', image_url: '/media/cruises/ama-waterways/amawaterways-amamagna-explore-1500.jpg' },
+      { name: 'The Douro & Porto', blurb: 'Portugal\'s wine river — port lodges, quinta estates, and the tiled old town of Porto above the water.', image_url: '/media/cruises/ama-waterways/amawaterways-amamagna-porto-1500.jpg' },
+      { name: 'The Christmas Markets', blurb: 'The Danube and Rhine in December — twinkling market squares, mulled wine, and the festive heart of Europe.', image_url: '/media/cruises/ama-waterways/amawaterways-amamagna-xmas_market-1500.jpg' },
+    ],
+    experiences: [
+      { title: 'Wine & the Chef\'s Table', blurb: 'Regional menus paired with local wines, and the Chef\'s Table specialty restaurant — AmaWaterways is a member of La Chaîne des Rôtisseurs.', image_url: '/media/cruises/ama-waterways/amawaterways-amamagna-wine_dinner-1500.jpg' },
+      { title: 'The Sun Deck & Pool', blurb: 'A heated sun-deck pool and whirlpool, the vineyards and castles of the riverbank drifting past at eye level.', image_url: '/media/cruises/ama-waterways/amawaterways-amamagna-pool-1500.jpg' },
+      { title: 'Cycle the Riverbanks', blurb: 'A fleet of bikes and guided hikes in every port — the active way to see the river, included in the fare.', image_url: '/media/cruises/ama-waterways/amawaterways-amamagna-bike-1500.jpg' },
+    ],
+    suites: [
+      { name: 'Twin-Balcony Staterooms', blurb: 'The signature design — a French balcony and a full outside balcony in the same stateroom, opening the room to the river.', image_url: '/media/cruises/ama-waterways/amawaterways-amamagna-bed-1500.jpg' },
+      { name: 'Spa-Style Baths', blurb: 'Light, modern bathrooms with twin sinks and a tub — among the most generous on Europe\'s rivers.', image_url: '/media/cruises/ama-waterways/amawaterways-amamagna-bath-1500.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'The Danube', nights: '7 nights', route: 'Vilshofen · Passau · Vienna · the Wachau Valley · Budapest', blurb: 'The classic Blue Danube, with biking and hiking in every port.' },
+      { name: 'The Rhine', nights: '7 nights', route: 'Amsterdam · Cologne · the Rhine Gorge · Strasbourg · Basel', blurb: 'Castles and vineyards from the Netherlands to Switzerland.' },
+      { name: 'The Douro', nights: '7 nights', route: 'Porto · the Douro Valley · Salamanca · Pinhão', blurb: 'Portugal\'s wine country, quinta to quinta along the terraced river.' },
+    ],
     logo_url: '/media/cruises/ama-waterways/ama-waterways_540-black.png',
-    logo_url_white: '/media/cruises/ama-waterways/AMA_white_400.png',
+    logo_url_white: '/assets/supplier logos/white transparent/cruise/amaWaterways-white-600.png',
     hero_image_url: '/media/cruises/ama-waterways/amawaterways-amamagna-hero-2200.jpg',
     tagline: 'The most award-winning river cruise line in the world.',
     description: 'AmaWaterways has been named World\'s Best River Cruise Line by Travel + Leisure for more than a decade. Twin-balcony staterooms, wellness programmes, and included excursions set AmaWaterways apart on Europe\'s most iconic rivers.',
@@ -930,8 +1272,8 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
     ships: [
       { name: 'AmaMagna', description: 'Revolutionary wide-beam river ship.', image: '/media/cruises/ama-waterways/amawaterways-amamagna-hero-2200.jpg' },
       { name: 'AmaKristina', image: '/media/cruises/ama-waterways/amakristina.jpg', description: '158 guests, European rivers.' },
-      { name: 'AmaSiena', image: '/media/cruises/ama-waterways/amasiena.jpg', description: 'Rhine, Moselle, and Danube.' },
-      { name: 'AmaLea', image: '/media/cruises/ama-waterways/amalea.jpg', description: 'Italy\'s Po River and beyond.' },
+      { name: 'AmaSiena', description: 'Rhine, Moselle, and Danube.' },
+      { name: 'AmaLea', description: 'Italy\'s Po River and beyond.' },
       { name: 'AmaSofia', description: 'New for 2026 — European rivers.' /* TODO: add image */ },
       { name: 'AmaKaia', description: 'New for 2026 — Mekong River.' /* TODO: add image */ },
     ],
@@ -950,6 +1292,20 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '21', name: 'Uniworld', slug: 'uniworld',
+    intro: {
+      eyebrow: 'Uniworld',
+      heading: 'The world\'s most awarded river cruise line',
+      body: 'Uniworld\'s boutique Super Ships are floating works of art — no two alike, each filled with antiques, original paintings, and one-of-a-kind interiors inspired by the great châteaux and palaces of Europe. Pricing is 100% all-inclusive, from excursions and gratuities to premium spirits, and the staff-to-guest ratio is the highest on the rivers. Lavish, intimate, and unmistakably designed.',
+    },
+    experiences: [
+      { title: 'Floating Boutique Hotels', blurb: 'Hand-curated interiors — Parisian Art Deco on one ship, Baroque opulence on another — filled with antiques and original art.', image_url: '/media/cruises/uniworld/joie-de-vivre.jpg' },
+      { title: 'The Lounges & Bars', blurb: 'Jewel-box lounges and bars where the 100%-inclusive spirit shows — premium pours, fine detail, and the highest staff-to-guest ratio afloat.', image_url: '/media/cruises/uniworld/ss-sacy.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'The Danube', nights: '7 nights', route: 'Budapest · Vienna · the Wachau Valley · Passau · Nuremberg', blurb: 'The Blue Danube aboard a one-of-a-kind Super Ship, all-inclusive throughout.' },
+      { name: 'The Seine & Paris', nights: '7 nights', route: 'Paris · Vernon (Giverny) · Rouen · Les Andelys', blurb: 'Impressionist France from the heart of Paris to Normandy.' },
+      { name: 'The Douro', nights: '7 nights', route: 'Porto · the Douro Valley · Salamanca · Régua', blurb: 'Portugal\'s terraced wine river, in lavish, all-inclusive comfort.' },
+    ],
     logo_url: '/media/cruises/uniworld/uniworld_river_cruises-black-500.png',
     logo_url_white: null,
     hero_image_url: '/media/cruises/uniworld/uniworld-sunset-hero-2000.jpg',
@@ -1024,6 +1380,29 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '23', name: 'Virgin Voyages', slug: 'virgin-voyages',
+    intro: {
+      eyebrow: 'Virgin Voyages',
+      heading: 'An epic sea change for all',
+      body: 'Richard Branson\'s adults-only line threw out the cruise rulebook — no buffets, no formal nights, no kids, and no surcharges on the twenty-plus eateries, all included in the fare. In their place: a two-deck nightclub called The Manor, a wellness deck with a boxing ring and daily classes, and a tattoo parlour. Bold, design-led, and unmistakably Virgin.',
+    },
+    destinations: [
+      { name: 'The Caribbean', blurb: 'Beach clubs and turquoise water from Miami — including Virgin\'s own Beach Club at Bimini, a day of music and sand.', image_url: '/media/cruises/virgin-voyages/IMG-DEST-costa-maya-mahahual-beach-sunset-v1-01-913747024-1092x1024.jpg' },
+    ],
+    experiences: [
+      { title: 'Twenty-Plus Eateries, None Extra', blurb: 'From the tasting-menu Test Kitchen to Mexican, Korean BBQ, and Italian — every restaurant is included, with not a buffet in sight.', image_url: '/media/cruises/virgin-voyages/IMG-Voyages-TK-Scallops-900.jpg' },
+      { title: 'The Manor', blurb: 'A two-deck nightclub at the heart of the ship — live music, late nights, and the Scarlet Night party out on deck.', image_url: '/media/cruises/virgin-voyages/RDR-FNB-the-manor-v1-03-1600x900.jpg' },
+      { title: 'The Dock', blurb: 'A teak deck and Mediterranean-style lounge at the stern, with daybeds, mezze, and the sea at eye level.', image_url: '/media/cruises/virgin-voyages/RDR-FNB-The-Dock-bar-deck-roman-and-williams-v1-02-1600x900.jpg' },
+      { title: 'Wellness, Reimagined', blurb: 'An outdoor athletic club with a boxing ring, a full gym, and daily yoga and fitness classes — all included.', image_url: '/media/cruises/virgin-voyages/IMG-WELL-yoga-ladies-1000x1000.jpg' },
+    ],
+    suites: [
+      { name: 'Sea Terrace Cabins', blurb: 'Design-forward cabins with a hammock-strung terrace, mood lighting, and a runway-red palette — Virgin\'s take on the balcony stateroom.', image_url: '/media/cruises/virgin-voyages/IMG-CAB-Sea-Terrace-1092x1024.jpeg' },
+      { name: 'RockStar Quarters', blurb: 'The suite tier — bigger terraces, a stocked bar, and a RockStar Agent to handle every request from bookings to bubbly.', image_url: '/media/cruises/virgin-voyages/RDR-STE-massive-suite-day-v02-04-1000x1000.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'The Caribbean', nights: '5 nights', route: 'Miami · Bimini Beach Club · Puerto Plata · Virgin\'s private night', blurb: 'Beach clubs, late nights, and all dining included, round-trip from Miami.' },
+      { name: 'The Mediterranean', nights: '7 nights', route: 'Barcelona · Marseille · the Riviera · Ibiza', blurb: 'Design-led sailing through the western Med, with Ibiza after dark.' },
+      { name: 'The Greek Isles', nights: '7 nights', route: 'Athens · Mykonos · Santorini · the Cyclades', blurb: 'The Aegean for adults — island days and Scarlet Nights.' },
+    ],
     logo_url: '/media/cruises/virgin-voyages/virgin-voyages-600.png',
     logo_url_white: '/media/cruises/virgin-voyages/virgin-voyages-600.png',
     hero_image_url: '/media/cruises/virgin-voyages/IMG-DEST-costa-maya-mahahual-beach-sunset-v1-01-913747024-1092x1024.jpg',
@@ -1098,6 +1477,45 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       '/media/cruises/windstar/star-legend.jpg',   // TODO: source proper Windstar slider images
     ],
     sort_order: 24,
+  },
+  {
+    id: '28', name: 'Explora Journeys', slug: 'explora-journeys',
+    logo_url: '/media/cruises/explora/explora-logo.png',
+    logo_url_white: null,
+    hero_image_url: '/media/cruises/explora/explora-hero.jpg',
+    tagline: 'Ocean travel, redefined',
+    description: 'Explora Journeys is the luxury-lifestyle brand of the MSC Group — a new fleet of all-suite, ocean-front ships built around space, calm, and the European art of living well. EXPLORA I and EXPLORA II carry around 900 guests apiece, with multiple pools including an all-weather Conservatory, a wellness spa, and a relaxed, unhurried sense of the sea.',
+    cruise_types: ['ocean'],
+    highlights: [],
+    intro: {
+      eyebrow: 'Explora Journeys',
+      heading: 'The ocean, in no hurry',
+      body: 'Explora Journeys reimagines luxury at sea as something calmer and more spacious — every accommodation an ocean-front suite, every deck designed for lingering rather than queuing. The European art of living well runs through it: multiple pools including an all-weather Conservatory, a generous spa and wellness world, and a fleet that favours longer, more immersive itineraries. Less a cruise than a way of being on the water.',
+    },
+    destinations: [
+      { name: 'The Mediterranean', blurb: 'Dubrovnik, the Adriatic, and the islands of the western Mediterranean, traced on relaxed, immersive itineraries.', image_url: '/media/cruises/explora-journeys/An-Invitation-to-Explora-Med.webp' },
+      { name: 'The Amalfi Coast', blurb: 'The cliffside towns and turquoise water of southern Italy, the ship anchored within sight of the pastel facades.', image_url: '/media/cruises/explora-journeys/explora-amalfi.jpg' },
+      { name: 'Hidden Coves', blurb: 'Quiet anchorages and lesser-known harbours, the kind of places a calmer, more spacious ship is built to savour.', image_url: '/media/cruises/explora-journeys/explora-cove.jpg' },
+    ],
+    experiences: [
+      { title: 'The Conservatory Pool', blurb: 'An all-weather pool beneath a retractable roof, surrounded by greenery and ocean light — the social heart of the ship in any climate.', image_url: '/media/cruises/explora-journeys/Explora_Conservatory_Pool_Drone_347_MASTER-1.webp' },
+    ],
+    ships: [
+      { name: 'EXPLORA I', description: 'The inaugural ship — around 900 guests, all ocean-front suites, launched 2023.', image: '/media/cruises/explora-journeys/An-Invitation-to-Explora-Med.webp' },
+      { name: 'EXPLORA II', description: 'The second ship of the fleet, launched 2024 — all-suite, all ocean-front.', image: '/media/cruises/explora-journeys/explora-amalfi.jpg' },
+    ],
+    sample_journeys: [
+      { name: 'The Mediterranean', nights: '7 nights', route: 'Rome · the Amalfi Coast · Sicily · the Adriatic · Dubrovnik', blurb: 'Southern Italy and the Adriatic at an unhurried, immersive pace.' },
+      { name: 'Northern Europe', nights: '10 nights', route: 'Southampton · the Norwegian Fjords · Copenhagen · the Baltic', blurb: 'Long northern light and dramatic coastlines, all-suite throughout.' },
+      { name: 'Caribbean & Transatlantic', nights: '14 nights', route: 'Lisbon · the Azores · the Eastern Caribbean', blurb: 'A relaxed crossing into the islands, the sea days as much the point as the ports.' },
+    ],
+    slider_images: [
+      '/media/cruises/explora/explora-hero.jpg',
+      '/media/cruises/explora-journeys/explora-amalfi.jpg',
+      '/media/cruises/explora-journeys/Explora_Conservatory_Pool_Drone_347_MASTER-1.webp',
+      '/media/cruises/explora-journeys/explora-cove.jpg',
+    ],
+    sort_order: 8,
   },
 ]
 
