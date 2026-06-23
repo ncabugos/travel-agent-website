@@ -3,11 +3,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import { MOCK_HOTEL_PROGRAMS } from '@/lib/hotel-programs'
+import type { HotelProgram } from '@/lib/hotel-programs'
+import type { CruiseLine } from '@/lib/cruise-lines'
 import type { FeaturedPartner } from '@/lib/collections'
 
 interface T2PartnerGridProps {
-  partners: FeaturedPartner[]
+  programs: HotelProgram[]
+  cruises: CruiseLine[]
   agentId: string
 }
 
@@ -16,38 +18,30 @@ const TABS = [
   { label: 'Cruise', value: 'cruise' },
 ]
 
-// ─── Cruise fallback rows (black logos, slugs match find-cruise routes) ───────
-const FALLBACK_CRUISES: FeaturedPartner[] = [
-  { id: 'c1', name: 'Regent Seven Seas',  slug: 'regent-seven-seas', logo_url: '/assets/supplier logos/black transparent/cruise/regent-black-600.png',   category: 'cruise', is_preferred: true, sort_order: 1 },
-  { id: 'c2', name: 'Silversea Cruises',  slug: 'silversea',         logo_url: '/assets/supplier logos/jpg/Silversea-Logo.png',            category: 'cruise', is_preferred: true, sort_order: 2 },
-  { id: 'c3', name: 'Seabourn Cruises',   slug: 'seabourn',          logo_url: '/media/cruises/seabourn/seabourn-black-600.png',            category: 'cruise', is_preferred: true, sort_order: 3 },
-  { id: 'c4', name: 'Cunard',             slug: 'cunard',            logo_url: '/assets/supplier logos/jpg/Cunard-black.png',               category: 'cruise', is_preferred: true, sort_order: 4 },
-  { id: 'c5', name: 'Oceania Cruises',    slug: 'oceania',           logo_url: '/media/cruises/oceania/oceania-cruises-logo-black-600.png', category: 'cruise', is_preferred: true, sort_order: 5 },
-  { id: 'c6', name: 'Azamara',            slug: 'azamara',           logo_url: '/media/cruises/azamara/azamara-logo-black-600.png',         category: 'cruise', is_preferred: true, sort_order: 6 },
-  { id: 'c7', name: 'Ponant',             slug: 'ponant',            logo_url: '/media/cruises/ponant/ponant-blue-600.jpg',                 category: 'cruise', is_preferred: true, sort_order: 7 },
-  { id: 'c8', name: 'Holland America',    slug: 'holland-america',   logo_url: '/assets/supplier logos/jpg/Holland-America-black.png',      category: 'cruise', is_preferred: true, sort_order: 8 },
-  { id: 'c9', name: 'Viking',             slug: 'viking',            logo_url: '/media/cruises/viking/viking-cruises-black.png',            category: 'cruise', is_preferred: true, sort_order: 9 },
-]
-
-// ─── Hotel fallback — built from the canonical MOCK_HOTEL_PROGRAMS list ───────
-const FALLBACK_HOTELS: FeaturedPartner[] = MOCK_HOTEL_PROGRAMS.map((p, i) => ({
-  id: `h${i + 1}`,
-  name: p.name,
-  slug: p.slug,
-  logo_url: p.logo_url,
-  category: 'hotel',
-  is_preferred: true,
-  sort_order: i + 10,
-}))
-
-const FALLBACK_PARTNERS = [...FALLBACK_HOTELS, ...FALLBACK_CRUISES]
-
-export function T2PartnerGrid({ partners, agentId }: T2PartnerGridProps) {
+export function T2PartnerGrid({ programs, cruises, agentId }: T2PartnerGridProps) {
   const [activeTab, setActiveTab] = useState('hotel')
 
-  // Always use the canonical program list — never the DB featured_partners table
-  // (DB table has stale/partial data that causes missing rows and broken slugs)
-  const filtered = FALLBACK_PARTNERS.filter(p => p.category === activeTab)
+  // Both lists come from the DB catalogs (hotel_programs / cruise_lines), black
+  // logos on the white grid — black/white only, single source of truth.
+  const hotelPartners: FeaturedPartner[] = programs.map((p, i) => ({
+    id: `h${i + 1}`,
+    name: p.name,
+    slug: p.slug,
+    logo_url: p.logo_url_black ?? p.logo_url,
+    category: 'hotel',
+    is_preferred: true,
+    sort_order: i + 10,
+  }))
+  const cruisePartners: FeaturedPartner[] = cruises.map((c, i) => ({
+    id: `c${i + 1}`,
+    name: c.name,
+    slug: c.slug,
+    logo_url: c.logo_url_black ?? c.logo_url,
+    category: 'cruise',
+    is_preferred: true,
+    sort_order: i + 1,
+  }))
+  const filtered = activeTab === 'hotel' ? hotelPartners : cruisePartners
 
   const base = `/t2/${agentId}`
 

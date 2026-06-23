@@ -97,8 +97,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       'https://zcllngvctqthvqaupxyt.supabase.co/storage/v1/object/public/hotel-covers/gallery/dorchester/dorchester-service-1500.jpg',
       'https://zcllngvctqthvqaupxyt.supabase.co/storage/v1/object/public/hotel-covers/gallery/dorchester/dorchester-sign-BH-1500.jpg',
     ],
-    tagline: 'Unrivalled privileges at the world\'s most iconic Dorchester hotels.',
-    description: 'The Diamond Club provides value-added benefits and priority upgrades at any hotel within the Dorchester Collection. Access is available exclusively when booking through a participating preferred travel agency.',
+    tagline: 'The Dorchester, Le Meurice, Hotel Eden — at their most generous.',
+    description: 'Our Diamond Club standing brings a room upgrade on arrival, daily breakfast, and a hotel credit at every Dorchester Collection address — arranged before you check in.',
     category: 'invitation_only',
     property_count: 10,
     benefits: [
@@ -136,8 +136,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/four-seasons/FS-residences-1500-video-bg.jpg',
       '/media/hotel-programs/four-seasons/fs-taormina-pool-couple-1080x1350.jpg',
     ],
-    tagline: 'The exclusive network connecting the world\'s finest hotels with the world\'s finest travel consultants.',
-    description: 'The Four Seasons Preferred Partner programme is an exclusive, invitation-only network of high-end travel consultants. It enables extraordinary guests to experience Four Seasons properties with a suite of value-added benefits available only through a participating preferred agency.',
+    tagline: 'Four Seasons, anywhere in the world — with more than a reservation waiting.',
+    description: 'As a Four Seasons Preferred Partner, we secure daily breakfast, a hotel credit, and a room upgrade on arrival when available — at properties from Bora Bora to Florence.',
     category: 'invitation_only',
     property_count: 130,
     benefits: [
@@ -170,8 +170,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/marriott-stars---luminous/ritz-yacht-rear-1500.jpg',
       '/media/hotel-programs/marriott-stars---luminous/marriott-STARS-gallery-4-1500.jpg',
     ],
-    tagline: 'A special recognition programme that transforms Ritz-Carlton stays into legendary memories.',
-    description: 'STARS represents a curated relationship between The Ritz-Carlton and a select group of elite travel agencies worldwide. The programme elevates the guest experience through thoughtful, personalised touches that begin before arrival and continue throughout the stay.',
+    tagline: 'Ritz-Carlton stays, elevated by touches arranged before you arrive.',
+    description: 'Through STARS, a Ritz-Carlton stay carries a personal welcome from management, daily breakfast, a 4 PM checkout, and a room upgrade on arrival when available.',
     category: 'invitation_only',
     property_count: 100,
     benefits: [
@@ -205,8 +205,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/rosewood-elite/guanzhou-rosewood-1500.jpg',
       '/media/hotel-programs/rosewood-elite/beijing-rosewood-1500.jpg',
     ],
-    tagline: 'Where ultra-luxury becomes truly personal.',
-    description: 'Rosewood Elite addresses the desire to embrace and recognise elite clientele at Rosewood\'s most extraordinary hotels and resorts worldwide. Guests who book through a Rosewood Elite agency enjoy exclusive privileges curated for those who expect the very best.',
+    tagline: 'Rosewood\'s sense of place — and a welcome held just for you.',
+    description: 'Our Rosewood Elite standing brings daily breakfast, a room upgrade on arrival, and a welcome from the property\'s managing director — arranged before you arrive.',
     category: 'invitation_only',
     property_count: 35,
     benefits: [
@@ -236,8 +236,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/hera-accor/Orient-express-1830x1200-1.jpg',
       '/media/hotel-programs/hera-accor/accor-FAENA-pool-1920.jpg',
     ],
-    tagline: 'Preferred access to 5,000+ luxury properties worldwide.',
-    description: 'Accor Preferred by HERA provides privileged access to Accor\'s vast global portfolio of luxury and lifestyle hotels, including Raffles, Fairmont, Sofitel, and Orient Express. The programme unlocks exclusive benefits for guests who choose to book through a participating preferred advisor.',
+    tagline: 'Raffles, Fairmont, and the Orient Express — across Accor\'s finest houses.',
+    description: 'Booked through us, an Accor stay carries daily breakfast, a property credit, and a room upgrade on arrival — at Raffles, Fairmont, Sofitel, and beyond.',
     category: 'global_network',
     property_count: 5000,
     benefits: [
@@ -268,8 +268,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/mandarin-oriental/mandarin-oriental-fan-club-Featured-Slider-5-1500.jpg',
       '/media/hotel-programs/mandarin-oriental/mandarin-oriental-fan-club-Featured Slider 6 1500.jpg',
     ],
-    tagline: 'Invitation-only access to Mandarin Oriental\'s legendary hospitality.',
-    description: 'The Mandarin Oriental Fan Club is an invitation-only programme that provides unique services and exclusive privileges at Mandarin Oriental\'s prestigious collection of hotels, resorts, and residences worldwide.',
+    tagline: 'Mandarin Oriental\'s legendary service — extended to you.',
+    description: 'As Fan Club members, we arrange a room upgrade on arrival, daily breakfast, and a dining or spa credit at every Mandarin Oriental — set before you check in.',
     category: 'invitation_only',
     property_count: 35,
     benefits: [
@@ -301,8 +301,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/shangri-la/ShangriLa-hotels-Featured Slider 5 1500.jpg',
       '/media/hotel-programs/shangri-la/ShangriLa-hotels-Featured Slider 6 1500.jpg',
     ],
-    tagline: 'Hospitality from the Heart, perfected at every Shangri-La property.',
-    description: 'The Luxury Circle represents the pinnacle of Shangri-La\'s commitment to personalised, heartfelt hospitality. Exclusively available through select preferred travel agencies, it delivers an elevated experience across Shangri-La, Kerry, and JEN hotels worldwide.',
+    tagline: 'Shangri-La\'s hospitality from the heart — at its most generous.',
+    description: 'Our Luxury Circle standing brings a guaranteed room upgrade, daily breakfast, and a hotel credit at every Shangri-La — with a welcome arranged before you arrive.',
     category: 'invitation_only',
     property_count: 100,
     benefits: [
@@ -333,8 +333,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/rocco-forte/roccoforte-slider-2-1500.jpg',
       '/media/hotel-programs/rocco-forte/roccoforte-slider-3-1500.jpg',
     ],
-    tagline: 'An exclusive fraternity honouring the world\'s most distinguished travel advisors.',
-    description: 'Sir Rocco\'s Knights is Rocco Forte Hotels\' invitation-only preferred partner programme. It recognises a handpicked selection of elite agencies globally and rewards discerning clients with spectacular privileges across Rocco Forte\'s European portfolio of prestige properties.',
+    tagline: 'Rocco Forte\'s European houses — Rome, London, Florence, and beyond.',
+    description: 'Through Sir Rocco\'s Knights, we arrange daily breakfast, a dining credit, and a room upgrade across Rocco Forte\'s European houses — with a welcome before you arrive.',
     category: 'invitation_only',
     property_count: 14,
     benefits: [
@@ -365,8 +365,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/one-and-only/oneandonly-slider-4-1500.jpg',
       '/media/hotel-programs/one-and-only/oneandonly-featured-1500.jpg',
     ],
-    tagline: 'The most exclusive places on earth — now more personal than ever.',
-    description: 'One&Only Resorts occupies the world\'s most breathtaking destinations with properties that redefine ultra-luxury. Booking through a preferred agency unlocks a curated set of exclusive benefits that reflect the brand\'s philosophy of personalised, unapologetic luxury.',
+    tagline: 'One&Only\'s most extraordinary addresses — made personal.',
+    description: 'Booked through us, a One&Only stay carries daily breakfast, a resort or spa credit, and a room upgrade on arrival — with recognition from the moment you land.',
     category: 'brand_programme',
     property_count: 15,
     benefits: [
@@ -398,8 +398,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/auberge-resorts/auberge-resorts-Featured-Slider-4-1500.jpg',
       '/media/hotel-programs/auberge-resorts/auberge-featured-1500.jpg',
     ],
-    tagline: 'Hand-crafted luxury in the world\'s most inspiring places.',
-    description: 'Auberge Resorts Collection is a portfolio of exceptional hotels and resorts in iconic destinations. Each property delivers a one-of-a-kind experience with remarkable, warm hospitality. Booking through a preferred partner ensures the fullest expression of Auberge\'s personal service.',
+    tagline: 'Auberge\'s sense of place, in the world\'s most inspiring settings.',
+    description: 'Our Auberge standing brings daily breakfast, a resort or spa credit, and a room upgrade on arrival — arranged before you ever reach the door.',
     category: 'brand_programme',
     property_count: 25,
     benefits: [
@@ -431,8 +431,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/hyatt-prive/hyatt-slider-5-1500.jpg',  // Park Hyatt Cabo del Sol exterior (1000px — replace when higher-res available)
       '/media/hotel-programs/hyatt-prive/hyatt-slider-6-1500.jpg',  // Miraval Arizona retreat patio (1000px — replace when higher-res available)
     ],
-    tagline: 'Strictly limited to a small collection of Hyatt\'s most exceptional global agencies.',
-    description: 'World of Hyatt Privé is an exclusive travel advisor programme providing preferred benefits at Hyatt\'s most prestigious properties, including Park Hyatt, Alila, Andaz, and Grand Hyatt. Membership is strictly limited, ensuring recognition and service of the highest order.',
+    tagline: 'Park Hyatt, Alila, Andaz — Hyatt\'s most exceptional houses.',
+    description: 'Through World of Hyatt Privé, we arrange daily breakfast, a property credit, and a room upgrade on arrival at Park Hyatt, Alila, Andaz, and Grand Hyatt.',
     category: 'invitation_only',
     property_count: 1000,
     benefits: [
@@ -462,8 +462,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/kempinski-1897/kempinski-slider-3-1500.jpg',
       '/media/hotel-programs/kempinski-1897/kempinski-featured-1080.jpg',
     ],
-    tagline: 'A passport to a world of curated privileges at Europe\'s oldest luxury hotel group.',
-    description: 'Club 1897 is Kempinski Hotels\' preferred partner programme, named after the year the brand was founded. It grants access to curated privileges across Kempinski\'s extraordinary portfolio spanning over 35 countries, from palace hotels to resort retreats.',
+    tagline: 'Europe\'s oldest luxury house — a passport to its finest addresses.',
+    description: 'Our Club 1897 standing brings a room upgrade, daily breakfast, and a hotel credit across Kempinski\'s palaces and resorts — arranged before you arrive.',
     category: 'invitation_only',
     property_count: 75,
     benefits: [
@@ -497,8 +497,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/peninsula-penclub/Peninsula-Hotels-Featured Slider 5 1500.jpg',
       '/media/hotel-programs/peninsula-penclub/Peninsula-Hotels-Featured Slider 6 1500.jpg',
     ],
-    tagline: 'A select and personalised programme with membership by invitation only.',
-    description: 'The Peninsula PenClub is The Peninsula Hotels\' invitation-only preferred partner programme. It reflects the brand\'s dedication to bespoke service and delivers exclusive privileges across iconic Peninsula properties in Hong Kong, New York, Paris, Tokyo, and beyond.',
+    tagline: 'The Peninsula, on your schedule — Hong Kong, Paris, New York, and beyond.',
+    description: 'As PenClub members, we arrange daily breakfast, a room upgrade, and Peninsula Time — flexible arrival and departure — at every Peninsula, set before you check in.',
     category: 'invitation_only',
     property_count: 14,
     benefits: [
@@ -527,8 +527,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/como-hotels/COMO-hotels-1500-2.jpg',
       '/media/hotel-programs/como-hotels/COMO-hotels-1500-3.jpg',
     ],
-    tagline: 'Where holistic wellness meets breathtaking design.',
-    description: 'COMO Hotels and Resorts is a collection of intimate, design-led properties in the world\'s most inspiring destinations. Each property reflects a deep commitment to wellness, whole-food cuisine, and mindful luxury. A preferred agency booking unlocks an elevated, deeply personal COMO experience.',
+    tagline: 'COMO\'s wellness and design — in the world\'s most beautiful places.',
+    description: 'Booked through us, a COMO stay carries daily breakfast, a resort or spa credit, and a room upgrade on arrival — with a welcome arranged before you reach the door.',
     category: 'brand_programme',
     property_count: 20,
     benefits: [
@@ -559,8 +559,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/oetker-pearl/oetker-eden_villa-1500.jpg',
       '/media/hotel-programs/oetker-pearl/oetker-featured.jpg',
     ],
-    tagline: '"Masterpiece Hotels" — true icons of elegance and individuality.',
-    description: 'The Oetker Collection Pearl Partner programme provides privileged access to an extraordinary portfolio of "Masterpiece Hotels" — including Brenners Park-Hotel & Spa, Hôtel du Cap-Eden-Roc, and Le Bristol Paris. Each property is united by an uncompromising commitment to excellence.',
+    tagline: 'Oetker\'s Masterpiece Hotels — Le Bristol, Eden-Roc, Brenners.',
+    description: 'Our Pearl Partner standing brings a guaranteed room upgrade, daily breakfast, and a property credit at Oetker\'s Masterpiece Hotels — arranged before you arrive.',
     category: 'invitation_only',
     property_count: 10,
     benefits: [
@@ -591,8 +591,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/aman/aman-slider-3-1500.jpg',
       '/media/hotel-programs/aman/home-slider-image-AmanPuri-Thailand.jpg',
     ],
-    tagline: 'Sanctuary — redefined at the world\'s most serene destinations.',
-    description: 'Aman is one of the world\'s most exclusive hotel groups, operating intimate sanctuaries in breathtaking settings across the globe. Aman properties are celebrated for extraordinary architecture, minimalist design, and deeply immersive guest experiences. Preferred agency bookings unlock an additional layer of personal service.',
+    tagline: 'Aman\'s sanctuaries — quiet, remote, and entirely yours.',
+    description: 'Booked through us, an Aman stay carries daily breakfast, a resort or spa credit, and a room upgrade on arrival — with a welcome arranged before you reach the door.',
     category: 'brand_programme',
     property_count: 35,
     benefits: [
@@ -622,8 +622,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/montage/montage-slider-3-1500.jpg',
       '/media/hotel-programs/montage/montage-slider-4-1500.jpg',
     ],
-    tagline: 'Gracious service, inspired design, and cherished memories.',
-    description: 'Montage Hotels & Resorts is a collection of ultra-luxury properties in iconic American destinations. The brand is celebrated for gracious, individualised service and its commitment to creating memories that last a lifetime. Preferred agency bookings add an exclusive layer of recognition and value.',
+    tagline: 'Montage\'s gracious service, at America\'s most celebrated resorts.',
+    description: 'Our Montage standing brings daily breakfast, a resort or spa credit, and a room upgrade on arrival — arranged before you ever reach the door.',
     category: 'brand_programme',
     property_count: 12,
     benefits: [
@@ -665,8 +665,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/marriott-stars---luminous/marriott-STARS-gallery-7-1500.jpg',
       '/media/hotel-programs/marriott-stars---luminous/marriott-STARS-gallery-8-1500.jpg',
     ],
-    tagline: 'Luxury privileges at over 250 of the world\'s most prestigious Marriott properties.',
-    description: 'Marriott Stars & Luminous is Marriott International\'s preferred partner programme covering luxury brands including The Ritz-Carlton, St. Regis, EDITION, The Luxury Collection, W Hotels, Bvlgari, and JW Marriott. The programme unlocks exclusive benefits at over 250 participating properties worldwide.',
+    tagline: 'St. Regis, EDITION, Bvlgari — Marriott\'s luxury houses, elevated.',
+    description: 'Through Stars & Luminous, we arrange daily breakfast, a hotel credit, and a room upgrade on arrival at St. Regis, EDITION, Bvlgari, and The Luxury Collection.',
     category: 'global_network',
     property_count: 250,
     benefits: [
@@ -704,8 +704,8 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
       '/media/hotel-programs/leading-hotels/leading-hotels-slider-3-1500.jpg',
       '/media/hotel-programs/leading-hotels/leading-hotels-featured-1500.jpg',
     ],
-    tagline: 'The world\'s original collection of independent luxury hotels.',
-    description: 'The Leading Hotels of the World is a prestigious collection of over 400 independent luxury hotels spanning more than 80 countries. Since 1928, it has been the gold standard in curated independent luxury travel, connecting discerning guests with extraordinary properties that reflect the unique character and culture of their destination. Booking through a preferred partner ensures exclusive recognition and benefits unavailable on any other channel.',
+    tagline: 'Over 400 independent houses — each unmistakably of its place.',
+    description: 'As a Leading Hotels partner, we arrange a room upgrade on arrival, daily breakfast, and early check-in across more than 400 independent hotels worldwide.',
     category: 'global_network',
     property_count: 400,
     benefits: [
@@ -719,6 +719,84 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
     sort_order: 20,
     is_active: true,
   },
+  // ── Brands added 2026-06 — logos in the catalog; benefits to be filled by the
+  //    operator via the admin editor / a future seed once verified (no fabricated perks). ──
+  {
+    id: '21',
+    slug: 'six-senses',
+    name: 'Six Senses',
+    logo_url: '/assets/supplier logos/black transparent/SixSenses-logo-black-600.png',
+    logo_url_white: '/assets/supplier logos/white transparent/SixSenses-logo-white-600.png',
+    logo_url_black: '/assets/supplier logos/black transparent/SixSenses-logo-black-600.png',
+    image_url: null,
+    slider_images: [],
+    tagline: 'Wellness, sustainability, and the quiet corners of the world.',
+    description: 'Six Senses resorts and spas, booked through our preferred partnership — with the recognition and on-property privileges it carries.',
+    category: 'brand_programme',
+    property_count: null,
+    benefits: [],
+    eligibility_notes: null,
+    booking_notes: null,
+    sort_order: 21,
+    is_active: true,
+  },
+  {
+    id: '22',
+    slug: 'jumeirah-passport',
+    name: 'Jumeirah Passport',
+    logo_url: '/assets/supplier logos/black transparent/jumeirah_passport-black-600.png',
+    logo_url_white: '/assets/supplier logos/white transparent/jumeirah-passport-logo-white-600.png',
+    logo_url_black: '/assets/supplier logos/black transparent/jumeirah_passport-black-600.png',
+    image_url: null,
+    slider_images: [],
+    tagline: 'Jumeirah\'s landmark hotels — Dubai, London, and beyond.',
+    description: 'Jumeirah\'s flagship properties, booked through the Passport partnership — with the recognition and added privileges reserved for it.',
+    category: 'brand_programme',
+    property_count: null,
+    benefits: [],
+    eligibility_notes: null,
+    booking_notes: null,
+    sort_order: 22,
+    is_active: true,
+  },
+  {
+    id: '23',
+    slug: 'preferred-hotels-resorts',
+    name: 'Preferred Hotels & Resorts',
+    logo_url: '/assets/supplier logos/black transparent/preferredHotels-logo-black-600.png',
+    logo_url_white: '/assets/supplier logos/white transparent/preferredHotels-logo-white-600.png',
+    logo_url_black: '/assets/supplier logos/black transparent/preferredHotels-logo-black-600.png',
+    image_url: null,
+    slider_images: [],
+    tagline: 'Independent hotels of character, the world over.',
+    description: 'A global collection of independent luxury hotels, booked through our Preferred partnership — with member recognition and on-property benefits.',
+    category: 'global_network',
+    property_count: null,
+    benefits: [],
+    eligibility_notes: null,
+    booking_notes: null,
+    sort_order: 23,
+    is_active: true,
+  },
+  {
+    id: '24',
+    slug: 'couture',
+    name: 'Couture',
+    logo_url: '/assets/supplier logos/black transparent/couture-logo-black-600.png',
+    logo_url_white: '/assets/supplier logos/white transparent/couture-logo-white-600.png',
+    logo_url_black: '/assets/supplier logos/black transparent/couture-logo-black-600.png',
+    image_url: null,
+    slider_images: [],
+    tagline: 'The hand-selected best of the independent world.',
+    description: 'Couture is the most exclusive tier of the Preferred collection — a curated set of hotels with the highest level of partner recognition and privileges.',
+    category: 'invitation_only',
+    property_count: null,
+    benefits: [],
+    eligibility_notes: null,
+    booking_notes: null,
+    sort_order: 24,
+    is_active: true,
+  },
 ]
 
 // ─── Data Fetchers ────────────────────────────────────────────────────────────
@@ -729,9 +807,19 @@ const isDemo = (agentId?: string) =>
   !agentId || agentId === DEMO_ID || !process.env.NEXT_PUBLIC_SUPABASE_URL
 const isAnyDemoAgent = (agentId?: string) => !!agentId && DEMO_AGENT_IDS.has(agentId)
 
+/**
+ * The DB (`hotel_programs`) is the single source of truth for program logos +
+ * copy. We only fall back to MOCK_HOTEL_PROGRAMS when the Supabase env is
+ * absent (offline/preview builds) — NOT merely because no agentId was passed.
+ * This is what lets demo agents and the no-arg callers (t4 home, book-hotel
+ * detail pages, admin, agent-portal) all render live DB content.
+ */
+const hasSupabaseEnv = () =>
+  !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.SUPABASE_SERVICE_ROLE_KEY
+
 /** Fetch all active hotel programs ordered by sort_order */
 export async function getHotelPrograms(): Promise<HotelProgram[]> {
-  if (isDemo()) return MOCK_HOTEL_PROGRAMS
+  if (!hasSupabaseEnv()) return MOCK_HOTEL_PROGRAMS
 
   try {
     const supabase = createServiceClient()
@@ -756,7 +844,7 @@ export async function getHotelPrograms(): Promise<HotelProgram[]> {
 
 /** Fetch a single hotel program by slug */
 export async function getHotelProgram(slug: string): Promise<HotelProgram | null> {
-  if (isDemo()) {
+  if (!hasSupabaseEnv()) {
     return MOCK_HOTEL_PROGRAMS.find(p => p.slug === slug) ?? null
   }
 
@@ -804,8 +892,10 @@ export async function getAllHotelProgramSlugs(): Promise<string[]> {
  * the full catalogue — admins only need to touch this when curating.
  */
 export async function getAgentHotelPrograms(agentId?: string): Promise<HotelProgram[]> {
-  // Demo agents always see the full mock catalogue.
-  if (isDemo(agentId) || isAnyDemoAgent(agentId)) {
+  // Offline/preview only — demo agents now read the live DB catalogue (they
+  // simply have no agent_hotel_program_selections, so the no-selections branch
+  // below falls through to the full global set from getHotelPrograms()).
+  if (!hasSupabaseEnv()) {
     return MOCK_HOTEL_PROGRAMS
   }
 
@@ -903,4 +993,42 @@ export async function replaceAgentHotelProgramSelections(
     .from('agent_hotel_program_selections')
     .insert(rows)
   if (insErr) throw insErr
+}
+
+/**
+ * Update a single hotel program's editable fields (logos + client-facing copy).
+ * Used by the admin Hotel Programs editor. Service-role only — the caller (an
+ * admin API route) must gate on super-admin. Only whitelisted fields are
+ * written, so a stray body key can never touch slug/benefits/etc.
+ */
+export type HotelProgramUpdate = Partial<
+  Pick<HotelProgram, 'logo_url' | 'logo_url_white' | 'logo_url_black' | 'tagline' | 'description'>
+>
+
+export async function updateHotelProgram(
+  programId: string,
+  fields: HotelProgramUpdate,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  client?: any
+) {
+  const supabase = client ?? createServiceClient()
+
+  const allowed: (keyof HotelProgramUpdate)[] = [
+    'logo_url',
+    'logo_url_white',
+    'logo_url_black',
+    'tagline',
+    'description',
+  ]
+  const patch: Record<string, unknown> = {}
+  for (const k of allowed) {
+    if (fields[k] !== undefined) patch[k] = fields[k]
+  }
+  if (Object.keys(patch).length === 0) return
+
+  const { error } = await supabase
+    .from('hotel_programs')
+    .update(patch)
+    .eq('id', programId)
+  if (error) throw error
 }

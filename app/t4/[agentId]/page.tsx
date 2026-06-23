@@ -1,6 +1,7 @@
 import { getAgentProfile } from '@/lib/suppliers'
 import { getPropertiesDestinations } from '@/lib/collections'
 import { getHotelPrograms } from '@/lib/hotel-programs'
+import { getCruiseLines } from '@/lib/cruise-lines'
 import { getBlogPosts } from '@/lib/blog'
 import { T4Hero } from '@/components/t4/T4Hero'
 import { T4Manifesto } from '@/components/t4/T4Manifesto'
@@ -16,6 +17,26 @@ import { T4ContactSection } from '@/components/t4/T4ContactSection'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
+}
+
+// Tenant-specific metadata. Without this the t4 home inherits the platform's
+// B2B defaults (an advisor-facing title), so a client searching for the
+// practice sees platform marketing copy. Scoped to the t4 home route only —
+// platform-wide defaults are untouched.
+export async function generateMetadata({ params }: PageProps) {
+  const { agentId } = await params
+  const agent = await getAgentProfile(agentId)
+  const name = agent?.agency_name ?? 'Casa Solis'
+  const title = `${name} — Luxury Travel, Personally Planned · A Member of Virtuoso`
+  const description =
+    'A small advisory practice planning travel for a limited number of clients each year. Virtuoso privileges at Aman, Belmond, Four Seasons, and more — arranged before you arrive.'
+  return {
+    // `absolute` suppresses the platform title template (`· Elite Advisor Hub`)
+    // so a client-facing tenant page shows only the tenant's own title.
+    title: { absolute: title },
+    description,
+    openGraph: { title, description, type: 'website' },
+  }
 }
 
 const TESTIMONIALS = [
@@ -42,10 +63,11 @@ const TESTIMONIALS = [
 export default async function T4HomePage({ params }: PageProps) {
   const { agentId } = await params
 
-  const [agent, destinations, programs, posts] = await Promise.all([
+  const [agent, destinations, programs, cruises, posts] = await Promise.all([
     getAgentProfile(agentId),
     getPropertiesDestinations(),
     getHotelPrograms(),
+    getCruiseLines(),
     getBlogPosts(agentId),
   ])
 
@@ -70,8 +92,8 @@ export default async function T4HomePage({ params }: PageProps) {
         image="/media/hotel-programs/belmond-bellini-club/belmond-cap-1500.jpg"
         imageCaption="Belmond · Cap Ferrat"
         eyebrow="Luxury Travel Advisors"
-        headline={'Luxury travel,\npersonally planned.'}
-        body="Casa Solis plans travel for a small number of clients each year. Every trip is designed by the advisor you first speak with — and that same person is on call from the first email to the last night."
+        headline={'Every door,\nalready open.'}
+        body="Casa Solis plans travel for a small number of clients each year. Every trip is designed by the advisor you first speak with — the same person on call from the first email to the last night, in any time zone."
         primaryCta={{ label: 'Start Planning', href: '/contact' }}
         secondaryCta={{ label: 'How We Work', href: '#philosophy' }}
       />
@@ -108,6 +130,7 @@ export default async function T4HomePage({ params }: PageProps) {
       <T4PartnerTabs
         agentId={agentId}
         hotelPrograms={programs}
+        cruises={cruises}
       />
 
       {/* ── 06 · Hotel programs (editorial rows) ────────────────────── */}

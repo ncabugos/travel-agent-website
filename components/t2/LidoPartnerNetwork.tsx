@@ -3,50 +3,19 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
+import type { HotelProgram } from '@/lib/hotel-programs'
+import type { CruiseLine } from '@/lib/cruise-lines'
 
 interface LidoPartnerNetworkProps {
   /** Tenant base path, e.g. /t2/lido-collective */
   base: string
+  /** DB-driven hotel programs — white logos for the dark band */
+  programs: HotelProgram[]
+  /** DB-driven cruise lines — white logos for the dark band */
+  cruises: CruiseLine[]
 }
 
 type Logo = { name: string; src: string }
-
-const WHITE = '/assets/supplier logos/white transparent'
-
-const HOTEL_PROGRAMS: Logo[] = [
-  { name: 'Aman',                       src: `${WHITE}/Aman-white-600.png` },
-  { name: 'Belmond Bellini Club',       src: `${WHITE}/belmond-bellini_club.png` },
-  { name: 'Four Seasons Preferred',     src: `${WHITE}/FS_preferred-600.png` },
-  { name: 'Rosewood Elite',             src: `${WHITE}/rosewood-elite-white.png` },
-  { name: 'Mandarin Oriental Fan Club', src: `${WHITE}/mandarin-oriental-fan-club-Mandarin-white-600.png` },
-  { name: 'Ritz-Carlton STARS',         src: `${WHITE}/ritz-carlton-stars-white.png` },
-  { name: 'Oetker Collection',          src: `${WHITE}/oetker-pearl-white-600.png` },
-  { name: 'Rocco Forte',                src: `${WHITE}/Rocco_Forte-White-600.png` },
-  { name: 'The Peninsula PenClub',      src: `${WHITE}/Peninsula_PenClub-white-600.png` },
-  { name: 'COMO Hotels',                src: `${WHITE}/como-hotels-white.png` },
-  { name: 'Six Senses',                 src: `${WHITE}/SixSenses-logo-white-600.png` },
-  { name: 'One&Only',                   src: `${WHITE}/one&only-white-600.png` },
-]
-
-const CRUISE_PARTNERS: Logo[] = [
-  { name: 'Aman at Sea',                    src: `${WHITE}/cruise/aman_at_sea-white-600.png` },
-  { name: 'Orient Express Sailing',         src: `${WHITE}/cruise/orient_express_sailing-white-600.png` },
-  { name: 'Four Seasons Yachts',            src: `${WHITE}/cruise/FourSeasons_Yacht-white-600.png` },
-  { name: 'Ritz-Carlton Yacht Collection',  src: `${WHITE}/cruise/RitzCarlton_Yacht-white-600.png` },
-  { name: 'Regent Seven Seas',              src: `${WHITE}/cruise/regent-white-600.png` },
-  { name: 'Silversea',                      src: `${WHITE}/cruise/silverSea-wnite-600.png` },
-  { name: 'Cunard',                         src: `${WHITE}/cruise/cunard-white-600.png` },
-  { name: 'Ponant',                         src: `${WHITE}/cruise/ponant-white-600.png` },
-  { name: 'Crystal Cruises',                src: `${WHITE}/cruise/crystalCruises-white-600.png` },
-  { name: 'Explora Journeys',               src: `${WHITE}/cruise/explora-white-600.png` },
-  { name: 'Scenic',                         src: `${WHITE}/cruise/scenicCruises-white-600.png` },
-  { name: 'Windstar',                       src: `${WHITE}/cruise/windstarCruises-white-600.png` },
-]
-
-const FILTERS = [
-  { key: 'hotels',  label: 'Hotel Programs', logos: HOTEL_PROGRAMS, href: '/book-hotel' },
-  { key: 'cruise',  label: 'Cruise Partners', logos: CRUISE_PARTNERS, href: '/find-cruise' },
-] as const
 
 /**
  * The Lido Collective partner network — a dark navy band showing the white
@@ -54,8 +23,20 @@ const FILTERS = [
  * Hotel Programs and Cruise Partners. The filter is a sliding toggle; the logo
  * grid crossfades between the two sets. Click a logo to jump to that catalog.
  */
-export function LidoPartnerNetwork({ base }: LidoPartnerNetworkProps) {
+export function LidoPartnerNetwork({ base, programs, cruises }: LidoPartnerNetworkProps) {
   const [active, setActive] = useState<'hotels' | 'cruise'>('hotels')
+  // Both sets come from the DB catalogs (white variant for the dark band).
+  // Lines without a white logo are dropped here until one is uploaded.
+  const hotelLogos: Logo[] = programs
+    .map((p) => ({ name: p.name, src: p.logo_url_white ?? '' }))
+    .filter((l) => l.src)
+  const cruiseLogos: Logo[] = cruises
+    .map((c) => ({ name: c.name, src: c.logo_url_white ?? '' }))
+    .filter((l) => l.src)
+  const FILTERS = [
+    { key: 'hotels' as const, label: 'Hotel Programs',  logos: hotelLogos,  href: '/book-hotel' },
+    { key: 'cruise' as const, label: 'Cruise Partners', logos: cruiseLogos, href: '/find-cruise' },
+  ]
   const current = FILTERS.find((f) => f.key === active)!
   const activeIndex = FILTERS.findIndex((f) => f.key === active)
 

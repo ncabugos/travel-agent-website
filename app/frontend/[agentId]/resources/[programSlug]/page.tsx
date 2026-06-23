@@ -50,33 +50,9 @@ const CATEGORY_META: Record<string, { label: string }> = {
 const serif = 'var(--font-serif)'
 const sans  = 'var(--font-sans)'
 
-// White transparent brand logos for hero overlay — keyed by program slug
-// Paths use %20 for spaces and %26 for & since these are URL-served static files
-const BASE_LOGO = '/assets/supplier%20logos/white%20transparent'
-const HERO_LOGO: Record<string, string> = {
-  // Programs with dedicated white-transparent webp/png assets
-  'belmond-bellini-club':                   `${BASE_LOGO}/belmond-bellini_club.webp`,
-  'four-seasons-preferred-partner':         `${BASE_LOGO}/FS_preferred-600.webp`,
-  'aman-hotels-and-resorts':               `${BASE_LOGO}/Aman-white-600.png`,
-  'auberge-resorts-collection':            `${BASE_LOGO}/auberge-logo-white-600.webp`,
-  'montage-hotels':                        `${BASE_LOGO}/montage-white-600.webp`,
-  'one-and-only-hotels-and-resorts':       `${BASE_LOGO}/one%26only-white-600.webp`,
-  'mandarin-oriental-fan-club':            `${BASE_LOGO}/mandarin-oriental-fan-club-Mandarin-white-600.webp`,
-  'marriott-international-luminous':       `${BASE_LOGO}/marriott-stars_luminous.webp`,
-  'rosewood-elite':                        `${BASE_LOGO}/rosewood-elite-white.webp`,
-  'dorchester-diamond-club':               `${BASE_LOGO}/dorchester-logo-white.webp`,
-  'oetker-hotel-collection-pearl-partner': `${BASE_LOGO}/oetker-pearl-white-600.webp`,
-  'kempinski-club-1897':                   `${BASE_LOGO}/Kempinski-Club1897-white-600.webp`,
-  'peninsula-pen-club':                    `${BASE_LOGO}/Peninsula_PenClub-white-600.webp`,
-  'rocco-forte-hotels':                    `${BASE_LOGO}/Rocco_Forte-White-600.webp`,
-  'shangri-la-hotels-the-luxury-circle':   `${BASE_LOGO}/ShangriLa-white-600.webp`,
-  // Generated white-on-transparent PNGs from colour jpgs
-  'ritz-carlton-stars':                    `${BASE_LOGO}/ritz-carlton-stars-white.png`,
-  'hera-accor-hotels':                     `${BASE_LOGO}/accor-hera-white.png`,
-  'como-hotels':                           `${BASE_LOGO}/como-hotels-white.png`,
-  'hyatt-prive':                           `${BASE_LOGO}/HyattPrive_white-transparent.webp`,
-  'leading-hotels-of-the-world':           `${BASE_LOGO}/LeadingHotels-white-600.webp`,
-}
+// The hero overlay logo now comes from the DB-driven `program.logo_url_white`
+// (hotel_programs is the single source of truth for program logos). The old
+// hardcoded slug→white-logo map was removed.
 
 export default async function HotelProgramDetailPage({ params }: PageProps) {
   const { agentId, programSlug } = await params
@@ -93,7 +69,7 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
 
   const heroImg      = program.image_url ?? '/media/hotel-programs/peninsula-penclub/Peninsula-Hotels-Hero-2000.jpg'
   const sliderImages = program.slider_images.map((src) => ({ src }))
-  const heroLogo     = HERO_LOGO[programSlug] ?? null
+  const heroLogo     = program.logo_url_white ?? null
 
   return (
     <main style={{ background: 'var(--cream)' }}>

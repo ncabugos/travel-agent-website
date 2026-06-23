@@ -25,7 +25,10 @@ const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.
 
 // ── Files to publish (only these) ────────────────────────────────────────────
 const DRAFTS_DIR = path.join(process.cwd(), 'marketing/content-strategy/blog-drafts')
-const ARGV = process.argv.slice(2).map(a => path.basename(a))
+const RAW_ARGV = process.argv.slice(2)
+// `--draft` inserts as draft (status='draft'); default is published.
+const STATUS = RAW_ARGV.includes('--draft') ? 'draft' : 'published'
+const ARGV = RAW_ARGV.filter(a => !a.startsWith('--')).map(a => path.basename(a))
 const FILES = ARGV.length ? ARGV : [
   '2026-06-18-squarespace-for-travel-agents.md',
   '2026-06-22-travel-advisor-website-guide.md',
@@ -41,6 +44,9 @@ const COVER_TITLE = {
   'supplier-catalog-is-the-moat': 'The Supplier Catalog Is the Moat',
   'how-tiers-stack-modules': 'How the Tiers Stack',
   'curated-editorial-stream': 'A Journal That Stays Alive',
+  'host-agency-vs-going-independent': 'Host Agency vs. Going Independent',
+  'what-virtuoso-affiliation-gets-you': 'What Virtuoso Affiliation Actually Gets You',
+  'travel-agency-website-design-luxury-clients': 'Travel Agency Website Design',
 }
 // Fallback cover title: text before the first colon, else the full title.
 const coverTitle = (slug, title) => COVER_TITLE[slug] || title.split(':')[0].trim()
@@ -149,7 +155,7 @@ async function main() {
     const row = {
       slug: fm.slug,
       title: fm.title,
-      status: 'published',
+      status: STATUS,
       excerpt: fm.meta_description ?? null,
       body_html: html,
       seo_title: fm.meta_title ?? null,
@@ -165,8 +171,8 @@ async function main() {
       published_at: fm.publish_date ? new Date(fm.publish_date + 'T09:00:00Z').toISOString() : new Date().toISOString(),
     }
     const { error } = await supabase.from('marketing_posts').upsert(row, { onConflict: 'slug' })
-    console.log(`${error ? '❌ ' + error.message : '✓ published'}  ${fm.title}  [${pillar} → ${PILLAR_SLUG[pillar]}, ${faq.length} FAQs, ${row.read_minutes}min]  cover=${(buf.length / 1024).toFixed(0)}KB`)
+    console.log(`${error ? '❌ ' + error.message : '✓ ' + STATUS}  ${fm.title}  [${pillar} → ${PILLAR_SLUG[pillar]}, ${faq.length} FAQs, ${row.read_minutes}min]  cover=${(buf.length / 1024).toFixed(0)}KB`)
   }
-  console.log('\nDone. 3 new articles published with covers.')
+  console.log(`\nDone. ${FILES.length} articles imported as ${STATUS} with covers.`)
 }
 main()

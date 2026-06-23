@@ -4,23 +4,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import type { HotelProgram } from '@/lib/hotel-programs'
-
-// Black transparent PNGs from /public/assets/supplier logos/black transparent/cruise/
-const CRUISE_PARTNERS = [
-  { slug: 'regent-seven-seas', name: 'Regent Seven Seas Cruises', logo: '/assets/supplier logos/black transparent/cruise/regent-black-600.png' },
-  { slug: 'silversea',         name: 'Silversea Cruises',         logo: '/assets/supplier logos/black transparent/cruise/silverSea-black-600.png' },
-  { slug: 'seabourn',          name: 'Seabourn Cruises',          logo: '/assets/supplier logos/black transparent/cruise/seabourn-black-600.png' },
-  { slug: 'cunard',            name: 'Cunard',                    logo: '/assets/supplier logos/black transparent/cruise/cunard-black-600.png' },
-  { slug: 'oceania',           name: 'Oceania Cruises',           logo: '/assets/supplier logos/black transparent/cruise/oceaniaCruises-black-600.png' },
-  { slug: 'ponant',            name: 'Ponant',                    logo: '/assets/supplier logos/black transparent/cruise/Ponant-black-600.png' },
-  { slug: 'viking',            name: 'Viking',                    logo: '/assets/supplier logos/black transparent/cruise/vikingCruises-black-600.png' },
-  { slug: 'holland-america',   name: 'Holland America Line',      logo: '/assets/supplier logos/jpg/Holland-America-black.png' },
-  { slug: 'azamara',           name: 'Azamara',                   logo: '/assets/supplier logos/black transparent/cruise/azamara-black-600.png' },
-]
+import type { CruiseLine } from '@/lib/cruise-lines'
 
 interface T4PartnerTabsProps {
   agentId: string
   hotelPrograms: HotelProgram[]
+  cruises: CruiseLine[]
   eyebrow?: string
   heading?: string
   body?: string
@@ -33,6 +22,7 @@ interface T4PartnerTabsProps {
 export function T4PartnerTabs({
   agentId,
   hotelPrograms,
+  cruises,
   eyebrow = 'Exclusive Partnerships',
   heading = 'Preferred Partners',
   body = 'Our standing with these programs unlocks privileges — upgrades, credits, priority — unavailable through any other channel.',
@@ -153,7 +143,7 @@ export function T4PartnerTabs({
             }}
             className="t4-partner-grid"
           >
-            {CRUISE_PARTNERS.map((c) => (
+            {cruises.map((c) => (
               <Link
                 key={c.slug}
                 href={`${base}/find-cruise/${c.slug}`}
@@ -167,7 +157,7 @@ export function T4PartnerTabs({
                 }}
               >
                 <Image
-                  src={c.logo}
+                  src={c.logo_url_black ?? c.logo_url ?? ''}
                   alt={c.name}
                   width={340}
                   height={124}

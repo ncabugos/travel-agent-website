@@ -3,26 +3,16 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import { MOCK_HOTEL_PROGRAMS } from '@/lib/hotel-programs'
-
-// ─── Cruise lines to feature — black logos, link to landing pages ─────────────
-const CRUISE_PARTNERS = [
-  { slug: 'regent-seven-seas', name: 'Regent Seven Seas Cruises',  logo: '/assets/supplier logos/black transparent/cruise/regent-black-600.png' },
-  { slug: 'silversea',          name: 'Silversea Cruises',          logo: '/assets/supplier logos/jpg/Silversea-Logo.png' },
-  { slug: 'seabourn',           name: 'Seabourn Cruises',           logo: '/media/cruises/seabourn/seabourn-black-600.png' },
-  { slug: 'cunard',             name: 'Cunard',                     logo: '/assets/supplier logos/jpg/Cunard-black.png' },
-  { slug: 'oceania',            name: 'Oceania Cruises',            logo: '/media/cruises/oceania/oceania-cruises-logo-black-600.png' },
-  { slug: 'azamara',            name: 'Azamara',                    logo: '/media/cruises/azamara/azamara-logo-black-600.png' },
-  { slug: 'ponant',             name: 'Ponant',                     logo: '/media/cruises/ponant/ponant-blue-600.jpg' },
-  { slug: 'holland-america',    name: 'Holland America Line',       logo: '/assets/supplier logos/jpg/Holland-America-black.png' },
-  { slug: 'viking',             name: 'Viking',                     logo: '/media/cruises/viking/viking-cruises-black.png' },
-]
+import type { HotelProgram } from '@/lib/hotel-programs'
+import type { CruiseLine } from '@/lib/cruise-lines'
 
 interface Props {
   base: string
+  programs: HotelProgram[]
+  cruises: CruiseLine[]
 }
 
-export function YTCPartnerTabs({ base }: Props) {
+export function YTCPartnerTabs({ base, programs, cruises }: Props) {
   const [activeTab, setActiveTab] = useState<'hotels' | 'cruises'>('hotels')
 
   const tabStyle = (active: boolean): React.CSSProperties => ({
@@ -67,7 +57,7 @@ export function YTCPartnerTabs({ base }: Props) {
           }}
           className="ytc-partner-grid"
         >
-          {MOCK_HOTEL_PROGRAMS.map(p => (
+          {programs.map(p => (
             <Link
               key={p.slug}
               href={`${base}/book-hotel/${p.slug}`}
@@ -80,9 +70,9 @@ export function YTCPartnerTabs({ base }: Props) {
               }}
               className="ytc-partner-cell"
             >
-              {p.logo_url ? (
+              {(p.logo_url_black ?? p.logo_url) ? (
                 <Image
-                  src={p.logo_url}
+                  src={p.logo_url_black ?? p.logo_url ?? ''}
                   alt={p.name}
                   width={360}
                   height={120}
@@ -123,7 +113,7 @@ export function YTCPartnerTabs({ base }: Props) {
           }}
           className="ytc-partner-grid"
         >
-          {CRUISE_PARTNERS.map(c => (
+          {cruises.map(c => (
             <Link
               key={c.slug}
               href={`${base}/find-cruise/${c.slug}`}
@@ -137,7 +127,7 @@ export function YTCPartnerTabs({ base }: Props) {
               className="ytc-partner-cell"
             >
               <Image
-                src={c.logo}
+                src={c.logo_url_black ?? c.logo_url ?? ''}
                 alt={c.name}
                 width={286}
                 height={104}

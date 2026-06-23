@@ -16,8 +16,9 @@ import { getAgentProfile } from '@/lib/suppliers'
 import {
   getPropertiesDestinations,
   getExclusiveExperiences,
-  getFeaturedPartners,
 } from '@/lib/collections'
+import { getAgentHotelPrograms } from '@/lib/hotel-programs'
+import { getCruiseLines } from '@/lib/cruise-lines'
 import { getBlogPosts } from '@/lib/blog'
 import { tierAllows, type Tier } from '@/lib/tier-features'
 import Link from 'next/link'
@@ -204,10 +205,11 @@ export default async function T2HomePage({ params }: PageProps) {
   }
 
   const agent = await getAgentProfile(agentId)
-  const [properties, experiences, partners, posts] = await Promise.all([
+  const [properties, experiences, programs, cruises, posts] = await Promise.all([
     getPropertiesDestinations(),
     getExclusiveExperiences(),
-    getFeaturedPartners(),
+    getAgentHotelPrograms(agentId),
+    getCruiseLines(),
     getBlogPosts(agentId),
   ])
 
@@ -350,7 +352,7 @@ export default async function T2HomePage({ params }: PageProps) {
       <T2VirtuosoBand agencyName={agencyName} />
 
       {/* ── 06 · Partner logos ─────────────────────────────────────────── */}
-      <T2PartnerGrid partners={partners} agentId={agentId} />
+      <T2PartnerGrid programs={programs} cruises={cruises} agentId={agentId} />
 
       {/* ── 07 · Destinations carousel ─────────────────────────────────── */}
       <T2DestinationCarousel properties={properties} />

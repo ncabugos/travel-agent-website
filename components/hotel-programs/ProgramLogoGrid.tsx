@@ -163,12 +163,12 @@ export function ProgramLogoGrid({ programs, agentId, base }: ProgramLogoGridProp
             className="plg-cell"
             title={program.name}
           >
-            {/* Logo */}
+            {/* Logo — black variant on the light grid (black/white only) */}
             <div className="plg-logo-wrap">
-              {program.logo_url ? (
+              {(program.logo_url_black ?? program.logo_url) ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={program.logo_url}
+                  src={program.logo_url_black ?? program.logo_url ?? ''}
                   alt={program.name}
                   className="plg-logo-img"
                 />

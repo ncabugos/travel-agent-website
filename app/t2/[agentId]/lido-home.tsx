@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { getAgencyAdvisors } from '@/lib/agency-advisors'
+import { getAgentHotelPrograms } from '@/lib/hotel-programs'
+import { getCruiseLines } from '@/lib/cruise-lines'
 import { LIDO_DESTINATIONS, LIDO_JOURNAL } from '@/lib/lido-content'
 import { LidoPressBar } from '@/components/t2/LidoPressBar'
 import { LidoPartnerNetwork } from '@/components/t2/LidoPartnerNetwork'
@@ -67,7 +69,12 @@ const SERVICES = [
 export default async function LidoHomePage({ params }: PageProps) {
   const { agentId } = await params
   const base = `/t2/${agentId}`
-  const advisors = (await getAgencyAdvisors(agentId)).slice(0, 6)
+  const [advisorsAll, programs, cruises] = await Promise.all([
+    getAgencyAdvisors(agentId),
+    getAgentHotelPrograms(agentId),
+    getCruiseLines(),
+  ])
+  const advisors = advisorsAll.slice(0, 6)
 
   return (
     <div style={{ background: 'var(--lido-bg)', color: 'var(--lido-text)' }}>
@@ -143,7 +150,7 @@ export default async function LidoHomePage({ params }: PageProps) {
       </section>
 
       {/* ── Partner network (dark module · white logos · 2 filters) ────── */}
-      <LidoPartnerNetwork base={base} />
+      <LidoPartnerNetwork base={base} programs={programs} cruises={cruises} />
 
       {/* ── 03 · Destinations (arch cards, labels below) ───────────────── */}
       <section className="lido-section">

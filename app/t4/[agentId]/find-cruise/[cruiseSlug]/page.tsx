@@ -4,6 +4,23 @@ import { notFound } from 'next/navigation'
 import { getCruiseLine, getAllCruiseLineSlugs } from '@/lib/cruise-lines'
 import { getSupplierPromo } from '@/lib/supplier-promos'
 import { T4PromoBanner } from '@/components/t4/T4PromoBanner'
+import { T4VideoFilm } from '@/components/t4/T4VideoFilm'
+import {
+  T4CruiseDestinations,
+  T4CruiseExperiences,
+  T4CruiseSuites,
+  T4CruiseJourneys,
+} from '@/components/t4/T4CruiseSections'
+
+// Virtuoso Voyages perks shown when a cruise line has no DB-sourced benefits yet.
+const DEFAULT_CRUISE_BENEFITS = [
+  { title: 'Dedicated Onboard Host', description: 'A personal Virtuoso host sails with your group, present throughout the voyage to answer questions and ensure every detail runs exactly as planned.' },
+  { title: 'Private Welcome Reception', description: 'An exclusive cocktail reception at the start of each sailing, arranged solely for Virtuoso Voyages guests with introductions facilitated by your host.' },
+  { title: 'Shipboard Credit', description: '$100 per stateroom on voyages under 14 nights; $200 per stateroom on voyages of 14 nights or more, to spend freely on dining, spa, or excursions.' },
+  { title: 'Exclusive Shore Experience', description: 'A private shore excursion, VIP tour, or private car and driver whose itinerary is shaped entirely around your interests and pace — never a group schedule.' },
+  { title: 'Specialty Dining', description: 'Complimentary reservations at specialty restaurants on select sailings, including chef\'s tastings and curated wine pairings on participating vessels.' },
+  { title: 'Spa & Wellness Access', description: 'Select spa treatments, wellness credits, and onboard amenities included on participating voyages across our preferred cruise partners.' },
+]
 
 interface PageProps {
   params: Promise<{ agentId: string; cruiseSlug: string }>
@@ -30,6 +47,7 @@ export default async function T4CruiseLineDetailPage({ params }: PageProps) {
   if (!line) notFound()
 
   const base = `/t4/${agentId}`
+  const benefits = (line.benefits && line.benefits.length > 0) ? line.benefits : DEFAULT_CRUISE_BENEFITS
 
   return (
     <>
@@ -130,13 +148,15 @@ export default async function T4CruiseLineDetailPage({ params }: PageProps) {
           className="t4-cruise-overview"
         >
           <div>
-            <span className="t4-eyebrow">About the Line</span>
+            <span className="t4-eyebrow">{line.intro?.eyebrow ?? 'About the Line'}</span>
             <h2 className="t4-headline-xl" style={{ marginTop: 28 }}>
-              {line.name}
+              {line.intro?.heading ?? line.name}
             </h2>
           </div>
           <div>
-            {line.description && <p className="t4-body t4-body-lg">{line.description}</p>}
+            {(line.intro?.body || line.description) && (
+              <p className="t4-body t4-body-lg">{line.intro?.body ?? line.description}</p>
+            )}
           </div>
         </div>
 
@@ -146,6 +166,15 @@ export default async function T4CruiseLineDetailPage({ params }: PageProps) {
           }
         `}</style>
       </section>
+
+      {/* Cinematic film */}
+      {line.video_url && (
+        <T4VideoFilm
+          videoUrl={line.video_url}
+          posterUrl={line.video_poster_url ?? line.hero_image_url}
+          heading={`${line.name}, in motion`}
+        />
+      )}
 
       {/* Promo banner */}
       <section className="t4-section">
@@ -185,14 +214,7 @@ export default async function T4CruiseLineDetailPage({ params }: PageProps) {
             }}
             className="t4-voyages-grid"
           >
-            {[
-              { title: 'Dedicated Onboard Host', description: 'A personal Virtuoso host sails with your group, present throughout the voyage to answer questions and ensure every detail runs exactly as planned.' },
-              { title: 'Private Welcome Reception', description: 'An exclusive cocktail reception at the start of each sailing, arranged solely for Virtuoso Voyages guests with introductions facilitated by your host.' },
-              { title: 'Shipboard Credit', description: '$100 per stateroom on voyages under 14 nights; $200 per stateroom on voyages of 14 nights or more, to spend freely on dining, spa, or excursions.' },
-              { title: 'Exclusive Shore Experience', description: 'A private shore excursion, VIP tour, or private car and driver whose itinerary is shaped entirely around your interests and pace — never a group schedule.' },
-              { title: 'Specialty Dining', description: 'Complimentary reservations at specialty restaurants on select sailings, including chef\'s tastings and curated wine pairings on participating vessels.' },
-              { title: 'Spa & Wellness Access', description: 'Select spa treatments, wellness credits, and onboard amenities included on participating voyages across our preferred cruise partners.' },
-            ].map((p, i) => (
+            {benefits.map((p, i) => (
               <div key={p.title}>
                 <div style={{
                   fontFamily: 'var(--t4-font-display)',
@@ -219,8 +241,20 @@ export default async function T4CruiseLineDetailPage({ params }: PageProps) {
         `}</style>
       </section>
 
-      {/* Fleet */}
-      {line.ships && line.ships.length > 0 && (
+      {/* Destinations */}
+      <T4CruiseDestinations destinations={line.destinations ?? []} />
+
+      {/* Experiences */}
+      <T4CruiseExperiences experiences={line.experiences ?? []} />
+
+      {/* The Yacht: suites */}
+      <T4CruiseSuites suites={line.suites ?? []} vesselNote={line.ships?.[0]?.description} />
+
+      {/* Sample journeys */}
+      <T4CruiseJourneys journeys={line.sample_journeys ?? []} />
+
+      {/* Fleet (hidden only for a single-yacht line whose suites already show the vessel) */}
+      {line.ships && line.ships.length > 0 && !(line.ships.length === 1 && line.suites && line.suites.length > 0) && (
         <section className="t4-section">
           <div style={{ maxWidth: 720, marginBottom: 56 }}>
             <span className="t4-eyebrow">The Fleet</span>

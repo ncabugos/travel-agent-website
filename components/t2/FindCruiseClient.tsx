@@ -97,10 +97,10 @@ export function FindCruiseClient({ agentId, allCruises }: FindCruiseClientProps)
 
               {/* Card body: logo + name + description */}
               <div className="t2-card-body" style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '24px' }}>
-                {cruise.logo_url && (
+                {(cruise.logo_url_black ?? cruise.logo_url) && (
                   <div style={{ flexShrink: 0, width: 120, height: 56, position: 'relative' }}>
                     <Image
-                      src={cruise.logo_url}
+                      src={cruise.logo_url_black ?? cruise.logo_url ?? ''}
                       alt={`${cruise.name} logo`}
                       fill
                       style={{ objectFit: 'contain', objectPosition: 'left center' }}

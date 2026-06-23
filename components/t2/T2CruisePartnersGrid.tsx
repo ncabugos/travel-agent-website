@@ -108,10 +108,10 @@ export function T2CruisePartnersGrid({
                 </div>
               )}
               <div style={{ padding: '24px 24px 22px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                {line.logo_url && (
+                {(line.logo_url_black ?? line.logo_url) && (
                   <div style={{ height: 36, marginBottom: 14, display: 'flex', alignItems: 'center' }}>
                     <Image
-                      src={line.logo_url}
+                      src={line.logo_url_black ?? line.logo_url ?? ''}
                       alt={line.name}
                       width={140}
                       height={36}
