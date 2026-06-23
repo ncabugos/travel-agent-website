@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import { getVideoEmbed } from '@/lib/video-embed'
 
 interface T2VideoFilmProps {
   videoUrl: string
@@ -18,12 +19,9 @@ interface T2VideoFilmProps {
 export function T2VideoFilm({ videoUrl, posterUrl, eyebrow = 'The Film', heading }: T2VideoFilmProps) {
   const [playing, setPlaying] = useState(false)
 
-  // Pull the numeric id out of any vimeo.com/<id> or player.vimeo.com/video/<id> URL.
-  const match = videoUrl.match(/(?:vimeo\.com\/(?:video\/)?)(\d+)/)
-  const vimeoId = match?.[1]
-  if (!vimeoId) return null
-
-  const embedSrc = `https://player.vimeo.com/video/${vimeoId}?autoplay=1&title=0&byline=0&portrait=0&dnt=1`
+  const embed = getVideoEmbed(videoUrl)
+  if (!embed) return null
+  const embedSrc = embed.src
 
   return (
     <section style={{ background: 'var(--t2-dark-bg)', padding: 'clamp(64px, 9vw, 120px) 0' }}>

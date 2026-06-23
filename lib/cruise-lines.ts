@@ -613,6 +613,19 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '8', name: 'Holland America Line', slug: 'holland-america',
+    video_url: 'https://www.youtube.com/watch?v=2h5DH33HrDg',
+    video_poster_url: '/media/cruises/holland-america/hal-nieuw-amsterdam-alaska.jpg',
+    experiences: [
+      { title: 'Music Walk', blurb: 'A corridor of live-music venues running through every evening — B.B. King\'s Blues Club, the Rolling Stone Rock Room, and Lincoln Center Stage, found on no other line.', image_url: '/media/cruises/holland-america/hal-bb-kings-blues-club.jpg' },
+      { title: 'Lincoln Center Stage', blurb: 'Chamber music and classical performance in an intimate room — a partnership that brings the concert hall to sea.', image_url: '/media/cruises/holland-america/hal-lincoln-center-stage.jpg' },
+      { title: 'Specialty Dining', blurb: 'The Pinnacle Grill, Rudi\'s Sel de Mer seafood brasserie, Tamarind, and Canaletto — a generation of refined dining at sea.', image_url: '/media/cruises/holland-america/hal-rudis-sel-de-mer.jpg' },
+      { title: 'Dutch Heritage', blurb: 'A century and a half of seafaring shows in the details — the Grand Dutch Café, high tea, and a quiet sense of occasion.', image_url: '/media/cruises/holland-america/hal-dutch-high-tea.jpg' },
+      { title: 'The Lido Pool', blurb: 'A retractable glass dome over the main pool keeps the deck in use from Alaska to the tropics.', image_url: '/media/cruises/holland-america/hal-lido-pool.jpg' },
+    ],
+    suites: [
+      { name: 'The Neptune Suite', blurb: 'Spacious suites with a private verandah and access to the exclusive Neptune Lounge and concierge.', image_url: '/media/cruises/holland-america/hal-neptune-suite.jpg' },
+      { name: 'The Pinnacle Suite', blurb: 'The flagship accommodation — a full living and dining room, a wraparound view, and the ship\'s finest address.', image_url: '/media/cruises/holland-america/hal-pinnacle-suite.jpg' },
+    ],
     intro: {
       eyebrow: 'Holland America Line',
       heading: 'Savor the journey',
@@ -643,7 +656,7 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { title: 'Lincoln Center Stage', description: 'Live classical performances in the Music Walk every evening.' },
     ],
     ships: [
-      { name: 'Rotterdam', description: 'Pinnacle-class, 2,668 guests.', image: '/media/cruises/holland-america/hal-hero-2400.jpg' },
+      { name: 'Rotterdam', description: 'Pinnacle-class flagship, 2,668 guests.', image: '/media/cruises/holland-america/hal-rotterdam-exterior.jpg' },
       { name: 'Nieuw Statendam', image: '/media/cruises/holland-america/nieuw-statendam.jpg', description: 'Pinnacle-class, music and art at sea.' },
       { name: 'Koningsdam', image: '/media/cruises/holland-america/koningsdam.jpg', description: 'First Pinnacle-class ship, 2,650 guests.' },
       { name: 'Zuiderdam', image: '/media/cruises/holland-america/zuiderdam.jpg', description: 'Vista-class, intimate 1,916 guests.' },
@@ -977,6 +990,20 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '15', name: 'Paul Gauguin Cruises', slug: 'paul-gauguin',
+    video_url: 'https://www.youtube.com/watch?v=Nmlvo4uS7gs',
+    video_poster_url: '/media/cruises/paul-gauguin/pg-ship-exterior.jpg',
+    experiences: [
+      { title: 'The Watersports Marina', blurb: 'A retractable platform off the stern drops you straight into the lagoon — kayaks, paddleboards, and snorkelling included, with the warm Pacific at your feet.', image_url: '/media/cruises/paul-gauguin/pg-watersports-marina.jpg' },
+      { title: 'Les Gauguines', blurb: 'A troupe of Polynesian hosts who live aboard year-round, sharing the music, dance, language, and traditions of the islands.', image_url: '/media/cruises/paul-gauguin/pg-gauguines.jpg' },
+      { title: 'Dining at L\'Etoile', blurb: 'Fine French and Polynesian-inflected cuisine across L\'Etoile, La Veranda, and Le Grill — all of it, like the bar, included.', image_url: '/media/cruises/paul-gauguin/pg-dining-letoile.jpg' },
+      { title: 'The Spa & Pool Deck', blurb: 'A spa, a top-deck pool over the lagoon, and the Piano Bar after dark — the unhurried rhythm of a small ship in paradise.', image_url: '/media/cruises/paul-gauguin/pg-spa.jpg' },
+    ],
+    suites: [
+      { name: "The Owner's Suite", blurb: 'The largest accommodation aboard — a separate living room, a private balcony, and Polynesian-inspired finishes.', image_url: '/media/cruises/paul-gauguin/pg-owner-suite.jpg' },
+      { name: 'The Grand Suite', blurb: 'Generous living space with a private balcony and a hand-painted Gauguin-style panel.', image_url: '/media/cruises/paul-gauguin/pg-grand-suite.jpg' },
+      { name: 'Veranda Stateroom', blurb: 'A private balcony over the lagoon, with the islands sliding past from your own rail.', image_url: '/media/cruises/paul-gauguin/pg-veranda-stateroom.jpg' },
+      { name: 'Balcony Stateroom', blurb: 'Light, residential staterooms with an ocean-view veranda — intimate and unhurried.', image_url: '/media/cruises/paul-gauguin/pg-balcony-stateroom.jpg' },
+    ],
     logo_url: '/assets/supplier logos/jpg/Paul-Gauguin-black.png',
     logo_url_white: '/media/cruises/paul-gauguin/PGC-white-500.png',
     hero_image_url: '/media/cruises/paul-gauguin/pg-borabora-hero.jpg',
@@ -1302,14 +1329,29 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '21', name: 'Uniworld', slug: 'uniworld',
+    video_url: 'https://www.youtube.com/watch?v=mTR5jDw17Pk',
+    video_poster_url: '/media/cruises/uniworld/uniworld-ship-exterior.jpg',
+    destinations: [
+      { name: 'Paris & the Seine', blurb: 'From the heart of Paris to the chalk cliffs of Normandy, aboard the Parisian-themed S.S. Joie de Vivre.', image_url: '/media/cruises/uniworld/uniworld-paris.jpg' },
+      { name: 'The Danube', blurb: 'Budapest, Vienna, and the Wachau Valley — the great river capitals, with a one-of-a-kind Super Ship as your hotel.', image_url: '/media/cruises/uniworld/uniworld-danube-hungary.jpg' },
+      { name: 'The Douro', blurb: 'Portugal\'s terraced wine river — quinta estates and port lodges above the water, all-inclusive throughout.', image_url: '/media/cruises/uniworld/uniworld-douro.jpg' },
+      { name: 'Normandy & the Seine', blurb: 'Monet\'s Giverny, medieval Rouen, and the villages of the lower Seine, at a boutique ship\'s gentle pace.', image_url: '/media/cruises/uniworld/uniworld-seine-france.jpg' },
+    ],
+    suites: [
+      { name: 'The Grand Suite', blurb: 'Opulent suites framing the view — the Eiffel Tower from the bed on the Seine — with French balconies and bespoke furnishings.', image_url: '/media/cruises/uniworld/uniworld-grand-suite.jpg' },
+      { name: 'Marble Baths', blurb: 'Onyx-marble bathrooms, twin vanities, monogrammed towels, and Asprey or branded amenities — a hotel-grade finish on the rivers.', image_url: '/media/cruises/uniworld/uniworld-grand-suite-bath.jpg' },
+      { name: 'Staterooms', blurb: 'Even the entry staterooms are one-of-a-kind — hand-selected antiques, original art, and rich, residential textiles.', image_url: '/media/cruises/uniworld/uniworld-suite.jpg' },
+    ],
     intro: {
       eyebrow: 'Uniworld',
       heading: 'The world\'s most awarded river cruise line',
       body: 'Uniworld\'s boutique Super Ships are floating works of art — no two alike, each filled with antiques, original paintings, and one-of-a-kind interiors inspired by the great châteaux and palaces of Europe. Pricing is 100% all-inclusive, from excursions and gratuities to premium spirits, and the staff-to-guest ratio is the highest on the rivers. Lavish, intimate, and unmistakably designed.',
     },
     experiences: [
-      { title: 'Floating Boutique Hotels', blurb: 'Hand-curated interiors — Parisian Art Deco on one ship, Baroque opulence on another — filled with antiques and original art.', image_url: '/media/cruises/uniworld/joie-de-vivre.jpg' },
-      { title: 'The Lounges & Bars', blurb: 'Jewel-box lounges and bars where the 100%-inclusive spirit shows — premium pours, fine detail, and the highest staff-to-guest ratio afloat.', image_url: '/media/cruises/uniworld/ss-sacy.jpg' },
+      { title: 'The Art-Filled Salon', blurb: 'Public rooms hung with original art and filled with genuine antiques — no two Super Ships alike, each a floating boutique hotel.', image_url: '/media/cruises/uniworld/uniworld-salon.jpg' },
+      { title: 'The Bar & Lounge', blurb: 'Glossy mahogany, leather, and a 100%-inclusive pour — premium wines and spirits, gratuities, and excursions all part of the fare.', image_url: '/media/cruises/uniworld/uniworld-lounge-bar.jpg' },
+      { title: 'Fine Dining Aboard', blurb: 'Regional menus and farm-fresh ingredients served against the passing riverbank — here, the Eiffel Tower at dusk.', image_url: '/media/cruises/uniworld/uniworld-dining.jpg' },
+      { title: "Club L'Esprit", blurb: 'An indoor pool, spa, and wellness space — the highest staff-to-guest ratio on the rivers tending to every detail.', image_url: '/media/cruises/uniworld/uniworld-club-lesprit.jpg' },
     ],
     sample_journeys: [
       { name: 'The Danube', nights: '7 nights', route: 'Budapest · Vienna · the Wachau Valley · Passau · Nuremberg', blurb: 'The Blue Danube aboard a one-of-a-kind Super Ship, all-inclusive throughout.' },
@@ -1449,6 +1491,22 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
   },
   {
     id: '24', name: 'Windstar Cruises', slug: 'windstar',
+    video_url: 'https://www.youtube.com/watch?v=BjaDMvA_Syc',
+    video_poster_url: '/media/cruises/windstar/windstar-wind-surf-exterior.jpg',
+    destinations: [
+      { name: 'The Greek Isles & Adriatic', blurb: 'Hidden coves and walled towns like Dubrovnik, reached by a yacht small enough to slip into harbours the big ships sail past.', image_url: '/media/cruises/windstar/windstar-destination-dubrovnik.jpg' },
+      { name: 'Tahiti & French Polynesia', blurb: 'The lagoons of Bora Bora and the Society Islands under sail — Windstar has cruised these waters for decades.', image_url: '/media/cruises/windstar/windstar-destination-tahiti.jpg' },
+      { name: 'The Riviera', blurb: 'Monaco, the Côte d\'Azur, and the Ligurian coast — glamorous ports by day, quiet anchorages by night.', image_url: '/media/cruises/windstar/windstar-destination-monaco.jpg' },
+    ],
+    experiences: [
+      { title: 'The Watersports Marina', blurb: 'A retractable platform folds out from the stern for complimentary kayaking, paddleboarding, and swimming straight off the yacht at anchor.', image_url: '/media/cruises/windstar/windstar-watersports-marina.jpg' },
+      { title: 'Dining at Amphora', blurb: 'Candlelit, sea-facing dining with menus that lean on the ports you visit — intimate by design, never a crowd.', image_url: '/media/cruises/windstar/windstar-dining-amphora.jpg' },
+      { title: 'The Yacht Club', blurb: 'A relaxed top-deck café and lounge — coffee and pastries by morning, the bar and the view by evening.', image_url: '/media/cruises/windstar/windstar-yacht-club-lounge.jpg' },
+      { title: 'On Deck, Under Sail', blurb: 'Open teak decks, a pool, and the unmistakable moment the sails unfurl to the line\'s signature sail-away anthem.', image_url: '/media/cruises/windstar/windstar-pool.jpg' },
+    ],
+    suites: [
+      { name: 'Suites & Staterooms', blurb: 'Ocean-view suites and staterooms finished in a calm, nautical palette — and on the Star-class yachts, every accommodation is a suite.', image_url: '/media/cruises/windstar/windstar-owners-suite.jpg' },
+    ],
     logo_url: '/assets/supplier logos/jpg/Windstar-black.png',
     logo_url_white: null,
     hero_image_url: '/media/cruises/windstar/star-legend.jpg',   // TODO: source a proper Windstar hero (wide scenic)
@@ -1474,11 +1532,11 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { title: 'Open Bridge Policy', description: 'Guests welcome to visit the bridge and learn to sail.' },
     ],
     ships: [
-      { name: 'Wind Surf', description: '342 guests, 5-masted flagship sailing yacht.' /* TODO: add image */ },
+      { name: 'Wind Surf', image: '/media/cruises/windstar/windstar-wind-surf-exterior.jpg', description: '342 guests, the 5-masted flagship — the largest sailing yacht in the fleet.' },
       { name: 'Wind Star', image: '/media/cruises/windstar/wind-star.jpg', description: '148 guests, iconic four-masted sailing yacht.' },
-      { name: 'Wind Spirit', image: '/media/cruises/windstar/wind-spirit.jpg', description: '148 guests, Mediterranean and Caribbean.' },
-      { name: 'Star Breeze', image: '/media/cruises/windstar/star-breeze.jpg', description: '312 guests, Star Plus motor yacht.' },
-      { name: 'Star Legend', image: '/media/cruises/windstar/star-legend.jpg', description: '312 guests, Arctic and Caribbean.' },
+      { name: 'Wind Spirit', image: '/media/cruises/windstar/windstar-wind-spirit-exterior.jpg', description: '148 guests, four-masted, sailing the Mediterranean and Tahiti.' },
+      { name: 'Star Breeze', image: '/media/cruises/windstar/star-breeze.jpg', description: '312 guests, all-suite Star-class motor yacht.' },
+      { name: 'Star Legend', image: '/media/cruises/windstar/windstar-star-legend-at-sea.jpg', description: '312 guests, all-suite — Alaska, the Arctic, and the Caribbean.' },
       { name: 'Star Pride', description: '312 guests, Star Plus motor yacht.' /* TODO: add image */ },
       { name: 'Star Seeker', description: 'First newbuild in ~30 years — 112 all-suite, ice-capable. Debuts 2026.' /* TODO: add image */ },
       { name: 'Star Explorer', description: 'All-suite newbuild — debuts December 2026.' /* TODO: add image */ },

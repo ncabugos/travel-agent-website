@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { getVideoEmbed } from '@/lib/video-embed'
 
 interface T4VideoFilmProps {
   videoUrl: string
@@ -17,11 +18,9 @@ interface T4VideoFilmProps {
 export function T4VideoFilm({ videoUrl, posterUrl, eyebrow = 'The Film', heading }: T4VideoFilmProps) {
   const [playing, setPlaying] = useState(false)
 
-  const match = videoUrl.match(/(?:vimeo\.com\/(?:video\/)?)(\d+)/)
-  const vimeoId = match?.[1]
-  if (!vimeoId) return null
-
-  const embedSrc = `https://player.vimeo.com/video/${vimeoId}?autoplay=1&title=0&byline=0&portrait=0&dnt=1`
+  const embed = getVideoEmbed(videoUrl)
+  if (!embed) return null
+  const embedSrc = embed.src
 
   return (
     <section style={{ background: 'var(--t4-dark-bg)', padding: 'var(--t4-section-pad) 48px' }}>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { getVideoEmbed } from '@/lib/video-embed'
 
 interface T3VideoFilmProps {
   videoUrl: string
@@ -17,11 +18,9 @@ interface T3VideoFilmProps {
 export function T3VideoFilm({ videoUrl, posterUrl, eyebrow = 'The Film', heading }: T3VideoFilmProps) {
   const [playing, setPlaying] = useState(false)
 
-  const match = videoUrl.match(/(?:vimeo\.com\/(?:video\/)?)(\d+)/)
-  const vimeoId = match?.[1]
-  if (!vimeoId) return null
-
-  const embedSrc = `https://player.vimeo.com/video/${vimeoId}?autoplay=1&title=0&byline=0&portrait=0&dnt=1`
+  const embed = getVideoEmbed(videoUrl)
+  if (!embed) return null
+  const embedSrc = embed.src
 
   return (
     <section style={{ background: 'var(--t3-dark-bg)', padding: 'var(--t3-section-pad) 48px' }} className="t3-cruise-film">
