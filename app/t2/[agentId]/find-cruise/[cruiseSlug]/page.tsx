@@ -263,8 +263,8 @@ export default async function CruiseDetailPage({ params }: PageProps) {
         <T2HotelGallery images={gallerySlides} />
       )}
 
-      {/* ── Ships (fleet grid; hidden when suites already showcase the single yacht) ── */}
-      {cruise.ships && cruise.ships.length > 0 && !(cruise.suites && cruise.suites.length > 0) && (
+      {/* ── Ships (fleet grid; hidden only for a single-yacht line whose suites section already shows the vessel) ── */}
+      {cruise.ships && cruise.ships.length > 0 && !(cruise.ships.length === 1 && cruise.suites && cruise.suites.length > 0) && (
         <section className="t2-section">
           <div style={{ padding: '80px 48px', maxWidth: 1280, margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: 64 }}>
