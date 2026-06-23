@@ -1,9 +1,26 @@
 import { getCruiseLine, getAllCruiseLineSlugs } from '@/lib/cruise-lines'
 import { getSupplierPromo } from '@/lib/supplier-promos'
 import { T3PromoBanner } from '@/components/t3/T3PromoBanner'
+import { T3VideoFilm } from '@/components/t3/T3VideoFilm'
+import {
+  T3CruiseDestinations,
+  T3CruiseExperiences,
+  T3CruiseSuites,
+  T3CruiseJourneys,
+} from '@/components/t3/T3CruiseSections'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
+
+// Virtuoso Voyages perks shown when a cruise line has no DB-sourced benefits yet.
+const DEFAULT_CRUISE_BENEFITS = [
+  { title: 'Dedicated Onboard Host', description: 'A personal Virtuoso host sails with your group, present throughout the voyage to answer questions and ensure every detail runs exactly as planned.' },
+  { title: 'Private Welcome Reception', description: 'An exclusive cocktail reception at the start of each sailing, arranged solely for Virtuoso Voyages guests with introductions facilitated by your host.' },
+  { title: 'Shipboard Credit', description: '$100 per stateroom on voyages under 14 nights; $200 per stateroom on voyages of 14 nights or more, to spend freely on dining, spa, or excursions.' },
+  { title: 'Exclusive Shore Experience', description: 'A private shore excursion, VIP tour, or private car and driver whose itinerary is shaped entirely around your interests and pace — never a group schedule.' },
+  { title: 'Specialty Dining', description: 'Complimentary reservations at specialty restaurants on select sailings, including chef\'s tastings and curated wine pairings on participating vessels.' },
+  { title: 'Spa & Wellness Access', description: 'Select spa treatments, wellness credits, and onboard amenities included on participating voyages across our preferred cruise partners.' },
+]
 
 interface PageProps {
   params: Promise<{ agentId: string; cruiseSlug: string }>
@@ -33,6 +50,7 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
   if (!line) notFound()
 
   const base = `/t3/${agentId}`
+  const benefits = (line.benefits && line.benefits.length > 0) ? line.benefits : DEFAULT_CRUISE_BENEFITS
 
   return (
     <>
@@ -123,16 +141,27 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
           className="t3-cruise-intro"
         >
           <div>
-            <span className="t3-eyebrow t3-eyebrow-plain">About the Line</span>
+            <span className="t3-eyebrow t3-eyebrow-plain">{line.intro?.eyebrow ?? 'About the Line'}</span>
             <h2 className="t3-headline-xl" style={{ marginTop: 28 }}>
-              {line.name}
+              {line.intro?.heading ?? line.name}
             </h2>
           </div>
           <div>
-            {line.description && <p className="t3-body t3-body-lg">{line.description}</p>}
+            {(line.intro?.body || line.description) && (
+              <p className="t3-body t3-body-lg">{line.intro?.body ?? line.description}</p>
+            )}
           </div>
         </div>
       </section>
+
+      {/* ── Cinematic film ─────────────────────────────────────────────── */}
+      {line.video_url && (
+        <T3VideoFilm
+          videoUrl={line.video_url}
+          posterUrl={line.video_poster_url ?? line.hero_image_url}
+          heading={`${line.name}, in motion`}
+        />
+      )}
 
       {/* ── Promo banner ───────────────────────────────────────────────── */}
       <section className="t3-section">
@@ -170,14 +199,7 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
           }}
           className="t3-voyages-grid"
         >
-          {[
-            { title: 'Dedicated Onboard Host', description: 'A personal Virtuoso host sails with your group, present throughout the voyage to answer questions and ensure every detail runs exactly as planned.' },
-            { title: 'Private Welcome Reception', description: 'An exclusive cocktail reception at the start of each sailing, arranged solely for Virtuoso Voyages guests with introductions facilitated by your host.' },
-            { title: 'Shipboard Credit', description: '$100 per stateroom on voyages under 14 nights; $200 per stateroom on voyages of 14 nights or more, to spend freely on dining, spa, or excursions.' },
-            { title: 'Exclusive Shore Experience', description: 'A private shore excursion, VIP tour, or private car and driver whose itinerary is shaped entirely around your interests and pace — never a group schedule.' },
-            { title: 'Specialty Dining', description: 'Complimentary reservations at specialty restaurants on select sailings, including chef\'s tastings and curated wine pairings on participating vessels.' },
-            { title: 'Spa & Wellness Access', description: 'Select spa treatments, wellness credits, and onboard amenities included on participating voyages across our preferred cruise partners.' },
-          ].map((p, i) => (
+          {benefits.map((p, i) => (
             <div key={p.title}>
               <div style={{
                 fontFamily: 'var(--t3-font-display)',
@@ -196,8 +218,20 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* ── Fleet ──────────────────────────────────────────────────────── */}
-      {line.ships && line.ships.length > 0 && (
+      {/* ── Destinations ───────────────────────────────────────────────── */}
+      <T3CruiseDestinations destinations={line.destinations ?? []} />
+
+      {/* ── Experiences ────────────────────────────────────────────────── */}
+      <T3CruiseExperiences experiences={line.experiences ?? []} />
+
+      {/* ── The Yacht: suites ──────────────────────────────────────────── */}
+      <T3CruiseSuites suites={line.suites ?? []} vesselNote={line.ships?.[0]?.description} />
+
+      {/* ── Sample journeys ────────────────────────────────────────────── */}
+      <T3CruiseJourneys journeys={line.sample_journeys ?? []} />
+
+      {/* ── Fleet (hidden only for a single-yacht line whose suites already show the vessel) ── */}
+      {line.ships && line.ships.length > 0 && !(line.ships.length === 1 && line.suites && line.suites.length > 0) && (
         <section className="t3-section">
           <div style={{ maxWidth: 'var(--t3-content-narrow)', marginBottom: 'var(--t3-gap)' }}>
             <span className="t3-eyebrow t3-eyebrow-plain">The Fleet</span>
@@ -350,6 +384,7 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
           .t3-cruise-intro { gap: var(--t3-gap) !important; }
           .t3-cruise-highlights-grid { gap: var(--t3-gap) !important; }
           .t3-cruise-ships-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .t3-cruise-3col { grid-template-columns: 1fr 1fr !important; }
         }
         @media (max-width: 768px) {
           .t3-cruise-intro { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; }
@@ -358,6 +393,9 @@ export default async function T3CruiseLineDetailPage({ params }: PageProps) {
           .t3-cruise-gallery { grid-template-columns: 1fr !important; }
           .t3-cruise-gallery > div { grid-column: auto !important; aspect-ratio: 4 / 3 !important; }
           .t3-cruise-cta { padding-left: 24px !important; padding-right: 24px !important; }
+          .t3-cruise-2col { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; }
+          .t3-cruise-3col { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; }
+          .t3-cruise-exp-row { grid-template-columns: 1fr !important; direction: ltr !important; gap: var(--t3-gap-tight) !important; }
         }
       `}</style>
     </>
