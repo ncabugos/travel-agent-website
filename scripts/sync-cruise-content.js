@@ -17,14 +17,18 @@ const arrText = src.slice(start, src.lastIndexOf(']', end) + 1)
 // eslint-disable-next-line no-eval
 const lines = eval('(' + arrText + ')')
 
-const FIELDS = ['tagline','description','logo_url','hero_image_url','highlights','ships','slider_images']
+const FIELDS = ['tagline','description','logo_url','hero_image_url','highlights','ships','slider_images',
+  'benefits','video_url','video_poster_url','intro','destinations','experiences','suites','sample_journeys']
 
 ;(async () => {
   const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)
   let ok = 0, miss = 0
   for (const l of lines) {
     const patch = {}
-    for (const f of FIELDS) patch[f] = l[f] ?? null
+    // Only push fields the line actually authors, so the rich content columns
+    // (benefits, intro, destinations, …) added in migration 049 keep their
+    // NOT NULL DEFAULT '[]' on lines that haven't been enriched yet.
+    for (const f of FIELDS) if (l[f] !== undefined) patch[f] = l[f]
     const { data, error } = await sb.from('cruise_lines').update(patch).eq('slug', l.slug).select('slug')
     if (error) { console.log('ERR', l.slug, error.message); continue }
     if (!data || data.length === 0) { console.log('NO DB ROW for slug:', l.slug); miss++; continue }

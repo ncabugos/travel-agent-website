@@ -9,6 +9,23 @@ import { T2HotelGallery } from '@/components/t2/T2HotelGallery'
 import { T2BenefitsGrid } from '@/components/t2/T2BenefitsGrid'
 import { T2PromoBanner } from '@/components/t2/T2PromoBanner'
 import { T2RelatedArticles } from '@/components/t2/T2RelatedArticles'
+import { T2VideoFilm } from '@/components/t2/T2VideoFilm'
+import {
+  T2CruiseDestinations,
+  T2CruiseExperiences,
+  T2CruiseSuites,
+  T2CruiseJourneys,
+} from '@/components/t2/T2CruiseSections'
+
+// Virtuoso Voyages perks shown when a cruise line has no DB-sourced benefits yet.
+const DEFAULT_CRUISE_BENEFITS = [
+  { title: 'Dedicated Onboard Host', description: 'A personal Virtuoso host sails with your group, present throughout the voyage to answer questions and ensure every detail runs exactly as planned.' },
+  { title: 'Private Welcome Reception', description: 'An exclusive cocktail reception at the start of each sailing, arranged solely for Virtuoso Voyages guests with introductions facilitated by your host.' },
+  { title: 'Shipboard Credit', description: '$100 per stateroom on voyages under 14 nights; $200 per stateroom on voyages of 14 nights or more, to spend freely on dining, spa, or excursions.' },
+  { title: 'Exclusive Shore Experience', description: 'A private shore excursion, VIP tour, or private car and driver whose itinerary is shaped entirely around your interests and pace — never a group schedule.' },
+  { title: 'Specialty Dining', description: 'Complimentary reservations at specialty restaurants on select sailings, including chef\'s tastings and curated wine pairings on participating vessels.' },
+  { title: 'Spa & Wellness Access', description: 'Select spa treatments, wellness credits, and onboard amenities included on participating voyages across our preferred cruise partners.' },
+]
 
 interface PageProps {
   params: Promise<{ agentId: string; cruiseSlug: string }>
@@ -40,6 +57,11 @@ export default async function CruiseDetailPage({ params }: PageProps) {
     ? cruise.slider_images
     : getCruiseGallery(cruise.slug)
 
+  // DB-sourced benefits, falling back to the standard Virtuoso Voyages perks so
+  // every existing cruise line keeps its block until enriched in the DB.
+  const benefits = (cruise.benefits && cruise.benefits.length > 0)
+    ? cruise.benefits
+    : DEFAULT_CRUISE_BENEFITS
 
   return (
     <>
@@ -129,6 +151,32 @@ export default async function CruiseDetailPage({ params }: PageProps) {
         </div>
       </section>
 
+      {/* ── Overview intro ── */}
+      {cruise.intro && (
+        <section className="t2-section">
+          <div style={{ maxWidth: 820, margin: '0 auto', padding: '0 24px', textAlign: 'center' }}>
+            <span style={{ fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--t2-primary)', opacity: 0.6, display: 'block', marginBottom: 16 }}>
+              {cruise.intro.eyebrow}
+            </span>
+            <h2 className="t2-heading" style={{ fontSize: 'clamp(30px, 4vw, 48px)', marginBottom: 28, lineHeight: 1.15 }}>
+              {cruise.intro.heading}
+            </h2>
+            <p className="t2-body t2-body-center" style={{ fontSize: 'clamp(16px, 1.3vw, 18px)', lineHeight: 1.9 }}>
+              {cruise.intro.body}
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* ── Cinematic film ── */}
+      {cruise.video_url && (
+        <T2VideoFilm
+          videoUrl={cruise.video_url}
+          posterUrl={cruise.video_poster_url ?? cruise.hero_image_url}
+          heading={`${cruise.name}, in motion`}
+        />
+      )}
+
       {/* ── Virtuoso Voyages ── */}
       <section className="t2-section" style={{ background: 'var(--t2-bg-alt)', maxWidth: 'none', paddingBottom: 'clamp(56px, 8vw, 96px)' }}>
         <div style={{ width: '100%', margin: '0 auto' }}>
@@ -149,14 +197,7 @@ export default async function CruiseDetailPage({ params }: PageProps) {
             gridTemplateColumns: 'repeat(3, 1fr)',
             gap: 40,
           }} className="t2-voyages-grid">
-            {[
-              { title: 'Dedicated Onboard Host', description: 'A personal Virtuoso host sails with your group, present throughout the voyage to answer questions and ensure every detail runs exactly as planned.' },
-              { title: 'Private Welcome Reception', description: 'An exclusive cocktail reception at the start of each sailing, arranged solely for Virtuoso Voyages guests with introductions facilitated by your host.' },
-              { title: 'Shipboard Credit', description: '$100 per stateroom on voyages under 14 nights; $200 per stateroom on voyages of 14 nights or more, to spend freely on dining, spa, or excursions.' },
-              { title: 'Exclusive Shore Experience', description: 'A private shore excursion, VIP tour, or private car and driver whose itinerary is shaped entirely around your interests and pace — never a group schedule.' },
-              { title: 'Specialty Dining', description: 'Complimentary reservations at specialty restaurants on select sailings, including chef\'s tastings and curated wine pairings on participating vessels.' },
-              { title: 'Spa & Wellness Access', description: 'Select spa treatments, wellness credits, and onboard amenities included on participating voyages across our preferred cruise partners.' },
-            ].map((p, i) => (
+            {benefits.map((p, i) => (
               <div key={p.title} style={{
                 background: '#fff',
                 borderRadius: 'var(--t2-radius-lg)',
@@ -190,6 +231,18 @@ export default async function CruiseDetailPage({ params }: PageProps) {
         `}</style>
       </section>
 
+      {/* ── Destinations ── */}
+      <T2CruiseDestinations destinations={cruise.destinations ?? []} />
+
+      {/* ── Experiences ── */}
+      <T2CruiseExperiences experiences={cruise.experiences ?? []} />
+
+      {/* ── The Yacht: suites ── */}
+      <T2CruiseSuites suites={cruise.suites ?? []} vesselNote={cruise.ships?.[0]?.description} />
+
+      {/* ── Sample Journeys ── */}
+      <T2CruiseJourneys journeys={cruise.sample_journeys ?? []} />
+
       {/* ── Promo Banner ── */}
       <section className="t2-section">
         <T2PromoBanner
@@ -210,8 +263,8 @@ export default async function CruiseDetailPage({ params }: PageProps) {
         <T2HotelGallery images={gallerySlides} />
       )}
 
-      {/* ── Ships ── */}
-      {cruise.ships && cruise.ships.length > 0 && (
+      {/* ── Ships (fleet grid; hidden when suites already showcase the single yacht) ── */}
+      {cruise.ships && cruise.ships.length > 0 && !(cruise.suites && cruise.suites.length > 0) && (
         <section className="t2-section">
           <div style={{ padding: '80px 48px', maxWidth: 1280, margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: 64 }}>

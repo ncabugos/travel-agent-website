@@ -17,6 +17,15 @@ export interface CruiseLine {
   ships: CruiseShip[]
   slider_images: string[]
   sort_order: number
+  // ── Rich yacht/cruise page content (DB-driven, optional per line) ──
+  benefits?: CruiseBenefit[]            // Virtuoso Voyages perks; falls back to defaults when empty
+  video_url?: string | null            // Vimeo URL for the cinematic film section
+  video_poster_url?: string | null     // poster image behind the play button
+  intro?: CruiseIntro | null           // overview section
+  destinations?: CruiseDestination[]   // where the yacht sails
+  experiences?: CruiseExperience[]     // onboard experiences
+  suites?: CruiseSuite[]               // the yacht's accommodations
+  sample_journeys?: CruiseJourney[]    // illustrative itineraries
 }
 
 export interface CruiseHighlight {
@@ -28,6 +37,43 @@ export interface CruiseShip {
   name: string
   description?: string
   image?: string
+}
+
+export interface CruiseBenefit {
+  title: string
+  description: string
+}
+
+export interface CruiseIntro {
+  eyebrow: string
+  heading: string
+  body: string
+}
+
+export interface CruiseDestination {
+  name: string
+  blurb: string
+  image_url: string
+}
+
+export interface CruiseExperience {
+  title: string
+  blurb: string
+  image_url: string
+}
+
+export interface CruiseSuite {
+  name: string
+  blurb: string
+  image_url: string
+}
+
+export interface CruiseJourney {
+  name: string
+  nights: string
+  route: string
+  blurb: string
+  image_url?: string
 }
 
 export interface ProgramFeaturedProperty {
@@ -44,6 +90,67 @@ export interface ProgramFeaturedProperty {
 // ─── Mock Data ────────────────────────────────────────────────────────────────
 
 const MOCK_CRUISE_LINES: CruiseLine[] = [
+  // ── Private Yachts ──────────────────────────────────────────────────────────
+  {
+    id: 'aman-at-sea', name: 'Aman at Sea', slug: 'aman-at-sea',
+    logo_url: '/media/cruises/aman-at-sea/aman_at_sea-black-600.png',
+    logo_url_white: '/media/cruises/aman-at-sea/aman_at_sea-white-600.png',
+    logo_url_black: '/media/cruises/aman-at-sea/aman_at_sea-black-600.png',
+    hero_image_url: '/media/cruises/aman-at-sea/aman-hero.webp',
+    tagline: 'A Philosophy in Motion',
+    description: 'Amangati — "peaceful motion" in Sanskrit — is Aman\'s first yacht: 47 suites for 94 guests, drawn by Sinot and conceived as a private Aman carried across the world\'s most storied waters. Setting sail Spring 2027.',
+    cruise_types: ['yacht'],
+    highlights: [],
+    video_url: 'https://vimeo.com/1130914645',
+    video_poster_url: '/media/cruises/aman-at-sea/aman-hero.webp',
+    intro: {
+      eyebrow: 'Aman at Sea',
+      heading: 'A sanctuary that moves with the sea',
+      body: 'For five decades, Aman has been defined by space, seclusion, and an instinct for the world\'s most beautiful places. Amangati carries that philosophy onto the water — a yacht conceived not as a ship but as a private Aman in motion. Every one of its 47 suites opens onto a private terrace and floor-to-ceiling ocean views; the largest spa in luxury yachting unfolds across two storeys; and a discreet onboard team attends to every detail. The result is the rarest thing at sea: stillness.',
+    },
+    benefits: [
+      { title: 'Dedicated Onboard Host', description: 'A personal Virtuoso host sails with your group, present throughout the voyage to ensure every detail runs exactly as planned.' },
+      { title: 'Private Welcome Reception', description: 'An exclusive reception at the start of each sailing, arranged solely for Virtuoso Voyages guests with introductions facilitated by your host.' },
+      { title: 'Shipboard Credit', description: '$100 per suite on voyages under 14 nights; $200 per suite on voyages of 14 nights or more, to spend freely on dining, spa, or excursions.' },
+      { title: 'Exclusive Shore Experience', description: 'A private shore excursion or car and driver whose itinerary is shaped entirely around your interests and pace — never a group schedule.' },
+      { title: 'Specialty Dining', description: 'Complimentary reservations at the yacht\'s signature restaurants, including chef\'s tastings and curated pairings on participating sailings.' },
+      { title: 'Spa & Wellness Access', description: 'Select treatments and wellness credits at the Aman Spa, the largest afloat, included on participating voyages.' },
+    ],
+    destinations: [
+      { name: 'The Mediterranean', blurb: 'Amangati\'s first seasons trace the sun-drenched shores of the Mediterranean — the French Riviera, the Greek Isles, and the shallow harbours and remote anchorages larger ships can never reach. Yachting, in its most elegant form.', image_url: '/media/cruises/aman-at-sea/dest-mediterranean.webp' },
+      { name: 'The Marina & the Sea', blurb: 'A dedicated marina folds out from the hull, giving direct, seamless access to the water — shaded decks, alfresco spaces, and a fleet of watercraft that turn every anchorage into a private beach club.', image_url: '/media/cruises/aman-at-sea/dest-marina.webp' },
+    ],
+    experiences: [
+      { title: 'The Aman Spa', blurb: 'The largest spa in luxury yachting — a two-storey wellness sanctuary with a Japanese serenity garden and ocean-facing treatment rooms, an Aman signature reimagined for the sea.', image_url: '/media/cruises/aman-at-sea/exp-spa.webp' },
+      { title: 'The Jazz Club', blurb: 'A softly lit, open-air terrace where live bands and DJs play late into the night beneath the stars — an evening ritual in the unmistakable Aman key.', image_url: '/media/cruises/aman-at-sea/exp-jazz-club.webp' },
+      { title: 'Aman Grill', blurb: 'Open-air, sea-facing dining built around the fire — the day\'s catch and the season\'s harvest, served on shaded alfresco decks at the water\'s edge.', image_url: '/media/cruises/aman-at-sea/exp-grill.webp' },
+      { title: 'Enju & Hiori', blurb: 'Japanese dining drawn from Aman\'s deep roots in the cuisine — an intimate room where precision and seasonality meet the rhythm of the voyage.', image_url: '/media/cruises/aman-at-sea/exp-enju-hiori.webp' },
+      { title: 'The Marina & Watersports', blurb: 'Direct access to the sea from a dedicated marina — paddleboards, dives, and quiet swims off the hull, each anchorage your own.', image_url: '/media/cruises/aman-at-sea/exp-watersports.webp' },
+    ],
+    suites: [
+      { name: 'Aman Suite', blurb: 'The signature suite at sea — airy, light-filled living space opening onto a private terrace with floor-to-ceiling ocean views.', image_url: '/media/cruises/aman-at-sea/suite-aman.webp' },
+      { name: 'Premier Suite', blurb: 'Generous proportions and a private terrace, finished in the natural materials and quiet palette that define every Aman.', image_url: '/media/cruises/aman-at-sea/suite-premier.webp' },
+      { name: 'Signature Suite', blurb: 'Elevated living and dining space with sweeping sightlines to the horizon and a terrace made for slow mornings at anchor.', image_url: '/media/cruises/aman-at-sea/suite-signature.webp' },
+      { name: 'Grand Suite', blurb: 'The pinnacle of the fleet — expansive interiors, a wraparound terrace, and uninterrupted ocean views from every room.', image_url: '/media/cruises/aman-at-sea/suite-grand.webp' },
+    ],
+    ships: [
+      { name: 'Amangati', description: '47 suites for 94 guests · exterior and interior design by Sinot · registered in Malta · the largest spa in luxury yachting · launching Spring 2027.', image: '/media/cruises/aman-at-sea/aman-hero.webp' },
+    ],
+    sample_journeys: [
+      { name: 'Riviera & the Ligurian Coast', nights: '7 nights', route: 'Monaco · Saint-Tropez · Portofino · Cinque Terre · Portovenere', blurb: 'A first taste of the Mediterranean in its most polished light — celebrated marinas by day, quiet anchorages by night, and the spa between.' },
+      { name: 'The Greek Isles & the Aegean', nights: '10 nights', route: 'Athens · Hydra · Mykonos · Santorini · Patmos · the Dodecanese', blurb: 'Island-hopping through shallow harbours and remote coves, with private shore experiences shaped entirely around your pace.' },
+      { name: 'The Tyrrhenian & Amalfi', nights: '8 nights', route: 'Naples · Capri · Positano · the Aeolian Islands · Taormina', blurb: 'Volcanic coastlines and storied islands, anchored each evening within reach of dinner ashore or under sail.' },
+    ],
+    slider_images: [
+      '/media/cruises/aman-at-sea/aman-hero.webp',
+      '/media/cruises/aman-at-sea/suite-grand.webp',
+      '/media/cruises/aman-at-sea/exp-spa.webp',
+      '/media/cruises/aman-at-sea/exp-jazz-club.webp',
+      '/media/cruises/aman-at-sea/dest-marina.webp',
+      '/media/cruises/aman-at-sea/exp-grill.webp',
+    ],
+    sort_order: 0,
+  },
   // ── Ultra-Luxury Ocean ──────────────────────────────────────────────────────
   {
     id: '1', name: 'Regent Seven Seas Cruises', slug: 'regent-seven-seas',
@@ -870,6 +977,11 @@ export async function getCruiseLines(cruiseType?: string): Promise<CruiseLine[]>
       ships: r.ships ?? [],
       slider_images: r.slider_images ?? [],
       cruise_types: r.cruise_types ?? (r.cruise_type ? [r.cruise_type] : []),
+      benefits: r.benefits ?? [],
+      destinations: r.destinations ?? [],
+      experiences: r.experiences ?? [],
+      suites: r.suites ?? [],
+      sample_journeys: r.sample_journeys ?? [],
     }))
   } catch { return MOCK_CRUISE_LINES }
 }
@@ -897,6 +1009,11 @@ export async function getCruiseLine(slug: string): Promise<CruiseLine | null> {
       ships: r.ships ?? [],
       slider_images: r.slider_images ?? [],
       cruise_types: r.cruise_types ?? (r.cruise_type ? [r.cruise_type] : []),
+      benefits: r.benefits ?? [],
+      destinations: r.destinations ?? [],
+      experiences: r.experiences ?? [],
+      suites: r.suites ?? [],
+      sample_journeys: r.sample_journeys ?? [],
     }
   } catch { return MOCK_CRUISE_LINES.find(c => c.slug === slug) ?? null }
 }
