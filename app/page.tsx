@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Globe, FileText, Building2, Paintbrush, Lock, TrendingUp } from 'lucide-react'
 import { MarketingPricing } from '@/components/marketing/MarketingPricing'
 import { MarketingNav } from '@/components/marketing/MarketingNav'
+import { StudioBanner } from '@/components/marketing/StudioBanner'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 import { HeroSlideshow } from '@/components/marketing/HeroSlideshow'
 import { MarketingBrandedWebsite } from '@/components/marketing/MarketingBrandedWebsite'
@@ -11,6 +12,7 @@ import { MarketingClosingCTA } from '@/components/marketing/MarketingClosingCTA'
 import { MarketingReachSection } from '@/components/marketing/MarketingReachSection'
 import { MarketingCuratedEditorial } from '@/components/marketing/MarketingCuratedEditorial'
 import { MarketingAdvisorPortal } from '@/components/marketing/MarketingAdvisorPortal'
+import { MarketingStudioPromo } from '@/components/marketing/MarketingStudioPromo'
 import { MarketingInsightsTeaser } from '@/components/marketing/MarketingInsightsTeaser'
 
 export const metadata = {
@@ -100,6 +102,9 @@ export default function EliteAdvisorHubHomePage() {
       color: '#111',
       background: '#fff',
     }}>
+      {/* Promo banner — pins above the nav, links to the Studio services page */}
+      <StudioBanner />
+
       {/* Navigation */}
       <MarketingNav />
 
@@ -282,6 +287,9 @@ export default function EliteAdvisorHubHomePage() {
 
       {/* Pricing */}
       <MarketingPricing />
+
+      {/* Studio cross-sell — the done-for-you marketing service on top of the platform */}
+      <MarketingStudioPromo />
 
       {/* Demos */}
       <section id="demos" className="eah-section" style={{

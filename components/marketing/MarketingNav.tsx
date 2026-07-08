@@ -7,6 +7,7 @@ import Image from 'next/image'
 const NAV_LINKS = [
   { label: 'Features', href: '/#features' },
   { label: 'Pricing',  href: '/#pricing'  },
+  { label: 'Studio',   href: '/studio'    },
   { label: 'Demos',    href: '/#demos'    },
   { label: 'Insights', href: '/insights'  },
 ]
@@ -31,7 +32,9 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
     <>
       <nav
         style={{
-          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
+          // top offset honours an optional announcement bar (see StudioBanner);
+          // --eah-banner-h defaults to 0px on every page without one.
+          position: 'fixed', top: 'var(--eah-banner-h, 0px)', left: 0, right: 0, zIndex: 1000,
           backgroundColor: 'rgba(255,255,255,0.95)',
           backdropFilter: 'blur(12px)',
           borderBottom: '1px solid rgba(0,0,0,0.06)',
@@ -175,7 +178,7 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
         className="marketing-mobile-sheet"
         style={{
           position: 'fixed',
-          top: '64px', left: 0, right: 0,
+          top: 'calc(64px + var(--eah-banner-h, 0px))', left: 0, right: 0,
           zIndex: 999,
           background: '#ffffff',
           borderBottom: '1px solid rgba(0,0,0,0.08)',
@@ -184,7 +187,7 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
           opacity: open ? 1 : 0,
           pointerEvents: open ? 'auto' : 'none',
           transition: 'opacity 0.22s ease, transform 0.22s ease',
-          maxHeight: 'calc(100vh - 64px)',
+          maxHeight: 'calc(100vh - 64px - var(--eah-banner-h, 0px))',
           overflowY: 'auto',
         }}
       >

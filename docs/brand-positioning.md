@@ -69,7 +69,13 @@ After: *"Elite Advisor Hub was built by an active Virtuoso advisor who got tired
 
 ## Visual identity cues (for the rewrite designer)
 
-Restraint. Generous white space. Editorial photography (large, slow, confident) over stock travel images. Type that signals competence: a quiet serif paired with an honest sans-serif. Color palette anchored in deep navy and warm metallic, not the saturated travel-poster blues that every competitor uses. The visual stance is "private club," not "online catalog."
+Restraint. Generous white space. Editorial photography (large, slow, confident) over stock travel images. Type that signals competence: system UI / Inter for marketing surfaces, with the advisor templates owning their own serif pairings. The visual stance is "private club," not "online catalog."
+
+**Color palette** (authoritative source: `brand/EAH_Brand_Style_Guide.html`, tokens in `app/globals.css`):
+
+- **Accents — purple and gold together.** Brand Purple `#7C3AED` and Violet `#A78BFA` carry actions and emphasis (CTAs, gradient headline accents via the Lavender Gradient `#A5B4FC → #C4B5FD`, badges). Gold `#B49A5A` / Gold Light `#C9B07A` carry editorial accents (eyebrows, labels, prices, ✓ marks, luxury moments).
+- **Neutrals — warm, never cold.** Cream `#FAFAF5` backgrounds, Charcoal `#1A1715` text, Dark Footer `#131210`, Warm Gray `#8A8279`, Divider `#E8E4DC`. No slate/Tailwind grays on brand surfaces.
+- Not saturated travel-poster blues, and not a single-accent system — the purple/gold pairing is the identity.
 
 ## Touchpoints to rewrite
 
