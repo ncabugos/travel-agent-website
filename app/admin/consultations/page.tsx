@@ -8,6 +8,7 @@ type ConsultationRow = {
   created_at: string
   tier: string | null
   source: string | null
+  plan_interest: string | null
   first_name: string
   last_name: string
   email: string
@@ -18,12 +19,20 @@ type ConsultationRow = {
   status: string
 }
 
+const STUDIO_PLAN_LABELS: Record<string, string> = {
+  essential: 'Essential',
+  professional: 'Professional',
+  'full-service': 'Full Service',
+  agency: 'Agency',
+  unsure: 'Not sure',
+}
+
 export default async function AdminConsultationsPage() {
   const supabase = createServiceClient()
   const { data, error } = await supabase
     .from('consultation_requests')
     .select(
-      'id, created_at, tier, source, first_name, last_name, email, phone, agency_name, num_advisors, timeline, status',
+      'id, created_at, tier, source, plan_interest, first_name, last_name, email, phone, agency_name, num_advisors, timeline, status',
     )
     .order('created_at', { ascending: false })
 
@@ -36,7 +45,7 @@ export default async function AdminConsultationsPage() {
           Consultation Requests
         </h1>
         <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#6b7280' }}>
-          Leads from the Custom/Agency consultation form and the Founding Advisor beta waitlist.
+          Leads from the Custom/Agency consultation form, the Studio services page, and the Founding Advisor beta waitlist.
         </p>
       </div>
 
@@ -82,11 +91,15 @@ export default async function AdminConsultationsPage() {
                 </td>
                 <td style={td}>
                   <span style={sourceChip(r.source)}>
-                    {r.source === 'beta-waitlist' ? 'Beta waitlist' : 'Consultation'}
+                    {r.source === 'beta-waitlist' ? 'Beta waitlist' : r.source === 'studio' ? 'Studio' : 'Consultation'}
                   </span>
                 </td>
                 <td style={td}>
-                  <span style={tierChip(r.tier)}>{r.tier ?? '—'}</span>
+                  {r.source === 'studio' ? (
+                    <span style={tierChip(null)}>{STUDIO_PLAN_LABELS[r.plan_interest ?? ''] ?? r.plan_interest ?? '—'}</span>
+                  ) : (
+                    <span style={tierChip(r.tier)}>{r.tier ?? '—'}</span>
+                  )}
                 </td>
                 <td style={{ ...td, fontSize: '13px', color: '#374151' }}>{r.num_advisors ?? '—'}</td>
                 <td style={{ ...td, fontSize: '13px', color: '#374151' }}>{r.timeline ?? '—'}</td>
@@ -139,6 +152,7 @@ const chip = (bg: string, color: string): React.CSSProperties => ({
 function sourceChip(source: string | null): React.CSSProperties {
   switch (source) {
     case 'beta-waitlist': return chip('#fef9c3', '#854d0e')
+    case 'studio':        return chip('#f4efe2', '#7a6526')
     default:              return chip('#e5e7eb', '#374151')
   }
 }

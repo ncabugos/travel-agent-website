@@ -8,6 +8,14 @@ interface PageProps {
   params: Promise<{ id: string }>
 }
 
+const STUDIO_PLAN_LABELS: Record<string, string> = {
+  essential: 'Essential ($950/mo)',
+  professional: 'Professional ($1,850/mo)',
+  'full-service': 'Full Service ($3,500/mo)',
+  agency: 'Agency (custom)',
+  unsure: 'Not sure yet',
+}
+
 export default async function ConsultationDetailPage({ params }: PageProps) {
   const { id } = await params
   const supabase = createServiceClient()
@@ -19,6 +27,9 @@ export default async function ConsultationDetailPage({ params }: PageProps) {
 
   if (error || !data) notFound()
   const r = data as Record<string, any>
+
+  const isStudio = r.source === 'studio'
+  const sourceLabel = isStudio ? 'Studio' : r.source === 'beta-waitlist' ? 'Beta waitlist' : 'Consultation'
 
   return (
     <div style={{ padding: '24px 32px', maxWidth: '960px' }}>
@@ -34,22 +45,34 @@ export default async function ConsultationDetailPage({ params }: PageProps) {
           {r.first_name} {r.last_name}
         </h1>
         <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#6b7280' }}>
-          Submitted {new Date(r.created_at).toLocaleString()} · Tier: <strong>{r.tier ?? '—'}</strong> · Status: <strong>{r.status}</strong>
+          Submitted {new Date(r.created_at).toLocaleString()} · {sourceLabel}
+          {!isStudio && <> · Tier: <strong>{r.tier ?? '—'}</strong></>} · Status: <strong>{r.status}</strong>
         </p>
       </div>
 
       <Section title="Contact">
         <Row label="Email" value={r.email} />
         <Row label="Phone" value={r.phone} />
-        <Row label="Role / Title" value={r.role_title} />
+        {!isStudio && <Row label="Role / Title" value={r.role_title} />}
       </Section>
 
-      <Section title="Inquiry">
-        <Row label="Tier of interest" value={r.tier} />
-        <Row label="Timeline" value={r.timeline} />
-        <Row label="Heard from" value={r.heard_from} />
-        <Row label="Message" value={r.message} multiline />
-      </Section>
+      {isStudio && (
+        <Section title="Studio inquiry">
+          <Row label="Plan interest" value={STUDIO_PLAN_LABELS[r.plan_interest ?? ''] ?? r.plan_interest} />
+          <Row label="Business" value={r.agency_name} />
+          <Row label="Current website" value={r.existing_website} />
+          <Row label="What they need" value={r.message} multiline />
+        </Section>
+      )}
+
+      {!isStudio && (
+        <Section title="Inquiry">
+          <Row label="Tier of interest" value={r.tier} />
+          <Row label="Timeline" value={r.timeline} />
+          <Row label="Heard from" value={r.heard_from} />
+          <Row label="Message" value={r.message} multiline />
+        </Section>
+      )}
 
       {r.tier === 'agency' && (
         <Section title="Agency details">

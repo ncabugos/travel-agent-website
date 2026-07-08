@@ -16,9 +16,9 @@ const SITE_URL =
  * (auth-gated; also blocked in robots.ts).
  *
  * Individual advisor sites under /frontend|/t2|/t3|/t4 own their SEO via each
- * tenant's custom domain + per-tenant sitemap. The entries below are the
- * showcase demos linked from the homepage #demos section — keep this list in
- * sync with the DEMOS array in app/page.tsx.
+ * tenant's custom domain + per-tenant sitemap. Showcase demos are deliberately
+ * excluded — they are fixtures, not real businesses, and are noindex'd at the
+ * template-layout level, so listing them here would only invite wasted crawls.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()
@@ -28,22 +28,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const marketing = [
     { path: '', priority: 1.0, changeFrequency: 'weekly' as const },
     { path: 'templates', priority: 0.9, changeFrequency: 'monthly' as const },
+    { path: 'studio', priority: 0.9, changeFrequency: 'monthly' as const },
     { path: 'insights', priority: 0.8, changeFrequency: 'daily' as const },
     { path: 'insights/author/nick', priority: 0.4, changeFrequency: 'monthly' as const },
     { path: 'schedule-consultation', priority: 0.8, changeFrequency: 'monthly' as const },
     { path: 'support', priority: 0.4, changeFrequency: 'monthly' as const },
     { path: 'privacy', priority: 0.3, changeFrequency: 'yearly' as const },
     { path: 'terms', priority: 0.3, changeFrequency: 'yearly' as const },
-  ]
-
-  const demos = [
-    '/frontend/demo-agent',
-    '/t2/t2-demo',
-    '/t3/t3-demo',
-    '/t2/ytc-demo',
-    '/t4/casa-solis',
-    '/t2/wwt-demo',
-    '/t2/lido-collective',
   ]
 
   return [
@@ -64,12 +55,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(p.updated_at),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
-    })),
-    ...demos.map((path) => ({
-      url: `${SITE_URL}${path}`,
-      lastModified: now,
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
     })),
   ]
 }
