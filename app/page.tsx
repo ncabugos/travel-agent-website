@@ -12,6 +12,7 @@ import { MarketingClosingCTA } from '@/components/marketing/MarketingClosingCTA'
 import { MarketingReachSection } from '@/components/marketing/MarketingReachSection'
 import { MarketingCuratedEditorial } from '@/components/marketing/MarketingCuratedEditorial'
 import { MarketingAdvisorPortal } from '@/components/marketing/MarketingAdvisorPortal'
+import { MarketingStudioPromo } from '@/components/marketing/MarketingStudioPromo'
 import { MarketingInsightsTeaser } from '@/components/marketing/MarketingInsightsTeaser'
 
 export const metadata = {
@@ -286,6 +287,9 @@ export default function EliteAdvisorHubHomePage() {
 
       {/* Pricing */}
       <MarketingPricing />
+
+      {/* Studio cross-sell — the done-for-you marketing service on top of the platform */}
+      <MarketingStudioPromo />
 
       {/* Demos */}
       <section id="demos" className="eah-section" style={{
