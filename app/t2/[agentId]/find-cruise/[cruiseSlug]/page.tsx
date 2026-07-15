@@ -27,6 +27,24 @@ const DEFAULT_CRUISE_BENEFITS = [
   { title: 'Spa & Wellness Access', description: 'Select spa treatments, wellness credits, and onboard amenities included on participating voyages across our preferred cruise partners.' },
 ]
 
+// Editorial imagery for the benefit cards, drawn from the local supplier media
+// library (public/media/cruises). Matched to the benefit by keyword so
+// DB-sourced benefit titles get sensible imagery too; falls back by index.
+const BENEFIT_IMAGES: { match: RegExp; src: string; alt: string }[] = [
+  { match: /welcome|reception|champagne|celebrat/i, src: '/media/cruises/crystal/world-cruise-welcome-celebration-champagne.jpg', alt: 'A champagne welcome celebration' },
+  { match: /host|concierge|butler|dedicated/i, src: '/media/cruises/cunard/cunard-Grand-Lobby-hero.jpg', alt: 'The grand lobby where guests are received' },
+  { match: /credit|spend|amenit|onboard/i, src: '/media/cruises/uniworld/uniworld-lounge-bar.jpg', alt: 'An elegant onboard lounge and bar' },
+  { match: /shore|excursion|tour|destination|explore|private car/i, src: '/media/cruises/uniworld/uniworld-douro.jpg', alt: 'A shore excursion through the Douro vineyards' },
+  { match: /dining|restaurant|culinary|chef|cuisine|tasting|wine/i, src: '/media/cruises/ama-waterways/amawaterways-amamagna-wine_dinner-1500.jpg', alt: 'A private wine dinner on board' },
+  { match: /spa|wellness|fitness|health|treatment/i, src: '/media/cruises/scenic/scenic-spa-1500.jpg', alt: 'The onboard spa and wellness sanctuary' },
+]
+const BENEFIT_IMAGE_FALLBACK = BENEFIT_IMAGES.map((b) => ({ src: b.src, alt: b.alt }))
+function benefitImage(title: string, i: number): { src: string; alt: string } {
+  const hit = BENEFIT_IMAGES.find((b) => b.match.test(title))
+  if (hit) return { src: hit.src, alt: hit.alt }
+  return BENEFIT_IMAGE_FALLBACK[i % BENEFIT_IMAGE_FALLBACK.length]
+}
+
 interface PageProps {
   params: Promise<{ agentId: string; cruiseSlug: string }>
 }
@@ -197,31 +215,70 @@ export default async function CruiseDetailPage({ params }: PageProps) {
             gridTemplateColumns: 'repeat(3, 1fr)',
             gap: 40,
           }} className="t2-voyages-grid">
-            {benefits.map((p, i) => (
-              <div key={p.title} style={{
-                background: '#fff',
-                borderRadius: 'var(--t2-radius-lg)',
-                padding: '32px 28px',
-                border: '1px solid var(--t2-divider)',
-              }}>
-                <div style={{
-                  fontFamily: 'var(--t2-font-serif)',
-                  fontSize: 13,
-                  letterSpacing: '0.1em',
-                  color: 'var(--t2-primary)',
-                  opacity: 0.45,
-                  marginBottom: 16,
+            {benefits.map((p, i) => {
+              const img = (p as { image?: string }).image
+                ? { src: (p as { image?: string }).image as string, alt: p.title }
+                : benefitImage(p.title, i)
+              return (
+                <article key={p.title} className="t2-voyage-card" style={{
+                  background: '#fff',
+                  borderRadius: 'var(--t2-radius-lg)',
+                  border: '1px solid var(--t2-divider)',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}>
-                  {String(i + 1).padStart(2, '0')}
-                </div>
-                <h3 style={{ fontFamily: 'var(--t2-font-serif)', fontSize: 18, fontWeight: 500, marginBottom: 12 }}>{p.title}</h3>
-                <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 13.5, lineHeight: 1.75, color: 'var(--t2-text-muted)', margin: 0 }}>{p.description}</p>
-              </div>
-            ))}
+                  <div className="t2-voyage-card-media">
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 33vw"
+                      style={{ objectFit: 'cover' }}
+                    />
+                    <span className="t2-voyage-card-num">{String(i + 1).padStart(2, '0')}</span>
+                  </div>
+                  <div style={{ padding: '26px 28px 30px' }}>
+                    <h3 style={{ fontFamily: 'var(--t2-font-serif)', fontSize: 18, fontWeight: 500, marginBottom: 12 }}>{p.title}</h3>
+                    <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 13.5, lineHeight: 1.75, color: 'var(--t2-text-muted)', margin: 0 }}>{p.description}</p>
+                  </div>
+                </article>
+              )
+            })}
           </div>
         </div>
 
         <style>{`
+          .t2-voyage-card {
+            transition: transform 500ms cubic-bezier(0.22,1,0.36,1), box-shadow 500ms cubic-bezier(0.22,1,0.36,1);
+          }
+          .t2-voyage-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 50px -28px rgba(0,0,0,0.4);
+          }
+          .t2-voyage-card-media {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background: var(--t2-bg-alt);
+          }
+          .t2-voyage-card-media img {
+            transition: transform 900ms cubic-bezier(0.22,1,0.36,1);
+          }
+          .t2-voyage-card:hover .t2-voyage-card-media img { transform: scale(1.06); }
+          .t2-voyage-card-num {
+            position: absolute; top: 14px; left: 16px; z-index: 2;
+            font-family: var(--t2-font-serif); font-size: 12px; letter-spacing: 0.14em;
+            color: #fff;
+            width: 34px; height: 34px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.34);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.35);
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .t2-voyage-card, .t2-voyage-card-media img { transition: none; }
+          }
           @media (max-width: 900px) {
             .t2-voyages-grid { grid-template-columns: repeat(2, 1fr) !important; }
           }

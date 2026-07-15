@@ -13,6 +13,7 @@
 
 import type { Metadata } from 'next'
 import type { AgentProfile } from '@/lib/suppliers'
+import { isDemoSlug, isPublishedDemoSlug } from '@/lib/demo-agents'
 
 const PLATFORM_HOST = 'https://www.eliteadvisorhub.com'
 
@@ -91,8 +92,29 @@ const EDEN_FACTS: AgentSeoFacts = {
   favicon: '/assets/eden/logos/eden-wing-gold-125-reduced.png',
 }
 
+const WWT_FACTS: AgentSeoFacts = {
+  brandTagline:
+    'Slow-paced wine and wellness travel, personally planned, with Virtuoso VIP perks.',
+  brandDescriptionLong:
+    'Wine & Wellness Travel is a Virtuoso luxury agency planning slow-paced wine, wellness, and villa journeys with VIP perks: room upgrades, resort credits, daily breakfast.',
+  awards: [],
+  defaultOgImage: '/demos/wine_and_wellness.jpg',
+  defaultOgImageAlt: 'Wine & Wellness Travel — luxury wine, wellness, and villa journeys',
+  sameAs: [
+    'https://www.facebook.com/wineandwellnesstravel',
+    'https://www.instagram.com/wineandwellnesstravel',
+  ],
+  memberOf: [
+    { name: 'Virtuoso' },
+    { name: 'Montecito Village Travel', url: 'https://www.montecitovillagetravel.com' },
+  ],
+  // Public CST from the live wineandwellnesstravel.com footer. Confirm before launch.
+  identifier: 'CST #2019108-10',
+}
+
 const AGENT_SEO_DATA: Record<string, AgentSeoFacts> = {
   '2e18df43-171a-4565-b840-aade259cab69': EDEN_FACTS,
+  'wwt-demo': WWT_FACTS,
 }
 
 /** Look up SEO facts for a tenant; returns sensible defaults if none. */
@@ -219,7 +241,11 @@ interface BuildMetadataInput {
   twitterDescription?: string
   /** 'website' (default) or 'article' for blog posts. */
   ogType?: 'website' | 'article'
-  /** Whether the page should be indexed (default true). */
+  /**
+   * Whether the page should be indexed. When omitted, defaults to true for
+   * real tenants and false for demo fixtures (their slug is their agent id),
+   * so showcase demos stay out of search results.
+   */
   index?: boolean
 }
 
@@ -248,9 +274,14 @@ export function buildMetadata({
   ogDescription,
   twitterDescription,
   ogType = 'website',
-  index = true,
+  index,
 }: BuildMetadataInput): Metadata {
   const facts = getSeoFacts(agent)
+  // Demo fixtures are not real businesses — keep them out of the index unless a
+  // caller explicitly opts in. Real tenants (and published demos like Wine &
+  // Wellness Travel) default to indexable.
+  const shouldIndex =
+    index ?? (!isDemoSlug(agent.id) || isPublishedDemoSlug(agent.id))
   const url = canonicalUrl(agent, path)
   const origin = canonicalOrigin(agent)
   const ogImagePath = image ?? facts.defaultOgImage
@@ -297,7 +328,7 @@ export function buildMetadata({
       description: finalTwitterDesc,
       images: [ogImage],
     },
-    robots: index
+    robots: shouldIndex
       ? {
           index: true,
           follow: true,

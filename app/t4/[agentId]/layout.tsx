@@ -29,6 +29,15 @@ interface LayoutProps {
   params: Promise<{ agentId: string }>
 }
 
+// Showcase demos are fixtures, not real businesses. Emit a noindex directive
+// for them at the layout level so it cascades to every page in this template
+// (the home route's own generateMetadata sets no robots, so it inherits this).
+// Real tenant sites get no robots override here and stay indexable.
+export async function generateMetadata({ params }: { params: Promise<{ agentId: string }> }) {
+  const { agentId } = await params
+  return isDemoSlug(agentId) ? { robots: { index: false, follow: false } } : {}
+}
+
 export default async function T4Layout({ children, params }: LayoutProps) {
   const { agentId } = await params
   const [agent, gaMeasurementId] = await Promise.all([

@@ -1,6 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import YTCAboutPage from './ytc-about'
+import { getAgentProfile } from '@/lib/suppliers'
+import { buildMetadata } from '@/lib/seo'
+import type { Metadata } from 'next'
 
 // ─── Inline data ──────────────────────────────────────────────────────────────
 
@@ -68,6 +71,21 @@ const ACCOLADES = [
 ]
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ agentId: string }> },
+): Promise<Metadata> {
+  const { agentId } = await params
+  const agent = await getAgentProfile(agentId)
+  if (!agent) return {}
+  return buildMetadata({
+    agent,
+    title: 'About',
+    description:
+      'Meet the advisors behind our bespoke luxury travel planning, a Virtuoso member agency crafting personalized journeys with exclusive VIP hotel and cruise perks.',
+    path: 'about',
+  })
+}
 
 export default async function AboutPage({ params }: { params: Promise<{ agentId: string }> }) {
   const { agentId } = await params

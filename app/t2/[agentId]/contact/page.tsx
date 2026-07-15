@@ -1,10 +1,25 @@
 import { getAgentProfile } from '@/lib/suppliers'
+import { buildMetadata } from '@/lib/seo'
+import type { Metadata } from 'next'
 import { T2ContactForm } from '@/components/t2/T2ContactForm'
 import Image from 'next/image'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
   searchParams?: Promise<{ hotel?: string; intent?: string }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { agentId } = await params
+  const agent = await getAgentProfile(agentId)
+  if (!agent) return {}
+  return buildMetadata({
+    agent,
+    title: 'Contact',
+    description:
+      'Start planning your next luxury journey. Reach your travel advisor to design a bespoke trip with exclusive Virtuoso perks and white-glove service.',
+    path: 'contact',
+  })
 }
 
 export default async function ContactPage({ params, searchParams }: PageProps) {

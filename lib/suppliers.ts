@@ -66,17 +66,18 @@ export async function getAgentProfile(agentId: string): Promise<MockAgent | null
       'travel_types',
     ]
 
-    // Try the post-migration-029 schema (with first_name). If the column
-    // doesn't exist yet, fall back to the legacy schema so the site keeps
-    // rendering until the migration is applied. The {{advisor_first_name}}
-    // token will fall back to "your advisor" until first_name is populated.
+    // Optional columns added by later migrations (029 first_name, 051
+    // bespoke_layout). Select them when present, but fall back to the base
+    // schema if a column doesn't exist yet so the site keeps rendering until
+    // the migration is applied.
+    const optionalColumns = ['first_name', 'bespoke_layout']
     let { data, error } = await supabase
       .from('agents')
-      .select([...baseColumns, 'first_name'].join(', '))
+      .select([...baseColumns, ...optionalColumns].join(', '))
       .eq('id', agentId)
       .single()
 
-    if (error && /first_name/i.test(error.message ?? '')) {
+    if (error && /first_name|bespoke_layout/i.test(error.message ?? '')) {
       ;({ data, error } = await supabase
         .from('agents')
         .select(baseColumns.join(', '))
@@ -99,6 +100,7 @@ export async function getAgentProfile(agentId: string): Promise<MockAgent | null
       email: row.email ?? '',
       phone: row.phone ?? '',
       tier: row.tier ?? null,
+      bespoke_layout: row.bespoke_layout ?? null,
       bio: row.bio ?? undefined,
       instagram_url: row.instagram_url ?? undefined,
       facebook_url: row.facebook_url ?? undefined,

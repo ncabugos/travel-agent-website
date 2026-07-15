@@ -1,14 +1,25 @@
 import Link from 'next/link'
 import { getBlogPosts } from '@/lib/blog'
 import type { BlogPost } from '@/types/index'
+import { getAgentProfile } from '@/lib/suppliers'
+import { buildMetadata } from '@/lib/seo'
+import type { Metadata } from 'next'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
 }
 
-export const metadata = {
-  title: 'Journal',
-  description: 'Dispatches and field notes from our advisors.',
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { agentId } = await params
+  const agent = await getAgentProfile(agentId)
+  if (!agent) return {}
+  return buildMetadata({
+    agent,
+    title: 'Travel Journal',
+    description:
+      'Destination guides, new hotel openings, and field notes from our luxury travel advisors, with the stays and stories worth your time.',
+    path: 'journal',
+  })
 }
 
 export default async function T2JournalIndexPage({ params }: PageProps) {

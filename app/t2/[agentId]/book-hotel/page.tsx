@@ -4,14 +4,25 @@ import { T2HotelProgramsGrid } from '@/components/t2/T2HotelProgramsGrid'
 import { getHotelFilterOptions } from '@/lib/hotels'
 import { getAgentHotelPrograms } from '@/lib/hotel-programs'
 import Image from 'next/image'
+import { getAgentProfile } from '@/lib/suppliers'
+import { buildMetadata } from '@/lib/seo'
+import type { Metadata } from 'next'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
 }
 
-export const metadata = {
-  title: 'Hotels | Programs & Directory',
-  description: 'Browse our preferred hotel programs and search 1,795 luxury hotels worldwide with exclusive Virtuoso benefits.',
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { agentId } = await params
+  const agent = await getAgentProfile(agentId)
+  if (!agent) return {}
+  return buildMetadata({
+    agent,
+    title: 'Luxury Hotels & Preferred Programs',
+    description:
+      'Browse preferred hotel programs and 1,795 luxury hotels with Virtuoso perks: room upgrades, daily breakfast, and resort credits, booked through your advisor.',
+    path: 'book-hotel',
+  })
 }
 
 /**

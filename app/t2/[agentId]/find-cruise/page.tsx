@@ -3,11 +3,26 @@ import { FindCruiseClient } from '@/components/t2/FindCruiseClient'
 import { T2CruisePartnersGrid } from '@/components/t2/T2CruisePartnersGrid'
 import { T2LeadForm } from '@/components/t2/T2LeadForm'
 import { getAgentProfile } from '@/lib/suppliers'
+import { buildMetadata } from '@/lib/seo'
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { agentId } = await params
+  const agent = await getAgentProfile(agentId)
+  if (!agent) return {}
+  return buildMetadata({
+    agent,
+    title: 'Luxury Cruises',
+    description:
+      'Ocean, river, and expedition cruises with exclusive amenities: onboard credits, private receptions, and curated shore excursions through your Virtuoso advisor.',
+    path: 'find-cruise',
+  })
 }
 
 export default async function FindCruisePage({ params }: PageProps) {

@@ -13,6 +13,8 @@ import { T2JournalTeaser } from '@/components/t2/T2JournalTeaser'
 import { T2InstagramFeed } from '@/components/t2/T2InstagramFeed'
 import { T2LeadForm } from '@/components/t2/T2LeadForm'
 import { getAgentProfile } from '@/lib/suppliers'
+import { buildMetadata } from '@/lib/seo'
+import type { Metadata } from 'next'
 import {
   getPropertiesDestinations,
   getExclusiveExperiences,
@@ -23,11 +25,23 @@ import { getBlogPosts } from '@/lib/blog'
 import { tierAllows, type Tier } from '@/lib/tier-features'
 import Link from 'next/link'
 import YTCHomePage from './ytc-home'
-import WWTHomePage from './wwt-home'
 import LidoHomePage from './lido-home'
+import WWTHomeV2 from './wwt-home-v2'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { agentId } = await params
+  const agent = await getAgentProfile(agentId)
+  if (!agent) return {}
+  return buildMetadata({
+    agent,
+    title: 'Luxury Travel, Personally Planned',
+    description:
+      'Bespoke luxury journeys with Virtuoso VIP perks: room upgrades, resort credits, and daily breakfast at the world’s finest hotels, planned by your advisor.',
+  })
 }
 
 // Vista is positioned as the Growth-tier demo. The section set here is the
@@ -194,17 +208,19 @@ export default async function T2HomePage({ params }: PageProps) {
     return <YTCHomePage params={params} />
   }
 
-  // Route Wine & Wellness Travel to its Aethos-inspired bespoke homepage.
-  if (agentId === 'wwt-demo') {
-    return <WWTHomePage params={params} />
-  }
-
   // Route The Lido Collective (Agency demo) to its type-driven navy homepage.
   if (agentId === 'lido-collective') {
     return <LidoHomePage params={params} />
   }
 
   const agent = await getAgentProfile(agentId)
+
+  // Wine & Wellness Travel — bespoke flagship build. Selected by the staging
+  // slug or, in production, the agent's `bespoke_layout` flag (so the live
+  // domain renders it without hardcoding the tenant UUID here).
+  if (agentId === 'wwt-demo' || agent?.bespoke_layout === 'wwt') {
+    return <WWTHomeV2 params={params} />
+  }
   const [properties, experiences, programs, cruises, posts] = await Promise.all([
     getPropertiesDestinations(),
     getExclusiveExperiences(),
