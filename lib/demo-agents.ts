@@ -26,6 +26,17 @@ export const DEMO_SLUGS = new Set(DEMO_AGENTS.map(d => d.slug))
 
 export const isDemoSlug = (id: string): boolean => DEMO_SLUGS.has(id)
 
+/**
+ * Demo slugs that are ALSO published as live, indexable sites. They render from
+ * mock data but should be treated like a real tenant for SEO (indexable + their
+ * own canonical). Wine & Wellness Travel runs as both the T2 showcase and the
+ * operator's live site.
+ */
+export const PUBLISHED_DEMO_SLUGS = new Set<string>(['wwt-demo'])
+
+export const isPublishedDemoSlug = (id: string): boolean =>
+  PUBLISHED_DEMO_SLUGS.has(id)
+
 export function journalBasePath(slug: string): string {
   const demo = DEMO_AGENTS.find(d => d.slug === slug)
   if (!demo) return `/frontend/${slug}/blog`

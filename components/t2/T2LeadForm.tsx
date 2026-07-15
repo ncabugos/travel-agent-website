@@ -17,10 +17,13 @@ export function T2LeadForm({
   const pathname = usePathname()
   const [submitted, setSubmitted] = useState(false)
 
-  // Coast & Compass uses the light variant site-wide. Delegating here means
-  // every page that already renders <T2LeadForm /> inherits the swap with no
-  // call-site changes. Other personas keep the dark default.
-  if (pathname?.startsWith('/t2/coast-compass-demo')) {
+  // Coast & Compass and Wine & Wellness Travel use the light variant site-wide.
+  // Delegating here means every page that already renders <T2LeadForm /> inherits
+  // the swap with no call-site changes. Other personas keep the dark default.
+  if (
+    pathname?.startsWith('/t2/coast-compass-demo') ||
+    pathname?.startsWith('/t2/wwt-demo')
+  ) {
     return <T2LeadFormLight heading={heading} subheading={subheading} />
   }
 

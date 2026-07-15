@@ -3,10 +3,25 @@ import { T2ExperienceGrid } from '@/components/t2/T2ExperienceGrid'
 import { LidoContact, type LidoLocation } from '@/components/t2/LidoContact'
 import { getExclusiveExperiences } from '@/lib/collections'
 import { getAgentProfile } from '@/lib/suppliers'
+import { buildMetadata } from '@/lib/seo'
+import type { Metadata } from 'next'
 import Image from 'next/image'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { agentId } = await params
+  const agent = await getAgentProfile(agentId)
+  if (!agent) return {}
+  return buildMetadata({
+    agent,
+    title: 'Plan a Trip',
+    description:
+      'Tell us where you want to go. We’ll match you with the right hotels, cruises, and itineraries, and unlock Virtuoso perks on every booking.',
+    path: 'plan-a-trip',
+  })
 }
 
 // The Lido Collective treats "Plan a Trip" as a proper agency contact page:

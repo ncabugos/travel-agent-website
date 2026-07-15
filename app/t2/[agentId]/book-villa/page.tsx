@@ -2,6 +2,8 @@ import { T2LeadForm } from '@/components/t2/T2LeadForm'
 import { FindVillaClient } from '@/components/t2/FindVillaClient'
 import { getAllVillas, getVillaCountries } from '@/lib/villas'
 import { getAgentProfile } from '@/lib/suppliers'
+import { buildMetadata } from '@/lib/seo'
+import type { Metadata } from 'next'
 import { tierAllows, type Tier } from '@/lib/tier-features'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
@@ -10,9 +12,17 @@ interface PageProps {
   params: Promise<{ agentId: string }>
 }
 
-export const metadata = {
-  title: 'Book a Private Villa | Luxury Retreats',
-  description: 'Browse handpicked luxury villas worldwide — filter by country, bedrooms, and price.',
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { agentId } = await params
+  const agent = await getAgentProfile(agentId)
+  if (!agent) return {}
+  return buildMetadata({
+    agent,
+    title: 'Private Villa Rentals',
+    description:
+      'Handpicked luxury villas worldwide, from Caribbean beachfront estates to Tuscan countryside retreats, curated and reviewed by your personal travel advisor.',
+    path: 'book-villa',
+  })
 }
 
 export default async function BookVillaPage({ params }: PageProps) {

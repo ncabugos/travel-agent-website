@@ -2,11 +2,26 @@ import Image from 'next/image'
 import { getSupplierProducts } from '@/lib/collections'
 import { T2ExperiencesGrid } from '@/components/t2/T2ExperiencesGrid'
 import { getAgentProfile } from '@/lib/suppliers'
+import { buildMetadata } from '@/lib/seo'
+import type { Metadata } from 'next'
 import { tierAllows, type Tier } from '@/lib/tier-features'
 import { notFound } from 'next/navigation'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { agentId } = await params
+  const agent = await getAgentProfile(agentId)
+  if (!agent) return {}
+  return buildMetadata({
+    agent,
+    title: 'Curated Experiences',
+    description:
+      'Bespoke private journeys and once-in-a-lifetime experiences across 2,500+ destinations, designed by your advisor with exclusive Virtuoso access.',
+    path: 'experiences',
+  })
 }
 
 export default async function ExperiencesPage({ params }: PageProps) {

@@ -5,9 +5,12 @@ import { T2Nav } from '@/components/t2/T2Nav'
 import { LidoNav } from '@/components/t2/LidoNav'
 import { LidoMobileNav } from '@/components/t2/LidoMobileNav'
 import { T2Footer } from '@/components/t2/T2Footer'
+import { WWT2Nav } from '@/components/t2/wwt2/WWT2Nav'
+import { WWT2Footer } from '@/components/t2/wwt2/WWT2Footer'
 import { DemoSignupBanner } from '@/components/ui/DemoSignupBanner'
-import { isDemoSlug } from '@/lib/demo-agents'
+import { isDemoSlug, isPublishedDemoSlug } from '@/lib/demo-agents'
 import '@/app/t2/globals-t2.css'
+import '@/app/t2/wwt2.css'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -38,11 +41,24 @@ interface LayoutProps {
   params: Promise<{ agentId: string }>
 }
 
+// Showcase demos are fixtures, not real businesses. Emit a noindex directive
+// for them at the layout level so it cascades to every page in this template
+// (home + journal/hotels/destinations/advisors). Real tenant sites get no
+// robots override here and stay indexable.
+export async function generateMetadata({ params }: { params: Promise<{ agentId: string }> }) {
+  const { agentId } = await params
+  return isDemoSlug(agentId) && !isPublishedDemoSlug(agentId)
+    ? { robots: { index: false, follow: false } }
+    : {}
+}
+
 export default async function T2Layout({ children, params }: LayoutProps) {
   const { agentId } = await params
   const agent = await getAgentProfile(agentId)
   const isLido = agentId === 'lido-collective'
-  const pageClass = isLido ? 't2-page lido-page' : 't2-page'
+  // Wine & Wellness flagship (v2) — its own scoped design system + bespoke nav.
+  const isWwt2 = agentId === 'wwt-demo' || agent?.bespoke_layout === 'wwt'
+  const pageClass = isWwt2 ? 'wwt2-page' : isLido ? 't2-page lido-page' : 't2-page'
 
   return (
     <div className={`${playfair.variable} ${inter.variable} ${bodoniModa.variable} ${pageClass}`}>
@@ -64,51 +80,6 @@ export default async function T2Layout({ children, params }: LayoutProps) {
           }
         `}</style>
       )}
-      {/* Inject Wine & Wellness Travel theme — Aethos-inspired cream + wine palette */}
-      {agentId === 'wwt-demo' && (
-        <style>{`
-          :root {
-            --t2-bg:           #F4F1E9;
-            --t2-bg-alt:       #E9E3D3;
-            --t2-text:         #1F1D18;
-            --t2-text-muted:   #6E6757;
-            --t2-accent:       #7A3C2F;
-            --t2-accent-hover: #9B5447;
-            --t2-divider:      #D4CCB9;
-            --t2-dark-bg:      #16140E;
-            --t2-dark-text:    #F1EAD5;
-            --t2-overlay:      rgba(22,20,14,0.55);
-            --t2-section-pad:  clamp(120px, 14vw, 180px);
-          }
-          .t2-page {
-            letter-spacing: 0.002em;
-          }
-          .t2-heading {
-            font-weight: 300;
-            letter-spacing: -0.018em;
-          }
-          .t2-label {
-            font-size: 11px;
-            letter-spacing: 0.32em;
-            color: var(--t2-text-muted) !important;
-            font-weight: 500;
-          }
-          /* Aethos-style link underline for anchor links */
-          .wwt-link {
-            color: var(--t2-text);
-            text-decoration: none;
-            border-bottom: 1px solid var(--t2-text);
-            padding-bottom: 2px;
-            font-family: var(--t2-font-sans);
-            font-size: 12px;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            font-weight: 500;
-            transition: opacity 240ms var(--t2-ease);
-          }
-          .wwt-link:hover { opacity: 0.55; }
-        `}</style>
-      )}
       {/* Coast & Compass — locked to Bodoni Moda. Scoped to .t2-page (not :root)
           so var() resolves against the next/font class on the same element. */}
       {agentId === 'coast-compass-demo' && (
@@ -124,7 +95,10 @@ export default async function T2Layout({ children, params }: LayoutProps) {
           .t2-page .t2-ed-num { font-style: italic; }
         `}</style>
       )}
-      {isLido ? (
+      {/* WWT flagship — bespoke nav on every page (home + subpages). */}
+      {isWwt2 ? (
+        <WWT2Nav base={`/t2/${agentId}`} agencyName={agent?.agency_name ?? 'Wine & Wellness Travel'} />
+      ) : isLido ? (
         <>
           <LidoNav agentId={agentId} />
           <LidoMobileNav agentId={agentId} />
@@ -141,6 +115,17 @@ export default async function T2Layout({ children, params }: LayoutProps) {
         />
       )}
       <main>{children}</main>
+      {isWwt2 ? (
+        <WWT2Footer
+          base={`/t2/${agentId}`}
+          agencyName={agent?.agency_name ?? 'Wine & Wellness Travel'}
+          email={agent?.email}
+          phone={agent?.phone}
+          instagram={agent?.instagram_url}
+          facebook={agent?.facebook_url}
+          heroImage="/media/hotel-programs/four-seasons/fs-lanai_wellness-1500.jpg"
+        />
+      ) : (
       <T2Footer
         agentId={agentId}
         agencyName={agent?.agency_name ?? 'Luxury Travel Co.'}
@@ -153,6 +138,7 @@ export default async function T2Layout({ children, params }: LayoutProps) {
         showVirtuosoLogo={isLido}
         affiliationLine={isLido ? 'A proud member of Virtuoso — the world’s leading luxury travel network.' : undefined}
       />
+      )}
     </div>
   )
 }

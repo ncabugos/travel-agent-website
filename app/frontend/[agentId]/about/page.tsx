@@ -39,7 +39,6 @@ const TEAM = [
   {
     name: 'John Oberacker',
     title: 'Travel Expert',
-    phone: '(562) 856-8603',
     bio: 'Condé Nast Top Travel Specialist for 2024 & 2025. With 20+ years crafting extraordinary journeys across 80+ countries, John brings unrivalled access and expertise to every itinerary.',
     image: '/media/eden/team/john-oberacker-badge.jpg',
     instagram: 'https://www.instagram.com/traveltoeden/',
@@ -48,7 +47,6 @@ const TEAM = [
   {
     name: 'Kasra Esteghamat',
     title: 'Travel Expert',
-    phone: '(562) 856-8603',
     bio: 'Kasra\'s passion for travel has taken him across six continents. His deep relationships with luxury properties worldwide ensure his clients receive an unmatched level of personalised service.',
     image: '/media/eden/team/kasra-e.jpg',
     instagram: 'https://www.instagram.com/edenforyourworld/',
@@ -57,7 +55,6 @@ const TEAM = [
   {
     name: 'Jill Robbins',
     title: 'Travel Expert',
-    phone: '(949) 697-4555',
     bio: 'Jill is passionate about connecting clients with experiences that reflect their unique sense of adventure. From European river cruises to remote island escapes, she crafts journeys that resonate deeply.',
     image: '/media/eden/team/JILL-Robins-800x1000.jpg',
     instagram: 'https://www.instagram.com/jilledentravel/',
@@ -66,7 +63,6 @@ const TEAM = [
   {
     name: 'Dianna Cooper',
     title: 'Travel Expert',
-    phone: '(562) 209-3781',
     bio: 'Born and raised in Southern California, Dianna has had the fortune of exploring many beautiful destinations around the globe — all of which have created memories she won\'t soon forget.',
     image: '/media/eden/team/dianna-cooper-virtuoso-800x1000-700x875.jpg',
     instagram: 'https://www.instagram.com/travelfun1/',
@@ -75,7 +71,6 @@ const TEAM = [
   {
     name: 'Kim Diaz',
     title: 'Travel Expert',
-    phone: '(714) 322-2423',
     bio: 'After graduating from college and spending a summer backpacking through Europe, Kim learned a couple things… there are so many beautiful places beckoning for us to visit, and meeting new people and hearing about their lives, eating their food, drinking their spirits, brings new meaning to "breaking bread".',
     image: '/media/eden/team/KIM-Diaz-800x1000-700x875.jpg',
     instagram: 'https://www.instagram.com/kdiaztravel/',
@@ -84,7 +79,6 @@ const TEAM = [
   {
     name: 'Erin Ross',
     title: 'Travel Expert',
-    phone: '(562) 277-3999',
     bio: 'My love for adventure started young, exploring my home state of California and our National Parks with my family. Growing up my mother became a travel advisor and through her I learned how much there is to experience in the world! I am passionate about helping others make their dream trips come true.',
     image: '/media/eden/team/ErinRoss-800x1000-1-700x875.jpg',
     instagram: 'https://www.instagram.com/erinrosstravel/',
@@ -93,7 +87,6 @@ const TEAM = [
   {
     name: 'Kelly Daoud',
     title: 'Air Expert',
-    phone: '(760) 831-1320',
     bio: 'Kelly\'s love of travel was ignited by her first trip overseas and has never stopped. She brings thoughtful, personalised service to every client engagement, ensuring seamless travel experiences from start to finish.',
     image: '/media/eden/team/kellyDoud-700x875.jpg',
     instagram: 'https://www.instagram.com/edenfyw_wings/',
@@ -118,14 +111,6 @@ function MailIcon() {
     </svg>
   )
 }
-function PhoneIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.49 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.4 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.7a16 16 0 0 0 6.29 6.29l.8-.79a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
-  )
-}
-
 export default async function AboutPage({ params }: PageProps) {
   const { agentId } = await params
 
@@ -220,11 +205,6 @@ export default async function AboutPage({ params }: PageProps) {
                   {member.title}
                 </p>
                 <div style={{ width: '36px', height: '1px', background: '#ccc', marginBottom: '18px' }} />
-
-                {/* Phone */}
-                <p style={{ fontFamily: sans, fontSize: '14px', color: '#333', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-                  <PhoneIcon /> {member.phone}
-                </p>
 
                 {/* Bio */}
                 <p style={{ fontFamily: sans, fontSize: '14px', lineHeight: '1.82', color: '#555', marginBottom: '20px' }}>

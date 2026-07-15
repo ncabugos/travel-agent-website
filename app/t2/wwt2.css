@@ -1,0 +1,326 @@
+/* =============================================================================
+   Wine & Wellness Travel — bespoke flagship design system (v2)
+   Four Seasons-inspired monochrome: pure white ground, near-black ink, gray
+   hairlines, light serif display, vast whitespace, slow fade-rise motion.
+   Palette sampled from fourseasons.com (2026-07).
+
+   Everything is scoped under `.wwt2-page` so it never leaks into other T2
+   tenants. Tokens are `--wwt-*`. Imagery/data come from the DB; this file is
+   chrome only.
+   ============================================================================= */
+
+.wwt2-page {
+  /* ── Monochrome ground (Four Seasons: white / black / gray) ───────────── */
+  --wwt-paper:     #FFFFFF;   /* page ground — pure white */
+  --wwt-paper-2:   #F8F8F8;   /* alternating band — off-white */
+  --wwt-sand:      #E8E8E8;   /* fills */
+  --wwt-clay:      #D8D8D8;   /* hairlines / dividers */
+  --wwt-stone:     #767676;   /* muted text + eyebrow labels */
+  --wwt-ink:       #030303;   /* primary text — near-black */
+  --wwt-ink-soft:  #4D4D4D;   /* body text — FS secondary gray */
+
+  /* ── Accents (FS is monochrome — kept neutral) ────────────────────────── */
+  --wwt-bordeaux:  #030303;   /* emphasis / focus outline */
+  --wwt-sage:      #4D4D4D;
+
+  /* ── Dark surfaces (for cinematic bands) ──────────────────────────────── */
+  --wwt-night:     #141414;   /* neutral near-black */
+  --wwt-night-2:   #1F1F1F;
+  --wwt-on-night:  #FFFFFF;   /* white on dark */
+
+  /* ── Type ─────────────────────────────────────────────────────────────── */
+  --wwt-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --wwt-sans:  'Inter', system-ui, -apple-system, sans-serif;
+
+  /* fluid scale — large + airy */
+  --wwt-t-hero:  clamp(2.9rem, 6.2vw, 6rem);
+  --wwt-t-h1:    clamp(2.1rem, 4.2vw, 3.5rem);
+  --wwt-t-h2:    clamp(1.6rem, 2.6vw, 2.4rem);
+  --wwt-t-h3:    clamp(1.25rem, 1.8vw, 1.6rem);
+  --wwt-t-body:  1.0625rem;     /* ~17px */
+  --wwt-t-eyebrow: 0.6875rem;   /* ~11px */
+
+  /* ── Rhythm ───────────────────────────────────────────────────────────── */
+  --wwt-section: clamp(6rem, 12vw, 12rem);   /* ~96–192px vertical */
+  --wwt-gutter:  clamp(1.5rem, 5vw, 6rem);
+  --wwt-measure: 64ch;
+  --wwt-max:     1320px;
+
+  /* ── Motion ───────────────────────────────────────────────────────────── */
+  --wwt-ease:    cubic-bezier(0.22, 1, 0.36, 1);
+  --wwt-slow:    800ms;
+
+  background: var(--wwt-paper);
+  color: var(--wwt-ink);
+  font-family: var(--wwt-sans);
+  font-size: var(--wwt-t-body);
+  line-height: 1.75;
+  letter-spacing: 0.003em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* The bespoke build hides the generic chrome (banner spacing handled inline). */
+.wwt2-page main { overflow-x: clip; }
+
+/* ── Typography primitives ───────────────────────────────────────────────── */
+.wwt2-page .wwt-eyebrow {
+  font-family: var(--wwt-sans);
+  font-size: var(--wwt-t-eyebrow);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: var(--wwt-stone);
+  margin: 0;
+}
+
+.wwt2-page .wwt-display {
+  font-family: var(--wwt-serif);
+  font-weight: 300;
+  line-height: 1.06;
+  letter-spacing: -0.005em;
+  margin: 0;
+  color: var(--wwt-ink);
+}
+
+.wwt2-page .wwt-display.italic { font-style: italic; }
+
+.wwt2-page .wwt-h2 { font-size: var(--wwt-t-h2); }
+.wwt2-page .wwt-h1 { font-size: var(--wwt-t-h1); }
+
+.wwt2-page .wwt-lede {
+  font-family: var(--wwt-serif);
+  font-weight: 300;
+  font-size: var(--wwt-t-h3);
+  line-height: 1.5;
+  color: var(--wwt-ink-soft);
+  max-width: var(--wwt-measure);
+}
+
+.wwt2-page .wwt-body {
+  font-family: var(--wwt-sans);
+  font-weight: 300;
+  color: var(--wwt-ink-soft);
+  max-width: var(--wwt-measure);
+}
+
+/* ── Quiet links / buttons (Aman: understated, letter-spaced) ────────────── */
+.wwt2-page .wwt-link {
+  display: inline-block;
+  font-family: var(--wwt-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--wwt-ink);
+  text-decoration: none;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--wwt-clay);
+  transition: border-color 350ms var(--wwt-ease), opacity 350ms var(--wwt-ease);
+}
+.wwt2-page .wwt-link:hover { border-color: var(--wwt-ink); opacity: 0.78; }
+
+.wwt2-page .wwt-link.on-night { color: var(--wwt-on-night); border-color: rgba(255,255,255,0.4); }
+.wwt2-page .wwt-link.on-night:hover { border-color: var(--wwt-on-night); }
+
+.wwt2-page .wwt-btn {
+  display: inline-block;
+  font-family: var(--wwt-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--wwt-ink);
+  text-decoration: none;
+  padding: 1rem 2.4rem;
+  border: 1px solid var(--wwt-ink);
+  background: transparent;
+  cursor: pointer;
+  transition: background 350ms var(--wwt-ease), color 350ms var(--wwt-ease);
+}
+.wwt2-page .wwt-btn:hover { background: var(--wwt-ink); color: var(--wwt-paper); }
+.wwt2-page .wwt-btn.on-night { color: var(--wwt-on-night); border-color: var(--wwt-on-night); }
+.wwt2-page .wwt-btn.on-night:hover { background: var(--wwt-on-night); color: var(--wwt-night); }
+/* Solid black block CTA — Four Seasons "BOOK NOW". */
+.wwt2-page .wwt-btn.solid { background: var(--wwt-ink); color: #fff; border-color: var(--wwt-ink); }
+.wwt2-page .wwt-btn.solid:hover { background: transparent; color: var(--wwt-ink); }
+
+/* ── Layout helpers ──────────────────────────────────────────────────────── */
+.wwt2-page .wwt-shell {
+  max-width: var(--wwt-max);
+  margin: 0 auto;
+  padding-inline: var(--wwt-gutter);
+}
+.wwt2-page .wwt-section { padding-block: var(--wwt-section); }
+.wwt2-page .wwt-band-alt { background: var(--wwt-paper-2); }
+.wwt2-page .wwt-band-night { background: var(--wwt-night); color: var(--wwt-on-night); }
+.wwt2-page .wwt-band-night .wwt-display { color: var(--wwt-on-night); }
+.wwt2-page .wwt-band-night .wwt-body,
+.wwt2-page .wwt-band-night .wwt-lede { color: rgba(255,255,255,0.78); }
+.wwt2-page .wwt-band-night .wwt-eyebrow { color: rgba(255,255,255,0.55); }
+
+.wwt2-page .wwt-rule { height: 1px; background: var(--wwt-clay); border: 0; opacity: 0.6; }
+
+/* ── Scroll reveal (fade + rise), reduced-motion safe ────────────────────── */
+.wwt2-page .wwt-reveal { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .wwt2-page .wwt-reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity var(--wwt-slow) var(--wwt-ease),
+                transform var(--wwt-slow) var(--wwt-ease);
+    will-change: opacity, transform;
+  }
+  .wwt2-page .wwt-reveal[data-inview='true'] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Word-by-word headline reveal (WWT2HeadlineReveal) ───────────────────── */
+.wwt2-page .wwt-hr-slot {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  margin-right: 0.26em; /* word gap — a trailing space would be clipped */
+}
+.wwt2-page .wwt-hr-slot:last-child { margin-right: 0; }
+.wwt2-page .wwt-hr-word { display: inline-block; }
+@media (prefers-reduced-motion: no-preference) {
+  .wwt2-page .wwt-hr .wwt-hr-word {
+    transform: translateY(115%);
+    transition: transform 900ms var(--wwt-ease);
+    will-change: transform;
+  }
+  .wwt2-page .wwt-hr[data-inview='true'] .wwt-hr-word { transform: none; }
+}
+
+/* ── Parallax frame (WWT2Parallax) ───────────────────────────────────────── */
+.wwt2-page .wwt-plx {
+  position: relative;
+  overflow: hidden;
+  background: var(--wwt-sand);
+}
+.wwt2-page .wwt-plx-layer {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.14);
+  will-change: transform;
+}
+
+/* ── Chapter marks — numeral · growing hairline · eyebrow ────────────────── */
+.wwt2-page .wwt2-chmark {
+  display: flex; align-items: center; gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+.wwt2-page .wwt2-chmark-numeral {
+  font-family: var(--wwt-serif); font-style: italic;
+  font-size: 1.1rem; color: var(--wwt-stone); line-height: 1;
+}
+.wwt2-page .wwt2-chmark-line {
+  display: block; width: 64px; height: 1px; background: var(--wwt-clay);
+}
+.wwt2-page .wwt2-chmark.on-night .wwt2-chmark-numeral { color: rgba(255,255,255,0.55); }
+.wwt2-page .wwt2-chmark.on-night .wwt2-chmark-line { background: rgba(255,255,255,0.3); }
+@media (prefers-reduced-motion: no-preference) {
+  .wwt2-page .wwt2-chmark-line,
+  .wwt2-page .wwt-reveal .wwt2-chmark-line {
+    width: 0;
+    transition: width 1100ms var(--wwt-ease) 150ms;
+  }
+  .wwt2-page .wwt-reveal[data-inview='true'] .wwt2-chmark-line,
+  .wwt2-page .wwt-reveal[data-inview='true'].wwt2-chmark .wwt2-chmark-line { width: 64px; }
+}
+
+/* ── Chapter rail (WWT2ChapterRail) — desktop only ───────────────────────── */
+.wwt2-page .wwt2-rail {
+  position: fixed; right: clamp(1rem, 2vw, 1.9rem); top: 50%;
+  transform: translateY(-50%);
+  z-index: 900;
+  display: flex; flex-direction: row-reverse; gap: 1rem; align-items: stretch;
+  /* White + difference: reads black on paper, white on night bands. */
+  mix-blend-mode: difference;
+  color: #fff;
+}
+.wwt2-page .wwt2-rail-track {
+  width: 1px; position: relative; background: rgba(255,255,255,0.28);
+}
+.wwt2-page .wwt2-rail-fill {
+  position: absolute; inset: 0; background: #fff;
+  transform: scaleY(0); transform-origin: top; will-change: transform;
+}
+.wwt2-page .wwt2-rail-ticks {
+  display: flex; flex-direction: column; justify-content: center; gap: 1.05rem;
+}
+.wwt2-page .wwt2-rail-tick {
+  display: flex; align-items: center; justify-content: flex-end; gap: 0.55rem;
+  background: none; border: 0; cursor: pointer; padding: 0;
+  color: rgba(255,255,255,0.45);
+  transition: color 400ms var(--wwt-ease);
+}
+.wwt2-page .wwt2-rail-tick[data-active='true'],
+.wwt2-page .wwt2-rail-tick:hover { color: #fff; }
+.wwt2-page .wwt2-rail-dash {
+  display: block; width: 12px; height: 1px; background: currentColor;
+  transition: width 400ms var(--wwt-ease);
+}
+.wwt2-page .wwt2-rail-tick[data-active='true'] .wwt2-rail-dash,
+.wwt2-page .wwt2-rail-tick:hover .wwt2-rail-dash { width: 22px; }
+.wwt2-page .wwt2-rail-label {
+  font-family: var(--wwt-sans); font-size: 0.6rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.18em;
+  max-width: 0; opacity: 0; overflow: hidden; white-space: nowrap;
+  transition: max-width 500ms var(--wwt-ease), opacity 500ms var(--wwt-ease);
+}
+.wwt2-page .wwt2-rail-tick[data-active='true'] .wwt2-rail-label,
+.wwt2-page .wwt2-rail-tick:hover .wwt2-rail-label {
+  max-width: 120px; opacity: 1;
+}
+@media (max-width: 1099px) {
+  .wwt2-page .wwt2-rail { display: none; }
+}
+
+/* ── Curtain finale — the footer is uncovered as the page scrolls past ───── */
+@media (min-width: 900px) {
+  .wwt2-page main {
+    position: relative; z-index: 1;
+    background: var(--wwt-paper);
+  }
+  /* The sticky element must fit one viewport or its top clips: the footer is
+     pinned to exactly 100svh, the CTA flexes to fill above the quiet foot. */
+  .wwt2-page .wwt2-footer {
+    position: sticky; bottom: 0; z-index: 0;
+    height: 100svh;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    /* Keep the CTA clear of the fixed nav (+ demo banner) at page end. */
+    padding-top: calc(var(--eah-banner-h, 0px) + 80px);
+  }
+  .wwt2-page .wwt2-footer .wwt2-cta {
+    flex: 1; min-height: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding-block: 2rem;
+  }
+  /* Compress the finale so CTA + quiet foot together fit one viewport. */
+  .wwt2-page .wwt2-footer .wwt2-cta-title {
+    font-size: clamp(2.2rem, 4vw, 3.6rem);
+    margin: 0.9rem auto 1.1rem;
+  }
+  .wwt2-page .wwt2-footer .wwt2-cta-sub { margin-bottom: 1.4rem; }
+  .wwt2-page .wwt2-footer .wwt2-foot {
+    flex-shrink: 0;
+    padding-block: 1.6rem 1rem;
+  }
+  .wwt2-page .wwt2-footer .wwt2-foot-grid { padding-bottom: 1rem; }
+  .wwt2-page .wwt2-footer .wwt2-foot-base { padding-top: 1rem; }
+  .wwt2-page .wwt2-footer .wwt2-foot-nav,
+  .wwt2-page .wwt2-footer .wwt2-foot-contact { gap: 0.55rem; }
+}
+
+/* ── Focus visibility (a11y as a luxury floor) ───────────────────────────── */
+.wwt2-page a:focus-visible,
+.wwt2-page button:focus-visible {
+  outline: 2px solid var(--wwt-bordeaux);
+  outline-offset: 3px;
+}

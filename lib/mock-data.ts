@@ -35,6 +35,11 @@ export interface MockAgent {
   // Optional so existing demos that don't set it default to Growth behaviour.
   tier?: 'starter' | 'growth' | 'custom' | 'agency' | null
 
+  // Bespoke layout key — when set, the t2 render path serves a hand-built
+  // homepage for this tenant instead of the generic Vista composition.
+  // e.g. 'wwt' → Wine & Wellness Travel flagship build.
+  bespoke_layout?: string | null
+
   // ── Onboarding-collected profile fields ────────────────────────────────
   // All optional so existing demos that don't set them still type-check.
   bio?: string
@@ -220,7 +225,7 @@ export const DEMO_WWT_AGENT: MockAgent = {
   id: 'wwt-demo',
   full_name: 'Your Advisor',
   agency_name: 'Wine & Wellness Travel',
-  tagline: 'Slow-paced wine and wellness travel — private cellar dinners, spa retreats, and villa stays, personally planned.',
+  tagline: 'Luxury wine and wellness travel, personally planned — cellar dinners, spa retreats, villa stays, and river cruises, all with Virtuoso benefits.',
   tier: 'custom',
   email: 'hello@wineandwellnesstravel.com',
   phone: '+1 (000) 000-0000',
@@ -231,9 +236,11 @@ export const DEMO_WWT_AGENT: MockAgent = {
   youtube_url: undefined,
   tiktok_url: undefined,
   website_url: 'https://www.wineandwellnesstravel.com',
-  custom_domain: null,
+  // Launch domain for the live site. Drives canonical URLs + absolute OG image
+  // URLs in lib/seo.ts. Swap to the final domain before go-live if different.
+  custom_domain: 'wineandwellness.com',
   avatar_url: null,
-  bio: "Wine & Wellness Travel was born from a single belief — that travel, at its best, is not a destination but a slow return to yourself. As a proud affiliate of Montecito Village Travel and a member of Virtuoso, the world's leading luxury travel network, I design journeys for the traveler who measures a great trip not by what they ticked off, but by how they felt at the end of it: a private cellar dinner in Piemonte, a silent dawn walk through Kyoto, a barefoot week at a Tuscan farmhouse with nothing on the itinerary but long lunches. Every trip comes with VIP perks, hand-vetted properties, and a single point of contact from first call to last night — so you can stop planning and start being somewhere.",
+  bio: "Wine & Wellness Travel plans immersive journeys through the world's great wine and wellness destinations. As an affiliate of Montecito Village Travel and a member of Virtuoso, the world's leading luxury travel network, we secure benefits you can't book on your own — room upgrades, hotel credits, daily breakfast, and VIP recognition at over 1,400 properties. Every journey is planned in full by one advisor: private cellar dinners in Piemonte, spa weeks at a Tuscan farmhouse, river cruises through Bordeaux. You make one call. We handle everything else.",
   travel_specialties: [
     'Wine Country',
     'Wellness & Spa Retreats',
