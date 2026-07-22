@@ -5,13 +5,9 @@ import { MarketingNav } from '@/components/marketing/MarketingNav'
 import { StudioBanner } from '@/components/marketing/StudioBanner'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 import { HeroSlideshow } from '@/components/marketing/HeroSlideshow'
-import { MarketingBrandedWebsite } from '@/components/marketing/MarketingBrandedWebsite'
 import { MarketingSupplierPrograms } from '@/components/marketing/MarketingSupplierPrograms'
-import { MarketingTensionBeat } from '@/components/marketing/MarketingTensionBeat'
 import { MarketingClosingCTA } from '@/components/marketing/MarketingClosingCTA'
-import { MarketingReachSection } from '@/components/marketing/MarketingReachSection'
 import { MarketingCuratedEditorial } from '@/components/marketing/MarketingCuratedEditorial'
-import { MarketingAdvisorPortal } from '@/components/marketing/MarketingAdvisorPortal'
 import { MarketingStudioPromo } from '@/components/marketing/MarketingStudioPromo'
 import { MarketingInsightsTeaser } from '@/components/marketing/MarketingInsightsTeaser'
 
@@ -134,7 +130,7 @@ export default function EliteAdvisorHubHomePage() {
             marginBottom: '32px', textTransform: 'uppercase', letterSpacing: '0.05em',
             backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.15)',
           }}>
-            ✦ For advisors selling the world&rsquo;s finest hotels
+            ✦ For the world&rsquo;s finest travel advisors
           </div>
 
           <h1 style={{
@@ -146,13 +142,13 @@ export default function EliteAdvisorHubHomePage() {
             maxWidth: '900px',
             color: '#fff',
           }}>
-            The trips are extraordinary.{' '}
+            A website as extraordinary as{' '}
             <span style={{
               background: 'linear-gradient(135deg, #a5b4fc, #c4b5fd)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}>
-              The websites rarely are.
+              the trips you sell.
             </span>
           </h1>
 
@@ -160,7 +156,7 @@ export default function EliteAdvisorHubHomePage() {
             fontSize: '18px', lineHeight: 1.7, color: 'rgba(255,255,255,0.82)',
             maxWidth: '620px', margin: '0 auto 40px',
           }}>
-            Independent advisors sell Aman, Belmond, and Four Seasons — then send clients to a site built for a $250 booking, not a $25,000 one. Elite Advisor Hub closes the gap: a branded site as composed as the journeys you plan, with the supplier programs already in place and kept current for you.
+            You place clients at Aman before the season opens and hold cabins the public never sees. Elite Advisor Hub gives that work the site it deserves — custom-branded, maintained for you, and live within days.
           </p>
 
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -177,7 +173,7 @@ export default function EliteAdvisorHubHomePage() {
                 transition: 'transform 0.2s, box-shadow 0.2s',
               }}
             >
-              Explore Pricing
+              Begin your 30 days
             </a>
             <a
               href="#demos"
@@ -195,9 +191,6 @@ export default function EliteAdvisorHubHomePage() {
         </div>
       </section>
 
-      {/* Tension beat — names the problem, pivots into the feature grid */}
-      <MarketingTensionBeat />
-
       {/* Features */}
       <section id="features" className="eah-section" style={{
         padding: '100px 24px', backgroundColor: '#fff',
@@ -207,13 +200,14 @@ export default function EliteAdvisorHubHomePage() {
             fontSize: '36px', fontWeight: 700, textAlign: 'center',
             letterSpacing: '-0.02em', lineHeight: 1.1, margin: '0 0 12px',
           }}>
-            What &ldquo;maintained for you&rdquo; actually means.
+            All of the essentials. Maintenance done for you.
           </h2>
           <p style={{
             textAlign: 'center', fontSize: '16px', color: '#6b7280',
-            margin: '0 0 60px', maxWidth: '520px', marginInline: 'auto',
+            margin: '0 0 60px', maxWidth: '540px', marginInline: 'auto',
           }}>
-            Built by a working advisor. Maintained for practices that treat every booking as a credential.
+            Your website has always been the one part of the client experience you didn&rsquo;t
+            fully control. Now it is — without becoming another job.
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }} className="eah-features-grid">
@@ -279,18 +273,6 @@ export default function EliteAdvisorHubHomePage() {
       </section>
 
       {/* Deep-dive feature sections */}
-      <MarketingBrandedWebsite />
-      <MarketingSupplierPrograms />
-      <MarketingReachSection />
-      <MarketingCuratedEditorial />
-      <MarketingAdvisorPortal />
-
-      {/* Pricing */}
-      <MarketingPricing />
-
-      {/* Studio cross-sell — the done-for-you marketing service on top of the platform */}
-      <MarketingStudioPromo />
-
       {/* Demos */}
       <section id="demos" className="eah-section" style={{
         padding: '100px 24px', backgroundColor: '#fff',
@@ -300,15 +282,14 @@ export default function EliteAdvisorHubHomePage() {
             fontSize: '36px', fontWeight: 700, textAlign: 'center',
             letterSpacing: '-0.02em', lineHeight: 1.1, margin: '0 0 12px',
           }}>
-            Seven live sites. Not mockups.
+            Choose a template — or build your own.
           </h2>
           <p style={{
             textAlign: 'center', fontSize: '16px', color: '#6b7280',
             margin: '0 0 60px', maxWidth: '580px', marginInline: 'auto',
           }}>
-            Seven live sites on Elite Advisor Hub, organized by tier — two Starter templates,
-            one Growth build, two Custom builds, and two Agency examples. Each is live and
-            available to explore.
+            Explore the demo sites below to see each template style. Every real build starts
+            from one of these and is finished to your own brand — or designed fully bespoke.
           </p>
 
           <div
@@ -404,6 +385,16 @@ export default function EliteAdvisorHubHomePage() {
           </div>
         </div>
       </section>
+
+      <MarketingSupplierPrograms />
+      <MarketingCuratedEditorial />
+
+      {/* Pricing */}
+      <MarketingPricing />
+
+      {/* Studio cross-sell — the done-for-you marketing service on top of the platform */}
+      <MarketingStudioPromo />
+
 
       {/* Insights — latest from the EAH company blog (hidden until posts exist) */}
       <MarketingInsightsTeaser />

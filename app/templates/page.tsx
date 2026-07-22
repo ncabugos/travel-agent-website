@@ -11,7 +11,7 @@ const PURPLE = '#8b5cf6'
 export const metadata = buildMarketingMetadata({
   title: 'Website Templates for Luxury Travel Advisors — Elite Advisor Hub',
   description:
-    'Explore the three Elite Advisor Hub templates — Vista, Meridian, and Casa Solis. See a live demo of each Virtuoso-grade design built for luxury travel advisors.',
+    'Explore the three Elite Advisor Hub templates — Vista, Meridian, and Casa Solis. See a live demo of each luxury design built for top travel advisors.',
   path: 'templates',
   image: '/demos/vista.png',
   imageAlt: 'Elite Advisor Hub templates — Vista, Meridian, and Casa Solis',
@@ -101,8 +101,9 @@ export default function TemplatesPage() {
             </span>
           </h1>
           <p style={{ fontSize: '18px', lineHeight: 1.7, color: '#6b7280', maxWidth: '600px', margin: '0 auto' }}>
-            Every Elite Advisor Hub site is a Virtuoso-grade build. Choose the design
-            that fits your brand — then see it live, running on a real demo site.
+            Every Elite Advisor Hub site is built to the standard the top consortia
+            expect. Choose the design that fits your brand — then see it live on a
+            demo site.
           </p>
         </div>
       </section>
@@ -193,7 +194,7 @@ export default function TemplatesPage() {
             Ready to launch yours?
           </h2>
           <p style={{ fontSize: '16px', color: '#6b7280', lineHeight: 1.7, margin: '0 0 32px' }}>
-            A Virtuoso-grade site at $59 a month — no setup fee, and your first
+            Your site at $59 a month — no setup fee, and your first
             30 days are with our compliments.
           </p>
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>

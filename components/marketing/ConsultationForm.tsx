@@ -47,8 +47,16 @@ const HEARD_FROM = [
 const HOST_AFFILIATIONS = [
   'Select one…',
   'Virtuoso',
+  'Signature Travel Network',
+  'Ensemble Travel Group',
+  'Travel Leaders',
+  'Serandipians',
+  'XO Private',
+  'Internova Select',
+  'GlobalStar',
+  'Affluent Traveler Collection',
+  'Other consortium',
   'Independent',
-  'Other',
 ]
 
 const SPECIALTIES = [

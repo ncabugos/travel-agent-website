@@ -52,20 +52,43 @@ export async function MarketingSupplierPrograms() {
               color: '#ffffff',
             }}
           >
-            The catalog that makes you look like you've been doing this for twenty years.
+            Luxury partnerships, already built in.
           </h2>
           <p
             style={{
               fontSize: '17px',
               lineHeight: 1.65,
               color: '#a1a1aa',
-              margin: 0,
+              margin: '0 0 18px',
               maxWidth: '680px',
             }}
           >
             Every preferred-partner program your clients care about — already on your site, with the
             benefits they'll receive on every stay. We keep the catalog maintained. You keep the
             relationships.
+          </p>
+          <p
+            style={{
+              fontSize: '14px',
+              lineHeight: 1.7,
+              color: '#71717a',
+              margin: '0 0 14px',
+              maxWidth: '680px',
+            }}
+          >
+            At home in every network — Virtuoso, Signature, Ensemble, Travel Leaders, Serandipians,
+            XO Private, Internova Select, GlobalStar, and the Affluent Traveler Collection.
+          </p>
+          <p
+            style={{
+              fontSize: '13px',
+              fontWeight: 600,
+              letterSpacing: '0.08em',
+              color: '#C9B07A',
+              margin: 0,
+            }}
+          >
+            1,795+ luxury hotels &nbsp;·&nbsp; 30+ cruise lines &nbsp;·&nbsp; live within days
           </p>
         </div>
 

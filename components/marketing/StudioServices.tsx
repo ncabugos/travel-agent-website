@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 /**
  * Studio "Capabilities" showcase — a dark, animated section that demonstrates
  * the marketing services (social, content/GEO, AI visibility, email, design) as
- * live device mockups. Reuses the animation approach from MarketingAdvisorPortal
+ * live device mockups. Reuses the in-view animation approach from the former MarketingAdvisorPortal
  * (IntersectionObserver + rAF loop + ramp/ease helpers), restyled to the Studio
  * gold/charcoal identity and laid out as alternating feature rows.
  */

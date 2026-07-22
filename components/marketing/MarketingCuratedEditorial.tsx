@@ -87,7 +87,7 @@ export function MarketingCuratedEditorial() {
               color: '#0a0a0a',
             }}
           >
-            A journal that publishes itself.
+            Keep your site active with a curated journal.
           </h2>
           <p
             style={{
@@ -98,9 +98,11 @@ export function MarketingCuratedEditorial() {
               maxWidth: '640px',
             }}
           >
-            A dead journal is the fastest way to look inactive. Ours doesn&rsquo;t go quiet. An
-            in-house editorial team publishes destination guides, hotel spotlights, and notes on a
-            weekly cadence — you pick the categories, the articles arrive on your site automatically.
+            A dead journal is the fastest way to look inactive. An in-house editorial team
+            publishes destination guides and hotel spotlights to your site weekly — you pick the
+            categories, the articles arrive automatically. And because Google and AI answer
+            engines now reward sites that publish fresh, expert content, an active journal is how
+            clients asking ChatGPT or Perplexity for an advisor actually find you.
             Real content for search, and for the client email you were going to write anyway.
           </p>
         </div>
