@@ -1,6 +1,8 @@
 import { Cormorant_Garamond, DM_Sans } from 'next/font/google'
 import type { ReactNode } from 'react'
 import { getAgentProfile } from '@/lib/suppliers'
+import { getAgentGaMeasurementId } from '@/lib/agent-ga'
+import TenantAnalyticsConfig from '@/components/analytics/TenantAnalyticsConfig'
 import { TopBar } from '@/components/layout/TopBar'
 import { SiteNav } from '@/components/layout/SiteNav'
 import { SiteFooter } from '@/components/layout/SiteFooter'
@@ -30,7 +32,10 @@ interface LayoutProps {
 
 export default async function AgentFrontendLayout({ children, params }: LayoutProps) {
   const { agentId } = await params
-  const agent = await getAgentProfile(agentId)
+  const [agent, gaMeasurementId] = await Promise.all([
+    getAgentProfile(agentId),
+    getAgentGaMeasurementId(agentId),
+  ])
   const base = agent ? tenantBase(agent) : `/frontend/${agentId}`
 
   const social = {
@@ -44,6 +49,7 @@ export default async function AgentFrontendLayout({ children, params }: LayoutPr
       className={`${cormorant.variable} ${dmSans.variable}`}
       style={{ background: 'var(--cream)', minHeight: '100vh' }}
     >
+      {gaMeasurementId && <TenantAnalyticsConfig measurementId={gaMeasurementId} />}
       {isDemoSlug(agentId) && <DemoSignupBanner />}
       <TopBar
         phone={agent?.phone ?? '+1 (562) 856-8603'}

@@ -1,6 +1,8 @@
 import { Playfair_Display, Inter, Bodoni_Moda } from 'next/font/google'
 import type { ReactNode } from 'react'
 import { getAgentProfile } from '@/lib/suppliers'
+import { getAgentGaMeasurementId } from '@/lib/agent-ga'
+import TenantAnalyticsConfig from '@/components/analytics/TenantAnalyticsConfig'
 import { T2Nav } from '@/components/t2/T2Nav'
 import { LidoNav } from '@/components/t2/LidoNav'
 import { LidoMobileNav } from '@/components/t2/LidoMobileNav'
@@ -54,7 +56,10 @@ export async function generateMetadata({ params }: { params: Promise<{ agentId: 
 
 export default async function T2Layout({ children, params }: LayoutProps) {
   const { agentId } = await params
-  const agent = await getAgentProfile(agentId)
+  const [agent, gaMeasurementId] = await Promise.all([
+    getAgentProfile(agentId),
+    getAgentGaMeasurementId(agentId),
+  ])
   const isLido = agentId === 'lido-collective'
   // Wine & Wellness flagship (v2) — its own scoped design system + bespoke nav.
   const isWwt2 = agentId === 'wwt-demo' || agent?.bespoke_layout === 'wwt'
@@ -62,6 +67,7 @@ export default async function T2Layout({ children, params }: LayoutProps) {
 
   return (
     <div className={`${playfair.variable} ${inter.variable} ${bodoniModa.variable} ${pageClass}`}>
+      {gaMeasurementId && <TenantAnalyticsConfig measurementId={gaMeasurementId} />}
       {isDemoSlug(agentId) && <DemoSignupBanner />}
       {/* Inject YTC theme override if this is the YTC demo */}
       {agentId === 'ytc-demo' && (

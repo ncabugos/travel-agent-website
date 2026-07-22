@@ -1,6 +1,8 @@
 import { Space_Grotesk, Inter } from 'next/font/google'
 import type { ReactNode } from 'react'
 import { getAgentProfile } from '@/lib/suppliers'
+import { getAgentGaMeasurementId } from '@/lib/agent-ga'
+import TenantAnalyticsConfig from '@/components/analytics/TenantAnalyticsConfig'
 import { T3Nav } from '@/components/t3/T3Nav'
 import { T3Footer } from '@/components/t3/T3Footer'
 import { DemoSignupBanner } from '@/components/ui/DemoSignupBanner'
@@ -36,10 +38,14 @@ export async function generateMetadata({ params }: { params: Promise<{ agentId: 
 
 export default async function T3Layout({ children, params }: LayoutProps) {
   const { agentId } = await params
-  const agent = await getAgentProfile(agentId)
+  const [agent, gaMeasurementId] = await Promise.all([
+    getAgentProfile(agentId),
+    getAgentGaMeasurementId(agentId),
+  ])
 
   return (
     <div className={`${spaceGrotesk.variable} ${inter.variable} t3-page`}>
+      {gaMeasurementId && <TenantAnalyticsConfig measurementId={gaMeasurementId} />}
       {isDemoSlug(agentId) && <DemoSignupBanner />}
       <T3Nav
         agentId={agentId}
