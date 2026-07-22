@@ -193,12 +193,13 @@ export default function TemplatesPage() {
             Ready to launch yours?
           </h2>
           <p style={{ fontSize: '16px', color: '#6b7280', lineHeight: 1.7, margin: '0 0 32px' }}>
-            Join the Founding Advisor beta — a Virtuoso-grade site with the setup fee
-            waived, a free first month, and a locked founding rate.
+            A Virtuoso-grade site at $59 a month — no setup fee, and your first
+            30 days are with our compliments.
           </p>
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link
-              href="/beta"
+              href="/#pricing"
+              className="eah-btn-lux"
               style={{
                 padding: '14px 32px',
                 backgroundColor: '#111',
@@ -209,7 +210,7 @@ export default function TemplatesPage() {
                 textDecoration: 'none',
               }}
             >
-              Join the founding beta
+              Begin your 30 days
             </Link>
             <Link
               href="/#pricing"

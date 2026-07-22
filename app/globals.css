@@ -141,3 +141,44 @@ body {
   transform: scale(1.04);
 }
 
+
+/* ── Luxe CTA treatment (marketing primary buttons) ──────────────────────────
+   A fine white hairline ring + a slow ambient sheen that sweeps the button
+   every ~6s, plus a quiet lift on hover. Deliberately restrained: no pulsing,
+   no looping glow — one pass of light, like a hallmark catching the sun.
+   Apply alongside a button's own background/colors. */
+.eah-btn-lux {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.eah-btn-lux::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 58%
+  );
+  transform: translateX(-130%);
+  animation: eah-sheen 6.4s ease-in-out infinite;
+}
+@keyframes eah-sheen {
+  0%   { transform: translateX(-130%); }
+  16%  { transform: translateX(130%); }
+  100% { transform: translateX(130%); }
+}
+.eah-btn-lux:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+@media (prefers-reduced-motion: reduce) {
+  .eah-btn-lux::after { animation: none; }
+  .eah-btn-lux { transition: none; }
+}

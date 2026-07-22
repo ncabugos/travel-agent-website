@@ -22,7 +22,7 @@ import {
 import { getAgentHotelPrograms } from '@/lib/hotel-programs'
 import { getCruiseLines } from '@/lib/cruise-lines'
 import { getBlogPosts } from '@/lib/blog'
-import { tierAllows, type Tier } from '@/lib/tier-features'
+import { tierAllows, featureAllowed, type Tier } from '@/lib/tier-features'
 import Link from 'next/link'
 import YTCHomePage from './ytc-home'
 import LidoHomePage from './lido-home'
@@ -386,8 +386,8 @@ export default async function T2HomePage({ params }: PageProps) {
       {/* ── 10 · Journal teaser ────────────────────────────────────────── */}
       <T2JournalTeaser agentId={agentId} posts={posts} />
 
-      {/* ── 11 · Instagram feed (Growth+) ──────────────────────────────── */}
-      {tierAllows(tier, 'instagram-feed') && (
+      {/* ── 11 · Instagram feed (Growth+ or instagram module) ─────────── */}
+      {featureAllowed(tier, agent?.active_modules, 'instagram-feed') && (
         <T2InstagramFeed handle={igHandle} />
       )}
 

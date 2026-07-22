@@ -17,10 +17,12 @@ interface Props {
   stripeCustomerId: string | null
 }
 
+// Business model v2: starter = the public $59 base plan ("The Site");
+// Growth/Custom remain internal/grandfathered tiers at current list prices.
 const TIER_OPTIONS = [
-  { value: 'starter', label: 'Starter — $79/mo' },
-  { value: 'growth', label: 'Growth — $149/mo' },
-  { value: 'custom', label: 'Custom — $299/mo' },
+  { value: 'starter', label: 'The Site — $59/mo' },
+  { value: 'growth', label: 'Growth — $179/mo (legacy)' },
+  { value: 'custom', label: 'Custom — $349/mo (legacy)' },
   { value: 'agency', label: 'Agency — Custom pricing' },
 ] as const
 

@@ -14,6 +14,8 @@ interface T2FooterProps {
   /** Subscription tier — filters the Explore link list so villa/experiences
       drop on tiers that don't include them. */
   tier?: Tier | null
+  /** Active à-la-carte module keys (agents.active_modules). */
+  modules?: string[] | null
   /** When true, the Network column shows the Virtuoso MEMBER mark + affiliation
       line instead of the plain text blurb. */
   showVirtuosoLogo?: boolean
@@ -40,12 +42,13 @@ export function T2Footer({
   bio,
   logoUrl,
   tier,
+  modules,
   showVirtuosoLogo,
   affiliationLine,
 }: T2FooterProps) {
   const year = new Date().getFullYear()
   const base = `/t2/${agentId}`
-  const exploreLinks = filterNavByTier(FOOTER_EXPLORE_LINKS, tier)
+  const exploreLinks = filterNavByTier(FOOTER_EXPLORE_LINKS, tier, modules)
 
   return (
     <footer

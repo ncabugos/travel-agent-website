@@ -55,3 +55,42 @@ After each workstream:
 - Spot-check at least 3 program slugs (Aman, Four Seasons, Marriott)
 - `tsc --noEmit` clean
 - One commit per workstream, screenshots in commit body
+
+---
+
+# Business Model v2 — Phase 1 (July 2026)
+
+Strategy: docs/business-model-v2.md (land $59 site / expand via portal / monetize supplier network).
+
+- [x] docs/business-model-v2.md written (canonical)
+- [x] lib/pricing.ts — central display-pricing constants (base, modules, services, agency)
+- [x] Stripe: starter → $59 interim price ID (shared w/ founding-starter), no setup fee, 30-day trial + payment_method_collection on public starter checkout; webhook sets `trialing` for trialed standard checkouts
+- [x] MarketingPricing.tsx rewritten — one plan + modules + services + agency, "with our compliments" voice, no toggle/ribbon/green badges
+- [x] MarketingClosingCTA scarcity line → complimentary-30-days; "Explore Tiers" → "Explore Pricing"
+- [x] ConsultationForm labels → v2 (tier submit values unchanged); billing toggle removed (monthly-only)
+- [x] Portal billing page + admin AgentSubscriptionPanel stale prices fixed
+- [x] Portal Services & Modules page (request-based ordering via edit_requests) + nav entry
+- [x] brand-positioning.md + CLAUDE.md §3 updated
+
+## Operator to-dos (Stripe dashboard)
+- [x] Dedicated base $59/mo price live (price_1TvlHU6lYeMpqwzvVyDg1H42, 2026-07-21) — swapped into TIER_PRICES.starter.monthly
+- [ ] Optional: $590/yr annual price if annual billing returns
+- [x] Beta/founding funnel retired — /beta page, waitlist form/action, and waitlist email removed 2026-07-21; inbound links repointed to /#pricing
+
+## Phase 2 — module entitlement backend (built 2026-07-21)
+- [x] Migration 053: agent_modules table + RLS + agents.active_modules cache (applies via CI on push)
+- [x] lib/tier-features: featureAllowed(tier, modules, feature) — tier bundle OR à-la-carte module
+- [x] MODULE_PRICES map in lib/stripe.ts (EMPTY — modules stay request-only until operator mints the 5 prices)
+- [x] /api/agent-portal/modules GET/POST/DELETE — prorated Stripe subscription items on the base sub
+- [x] Webhook reconciles subscription items → agent_modules (+ cancels all on subscription.deleted)
+- [x] Portal Services page: self-serve add/remove with request-flow fallback
+- [x] Gates wired: T2 villa page, cruise directory split, Instagram section, nav/footer links, and the curated editorial stream in lib/blog.ts (now truly Growth+/module-gated; base plan sees own posts only)
+
+## Phase 2 operator to-dos (Stripe dashboard)
+- [x] 5 live module prices created + wired into MODULE_PRICES 2026-07-21 (price_1TvsG4…–price_1TvsG7…)
+
+## Remaining backlog
+- [ ] T3/T4 enforcement gaps (pre-existing): hotel directory ungated everywhere; T4 testimonials/Instagram hardcoded; T3/T4 cruise ungated
+- [ ] Trial-expiry gating on subscription_status (middleware) + dunning on invoice.payment_failed
+- [ ] Auto-provisioning (prerequisite for trial volume)
+- [ ] Supplier media kit at ~30 advisors

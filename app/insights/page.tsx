@@ -80,8 +80,8 @@ export default async function InsightsIndexPage() {
         {rest.length === 0 && !featured ? (
           <div style={{ textAlign: 'center', padding: '80px 0', color: '#71717a' }}>
             <p style={{ fontSize: 18, margin: 0 }}>The first Insights articles are on the way.</p>
-            <Link href="/beta" style={{ display: 'inline-block', marginTop: 16, color: '#7c3aed', fontWeight: 600, textDecoration: 'none' }}>
-              Join the waitlist to be notified →
+            <Link href="/#pricing" style={{ display: 'inline-block', marginTop: 16, color: '#7c3aed', fontWeight: 600, textDecoration: 'none' }}>
+              Explore Elite Advisor Hub →
             </Link>
           </div>
         ) : (

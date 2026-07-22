@@ -4,7 +4,7 @@ import { getAllVillas, getVillaCountries } from '@/lib/villas'
 import { getAgentProfile } from '@/lib/suppliers'
 import { buildMetadata } from '@/lib/seo'
 import type { Metadata } from 'next'
-import { tierAllows, type Tier } from '@/lib/tier-features'
+import { featureAllowed, type Tier } from '@/lib/tier-features'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 
@@ -28,9 +28,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function BookVillaPage({ params }: PageProps) {
   const { agentId } = await params
 
-  // Villa catalog is a Custom-tier feature. Return 404 for Starter/Growth.
+  // Villa catalog: Custom-tier bundle or the à-la-carte villas module.
   const agent = await getAgentProfile(agentId)
-  if (!tierAllows(agent?.tier as Tier | null | undefined, 'villas')) {
+  if (!featureAllowed(agent?.tier as Tier | null | undefined, agent?.active_modules, 'villas')) {
     notFound()
   }
 

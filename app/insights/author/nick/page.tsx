@@ -57,7 +57,7 @@ export default async function AuthorPage() {
           {LINKEDIN && (
             <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" style={chipLink}>LinkedIn ↗</a>
           )}
-          <Link href="/beta" style={chipLink}>Join the waitlist →</Link>
+          <Link href="/#pricing" style={chipLink}>Explore Elite Advisor Hub →</Link>
         </div>
       </section>
 

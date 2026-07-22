@@ -32,18 +32,28 @@ keyed on `agents.custom_domain → { agentId, template }`).
 
 ---
 
-## 3. Tier × feature matrix (May 2026)
+## 3. Pricing model (business model v2, July 2026)
 
-Every tier ships a **custom-branded site** — built to the advisor's identity, not handed a stock
-template. Tiers differ by features, not by which design they receive. (The internal template the
-build sits on is an implementation detail, not a marketing axis.)
+**Governing doc: `docs/business-model-v2.md`** (land / expand / monetize-the-network). The
+public offer is **one entry plan + à-la-carte expansion**, not a tier ladder:
 
-| Tier | Monthly | Setup | Curated editorial stream | Villa | Headline differentiator |
-|---|---|---|---|---|---|
-| Starter | $89 | $499 | — (advisor-written only; clean editor included) | — | Custom-branded site, supplier catalog, lead inbox, portal |
-| Growth | $179 | $1,499 | 1 post/week | — | + Curated editorial stream |
-| Custom | $349 | $2,999 | 2 posts/week + topic requests | included | + Villa module, custom features, premium modules, bespoke design |
-| Agency | from $899 | from $4,999 | 2 posts/week per advisor, co-authored option | included | + **Agent directory**, multi-advisor management, unified billing |
+- **The Site** — $59/mo, **no setup fee, first 30 days complimentary** (card on file; Stripe
+  trial auto-converts on day 31). Custom-branded site, supplier catalog, journal, lead inbox,
+  portal. In copy the trial is always "with our compliments," never "free trial."
+- **Modules** (portal add-ons; Phase 1 request-based, Phase 2 self-serve billing): curated
+  editorial $49/mo · Editorial+ $99/mo · hotel/cruise directories $39/mo · Instagram feed
+  $19/mo · villa catalog $29/mo. Display constants live in `lib/pricing.ts`.
+- **Studio services** (ordered from the portal Services page, rides `edit_requests`): new page
+  from $450, design refresh from $750, social from $500/mo, etc.
+- **Agency** — consultative, from $899/mo + from $4,999 setup. Unchanged.
+- **Supplier partnerships** — featured placement + sponsored editorial sold to luxury suppliers
+  once the network reaches ~30 advisors (the ApproachGuides play).
+
+**The internal Growth ($179/$1,499) and Custom ($349/$2,999) tiers still exist** as feature
+gates and for grandfathered accounts (Eden For Your World). They are no longer marketed as
+public tiers; module gating maps onto them until per-module entitlements ship. Every site
+remains a **custom-branded build** — the internal template is an implementation detail, not a
+marketing axis.
 
 **Curated editorials are hard-gated to Growth+.** Starter advisors get the journal module (M18) so
 they can publish their own pieces via the Tiptap editor, but the operator-produced curated stream

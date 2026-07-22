@@ -7,6 +7,7 @@ import type { BlogPost } from '@/types/index'
 import { createServiceClient } from '@/lib/supabase/service'
 import type { AgentProfile } from '@/lib/suppliers'
 import { isDemoSlug } from '@/lib/demo-agents'
+import { featureAllowed, type Tier } from '@/lib/tier-features'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -141,6 +142,42 @@ export async function getBlogPosts(agentId?: string): Promise<BlogPost[]> {
       )
       .order('published_at', { ascending: false })
     if (error) { console.error('[getBlogPosts:demo]', error.message); return [] }
+    return (data ?? []).map(formatPostData) as BlogPost[]
+  }
+
+  // Curated editorial stream is a paid entitlement (business model v2):
+  // Growth+ tier bundle or the editorial/editorial-plus module. Base-plan
+  // agents without the module see only their OWN posts — the operator's
+  // broadcast stream does not flow to them. Fail-closed on a missing agent.
+  // Falls back to a tier-only select until migration 053 (active_modules)
+  // is applied, so a deploy-before-migration window can't drop the stream
+  // for entitled tiers.
+  let { data: agentRow, error: agentErr } = await supabase
+    .from('agents')
+    .select('tier, active_modules')
+    .eq('id', agentId)
+    .maybeSingle()
+  if (agentErr && /active_modules/i.test(agentErr.message ?? '')) {
+    ;({ data: agentRow, error: agentErr } = await supabase
+      .from('agents')
+      .select('tier')
+      .eq('id', agentId)
+      .maybeSingle())
+  }
+  const entitledToStream = featureAllowed(
+    (agentRow as { tier?: string | null } | null)?.tier as Tier | null | undefined,
+    (agentRow as { active_modules?: string[] | null } | null)?.active_modules,
+    'curated-editorial',
+  )
+
+  if (!entitledToStream) {
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .select(COLUMNS_WITH_JOIN)
+      .eq('status', 'published')
+      .eq('agent_id', agentId)
+      .order('published_at', { ascending: false })
+    if (error) { console.error('[getBlogPosts:own-only]', error.message); return [] }
     return (data ?? []).map(formatPostData) as BlogPost[]
   }
 

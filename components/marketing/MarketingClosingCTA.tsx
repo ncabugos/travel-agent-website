@@ -37,14 +37,14 @@ export function MarketingClosingCTA() {
           }}
         >
           When they do, the site should do what you&rsquo;d do in the room — set the standard, then
-          step out of the way. We onboard a limited number of advisors each quarter, because
-          migration is done by hand, not by wizard.
+          step out of the way. Your first 30 days are with our compliments; begin whenever
+          you&rsquo;re ready.
         </p>
 
         <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <a
             href="/schedule-consultation"
-            className="eah-closing-primary"
+            className="eah-closing-primary eah-btn-lux"
             style={{
               padding: '14px 32px',
               background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
@@ -74,7 +74,7 @@ export function MarketingClosingCTA() {
               transition: 'background 0.2s',
             }}
           >
-            Explore tiers
+            Explore pricing
           </a>
         </div>
       </div>

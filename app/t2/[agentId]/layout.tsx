@@ -112,6 +112,7 @@ export default async function T2Layout({ children, params }: LayoutProps) {
           logoUrlDark={agent?.logo_url_dark ?? undefined}
           navLinks={agent?.nav_links}
           tier={agent?.tier ?? null}
+          modules={agent?.active_modules ?? null}
         />
       )}
       <main>{children}</main>
@@ -135,6 +136,7 @@ export default async function T2Layout({ children, params }: LayoutProps) {
         cstNumber={agent?.cst_number}
         logoUrl={isLido ? '/demos/the-lido-collective/2x/lido-white@2x.png' : (agent?.logo_url ?? undefined)}
         tier={agent?.tier ?? null}
+        modules={agent?.active_modules ?? null}
         showVirtuosoLogo={isLido}
         affiliationLine={isLido ? 'A proud member of Virtuoso — the world’s leading luxury travel network.' : undefined}
       />

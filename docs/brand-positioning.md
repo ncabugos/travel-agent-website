@@ -11,9 +11,17 @@
 
 Elite Advisor Hub is invitation-worthy infrastructure for advisors who treat their practice as a serious business. The product attracts elite advisors and politely repels hobbyists. Pricing is the floor, not a discount.
 
-## Why this works for a $89 Starter tier
+## Why this works with a $59 entry plan (business model v2, July 2026)
 
-There is no tension. Starter is for advisors on the path to top 1% — early in their independent practice, often transitioning out of a host agency or a corporate travel role. The copy reads "built by and for the world's top travel advisors" — aspirational without being exclusionary. Notion, Linear, and Figma all run this play successfully. The Starter price is a foothold; the brand promise is the destination.
+> Pricing structure is now governed by `docs/business-model-v2.md` — one $59/mo site plan
+> (first 30 days complimentary, no setup fee), à-la-carte modules and studio services in the
+> portal, supplier partnerships as the long-term profit engine. The voice rules below are
+> unchanged and apply to all of it.
+
+There is no tension. The entry plan is for advisors on the path to top 1% — early in their independent practice, often transitioning out of a host agency or a corporate travel role. The copy reads "built by and for the world's top travel advisors" — aspirational without being exclusionary. Notion, Linear, and Figma all run this play successfully. The entry price is a foothold; the brand promise is the destination. The premium register lives in the presentation, not the price tag — the Four Seasons move: the brand is the luxury, the entry point is gracious.
+
+**Trial language:** always "your first 30 days are with our compliments" — never "free trial,"
+never "30-DAY FREE TRIAL" badges. "Complimentary" is the house word.
 
 ## Voice rules
 

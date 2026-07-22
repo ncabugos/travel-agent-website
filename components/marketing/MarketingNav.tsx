@@ -81,7 +81,8 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
                 Agent Login
               </Link>
               <Link
-                href="/agent-portal/register"
+                href="/#pricing"
+                className="eah-btn-lux"
                 style={{
                   padding: '8px 20px',
                   background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
@@ -91,7 +92,7 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
                   boxShadow: '0 1px 2px rgba(124,58,237,0.25)',
                 }}
               >
-                Sign Up Now
+                Begin your 30 days
               </Link>
             </div>
           )}
@@ -217,8 +218,9 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
             <Link
-              href="/agent-portal/register"
+              href="/#pricing"
               onClick={close}
+              className="eah-btn-lux"
               style={{
                 display: 'block', textAlign: 'center',
                 padding: '14px 20px',
@@ -230,7 +232,7 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
                 boxShadow: '0 1px 2px rgba(124,58,237,0.25)',
               }}
             >
-              Sign Up Now
+              Begin your 30 days
             </Link>
             <Link
               href="/agent-portal/login"

@@ -34,10 +34,16 @@ export const stripe = new Proxy({} as Stripe, {
  * will reject it.
  */
 export const TIER_PRICES = {
+  // Business model v2 (docs/business-model-v2.md): the public entry product is
+  // $59/mo, no setup fee, 30-day trial (applied by the checkout route via
+  // trial_period_days, not by the price).
+  // Annual returns once a $590/yr price exists (old $890/yr ID retired:
+  // price_1TbUbr6lYeMpqwzvdWFHIMsj; old $89/mo: price_1TYYar6lYeMpqwzvksQeEHYh;
+  // old $499 setup: price_1TYYbQ6lYeMpqwzv2J7JKEeE).
   starter: {
-    monthly: 'price_1TYYar6lYeMpqwzvksQeEHYh',   // $89/mo  (live)
-    annual:  'price_1TbUbr6lYeMpqwzvdWFHIMsj',   // $890/yr (live, 2-months-free)
-    setup:   'price_1TYYbQ6lYeMpqwzv2J7JKEeE',   // $499 one-time (live)
+    monthly: 'price_1TvlHU6lYeMpqwzvVyDg1H42',   // $59/mo (live, created 2026-07-21)
+    annual:  '',                                  // no $590/yr price yet — monthly-only
+    setup:   '',                                  // no setup fee on the base plan
     product: '',
   },
   growth: {
@@ -105,3 +111,39 @@ export const FOUNDING_PRICES = {
 } as const
 
 export type FoundingTierName = keyof typeof FOUNDING_PRICES
+
+/**
+ * À-la-carte module prices (business model v2, docs/business-model-v2.md).
+ *
+ * Each module is a recurring monthly price billed as an ADDITIONAL SUBSCRIPTION
+ * ITEM on the agent's existing base subscription — one invoice, prorated on
+ * add/remove. Keys must match lib/tier-features.ts ModuleKey and the
+ * agent_modules.module_key CHECK (migration 053).
+ *
+ * Empty string = price not yet created in the Stripe dashboard. The portal
+ * treats those modules as request-only (the edit_requests flow) instead of
+ * self-serve.
+ *
+ * LIVE-MODE price IDs (created 2026-07-21, one product per module so invoice
+ * line items read cleanly). Display prices live in lib/pricing.ts — keep both
+ * in sync: editorial $49 · editorial-plus $99 · directories $39 ·
+ * instagram $19 · villas $29.
+ */
+export const MODULE_PRICES: Record<
+  'editorial' | 'editorial-plus' | 'directories' | 'instagram' | 'villas',
+  string
+> = {
+  'editorial':      'price_1TvsG46lYeMpqwzv7iHtQYXM',   // Curated Editorial Stream $49/mo
+  'editorial-plus': 'price_1TvsG56lYeMpqwzvAThMPnrI',   // Editorial+ $99/mo
+  'directories':    'price_1TvsG56lYeMpqwzvKdRp990J',   // Hotel & Cruise Directories $39/mo
+  'instagram':      'price_1TvsG66lYeMpqwzvv2sIzwV0',   // Instagram Feed $19/mo
+  'villas':         'price_1TvsG76lYeMpqwzv48tYKnhR',   // Villa Catalog $29/mo
+}
+
+/** Reverse lookup: Stripe price ID → module key (empty IDs are ignored). */
+export function moduleKeyForPrice(priceId: string): keyof typeof MODULE_PRICES | null {
+  for (const [key, id] of Object.entries(MODULE_PRICES)) {
+    if (id && id === priceId) return key as keyof typeof MODULE_PRICES
+  }
+  return null
+}

@@ -12,26 +12,20 @@ const sans = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
 type TierValue = 'starter' | 'growth' | 'custom' | 'agency'
 type BillingCycle = 'monthly' | 'annual'
 
-interface TierPricing {
+interface TierOption {
   value: TierValue
-  name: string
-  monthly: string | null  // null = quote-only (Agency)
-  annual: string | null   // null = quote-only
-  annualEffectiveMonthly: string | null
+  label: string
 }
 
-const TIERS: TierPricing[] = [
-  { value: 'starter', name: 'Starter', monthly: '$89/mo',  annual: '$890/yr',   annualEffectiveMonthly: '$74/mo' },
-  { value: 'growth',  name: 'Growth',  monthly: '$179/mo', annual: '$1,790/yr', annualEffectiveMonthly: '$149/mo' },
-  { value: 'custom',  name: 'Custom',  monthly: '$349/mo', annual: '$3,490/yr', annualEffectiveMonthly: '$291/mo' },
-  { value: 'agency',  name: 'Agency',  monthly: null,      annual: null,        annualEffectiveMonthly: null },
+// Business model v2 (docs/business-model-v2.md): one public site plan plus
+// portal expansion. The legacy tier values are kept as the form's submit
+// values so the consultation action and admin views stay unchanged.
+const TIERS: TierOption[] = [
+  { value: 'starter', label: 'The Site — $59/mo · first 30 days complimentary' },
+  { value: 'growth',  label: 'The Site + modules — editorial, directories, feeds' },
+  { value: 'custom',  label: 'Bespoke design & premium work' },
+  { value: 'agency',  label: 'Agency — from $899/mo, quoted' },
 ]
-
-function tierLabel(t: TierPricing, cycle: BillingCycle): string {
-  if (!t.monthly) return `${t.name} — Contact for quote`
-  if (cycle === 'annual') return `${t.name} — ${t.annual} (${t.annualEffectiveMonthly} effective)`
-  return `${t.name} — ${t.monthly}`
-}
 
 const TIMELINES = [
   'Select a timeline…',
@@ -86,7 +80,8 @@ export function ConsultationForm({
     initialState,
   )
   const [tier, setTier] = useState<TierValue>(initialTier)
-  const [billing, setBilling] = useState<BillingCycle>(initialBilling)
+  // Monthly-only under business model v2 — kept as submit metadata.
+  const billing: BillingCycle = initialBilling
 
   if (state.success) {
     return (
@@ -158,49 +153,11 @@ export function ConsultationForm({
       )}
 
       {/* ── Tier selection ─────────────────────────────────────────── */}
-      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, marginBottom: 16 }}>
+      <div style={{ marginBottom: 16 }}>
         <SectionLabel>Plan of interest</SectionLabel>
-
-        {/* Billing-cycle toggle — mirrors the marketing pricing page */}
-        <div
-          role="radiogroup"
-          aria-label="Billing cycle"
-          style={{
-            display: 'inline-flex',
-            background: '#f4f4f5',
-            borderRadius: 999,
-            padding: 4,
-            fontFamily: sans,
-          }}
-        >
-          {(['monthly', 'annual'] as BillingCycle[]).map((c) => (
-            <button
-              key={c}
-              type="button"
-              onClick={() => setBilling(c)}
-              aria-checked={billing === c}
-              role="radio"
-              style={{
-                padding: '6px 16px',
-                fontSize: 12,
-                fontWeight: 600,
-                letterSpacing: '0.04em',
-                textTransform: 'capitalize',
-                border: 'none',
-                borderRadius: 999,
-                cursor: 'pointer',
-                background: billing === c ? '#fff' : 'transparent',
-                color: billing === c ? '#111' : '#6b7280',
-                boxShadow: billing === c ? '0 1px 2px rgba(0,0,0,0.06)' : 'none',
-                transition: 'background 0.2s ease, color 0.2s ease',
-              }}
-            >
-              {c === 'annual' ? 'Annual · 2 months free' : 'Monthly'}
-            </button>
-          ))}
-        </div>
       </div>
-      {/* Persist billing on submit — operator sees this in the consultation request */}
+      {/* Billing cycle is monthly-only under business model v2; the field is
+          kept so the consultation action and admin views stay unchanged. */}
       <input type="hidden" name="billing" value={billing} />
       <div
         role="radiogroup"
@@ -237,7 +194,7 @@ export function ConsultationForm({
               onChange={() => setTier(t.value)}
               style={{ accentColor: '#7c3aed' }}
             />
-            {tierLabel(t, billing)}
+            {t.label}
           </label>
         ))}
       </div>

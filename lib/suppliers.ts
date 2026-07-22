@@ -67,17 +67,17 @@ export async function getAgentProfile(agentId: string): Promise<MockAgent | null
     ]
 
     // Optional columns added by later migrations (029 first_name, 051
-    // bespoke_layout). Select them when present, but fall back to the base
-    // schema if a column doesn't exist yet so the site keeps rendering until
-    // the migration is applied.
-    const optionalColumns = ['first_name', 'bespoke_layout']
+    // bespoke_layout, 053 active_modules). Select them when present, but fall
+    // back to the base schema if a column doesn't exist yet so the site keeps
+    // rendering until the migration is applied.
+    const optionalColumns = ['first_name', 'bespoke_layout', 'active_modules']
     let { data, error } = await supabase
       .from('agents')
       .select([...baseColumns, ...optionalColumns].join(', '))
       .eq('id', agentId)
       .single()
 
-    if (error && /first_name|bespoke_layout/i.test(error.message ?? '')) {
+    if (error && /first_name|bespoke_layout|active_modules/i.test(error.message ?? '')) {
       ;({ data, error } = await supabase
         .from('agents')
         .select(baseColumns.join(', '))
@@ -101,6 +101,7 @@ export async function getAgentProfile(agentId: string): Promise<MockAgent | null
       phone: row.phone ?? '',
       tier: row.tier ?? null,
       bespoke_layout: row.bespoke_layout ?? null,
+      active_modules: row.active_modules ?? null,
       bio: row.bio ?? undefined,
       instagram_url: row.instagram_url ?? undefined,
       facebook_url: row.facebook_url ?? undefined,

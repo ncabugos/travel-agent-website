@@ -179,7 +179,7 @@ interface MarketingMetadataInput {
 
 /**
  * Metadata for platform marketing pages (eliteadvisorhub.com/<path>) — e.g.
- * /templates, /beta, /schedule-consultation. Unlike buildMetadata (which is
+ * /templates, /schedule-consultation. Unlike buildMetadata (which is
  * tenant-scoped and needs an AgentProfile), this canonicalizes to the platform
  * host. URLs are emitted relative so Next.js resolves them against the root
  * layout's `metadataBase`, keeping canonicals in sync with app/sitemap.ts. The

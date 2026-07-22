@@ -40,6 +40,10 @@ export interface MockAgent {
   // e.g. 'wwt' → Wine & Wellness Travel flagship build.
   bespoke_layout?: string | null
 
+  // Active à-la-carte module keys (agents.active_modules cache, migration
+  // 053). Checked alongside tier by lib/tier-features featureAllowed().
+  active_modules?: string[] | null
+
   // ── Onboarding-collected profile fields ────────────────────────────────
   // All optional so existing demos that don't set them still type-check.
   bio?: string

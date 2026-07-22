@@ -15,6 +15,9 @@ interface T2NavProps {
   /** Subscription tier. Filters default nav links — villa drops below Custom,
       experiences drops below Growth. Explicit `navLinks` overrides bypass this. */
   tier?: Tier | null
+  /** Active à-la-carte module keys (agents.active_modules) — a module can
+      restore a link the tier alone would drop (e.g. villas module). */
+  modules?: string[] | null
 }
 
 const NAV_LINKS = [
@@ -26,14 +29,15 @@ const NAV_LINKS = [
   { label: 'About',          href: '/about' },
 ]
 
-export function T2Nav({ agentId, agencyName, tagline, logoUrl, logoUrlDark, navLinks, tier }: T2NavProps) {
+export function T2Nav({ agentId, agencyName, tagline, logoUrl, logoUrlDark, navLinks, tier, modules }: T2NavProps) {
   const [scrolled, setScrolled]   = useState(false)
   const [menuOpen, setMenuOpen]   = useState(false)
   const [mounted, setMounted]     = useState(false)
   const base = `/t2/${agentId}`
-  // Explicit override wins. Otherwise, filter defaults by tier so Starter
-  // never shows Experiences and only Custom+ shows Private Villas.
-  const LINKS = navLinks ?? filterNavByTier(NAV_LINKS, tier)
+  // Explicit override wins. Otherwise, filter defaults by entitlement (tier
+  // bundle or à-la-carte module) so the base plan never shows Experiences and
+  // Private Villas appears only with Custom+ or the villas module.
+  const LINKS = navLinks ?? filterNavByTier(NAV_LINKS, tier, modules)
 
   useEffect(() => {
     setMounted(true)

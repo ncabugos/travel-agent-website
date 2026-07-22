@@ -3,6 +3,7 @@ import { FindCruiseClient } from '@/components/t2/FindCruiseClient'
 import { T2CruisePartnersGrid } from '@/components/t2/T2CruisePartnersGrid'
 import { T2LeadForm } from '@/components/t2/T2LeadForm'
 import { getAgentProfile } from '@/lib/suppliers'
+import { featureAllowed, type Tier } from '@/lib/tier-features'
 import { buildMetadata } from '@/lib/seo'
 import type { Metadata } from 'next'
 import Image from 'next/image'
@@ -82,11 +83,15 @@ export default async function FindCruisePage({ params }: PageProps) {
     getAgentProfile(agentId),
   ])
 
-  // Tier-aware split:
-  //   Starter → curated T2CruisePartnersGrid (non-searchable list of preferred
-  //             lines, each linking to a brand-detail page).
-  //   Growth+ → full searchable directory via FindCruiseClient.
-  const isStarter = agent?.tier === 'starter'
+  // Entitlement-aware split:
+  //   Base plan → curated T2CruisePartnersGrid (non-searchable list of
+  //               preferred lines, each linking to a brand-detail page).
+  //   Growth+ tier OR directories module → searchable FindCruiseClient.
+  const isStarter = !featureAllowed(
+    agent?.tier as Tier | null | undefined,
+    agent?.active_modules,
+    'searchable-cruises',
+  )
 
   if (isStarter) {
     return (

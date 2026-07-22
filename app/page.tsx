@@ -166,7 +166,7 @@ export default function EliteAdvisorHubHomePage() {
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <a
               href="#pricing"
-              className="eah-cta-primary"
+              className="eah-cta-primary eah-btn-lux"
               style={{
                 padding: '14px 32px',
                 background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
@@ -177,7 +177,7 @@ export default function EliteAdvisorHubHomePage() {
                 transition: 'transform 0.2s, box-shadow 0.2s',
               }}
             >
-              Explore Tiers
+              Explore Pricing
             </a>
             <a
               href="#demos"
@@ -420,18 +420,10 @@ export default function EliteAdvisorHubHomePage() {
           from { opacity: 0; transform: translateY(20px); }
           to   { opacity: 1; transform: translateY(0); }
         }
-        @keyframes ctaPulse {
-          0%, 100% { box-shadow: 0 4px 24px rgba(124,58,237,0.35); }
-          50%       { box-shadow: 0 4px 36px rgba(124,58,237,0.55); }
-        }
-
         /* ── Hero CTA ───────────────────────────────────────────── */
-        .eah-cta-primary {
-          animation: ctaPulse 3s ease-in-out infinite;
-        }
+        /* Ring + ambient sheen come from the shared .eah-btn-lux class
+           (app/globals.css) — no pulse; one pass of light every ~6s. */
         .eah-cta-primary:hover {
-          transform: translateY(-1px);
-          animation: none;
           box-shadow: 0 6px 32px rgba(124,58,237,0.5) !important;
         }
 
@@ -483,8 +475,7 @@ export default function EliteAdvisorHubHomePage() {
           .eah-section p { line-height: 1.55 !important; }
         }
         @media (prefers-reduced-motion: reduce) {
-          .eah-feature-card,
-          .eah-cta-primary { animation: none !important; }
+          .eah-feature-card { animation: none !important; }
         }
       `}</style>
     </div>

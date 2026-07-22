@@ -5,8 +5,7 @@
  *
  * Writes to the shared consultation_requests table with source='studio' so the
  * admin inbox (/admin/consultations) can tell Studio leads apart from
- * Custom/Agency sales leads and beta-waitlist signups. Mirrors the insert
- * pattern in lib/actions/beta-waitlist.ts (anon-key server client, RLS
+ * Custom/Agency sales leads. Uses the anon-key server client (RLS
  * "public insert").
  *
  * Field mapping onto the existing table:

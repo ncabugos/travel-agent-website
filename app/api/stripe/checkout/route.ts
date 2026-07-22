@@ -87,33 +87,40 @@ export async function POST(request: Request) {
       )
     }
 
-    // Create Checkout session with both the recurring subscription AND one-time setup fee.
-    // Stripe supports mixing recurring + one-time line items in 'subscription' mode.
-    // The setup fee is the same regardless of billing cycle.
+    // Business model v2 (docs/business-model-v2.md): the public base plan
+    // (starter) runs a 30-day trial with no setup fee. Legacy tiers keep their
+    // original behavior (setup fee on the first invoice, no trial).
+    const withTrial = tier === 'starter'
+
+    // Recurring subscription plus, when the tier still has one, the one-time
+    // setup fee. Stripe supports mixing recurring + one-time line items in
+    // 'subscription' mode; the setup fee lands on the first invoice only.
+    const lineItems: { price: string; quantity: number }[] = [
+      { price: recurringPriceId, quantity: 1 },
+    ]
+    if (prices.setup) {
+      lineItems.push({ price: prices.setup, quantity: 1 })
+    }
+
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       payment_method_types: ['card'],
-      line_items: [
-        // Recurring subscription — monthly or annual depending on cycle
-        {
-          price: recurringPriceId,
-          quantity: 1,
-        },
-        // One-time setup fee — charged on the first invoice only
-        {
-          price: prices.setup,
-          quantity: 1,
-        },
-      ],
+      line_items: lineItems,
+      // Force card capture even when $0 is due today, so a trialing
+      // subscription auto-converts on day 30.
+      ...(withTrial ? { payment_method_collection: 'always' as const } : {}),
       subscription_data: {
+        ...(withTrial ? { trial_period_days: 30 } : {}),
         metadata: {
           tier,
           billingCycle,
+          ...(withTrial ? { trial: '30d' } : {}),
         },
       },
       metadata: {
         tier,
         billingCycle,
+        ...(withTrial ? { trial: '30d' } : {}),
       },
       // After successful checkout, redirect to the onboarding wizard
       success_url: `${origin}/agent-portal/onboarding?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,

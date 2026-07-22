@@ -38,6 +38,7 @@ export function CheckoutButton({ tier, popular, billingCycle = 'monthly', childr
     <button
       onClick={handleCheckout}
       disabled={loading}
+      className={popular ? 'eah-btn-lux' : undefined}
       style={{
         display: 'flex',
         alignItems: 'center',
@@ -48,13 +49,16 @@ export function CheckoutButton({ tier, popular, billingCycle = 'monthly', childr
         padding: '12px',
         backgroundColor: popular ? '#111' : '#fff',
         color: popular ? '#fff' : '#111',
-        border: popular ? 'none' : '1px solid #d1d5db',
+        // The luxe class supplies the white hairline on the dark variant; the
+        // light variant keeps its own gray border (a white ring is invisible
+        // on white).
+        border: popular ? undefined : '1px solid #d1d5db',
         borderRadius: '10px',
         fontSize: '14px',
         fontWeight: 600,
         cursor: loading ? 'not-allowed' : 'pointer',
         opacity: loading ? 0.7 : 1,
-        transition: 'all 0.15s',
+        transition: popular ? undefined : 'all 0.15s',
       }}
     >
       {loading ? (

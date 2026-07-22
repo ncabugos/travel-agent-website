@@ -1,7 +1,68 @@
 import { NextResponse } from 'next/server'
-import { stripe } from '@/lib/stripe'
+import { stripe, moduleKeyForPrice } from '@/lib/stripe'
 import { createServiceClient } from '@/lib/supabase/service'
 import type Stripe from 'stripe'
+
+/**
+ * Reconcile agent_modules (+ the agents.active_modules cache) from the
+ * subscription's current items. Stripe is the source of truth for module
+ * billing: any item whose price maps to a module key becomes/stays active,
+ * and any active module row without a matching item is canceled. Prices that
+ * don't map to a module (the base plan, legacy tiers) are ignored.
+ */
+async function reconcileModulesFromSubscription(
+  supabase: ReturnType<typeof createServiceClient>,
+  agentId: string,
+  subscription: Stripe.Subscription,
+) {
+  const now = new Date().toISOString()
+  const itemsByModule = new Map<string, Stripe.SubscriptionItem>()
+  for (const item of subscription.items.data) {
+    const key = moduleKeyForPrice(item.price.id)
+    if (key) itemsByModule.set(key, item)
+  }
+
+  const { data: rowsRaw } = await supabase
+    .from('agent_modules')
+    .select('id, module_key, status')
+    .eq('agent_id', agentId)
+  const rows = (rowsRaw as { id: string; module_key: string; status: string }[] | null) ?? []
+  const rowByKey = new Map(rows.map((r) => [r.module_key, r]))
+
+  for (const [key, item] of itemsByModule) {
+    const existing = rowByKey.get(key)
+    if (existing?.status === 'active') continue
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (supabase.from('agent_modules') as any).upsert(
+      {
+        agent_id: agentId,
+        module_key: key,
+        status: 'active',
+        stripe_subscription_item_id: item.id,
+        stripe_price_id: item.price.id,
+        activated_at: now,
+        canceled_at: null,
+        updated_at: now,
+      },
+      { onConflict: 'agent_id,module_key' },
+    )
+  }
+
+  for (const row of rows) {
+    if (row.status === 'active' && !itemsByModule.has(row.module_key)) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await (supabase.from('agent_modules') as any)
+        .update({ status: 'canceled', canceled_at: now, updated_at: now })
+        .eq('id', row.id)
+    }
+  }
+
+  const activeKeys = [...itemsByModule.keys()]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  await (supabase.from('agents') as any)
+    .update({ active_modules: activeKeys })
+    .eq('id', agentId)
+}
 
 // Disable body parsing — Stripe needs the raw body for signature verification
 export const dynamic = 'force-dynamic'
@@ -49,10 +110,12 @@ export async function POST(request: Request) {
       // plan/cohort, so they fall back to the 'standard' default.
       const plan = session.metadata?.plan === 'founding' ? 'founding' : 'standard'
       const betaCohort = session.metadata?.cohort ?? null
-      // Founding subscriptions always start in a 30-day trial; standard ones are
-      // active immediately. customer.subscription.updated keeps status in sync
-      // afterward (e.g. when the trial converts to active on day 30).
-      const subscriptionStatus = plan === 'founding' ? 'trialing' : 'active'
+      // Founding subscriptions and trialed standard checkouts (the public base
+      // plan mirrors trial: '30d' onto the session) start in a 30-day trial;
+      // everything else is active immediately. customer.subscription.updated
+      // keeps status in sync afterward (e.g. when the trial converts on day 30).
+      const subscriptionStatus =
+        plan === 'founding' || session.metadata?.trial === '30d' ? 'trialing' : 'active'
 
       if (!email) {
         console.error('Checkout completed but no email found')
@@ -148,6 +211,22 @@ export async function POST(request: Request) {
         .update({ subscription_status: mappedStatus })
         .eq('stripe_customer_id', customerId)
 
+      // Keep module entitlements in lockstep with the subscription's items
+      // (covers portal add/remove, admin edits in the Stripe dashboard, and
+      // items dropped by dunning-driven subscription changes).
+      const { data: agentRow } = await supabase
+        .from('agents')
+        .select('id')
+        .eq('stripe_customer_id', customerId)
+        .maybeSingle()
+      if (agentRow) {
+        await reconcileModulesFromSubscription(
+          supabase,
+          (agentRow as { id: string }).id,
+          subscription,
+        )
+      }
+
       console.log(`Subscription ${subscription.id} status updated to ${mappedStatus}`)
       break
     }
@@ -168,6 +247,20 @@ export async function POST(request: Request) {
         .select('id, email, agency_name')
         .eq('stripe_customer_id', customerId)
         .single()
+
+      // The subscription is gone — all module entitlements go with it.
+      if (agent) {
+        const now = new Date().toISOString()
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (supabase.from('agent_modules') as any)
+          .update({ status: 'canceled', canceled_at: now, updated_at: now })
+          .eq('agent_id', (agent as any).id)
+          .eq('status', 'active')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (supabase.from('agents') as any)
+          .update({ active_modules: [] })
+          .eq('id', (agent as any).id)
+      }
 
       if (agent) {
         await supabase
