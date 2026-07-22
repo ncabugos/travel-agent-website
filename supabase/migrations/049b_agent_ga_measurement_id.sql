@@ -1,5 +1,11 @@
 -- Per-advisor Google Analytics (GA4) measurement ID.
 --
+-- NOTE (2026-07-22): renamed 049 → 049b. Two migrations were both numbered
+-- 049 (this one and cruise_lines_yacht_content), which broke CI db push —
+-- the remote ledger can only record one version '049'. Like 011b, the "b"
+-- suffix makes the CLI skip this file; that is safe because it was applied
+-- to production by hand (agents.ga_measurement_id exists, verified).
+--
 -- Each advisor can have their own GA4 property in addition to the platform-wide
 -- property. Their public tenant site fires both. Read via service-role client
 -- in lib/agent-ga.ts; surfaced on the advisor's tenant layout.
