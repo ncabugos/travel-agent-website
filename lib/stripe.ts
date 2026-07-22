@@ -40,8 +40,12 @@ export const TIER_PRICES = {
   // Annual returns once a $590/yr price exists (old $890/yr ID retired:
   // price_1TbUbr6lYeMpqwzvdWFHIMsj; old $89/mo: price_1TYYar6lYeMpqwzvksQeEHYh;
   // old $499 setup: price_1TYYbQ6lYeMpqwzv2J7JKEeE).
+  // HOTFIX 2026-07-22: price_1TvlHU6lYeMpqwzvVyDg1H42 was created with a $0.00
+  // amount (live checkout showed "$0.00/month after trial") — archive it in the
+  // dashboard so it can't be reused. Interim: founding-starter's verified $59/mo
+  // live price. Swap in a dedicated $59 "base" price once minted correctly.
   starter: {
-    monthly: 'price_1TvlHU6lYeMpqwzvVyDg1H42',   // $59/mo (live, created 2026-07-21)
+    monthly: 'price_1TZg2r6lYeMpqwzvoUUoY30Z',   // $59/mo (live — shared with founding-starter)
     annual:  '',                                  // no $590/yr price yet — monthly-only
     setup:   '',                                  // no setup fee on the base plan
     product: '',
