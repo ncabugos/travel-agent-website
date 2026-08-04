@@ -1,13 +1,19 @@
 'use client'
 
+import { ObfuscatedContact } from '@/components/ui/ObfuscatedContact'
+
 interface TopBarProps {
-  phone?: string
+  /** Phone from encodeContact() — encoded by the server so the raw number
+   *  never reaches this client component's serialized props. */
+  phoneEncoded?: string
+  /** Contact-page href for visitors without JavaScript. */
+  contactHref: string
   instagram?: string
   facebook?: string
   youtube?: string
 }
 
-export function TopBar({ phone, instagram, facebook, youtube }: TopBarProps) {
+export function TopBar({ phoneEncoded, contactHref, instagram, facebook, youtube }: TopBarProps) {
   return (
     <div
       className="fixed left-0 right-0 z-50 flex items-center justify-between px-6"
@@ -77,18 +83,19 @@ export function TopBar({ phone, instagram, facebook, youtube }: TopBarProps) {
       </div>
 
       {/* Right side */}
-      {phone && (
+      {phoneEncoded && (
         <div className="flex items-center gap-3" style={{ color: 'var(--warm-gray)' }}>
           <span style={{ textTransform: 'uppercase' }}>Speak to an expert</span>
           <span style={{ color: 'var(--divider)', fontSize: '10px' }}>·</span>
-          <a
-            href={`tel:${phone.replace(/\D/g, '')}`}
+          <ObfuscatedContact
+            encoded={phoneEncoded}
+            kind="tel"
+            fallbackHref={contactHref}
+            fallbackLabel="Call us"
             style={{ color: 'var(--gold)', letterSpacing: '0.1em', transition: 'color 0.2s' }}
             onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold-light)')}
             onMouseLeave={e => (e.currentTarget.style.color = 'var(--gold)')}
-          >
-            {phone}
-          </a>
+          />
         </div>
       )}
     </div>

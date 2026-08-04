@@ -9,6 +9,7 @@ import { SiteFooter } from '@/components/layout/SiteFooter'
 import { DemoSignupBanner } from '@/components/ui/DemoSignupBanner'
 import { isDemoSlug } from '@/lib/demo-agents'
 import { tenantBase } from '@/lib/tenant-paths'
+import { encodeContact } from '@/lib/obfuscate'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -52,7 +53,8 @@ export default async function AgentFrontendLayout({ children, params }: LayoutPr
       {gaMeasurementId && <TenantAnalyticsConfig measurementId={gaMeasurementId} />}
       {isDemoSlug(agentId) && <DemoSignupBanner />}
       <TopBar
-        phone={agent?.phone ?? '+1 (562) 856-8603'}
+        phoneEncoded={encodeContact(agent?.phone ?? '+1 (562) 856-8603')}
+        contactHref={`${base}/contact`}
         instagram={social.instagram}
         facebook={social.facebook}
         youtube={social.youtube}
@@ -69,8 +71,8 @@ export default async function AgentFrontendLayout({ children, params }: LayoutPr
         agentId={agentId}
         agencyName={agent?.agency_name ?? 'Luxury Travel'}
         base={base}
-        phone={agent?.phone ?? '+1 (562) 856-8603'}
-        email={agent?.email ?? 'info@edenfyw.com'}
+        phoneEncoded={encodeContact(agent?.phone ?? '+1 (562) 856-8603')}
+        emailEncoded={encodeContact(agent?.email ?? 'info@edenfyw.com')}
         address={agent?.address}
         cstNumber={agent?.cst_number}
         instagram={social.instagram}

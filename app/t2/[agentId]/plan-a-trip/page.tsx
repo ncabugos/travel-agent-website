@@ -4,6 +4,7 @@ import { LidoContact, type LidoLocation } from '@/components/t2/LidoContact'
 import { getExclusiveExperiences } from '@/lib/collections'
 import { getAgentProfile } from '@/lib/suppliers'
 import { buildMetadata } from '@/lib/seo'
+import { encodeContact } from '@/lib/obfuscate'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 
@@ -69,8 +70,8 @@ export default async function PlanATripPage({ params }: PageProps) {
         </section>
 
         <LidoContact
-          email={agent?.email ?? 'hello@lidocollective.com'}
-          phone="+1 (212) 555-0117"
+          emailEncoded={encodeContact(agent?.email ?? 'hello@lidocollective.com')}
+          phoneEncoded={encodeContact('+1 (212) 555-0117')}
           locations={LIDO_LOCATIONS}
           instagramUrl={agent?.instagram_url ?? 'https://www.instagram.com/lidocollective'}
         />

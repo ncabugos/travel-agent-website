@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { ObfuscatedContact } from '@/components/ui/ObfuscatedContact'
+import { encodeContact } from '@/lib/obfuscate'
 
 /**
  * MarketingFooter
@@ -108,9 +110,13 @@ export function MarketingFooter() {
           {' · '}
           1016 Cliff Drive, Santa Barbara, CA 93109
           {' · '}
-          <a href="mailto:support@eliteadvisorhub.com" style={{ color: '#6b7280', textDecoration: 'none' }}>
-            support@eliteadvisorhub.com
-          </a>
+          <ObfuscatedContact
+            encoded={encodeContact('support@eliteadvisorhub.com')}
+            kind="email"
+            fallbackHref="/support"
+            fallbackLabel="Contact support"
+            style={{ color: '#6b7280', textDecoration: 'none' }}
+          />
         </div>
 
         {/* ── Bottom: copyright + privacy/terms ───────────────────── */}

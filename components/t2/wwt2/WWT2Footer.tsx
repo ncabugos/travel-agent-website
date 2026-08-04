@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { Reveal } from './Reveal'
 import { WWT2HeadlineReveal } from './WWT2HeadlineReveal'
+import { ObfuscatedContact } from '@/components/ui/ObfuscatedContact'
+import { encodeContact } from '@/lib/obfuscate'
 
 interface WWT2FooterProps {
   base: string
@@ -84,14 +86,22 @@ export function WWT2Footer({
 
           <div className="wwt2-foot-contact">
             {email && (
-              <a href={`mailto:${email}`} className="wwt2-foot-contact-link">
-                {email}
-              </a>
+              <ObfuscatedContact
+                encoded={encodeContact(email)}
+                kind="email"
+                fallbackHref={`${base}/contact`}
+                fallbackLabel="Email us"
+                className="wwt2-foot-contact-link"
+              />
             )}
             {phone && (
-              <a href={`tel:${phone.replace(/[^+\d]/g, '')}`} className="wwt2-foot-contact-link">
-                {phone}
-              </a>
+              <ObfuscatedContact
+                encoded={encodeContact(phone)}
+                kind="tel"
+                fallbackHref={`${base}/contact`}
+                fallbackLabel="Call us"
+                className="wwt2-foot-contact-link"
+              />
             )}
             <div className="wwt2-foot-social">
               {instagram && (

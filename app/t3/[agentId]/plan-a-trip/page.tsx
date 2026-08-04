@@ -2,6 +2,7 @@ import { getAgentProfile } from '@/lib/suppliers'
 import { getExclusiveExperiences } from '@/lib/collections'
 import { T3PageHero } from '@/components/t3/T3PageHero'
 import { T3ContactSection } from '@/components/t3/T3ContactSection'
+import { encodeContact } from '@/lib/obfuscate'
 import { T3ExperienceEditorial } from '@/components/t3/T3ExperienceEditorial'
 
 interface PageProps {
@@ -164,8 +165,8 @@ export default async function T3PlanATripPage({ params }: PageProps) {
         eyebrow="Start Here"
         headline="Tell us about your trip."
         body="Share a few details below and we will respond personally — usually within a few hours, never more than one business day."
-        phone={agent?.phone}
-        email={agent?.email}
+        phoneEncoded={agent?.phone ? encodeContact(agent.phone) : undefined}
+        emailEncoded={agent?.email ? encodeContact(agent.email) : undefined}
         address={agent?.address}
       />
 

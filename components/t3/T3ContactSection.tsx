@@ -1,6 +1,7 @@
 'use client'
 import { useActionState, useState } from 'react'
 import { submitContactForm, type ContactFormState } from '@/lib/actions/contact'
+import { ObfuscatedContact } from '@/components/ui/ObfuscatedContact'
 
 interface T3ContactSectionProps {
   /** Required for the server action — without it the email can't be routed
@@ -9,8 +10,10 @@ interface T3ContactSectionProps {
   eyebrow?: string
   headline: string
   body?: string
-  phone?: string
-  email?: string
+  /** Phone / email from encodeContact(), encoded by the server so the raw
+   *  values never reach this client component's serialized props. */
+  phoneEncoded?: string
+  emailEncoded?: string
   address?: string
   /** Pre-fills a hotel context chip + tags the advisor email. Set via
    * `?hotel=<name>` on the URL when a visitor arrives from a hotel detail
@@ -25,8 +28,8 @@ export function T3ContactSection({
   eyebrow = 'Begin the Conversation',
   headline,
   body,
-  phone,
-  email,
+  phoneEncoded,
+  emailEncoded,
   address,
   hotel,
 }: T3ContactSectionProps) {
@@ -193,7 +196,7 @@ export function T3ContactSection({
         )}
 
         {/* Contact details strip */}
-        {(phone || email || address) && (
+        {(phoneEncoded || emailEncoded || address) && (
           <div
             style={{
               marginTop: 72,
@@ -206,8 +209,8 @@ export function T3ContactSection({
             }}
             className="t3-contact-meta"
           >
-            {phone && <ContactItem label="By Phone" value={phone} />}
-            {email && <ContactItem label="By Email" value={email} />}
+            {phoneEncoded && <ContactItem label="By Phone" encoded={phoneEncoded} kind="tel" />}
+            {emailEncoded && <ContactItem label="By Email" encoded={emailEncoded} kind="email" />}
             {address && <ContactItem label="Office" value={address} />}
           </div>
         )}
@@ -262,7 +265,22 @@ function Field({
   )
 }
 
-function ContactItem({ label, value }: { label: string; value: string }) {
+/**
+ * Renders either a plain value (address) or a contact detail assembled in the
+ * browser (phone/email). No-JS visitors get pointed at the form in this same
+ * section rather than a dead link.
+ */
+function ContactItem({
+  label,
+  value,
+  encoded,
+  kind,
+}: {
+  label: string
+  value?: string
+  encoded?: string
+  kind?: 'email' | 'tel'
+}) {
   return (
     <div>
       <div
@@ -286,7 +304,17 @@ function ContactItem({ label, value }: { label: string; value: string }) {
           lineHeight: 1.4,
         }}
       >
-        {value}
+        {encoded && kind ? (
+          <ObfuscatedContact
+            encoded={encoded}
+            kind={kind}
+            fallbackHref="#contact"
+            fallbackLabel={kind === 'email' ? 'Email us' : 'Call us'}
+            style={{ color: 'inherit', textDecoration: 'none' }}
+          />
+        ) : (
+          value
+        )}
       </div>
     </div>
   )

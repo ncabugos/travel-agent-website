@@ -1,5 +1,6 @@
 import { getAgentProfile } from '@/lib/suppliers'
 import { T3ContactSection } from '@/components/t3/T3ContactSection'
+import { encodeContact } from '@/lib/obfuscate'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -74,8 +75,8 @@ export default async function T3ContactPage({ params, searchParams }: PageProps)
         agentId={agentId}
         eyebrow="Begin"
         headline="Tell us about your journey."
-        phone={agent?.phone}
-        email={agent?.email}
+        phoneEncoded={agent?.phone ? encodeContact(agent.phone) : undefined}
+        emailEncoded={agent?.email ? encodeContact(agent.email) : undefined}
         address={agent?.address}
         hotel={hotel}
       />

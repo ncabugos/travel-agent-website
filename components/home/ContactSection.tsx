@@ -3,18 +3,19 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { EDEN } from '@/lib/media-library'
-
-interface AgentProfile {
-  phone?: string | null
-  email?: string | null
-  address?: string | null
-  website_url?: string | null
-  full_name?: string | null
-  agency_name?: string | null
-}
+import { ObfuscatedContact } from '@/components/ui/ObfuscatedContact'
 
 interface ContactSectionProps {
-  agent: AgentProfile
+  /**
+   * Phone / email from encodeContact(), encoded by the server. This component
+   * used to take the whole agent profile object, which put the advisor's real
+   * email and phone straight into the RSC flight payload embedded in the HTML —
+   * scrapable without running any JavaScript. Only encoded values cross the
+   * client boundary now.
+   */
+  phoneEncoded?: string | null
+  emailEncoded?: string | null
+  address?: string | null
   agentId: string
   /** Tenant link base — empty on vanity domain, `/frontend/{agentId}` on platform. */
   base?: string
@@ -24,7 +25,9 @@ interface ContactSectionProps {
 }
 
 export function ContactSection({
-  agent,
+  phoneEncoded,
+  emailEncoded,
+  address,
   agentId,
   base,
   imageSrc = EDEN.collageFooter,
@@ -34,15 +37,18 @@ export function ContactSection({
   const serif = 'var(--font-serif)'
   const sans = 'var(--font-sans)'
 
+  // `encoded` items render through ObfuscatedContact; `value` items are plain
+  // text that was never sensitive (the mailing address is already public).
   const contactItems = [
-    agent.phone && { label: 'Phone', value: agent.phone, href: `tel:${agent.phone.replace(/\D/g, '')}` },
-    agent.email && { label: 'Email', value: agent.email, href: `mailto:${agent.email}` },
-    agent.address && {
-      label: 'Location',
-      value: agent.address,
-      href: null,
-    },
-  ].filter(Boolean) as Array<{ label: string; value: string; href: string | null }>
+    phoneEncoded && { label: 'Phone', encoded: phoneEncoded, kind: 'tel' as const },
+    emailEncoded && { label: 'Email', encoded: emailEncoded, kind: 'email' as const },
+    address && { label: 'Location', value: address },
+  ].filter(Boolean) as Array<{
+    label: string
+    encoded?: string
+    kind?: 'email' | 'tel'
+    value?: string
+  }>
 
   return (
     <section
@@ -128,7 +134,7 @@ export function ContactSection({
         {/* Contact details */}
         {contactItems.length > 0 && (
           <div style={{ marginBottom: '40px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            {contactItems.map(({ label, value, href }) => (
+            {contactItems.map(({ label, value, encoded, kind }) => (
               <div key={label}>
                 <p
                   style={{
@@ -142,9 +148,12 @@ export function ContactSection({
                 >
                   {label}
                 </p>
-                {href ? (
-                  <a
-                    href={href}
+                {encoded && kind ? (
+                  <ObfuscatedContact
+                    encoded={encoded}
+                    kind={kind}
+                    fallbackHref={`${linkBase}/contact`}
+                    fallbackLabel={kind === 'email' ? 'Email us' : 'Call us'}
                     style={{
                       fontFamily: sans,
                       fontSize: '15px',
@@ -154,9 +163,7 @@ export function ContactSection({
                     }}
                     onMouseEnter={(e) => { e.currentTarget.style.color = '#B5945A' }}
                     onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--charcoal)' }}
-                  >
-                    {value}
-                  </a>
+                  />
                 ) : (
                   <p style={{ fontFamily: sans, fontSize: '15px', color: 'var(--charcoal)' }}>{value}</p>
                 )}

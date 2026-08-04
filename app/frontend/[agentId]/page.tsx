@@ -19,6 +19,7 @@ import { EDEN } from '@/lib/media-library'
 import { buildMetadata, getSeoFacts } from '@/lib/seo'
 import { JsonLd, travelAgencySchema, leadAdvisorSchema } from '@/components/seo/JsonLd'
 import { tenantBase } from '@/lib/tenant-paths'
+import { encodeContact } from '@/lib/obfuscate'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -244,7 +245,13 @@ export default async function AgentHomePage({ params }: PageProps) {
       {/* ─────────────────────────────────────────────────────────────────────
           9. CONTACT / PLAN YOUR TRIP — 2-col, image + contact info
           ───────────────────────────────────────────────────────────────────── */}
-      <ContactSection agent={agent} agentId={agentId} base={base} />
+      <ContactSection
+        phoneEncoded={agent?.phone ? encodeContact(agent.phone) : null}
+        emailEncoded={agent?.email ? encodeContact(agent.email) : null}
+        address={agent?.address}
+        agentId={agentId}
+        base={base}
+      />
 
     </main>
   )

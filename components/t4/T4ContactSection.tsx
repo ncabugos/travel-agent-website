@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import { ObfuscatedContact } from '@/components/ui/ObfuscatedContact'
+import { encodeContact } from '@/lib/obfuscate'
 
 interface T4ContactSectionProps {
   agentId: string
@@ -58,8 +60,18 @@ export function T4ContactSection({
 
         <div>
           <div style={{ borderTop: '1px solid var(--t4-divider)', paddingTop: 28 }}>
-            <DetailRow label="By Phone" value={phone ?? '+1 (415) 555 0134'} />
-            <DetailRow label="By Email" value={email ?? 'hello@casasolis.com'} />
+            <DetailRow
+              label="By Phone"
+              encoded={encodeContact(phone ?? '+1 (415) 555 0134')}
+              kind="tel"
+              fallbackHref={`${base}/contact`}
+            />
+            <DetailRow
+              label="By Email"
+              encoded={encodeContact(email ?? 'hello@casasolis.com')}
+              kind="email"
+              fallbackHref={`${base}/contact`}
+            />
             <DetailRow label="Our Studio" value={address ?? 'Via Roma 28 · Solferino · Italy'} last />
           </div>
         </div>
@@ -74,7 +86,25 @@ export function T4ContactSection({
   )
 }
 
-function DetailRow({ label, value, last }: { label: string; value: string; last?: boolean }) {
+/**
+ * Renders either a plain value (address) or a contact detail assembled in the
+ * browser (phone/email), keeping the raw string out of the server HTML.
+ */
+function DetailRow({
+  label,
+  value,
+  encoded,
+  kind,
+  fallbackHref,
+  last,
+}: {
+  label: string
+  value?: string
+  encoded?: string
+  kind?: 'email' | 'tel'
+  fallbackHref?: string
+  last?: boolean
+}) {
   return (
     <div
       style={{
@@ -107,7 +137,17 @@ function DetailRow({ label, value, last }: { label: string; value: string; last?
           lineHeight: 1.45,
         }}
       >
-        {value}
+        {encoded && kind ? (
+          <ObfuscatedContact
+            encoded={encoded}
+            kind={kind}
+            fallbackHref={fallbackHref ?? '#'}
+            fallbackLabel={kind === 'email' ? 'Email us' : 'Call us'}
+            style={{ color: 'inherit', textDecoration: 'none' }}
+          />
+        ) : (
+          value
+        )}
       </div>
     </div>
   )

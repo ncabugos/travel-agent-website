@@ -13,6 +13,7 @@ import { T3VirtuosoBand } from '@/components/t3/T3VirtuosoBand'
 import { T3FullBleedFeature } from '@/components/t3/T3FullBleedFeature'
 import { T3JournalTeaser } from '@/components/t3/T3JournalTeaser'
 import { T3ContactSection } from '@/components/t3/T3ContactSection'
+import { encodeContact } from '@/lib/obfuscate'
 
 interface PageProps {
   params: Promise<{ agentId: string }>
@@ -169,8 +170,8 @@ export default async function T3HomePage({ params }: PageProps) {
         eyebrow="10 — Begin the Conversation"
         headline="Every great journey starts with a conversation."
         body="Tell us where you're dreaming of, and we'll reach out within 24 hours to discuss what's possible."
-        phone={agent?.phone}
-        email={agent?.email}
+        phoneEncoded={agent?.phone ? encodeContact(agent.phone) : undefined}
+        emailEncoded={agent?.email ? encodeContact(agent.email) : undefined}
         address={agent?.address}
       />
     </>

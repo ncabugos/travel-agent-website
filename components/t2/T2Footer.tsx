@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { filterNavByTier, type Tier } from '@/lib/tier-features'
+import { ObfuscatedContact } from '@/components/ui/ObfuscatedContact'
+import { encodeContact } from '@/lib/obfuscate'
 
 interface T2FooterProps {
   agentId: string
@@ -248,8 +250,11 @@ export function T2Footer({
                 {address}
               </p>
             )}
-            <a
-              href={`tel:${phone.replace(/\s|\(|\)|-/g, '')}`}
+            <ObfuscatedContact
+              encoded={encodeContact(phone)}
+              kind="tel"
+              fallbackHref={`${base}/contact`}
+              fallbackLabel="Call us"
               style={{
                 fontFamily: 'var(--t2-font-sans)',
                 fontSize: 13,
@@ -259,11 +264,12 @@ export function T2Footer({
                 transition: 'color 0.2s ease',
               }}
               className="t2-footer-link"
-            >
-              {phone}
-            </a>
-            <a
-              href={`mailto:${email}`}
+            />
+            <ObfuscatedContact
+              encoded={encodeContact(email)}
+              kind="email"
+              fallbackHref={`${base}/contact`}
+              fallbackLabel="Email us"
               style={{
                 fontFamily: 'var(--t2-font-sans)',
                 fontSize: 13,
@@ -272,9 +278,7 @@ export function T2Footer({
                 textDecoration: 'none',
                 transition: 'opacity 0.2s ease',
               }}
-            >
-              {email}
-            </a>
+            />
           </div>
         </div>
       </div>

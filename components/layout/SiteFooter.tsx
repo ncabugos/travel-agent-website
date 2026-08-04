@@ -2,14 +2,17 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { ObfuscatedContact } from '@/components/ui/ObfuscatedContact'
 
 interface SiteFooterProps {
   agentId: string
   agencyName: string
   /** Tenant link base — empty on vanity domain, `/frontend/{agentId}` on platform. */
   base?: string
-  phone?: string
-  email?: string
+  /** Phone / email from encodeContact() — encoded by the server so the raw
+   *  values never reach this client component's serialized props. */
+  phoneEncoded?: string
+  emailEncoded?: string
   address?: string
   cstNumber?: string
   instagram?: string
@@ -30,8 +33,8 @@ export function SiteFooter({
   agentId,
   agencyName,
   base: baseProp,
-  phone,
-  email,
+  phoneEncoded,
+  emailEncoded,
   address,
   cstNumber,
   instagram,
@@ -168,24 +171,28 @@ export function SiteFooter({
         {/* Col 4: Contact */}
         <div className="footer-contact">
           <span style={labelStyle}>Contact</span>
-          {phone && (
-            <a
-              href={`tel:${phone.replace(/\D/g, '')}`}
+          {phoneEncoded && (
+            <ObfuscatedContact
+              encoded={phoneEncoded}
+              kind="tel"
+              fallbackHref={`${base}/contact`}
+              fallbackLabel="Call us"
               style={{ ...linkStyle, whiteSpace: 'nowrap' }}
               onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
               onMouseLeave={e => (e.currentTarget.style.color = '#9A9590')}
-            >
-              {phone}
-            </a>
+            />
           )}
-          <a
-            href={`mailto:${email || 'info@edenfyw.com'}`}
-            style={linkStyle}
-            onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#9A9590')}
-          >
-            {email || 'info@edenfyw.com'}
-          </a>
+          {emailEncoded && (
+            <ObfuscatedContact
+              encoded={emailEncoded}
+              kind="email"
+              fallbackHref={`${base}/contact`}
+              fallbackLabel="Email us"
+              style={linkStyle}
+              onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+              onMouseLeave={e => (e.currentTarget.style.color = '#9A9590')}
+            />
+          )}
           <div style={{ marginTop: '6px' }}>
             <span style={{ ...labelStyle, fontSize: '9px', marginBottom: '8px', color: '#5A5550' }}>Mailing Address</span>
             <p style={{ ...linkStyle, lineHeight: '1.7', cursor: 'default', margin: 0 }}>

@@ -1,12 +1,15 @@
 'use client'
 
 import { useState } from 'react'
+import { ObfuscatedContact } from '@/components/ui/ObfuscatedContact'
 
 export type LidoLocation = { city: string; detail: string }
 
 interface LidoContactProps {
-  email: string
-  phone?: string
+  /** Email / phone from encodeContact(), encoded by the server so the raw
+   *  values never reach this client component's serialized props. */
+  emailEncoded: string
+  phoneEncoded?: string
   locations: LidoLocation[]
   instagramUrl?: string
 }
@@ -17,7 +20,7 @@ interface LidoContactProps {
  * studios by appointment, hours, social); right rail is the enquiry form.
  * Light scheme on white, matching the rest of the Lido page.
  */
-export function LidoContact({ email, phone, locations, instagramUrl }: LidoContactProps) {
+export function LidoContact({ emailEncoded, phoneEncoded, locations, instagramUrl }: LidoContactProps) {
   const [submitted, setSubmitted] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -40,14 +43,26 @@ export function LidoContact({ email, phone, locations, instagramUrl }: LidoConta
             <div className="lido-contact-row">
               <dt className="lido-eyebrow">Email</dt>
               <dd>
-                <a href={`mailto:${email}`} className="lido-contact-link">{email}</a>
+                <ObfuscatedContact
+                  encoded={emailEncoded}
+                  kind="email"
+                  fallbackHref="#lido-contact-form"
+                  fallbackLabel="Email us"
+                  className="lido-contact-link"
+                />
               </dd>
             </div>
-            {phone && (
+            {phoneEncoded && (
               <div className="lido-contact-row">
                 <dt className="lido-eyebrow">Telephone</dt>
                 <dd>
-                  <a href={`tel:${phone.replace(/[^+\d]/g, '')}`} className="lido-contact-link">{phone}</a>
+                  <ObfuscatedContact
+                    encoded={phoneEncoded}
+                    kind="tel"
+                    fallbackHref="#lido-contact-form"
+                    fallbackLabel="Call us"
+                    className="lido-contact-link"
+                  />
                 </dd>
               </div>
             )}
@@ -89,7 +104,7 @@ export function LidoContact({ email, phone, locations, instagramUrl }: LidoConta
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="lido-contact-form">
+            <form id="lido-contact-form" onSubmit={handleSubmit} className="lido-contact-form">
               <div className="lido-contact-grid2">
                 <input type="text" placeholder="First Name *" required className="lido-contact-input" />
                 <input type="text" placeholder="Last Name *" required className="lido-contact-input" />
