@@ -1,6 +1,21 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      // Insights consolidation (July 2026): three early posts merged into the
+      // AI-search pillar. Permanent so engines transfer equity to the pillar.
+      ...[
+        'geo-for-travel-advisors-get-cited',
+        'static-website-costs-you-clients',
+        'is-ai-describing-your-practice-accurately',
+      ].map(slug => ({
+        source: `/insights/${slug}`,
+        destination: '/insights/ai-search-for-travel-advisors',
+        permanent: true,
+      })),
+    ]
+  },
   images: {
     remotePatterns: [
       // Unsplash — used for mock/demo hotel + IG images

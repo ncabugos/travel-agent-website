@@ -54,5 +54,9 @@ exports/
 # Launch contact lists & prospect outreach — personal data, never commit (public repo)
 scripts/warm-contacts*.csv
 scripts/warm-contacts*.pages
+scripts/warm-contacts*.numbers
 launch/EAH_Email_ChrisWeatherhead.md
 launch/EAH_Advisor_Outreach_Email.html
+
+# Supabase CLI local link state — pooler-url embeds the database password
+supabase/.temp/

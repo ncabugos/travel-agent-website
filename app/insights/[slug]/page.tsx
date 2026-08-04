@@ -179,6 +179,11 @@ export default async function InsightsPostPage({ params }: PageProps) {
         .insights-body a { color: #7c3aed; text-decoration: underline; }
         .insights-body img { max-width: 100%; height: auto; border-radius: 12px; margin: 28px 0; }
         .insights-body blockquote { border-left: 3px solid #7c3aed; padding: 4px 0 4px 22px; margin: 28px 0; font-style: italic; color: #3f3f46; font-size: 20px; }
+        .insights-body blockquote.insights-cta { font-style: normal; font-size: 16px; color: #3f3f46; background: linear-gradient(135deg, #faf5ff, #f5f3ff); border: 1px solid #ede9fe; border-left: 1px solid #ede9fe; border-radius: 16px; padding: 26px 30px; margin: 40px 0; }
+        .insights-body blockquote.insights-cta p { margin: 0 0 10px; }
+        .insights-body blockquote.insights-cta p:first-child { font-size: 19px; color: #0a0a0a; }
+        .insights-body blockquote.insights-cta p:last-child { margin: 14px 0 0; }
+        .insights-body blockquote.insights-cta a { color: #7c3aed; text-decoration: none; }
         .insights-body .insights-table-wrap { overflow-x: auto; margin: 32px 0; -webkit-overflow-scrolling: touch; }
         .insights-body table { width: 100%; border-collapse: collapse; margin: 0; font-size: 15px; line-height: 1.5; }
         .insights-body th, .insights-body td { padding: 12px 16px; text-align: left; vertical-align: top; }
