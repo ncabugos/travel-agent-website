@@ -28,7 +28,7 @@ export async function MarketingInsightsTeaser() {
               written by people who do the work.
             </p>
           </div>
-          <Link href="/insights" style={{ fontSize: 15, fontWeight: 600, color: '#7c3aed', textDecoration: 'none', whiteSpace: 'nowrap' }}>
+          <Link href="/insights" className="eah-insights-more eah-focus-ring-dark" style={{ fontSize: 15, fontWeight: 600, color: '#7c3aed', textDecoration: 'none', whiteSpace: 'nowrap', textUnderlineOffset: 4 }}>
             Read all Insights →
           </Link>
         </div>
@@ -39,6 +39,8 @@ export async function MarketingInsightsTeaser() {
       </div>
 
       <style>{`
+        .eah-insights-more:hover { text-decoration: underline !important; }
+        @media (prefers-reduced-motion: reduce) { .eah-insights-card { transition: none !important; } .eah-insights-card:hover { transform: none !important; } }
         .eah-insights-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px -12px rgba(0,0,0,0.15); border-color: rgba(124,58,237,0.25) !important; }
         @media (max-width: 900px) { .eah-insights-grid { grid-template-columns: 1fr 1fr !important; } }
         @media (max-width: 600px) { .eah-insights-grid { grid-template-columns: 1fr !important; } }

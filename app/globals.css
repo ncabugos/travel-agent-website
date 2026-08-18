@@ -22,7 +22,31 @@
 /* ── Base Reset ────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* Marketing-surface interaction defaults (Web Interface Guidelines) */
+button, a, summary { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+/* Scoped to marketing pages (root carries .eah-marketing) so tenant templates are untouched. */
+.eah-marketing :is(h1, h2, h3) { text-wrap: balance; }
+.eah-btn-lux:focus-visible,
+.eah-focus-ring:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px rgba(124, 58, 237, 0.55);
+}
+.eah-focus-ring-dark:focus-visible {
+  outline: 2px solid #7c3aed;
+  outline-offset: 3px;
+}
+.eah-skip-link {
+  position: absolute; left: 16px; top: -100px; z-index: 2000;
+  padding: 10px 16px; border-radius: 8px;
+  background: #1A1715; color: #fff; font-size: 14px; font-weight: 600;
+  text-decoration: none;
+}
+.eah-skip-link:focus { top: 12px; outline: 2px solid #fff; outline-offset: 2px; }
 
 body {
   background: var(--cream);

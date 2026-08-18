@@ -1,12 +1,19 @@
+import Link from 'next/link'
+import { CheckoutButton } from '@/components/stripe/CheckoutButton'
+import { CTA_MICROCOPY, PRIMARY_CTA_LABEL, PRIMARY_CTA_STYLE } from './tokens'
+
 /**
- * Homepage closing CTA band — sits after the Insights section, before the footer.
- * Mirrors the dark Network-section treatment (navy gradient, white headline) and
- * reuses the hero CTA button styling so the page closes on a familiar, premium
- * note. Primary CTA → consultation; secondary → pricing.
+ * Homepage closing CTA band — the last thing before the footer.
+ *
+ * Same single goal as the hero: begin the 30 days, straight into Stripe
+ * Checkout. The consultation path stays as a text-weight secondary for
+ * agencies and advisors who want to talk first. Named proof sits directly
+ * under the button (proof adjacent to the CTA outperforms proof elsewhere).
  */
 export function MarketingClosingCTA() {
   return (
     <section
+      id="closing-cta"
       className="eah-section"
       style={{
         padding: '120px 24px',
@@ -37,49 +44,55 @@ export function MarketingClosingCTA() {
           }}
         >
           When they do, the site should do what you&rsquo;d do in the room — set the standard, then
-          step out of the way. Your first 30 days are with our compliments; begin whenever
-          you&rsquo;re ready.
+          step out of the way. Your first 30 days are with our compliments.
         </p>
 
-        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <a
-            href="/schedule-consultation"
-            className="eah-closing-primary eah-btn-lux"
-            style={{
-              padding: '14px 32px',
-              background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
-              color: '#fff',
-              borderRadius: '10px',
-              fontSize: '15px',
-              fontWeight: 600,
-              textDecoration: 'none',
-              boxShadow: '0 4px 24px rgba(124, 58, 237, 0.35)',
-              transition: 'transform 0.2s, box-shadow 0.2s',
-            }}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px' }}>
+          <CheckoutButton
+            tier="starter"
+            popular
+            className="eah-closing-primary"
+            style={{ ...PRIMARY_CTA_STYLE, width: 'auto', minWidth: '260px' }}
           >
-            Schedule a consultation
-          </a>
-          <a
-            href="#pricing"
+            {PRIMARY_CTA_LABEL}
+          </CheckoutButton>
+          <p style={{ margin: 0, fontSize: '13px', color: 'rgba(255,255,255,0.62)' }}>
+            {CTA_MICROCOPY}
+          </p>
+          <Link
+            href="/schedule-consultation"
+            className="eah-closing-secondary eah-focus-ring"
             style={{
-              padding: '14px 32px',
-              backgroundColor: 'rgba(255,255,255,0.1)',
-              color: '#fff',
-              borderRadius: '10px',
+              marginTop: '10px',
+              color: 'rgba(255,255,255,0.8)',
               fontSize: '15px',
               fontWeight: 500,
-              textDecoration: 'none',
-              border: '1px solid rgba(255,255,255,0.25)',
-              backdropFilter: 'blur(8px)',
-              transition: 'background 0.2s',
+              textDecoration: 'underline',
+              textUnderlineOffset: '4px',
+              textDecorationColor: 'rgba(255,255,255,0.35)',
             }}
           >
-            Explore pricing
-          </a>
+            Prefer to talk first? Schedule a consultation
+          </Link>
         </div>
+
+        <p
+          style={{
+            margin: '44px auto 0',
+            paddingTop: '24px',
+            borderTop: '1px solid rgba(255,255,255,0.14)',
+            maxWidth: '520px',
+            fontSize: '14px',
+            lineHeight: 1.6,
+            color: 'rgba(255,255,255,0.7)',
+          }}
+        >
+          1,795+ luxury hotel programs · 30+ cruise lines · live within days
+        </p>
       </div>
 
       <style>{`
+        .eah-closing-secondary:hover { color: #fff !important; text-decoration-color: #fff !important; }
         .eah-closing-primary:hover {
           transform: translateY(-1px);
           box-shadow: 0 6px 32px rgba(124,58,237,0.5) !important;

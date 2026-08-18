@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { ScrollRailControls } from './ScrollRailControls'
 
 interface JournalCard {
   category: string
@@ -106,16 +107,25 @@ export function MarketingCuratedEditorial() {
             Real content for search, and for the client email you were going to write anyway.
           </p>
         </div>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '-24px', marginBottom: '8px' }}>
+          <ScrollRailControls targetId="eah-journal-rail" label="sample articles" />
+        </div>
       </div>
 
       {/* Horizontal scroll array of cards — Stripe-style */}
       <div
+        id="eah-journal-rail"
         className="eah-journal-scroll"
+        role="region"
+        aria-label="Sample journal articles"
+        tabIndex={0}
         style={{
           display: 'flex',
           gap: '20px',
           padding: '8px 24px 32px',
           overflowX: 'auto',
+          overscrollBehaviorX: 'contain',
+          scrollbarWidth: 'thin',
           scrollSnapType: 'x mandatory',
           scrollPadding: '0 24px',
           maxWidth: '100vw',
@@ -125,7 +135,7 @@ export function MarketingCuratedEditorial() {
           <article
             key={i}
             style={{
-              flex: '0 0 360px',
+              flex: '0 0 min(360px, 84vw)',
               scrollSnapAlign: 'start',
               background: '#fff',
               borderRadius: '16px',
@@ -181,7 +191,7 @@ export function MarketingCuratedEditorial() {
               >
                 {card.excerpt}
               </p>
-              <span style={{ fontSize: '12px', color: '#9ca3af', marginTop: '4px' }}>
+              <span style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
                 {card.readTime}
               </span>
             </div>
@@ -193,8 +203,8 @@ export function MarketingCuratedEditorial() {
         .eah-journal-scroll::-webkit-scrollbar { height: 8px; }
         .eah-journal-scroll::-webkit-scrollbar-track { background: transparent; }
         .eah-journal-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 4px; }
-        .eah-journal-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .eah-journal-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px -12px rgba(0,0,0,0.15); }
+        /* Cards are not links — no hover lift (false affordance). */
+        .eah-journal-scroll:focus-visible { outline: 2px solid #7c3aed; outline-offset: -2px; }
       `}</style>
     </section>
   )

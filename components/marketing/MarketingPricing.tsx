@@ -39,7 +39,7 @@ export function MarketingPricing() {
         </p>
         <h2
           style={{
-            fontSize: '36px',
+            fontSize: 'clamp(30px, 3.4vw, 42px)',
             fontWeight: 700,
             textAlign: 'center',
             letterSpacing: '-0.02em',
@@ -98,9 +98,9 @@ export function MarketingPricing() {
               {BASE_PLAN.blurb}
             </p>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '28px' }}>
+            <ul role="list" style={{ listStyle: 'none', margin: '0 0 28px', padding: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {BASE_PLAN.features.map((f) => (
-                <div
+                <li
                   key={f}
                   style={{
                     display: 'flex',
@@ -111,15 +111,19 @@ export function MarketingPricing() {
                     lineHeight: 1.5,
                   }}
                 >
-                  <span style={{ color: GOLD, fontWeight: 700, flexShrink: 0 }}>✓</span> {f}
-                </div>
+                  <span aria-hidden="true" style={{ color: GOLD, fontWeight: 700, flexShrink: 0 }}>✓</span> {f}
+                </li>
               ))}
-            </div>
+            </ul>
 
-            <CheckoutButton tier="starter" popular>
-              Begin your 30 days
+            <CheckoutButton
+              tier="starter"
+              popular
+              style={{ minHeight: '56px', padding: '16px', fontSize: '16px', background: 'linear-gradient(135deg, #7c3aed, #a78bfa)', boxShadow: '0 4px 24px rgba(124,58,237,0.35)' }}
+            >
+              Begin my 30 days
             </CheckoutButton>
-            <p style={{ fontSize: '12px', color: '#9ca3af', textAlign: 'center', margin: '12px 0 0' }}>
+            <p style={{ fontSize: '12px', color: '#6b7280', textAlign: 'center', margin: '12px 0 0' }}>
               Card on file · first billing on day 31 · cancel anytime
             </p>
           </div>
@@ -140,9 +144,9 @@ export function MarketingPricing() {
               Each module joins the site you already have — nothing is rebuilt, nothing starts over.
             </p>
 
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <ul role="list" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column' }}>
               {MODULES.map((m, i) => (
-                <div
+                <li
                   key={m.key}
                   style={{
                     display: 'flex',
@@ -161,14 +165,14 @@ export function MarketingPricing() {
                       {m.description}
                     </p>
                   </div>
-                  <span style={{ fontSize: '14px', fontWeight: 600, color: GOLD, whiteSpace: 'nowrap' }}>
+                  <span style={{ fontSize: '14px', fontWeight: 600, color: GOLD, whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' }}>
                     {usd(m.monthly)}/mo
                   </span>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
 
-            <p style={{ fontSize: '12px', color: '#9ca3af', margin: '20px 0 0', lineHeight: 1.5 }}>
+            <p style={{ fontSize: '12px', color: '#6b7280', margin: '20px 0 0', lineHeight: 1.5 }}>
               Modules are enabled from your portal — most within a day.
             </p>
           </div>
@@ -191,26 +195,27 @@ export function MarketingPricing() {
             Design and marketing work, ordered from your portal when you want it — no retainers
             required, no agencies to brief from zero.
           </p>
-          <div
+          <ul
+            role="list"
             className="eah-services-grid"
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px 32px' }}
+            style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px 32px' }}
           >
             {SERVICES.map((s) => (
-              <div key={s.key}>
+              <li key={s.key}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '12px' }}>
                   <p style={{ margin: '0 0 2px', fontSize: '14px', fontWeight: 600, color: '#111' }}>
                     {s.name}
                   </p>
-                  <span style={{ fontSize: '13px', fontWeight: 600, color: GOLD, whiteSpace: 'nowrap' }}>
+                  <span style={{ fontSize: '13px', fontWeight: 600, color: GOLD, whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' }}>
                     {s.price}
                   </span>
                 </div>
                 <p style={{ margin: 0, fontSize: '13px', color: '#6b7280', lineHeight: 1.5 }}>
                   {s.description}
                 </p>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
         {/* Agency */}
@@ -241,6 +246,7 @@ export function MarketingPricing() {
           </div>
           <Link
             href="/schedule-consultation?tier=agency"
+            className="eah-pricing-agency-cta eah-focus-ring"
             style={{
               padding: '12px 28px',
               borderRadius: '10px',
@@ -252,7 +258,7 @@ export function MarketingPricing() {
               whiteSpace: 'nowrap',
             }}
           >
-            Schedule a Consultation
+            Schedule a consultation
           </Link>
         </div>
       </div>
@@ -265,6 +271,8 @@ export function MarketingPricing() {
         @media (max-width: 560px) {
           .eah-services-grid { grid-template-columns: 1fr !important; }
         }
+        .eah-pricing-agency-cta { transition: background-color 0.15s ease; }
+        .eah-pricing-agency-cta:hover { background-color: #f0ede6 !important; }
       `}</style>
     </section>
   )

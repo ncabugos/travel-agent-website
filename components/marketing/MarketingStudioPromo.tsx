@@ -76,25 +76,28 @@ export function MarketingStudioPromo() {
             </p>
             <Link
               href="/studio"
+              className="eah-studio-cta eah-focus-ring"
               style={{
+                // Secondary action — outline, not purple. Purple is reserved
+                // for the one primary CTA on the homepage (begin the 30 days).
                 display: 'inline-block',
                 padding: '14px 30px',
                 borderRadius: '10px',
-                background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
+                background: 'rgba(255,255,255,0.06)',
                 color: '#fff',
                 fontSize: '15px',
                 fontWeight: 600,
                 textDecoration: 'none',
-                boxShadow: '0 4px 24px rgba(124, 58, 237, 0.35)',
+                border: '1px solid rgba(216,194,138,0.55)',
               }}
             >
               Explore Studio
             </Link>
           </div>
 
-          <div className="studio-promo-chips" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <ul role="list" className="studio-promo-chips" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {CAPABILITIES.map((c) => (
-              <div
+              <li
                 key={c.label}
                 style={{
                   display: 'flex',
@@ -106,15 +109,17 @@ export function MarketingStudioPromo() {
                   border: '1px solid rgba(255,255,255,0.08)',
                 }}
               >
-                <span style={{ color: '#D8C28A', fontWeight: 700, fontSize: '13px', flexShrink: 0 }}>✓</span>
+                <span aria-hidden="true" style={{ color: '#D8C28A', fontWeight: 700, fontSize: '13px', flexShrink: 0 }}>✓</span>
                 <span style={{ fontSize: '14.5px', fontWeight: 500, color: 'rgba(255,255,255,0.9)' }}>{c.label}</span>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
 
       <style>{`
+        .eah-studio-cta { transition: background-color 0.15s ease, border-color 0.15s ease; }
+        .eah-studio-cta:hover { background: rgba(255,255,255,0.12) !important; border-color: #D8C28A !important; }
         @media (max-width: 820px) {
           .studio-promo-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
         }

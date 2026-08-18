@@ -64,14 +64,14 @@ export async function MarketingSupplierPrograms() {
             }}
           >
             Every preferred-partner program your clients care about — already on your site, with the
-            benefits they'll receive on every stay. We keep the catalog maintained. You keep the
+            benefits they’ll receive on every stay. We keep the catalog maintained. You keep the
             relationships.
           </p>
           <p
             style={{
               fontSize: '14px',
               lineHeight: 1.7,
-              color: '#71717a',
+              color: '#a1a1aa',
               margin: '0 0 14px',
               maxWidth: '680px',
             }}
@@ -92,7 +92,8 @@ export async function MarketingSupplierPrograms() {
           </p>
         </div>
 
-        {/* Logo grid */}
+        {/* Logo grid — only rendered when the catalog returned logos. */}
+        {SUPPLIER_LOGOS.length > 0 && (
         <div
           className="eah-supplier-grid"
           style={{
@@ -133,6 +134,7 @@ export async function MarketingSupplierPrograms() {
             </div>
           ))}
         </div>
+        )}
 
         {/* Benefits + cruise note */}
         <div
@@ -163,6 +165,7 @@ export async function MarketingSupplierPrograms() {
               benefits surfaced on each program:
             </p>
             <ul
+              role="list"
               style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(2, 1fr)',
@@ -212,8 +215,8 @@ export async function MarketingSupplierPrograms() {
             <p style={{ margin: 0, fontSize: '15px', lineHeight: 1.65, color: '#d4d4d8' }}>
               Regent Seven Seas, Crystal, Silversea, Explora Journeys, Four Seasons Yachts,
               Ritz-Carlton Yacht Collection, Orient Express Sailing, Aman at Sea, plus AmaWaterways,
-              Avalon, and Uniworld on the river side. Villa networks layer in on Custom and Agency
-              tiers.
+              Avalon, and Uniworld on the river side. The villa catalog is available as an add-on
+              module.
             </p>
           </div>
         </div>

@@ -94,3 +94,31 @@ Strategy: docs/business-model-v2.md (land $59 site / expand via portal / monetiz
 - [ ] Trial-expiry gating on subscription_status (middleware) + dunning on invoice.payment_failed
 - [ ] Auto-provisioning (prerequisite for trial volume)
 - [ ] Supplier media kit at ~30 advisors
+
+## Homepage conversion redesign — Aug 2026 (branch fix/lead-capture-and-contact-obfuscation)
+Source: `../Landing-Page-Conversion-Research.md`. Principles applied: clear benefit headline, one primary
+goal (start the 30 days) with subordinate secondaries, direct-to-checkout CTA + click-trigger microcopy,
+static hero (no slideshow), social proof strip above the fold, Hero → Problem → Plan → Proof → Benefits →
+Offer → FAQ → CTA order, sticky mobile CTA, FAQ objection handling, purple reserved for CTAs (Von Restorff),
+16px+ body, warm neutrals only.
+
+- [x] CheckoutButton: accept `className`/`style` overrides
+- [x] Hero rewrite (static image, left-aligned, checkout CTA, microcopy, proof strip)
+- [x] MarketingHowItWorks (problem + 3-step plan)
+- [x] MarketingProof (Eden For Your World in production + founder line + numbers)
+- [x] MarketingFAQ (+ FAQPage JSON-LD)
+- [x] MarketingStickyCTA (mobile-only, after hero)
+- [x] Features/Demos restyle (no purple on non-CTA, no tier badges, 16px body)
+- [x] Reorder sections; drop StudioBanner from `/`
+- [x] MarketingClosingCTA primary → checkout; MarketingPricing CTA copy → first person
+- [x] Verify: tsc, 375/768/1280 screenshots
+
+Review (2026-08-17): tsc + eslint clean; verified 375/768/1280 via headless-Chrome CDP full-page captures
+(Browser-pane screenshots went stale when the pane was hidden). Not done on purpose: no testimonial quote
+(none exists yet — slot noted in MarketingProof); StudioBanner + HeroSlideshow left in place but unused on `/`.
+Known dev-env: POST /api/stripe/checkout returns "No such price" locally (live price ID + test key) — pre-existing.
+- [x] Web Interface Guidelines pass (2026-08-18): AA contrast sweep, `<main>` + skip link, `scroll-padding-top`,
+      inert nav sheet + sticky CTA, nav focus management, CheckoutButton error/aria-busy state, demo thumbs → next/image,
+      Curated Editorial rail keyboard/click controls (`ScrollRailControls`), sticky CTA hides over closing/footer,
+      focus-visible rings, reduced-motion gating, `role="list"`, tabular nums, semantic lists in Pricing/Studio promo
+- [ ] Pre-existing lint errors (not homepage): StudioBanner/StudioInquiryForm/StudioServices `set-state-in-effect`, SupportForm unescaped `'`

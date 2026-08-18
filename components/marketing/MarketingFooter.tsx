@@ -91,10 +91,12 @@ export function MarketingFooter() {
             </p>
           </div>
 
-          <FooterColumn title="Platform" links={PLATFORM_LINKS} />
-          <FooterColumn title="Demos"    links={DEMO_LINKS} />
-          <FooterColumn title="Company"  links={COMPANY_LINKS} />
-          <FooterColumn title="Legal"    links={LEGAL_LINKS} />
+          <nav aria-label="Footer" style={{ display: 'contents' }}>
+            <FooterColumn title="Platform" links={PLATFORM_LINKS} />
+            <FooterColumn title="Demos"    links={DEMO_LINKS} />
+            <FooterColumn title="Company"  links={COMPANY_LINKS} />
+            <FooterColumn title="Legal"    links={LEGAL_LINKS} />
+          </nav>
         </div>
 
         {/* ── Middle: legal-entity address line ───────────────────── */}
@@ -103,10 +105,10 @@ export function MarketingFooter() {
           paddingTop: 24,
           marginBottom: 16,
           fontSize: 12,
-          color: '#9ca3af',
+          color: '#6b7280',
           lineHeight: 1.7,
         }}>
-          <strong style={{ color: '#6b7280', fontWeight: 500 }}>Elite Advisor Hub, LLC</strong>
+          <strong style={{ color: '#4b5563', fontWeight: 500 }}>Elite Advisor Hub, LLC</strong>
           {' · '}
           1016 Cliff Drive, Santa Barbara, CA 93109
           {' · '}
@@ -127,13 +129,13 @@ export function MarketingFooter() {
           flexWrap: 'wrap',
           gap: 12,
           fontSize: 12,
-          color: '#9ca3af',
+          color: '#6b7280',
         }}>
           <div>© {year} Elite Advisor Hub, LLC. All rights reserved.</div>
           <div style={{ display: 'flex', gap: 20 }}>
-            <Link href="/privacy" style={{ color: '#9ca3af', textDecoration: 'none' }}>Privacy</Link>
-            <Link href="/terms" style={{ color: '#9ca3af', textDecoration: 'none' }}>Terms</Link>
-            <a href="https://eliteadvisorhub.com" style={{ color: '#9ca3af', textDecoration: 'none' }}>
+            <Link href="/privacy" className="eah-footer-link eah-focus-ring-dark" style={{ color: '#6b7280', textDecoration: 'none' }}>Privacy</Link>
+            <Link href="/terms" className="eah-footer-link eah-focus-ring-dark" style={{ color: '#6b7280', textDecoration: 'none' }}>Terms</Link>
+            <a href="https://eliteadvisorhub.com" className="eah-footer-link eah-focus-ring-dark" translate="no" style={{ color: '#6b7280', textDecoration: 'none' }}>
               eliteadvisorhub.com
             </a>
           </div>
@@ -142,6 +144,8 @@ export function MarketingFooter() {
       </div>
 
       <style>{`
+        .eah-footer-link { transition: color 0.15s ease; }
+        .eah-footer-link:hover { color: #111 !important; text-decoration: underline !important; text-underline-offset: 3px; }
         @media (max-width: 900px) {
           .footer-grid {
             grid-template-columns: 1fr 1fr !important;
@@ -178,7 +182,7 @@ function FooterColumn({ title, links }: {
       }}>
         {title}
       </div>
-      <ul style={{
+      <ul role="list" style={{
         listStyle: 'none',
         padding: 0,
         margin: 0,
@@ -190,6 +194,7 @@ function FooterColumn({ title, links }: {
           <li key={l.href + l.label}>
             <Link
               href={l.href}
+              className="eah-footer-link eah-focus-ring-dark"
               style={{
                 fontSize: 13,
                 color: '#6b7280',

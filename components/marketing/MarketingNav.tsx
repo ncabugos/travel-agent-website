@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -14,8 +14,27 @@ const NAV_LINKS = [
 
 export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
   const [open, setOpen] = useState(false)
+  const sheetRef = useRef<HTMLDivElement>(null)
+  const hamburgerRef = useRef<HTMLButtonElement>(null)
 
   const close = useCallback(() => setOpen(false), [])
+
+  // Focus management: move focus into the sheet on open, restore to the
+  // hamburger on close; page content behind the sheet is made inert.
+  useEffect(() => {
+    const main = document.querySelector('main')
+    if (open) {
+      main?.setAttribute('inert', '')
+      const first = sheetRef.current?.querySelector<HTMLElement>('a, button')
+      first?.focus()
+    } else {
+      main?.removeAttribute('inert')
+      if (document.activeElement && sheetRef.current?.contains(document.activeElement)) {
+        hamburgerRef.current?.focus()
+      }
+    }
+    return () => { main?.removeAttribute('inert') }
+  }, [open])
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
@@ -65,12 +84,13 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
           {!minimal && (
             <div className="marketing-nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
               {NAV_LINKS.map(({ label, href }) => (
-                <a key={label} href={href} style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}>
+                <a key={label} href={href} className="marketing-nav-link eah-focus-ring-dark" style={{ fontSize: '14px', color: '#5F5850', textDecoration: 'none', fontWeight: 500, transition: 'color 0.15s ease' }}>
                   {label}
                 </a>
               ))}
               <Link
                 href="/agent-portal/login"
+                className="marketing-nav-link eah-focus-ring-dark"
                 style={{
                   padding: '8px 18px',
                   color: '#111',
@@ -92,7 +112,7 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
                   boxShadow: '0 1px 2px rgba(124,58,237,0.25)',
                 }}
               >
-                Begin your 30 days
+                Begin my 30 days
               </Link>
             </div>
           )}
@@ -100,8 +120,9 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
           {/* Mobile hamburger */}
           {!minimal && (
           <button
+            ref={hamburgerRef}
             type="button"
-            className="marketing-nav-hamburger"
+            className="marketing-nav-hamburger eah-focus-ring-dark"
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             aria-controls="marketing-mobile-sheet"
@@ -123,10 +144,9 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
                 style={{
                   position: 'absolute', left: 0, right: 0,
                   height: '2px', borderRadius: '2px',
-                  background: '#111',
-                  top: open ? '6px' : '0',
-                  transform: open ? 'rotate(45deg)' : 'none',
-                  transition: 'transform 0.25s ease, top 0.25s ease, opacity 0.2s ease',
+                  background: '#111', top: 0,
+                  transform: open ? 'translateY(6px) rotate(45deg)' : 'none',
+                  transition: 'transform 0.25s ease',
                 }}
               />
               <span
@@ -142,10 +162,9 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
                 style={{
                   position: 'absolute', left: 0, right: 0,
                   height: '2px', borderRadius: '2px',
-                  background: '#111',
-                  top: open ? '6px' : '12px',
-                  transform: open ? 'rotate(-45deg)' : 'none',
-                  transition: 'transform 0.25s ease, top 0.25s ease',
+                  background: '#111', top: '12px',
+                  transform: open ? 'translateY(-6px) rotate(-45deg)' : 'none',
+                  transition: 'transform 0.25s ease',
                 }}
               />
             </div>
@@ -172,11 +191,14 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
       {/* Mobile sheet */}
       {!minimal && (
       <div
+        ref={sheetRef}
         id="marketing-mobile-sheet"
         role="dialog"
         aria-modal="true"
         aria-label="Navigation"
         className="marketing-mobile-sheet"
+        // inert keeps the closed sheet's links/buttons out of the tab order.
+        inert={!open}
         style={{
           position: 'fixed',
           top: 'calc(64px + var(--eah-banner-h, 0px))', left: 0, right: 0,
@@ -186,14 +208,16 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
           boxShadow: '0 12px 24px -12px rgba(0,0,0,0.15)',
           transform: open ? 'translateY(0)' : 'translateY(-8px)',
           opacity: open ? 1 : 0,
+          visibility: open ? 'visible' : 'hidden',
           pointerEvents: open ? 'auto' : 'none',
-          transition: 'opacity 0.22s ease, transform 0.22s ease',
-          maxHeight: 'calc(100vh - 64px - var(--eah-banner-h, 0px))',
+          transition: 'opacity 0.22s ease, transform 0.22s ease, visibility 0s linear ' + (open ? '0s' : '0.22s'),
+          maxHeight: 'calc(100dvh - 64px - var(--eah-banner-h, 0px))',
           overflowY: 'auto',
+          overscrollBehavior: 'contain',
         }}
       >
         <div style={{ padding: '12px 20px 24px' }}>
-          <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+          <ul role="list" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
             {NAV_LINKS.map(({ label, href }) => (
               <li key={label}>
                 <a
@@ -232,7 +256,7 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
                 boxShadow: '0 1px 2px rgba(124,58,237,0.25)',
               }}
             >
-              Begin your 30 days
+              Begin my 30 days
             </Link>
             <Link
               href="/agent-portal/login"
@@ -275,6 +299,10 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
           .marketing-nav-hamburger { display: inline-flex !important; }
         }
         .marketing-nav-hamburger:hover { background: rgba(0,0,0,0.04); }
+        .marketing-nav-link:hover { color: #111 !important; }
+        @media (prefers-reduced-motion: reduce) {
+          .marketing-mobile-sheet, .marketing-nav-hamburger span { transition: none !important; }
+        }
       `}</style>
     </>
   )
