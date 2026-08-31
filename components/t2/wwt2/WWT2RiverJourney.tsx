@@ -212,13 +212,21 @@ export function WWT2RiverJourney({ lines, base }: WWT2RiverJourneyProps) {
           transition: opacity 1100ms var(--wwt-ease), transform 1400ms var(--wwt-ease);
         }
         .wwt2-rj-img[data-active='true'] { opacity: 1; transform: scale(1); }
+        /* Two stacked washes: a horizontal one that holds the copy column, and a
+           vertical one so bright sky at the top of a frame cannot wash out the
+           eyebrow. The previous single horizontal gradient dropped to 0.15 on
+           the right and left the lede unreadable over busy imagery. */
         .wwt2-rj-scrim {
           position: absolute; inset: 0;
-          background: linear-gradient(to right, rgba(0,0,0,0.66) 0%, rgba(0,0,0,0.28) 60%, rgba(0,0,0,0.15) 100%);
+          background:
+            linear-gradient(to bottom, rgba(0,0,0,0.34) 0%, rgba(0,0,0,0.10) 42%, rgba(0,0,0,0.30) 100%),
+            linear-gradient(to right, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.55) 48%, rgba(0,0,0,0.30) 100%);
           transition: background 900ms var(--wwt-ease);
         }
         .wwt2-rj-scrim[data-deep='true'] {
-          background: linear-gradient(to right, rgba(0,0,0,0.74) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.35) 100%);
+          background:
+            linear-gradient(to bottom, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.18) 42%, rgba(0,0,0,0.38) 100%),
+            linear-gradient(to right, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.68) 48%, rgba(0,0,0,0.44) 100%);
         }
 
         .wwt2-rj-rail {
@@ -251,19 +259,29 @@ export function WWT2RiverJourney({ lines, base }: WWT2RiverJourneyProps) {
           opacity: 1; visibility: visible; transform: none;
         }
         .wwt2-rj-panel-inner { max-width: none; }
-        .wwt2-rj .wwt-eyebrow { color: rgba(255,255,255,0.6); }
+        /* All of these need the .wwt2-page prefix to out-specify the base
+           .wwt2-page .wwt-body / .wwt-eyebrow ink colours. Without it the lede
+           inherited --wwt-ink-soft and rendered as dark grey on a dark photo —
+           which is why it was effectively invisible. */
+        .wwt2-page .wwt2-rj .wwt-eyebrow { color: rgba(255,255,255,0.82); }
         /* .wwt2-page prefix out-specifies the base .wwt-display ink rule. */
-        .wwt2-page .wwt2-rj-title { color: #fff; margin: 1.4rem 0 1.6rem; }
-        .wwt2-rj-lede { color: rgba(255,255,255,0.8); max-width: 52ch; }
+        .wwt2-page .wwt2-rj-title {
+          color: #fff; margin: 1.6rem 0 1.5rem;
+          text-shadow: 0 2px 28px rgba(0,0,0,0.42);
+        }
+        .wwt2-page .wwt2-rj-lede {
+          color: rgba(255,255,255,0.94); max-width: 46ch;
+          line-height: 1.75; text-shadow: 0 1px 18px rgba(0,0,0,0.55);
+        }
         .wwt2-rj-stopno { margin-bottom: 2.2rem; }
         .wwt2-rj-region { margin-bottom: 0.9rem; }
         .wwt2-page .wwt2-rj-name {
           color: #fff; font-size: clamp(2.2rem, 5vw, 4.2rem); margin-bottom: 1.2rem;
         }
-        .wwt2-rj-note {
+        .wwt2-page .wwt2-rj-note {
           font-family: var(--wwt-sans); font-weight: 300;
-          color: rgba(255,255,255,0.82); max-width: 44ch; line-height: 1.7;
-          margin-bottom: 2rem;
+          color: rgba(255,255,255,0.92); max-width: 44ch; line-height: 1.75;
+          margin-bottom: 2rem; text-shadow: 0 1px 18px rgba(0,0,0,0.55);
         }
         .wwt2-rj-panel .wwt-shell { width: 100%; padding-left: clamp(4rem, 8vw, 8rem); }
 

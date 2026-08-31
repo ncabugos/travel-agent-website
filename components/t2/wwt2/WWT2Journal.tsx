@@ -26,24 +26,16 @@ export function WWT2Journal({ posts, base }: WWT2JournalProps) {
 
   return (
     <section id="ch-journal" className="wwt-section wwt2-journal">
-      {/* The dispatch marquee — a slow serif banner crowns the section. */}
-      <div className="wwt2-jm" aria-hidden="true">
-        <div className="wwt2-jm-track">
-          {[0, 1].map((half) => (
-            <span key={half} className="wwt2-jm-half">
-              {Array.from({ length: 3 }, (_, i) => (
-                <span key={i} className="wwt2-jm-phrase">
-                  The Journal <em>—</em> Notes from the road <em>—</em>{' '}
-                </span>
-              ))}
-            </span>
-          ))}
-        </div>
-      </div>
-
       <div className="wwt-shell">
         <Reveal className="wwt2-journal-head">
-          <p className="wwt-eyebrow">The Journal · Notes from the road</p>
+          <div className="wwt2-journal-headings">
+            <p className="wwt-eyebrow">Inspiration</p>
+            <h2 className="wwt-display wwt-h2 wwt2-journal-title">From the journal.</h2>
+            <p className="wwt-body wwt2-journal-lede">
+              Wine regions, wellness resorts, and the properties worth the detour — written
+              after we have been there.
+            </p>
+          </div>
           <Link href={`${base}/journal`} className="wwt-link wwt2-journal-all">
             All entries
           </Link>
@@ -90,34 +82,16 @@ export function WWT2Journal({ posts, base }: WWT2JournalProps) {
 
       <style>{`
         .wwt2-journal { overflow: hidden; }
-        .wwt2-jm {
-          margin-bottom: clamp(2.5rem, 5vw, 4rem);
-          border-top: 1px solid var(--wwt-clay);
-          border-bottom: 1px solid var(--wwt-clay);
-          padding: clamp(0.8rem, 1.6vw, 1.4rem) 0;
-        }
-        .wwt2-jm-track {
-          display: flex; width: max-content;
-          animation: wwt2-jm-scroll 44s linear infinite;
-        }
-        .wwt2-jm:hover .wwt2-jm-track { animation-play-state: paused; }
-        .wwt2-jm-half { display: flex; flex-shrink: 0; }
-        .wwt2-jm-phrase {
-          font-family: var(--wwt-serif); font-weight: 300;
-          font-size: clamp(2.2rem, 5vw, 4.2rem); line-height: 1.15;
-          color: var(--wwt-ink); white-space: pre;
-        }
-        .wwt2-jm-phrase em { font-style: normal; color: var(--wwt-clay); }
-        @keyframes wwt2-jm-scroll {
-          from { transform: translateX(0); }
-          to   { transform: translateX(-50%); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .wwt2-jm-track { animation: none; }
-        }
+        /* The scrolling marquee that used to crown this section was removed: its
+           track measured 6,505px inside a 1,280px viewport, and a reader only
+           ever saw partial words clipped at both edges. A standard section
+           header carries the same job without the overflow. */
+        .wwt2-journal-headings { max-width: 46ch; }
+        .wwt2-journal-title { margin: 1.1rem 0 0.9rem; }
+        .wwt2-journal-lede { max-width: 44ch; margin: 0; }
 
         .wwt2-journal-head {
-          display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 1.5rem;
+          display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem;
           margin-bottom: clamp(2.5rem, 5vw, 4rem);
         }
 

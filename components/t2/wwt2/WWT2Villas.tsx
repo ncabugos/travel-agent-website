@@ -28,13 +28,13 @@ export function WWT2Villas({ villas, base }: WWT2VillasProps) {
     <section id="ch-villas" className="wwt-section wwt-band-night wwt2-villas">
       <div className="wwt-shell">
         <Reveal className="wwt2-villas-head">
-          <p className="wwt-eyebrow">Private villas</p>
+          <p className="wwt-eyebrow">Villas</p>
           <h2 className="wwt-display wwt-h1 wwt2-villas-title">
-            The whole house, <span className="italic">entirely yours.</span>
+            Private villas with a chef, <span className="italic">staffed and stocked.</span>
           </h2>
           <p className="wwt-body wwt2-villas-lede">
-            Private estates with a chef, housekeeping, and a pool of your own — many with vineyards
-            beyond the garden wall. Every villa is inspected in person before we recommend it.
+            Housekeeping, a private pool, and in many cases vineyards beyond the garden wall.
+            Every villa is inspected in person before we put it in front of you.
           </p>
         </Reveal>
 
@@ -78,9 +78,9 @@ export function WWT2Villas({ villas, base }: WWT2VillasProps) {
       </div>
 
       <style>{`
-        .wwt2-villas-head { max-width: 44ch; margin-bottom: clamp(3rem, 6vw, 5rem); }
-        .wwt2-villas-title { margin: 1.3rem 0 1.6rem; }
-        .wwt2-villas-lede { max-width: 54ch; }
+        .wwt2-villas-head { max-width: 58ch; margin-bottom: clamp(3rem, 6vw, 5rem); }
+        .wwt2-villas-title { margin: 1.5rem 0 1.6rem; }
+        .wwt2-page .wwt2-villas-lede { max-width: 52ch; margin: 0; line-height: 1.75; }
 
         .wwt2-villas-grid {
           display: grid; grid-template-columns: repeat(3, 1fr);

@@ -67,8 +67,9 @@ export function WWT2Virtuoso() {
       </div>
 
       <style>{`
-        .wwt2-virt-head { max-width: 52ch; margin-bottom: clamp(3rem, 7vw, 5.5rem); }
-        .wwt2-virt-title { margin: 1.3rem 0 1.4rem; }
+        .wwt2-virt-head { max-width: 58ch; margin-bottom: clamp(3rem, 7vw, 5.5rem); }
+        .wwt2-virt-title { margin: 1.5rem 0 1.6rem; }
+        .wwt2-page .wwt2-virt-lede { max-width: 52ch; margin: 0; line-height: 1.75; }
 
         .wwt2-virt-stats {
           display: grid; grid-template-columns: repeat(3, 1fr);

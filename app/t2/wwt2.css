@@ -275,15 +275,23 @@
 }
 .wwt2-page .wwt2-rail-tick[data-active='true'] .wwt2-rail-dash,
 .wwt2-page .wwt2-rail-tick:hover .wwt2-rail-dash { width: 22px; }
+/* Reveal by fading and sliding, not by animating max-width. The width animation
+   clipped the label mid-word, so a passing reader saw "YOUR" rather than
+   "YOUR ADVISOR" and read it as broken text. */
 .wwt2-page .wwt2-rail-label {
   font-family: var(--wwt-sans); font-size: 0.6rem; font-weight: 500;
   text-transform: uppercase; letter-spacing: 0.18em;
-  max-width: 0; opacity: 0; overflow: hidden; white-space: nowrap;
-  transition: max-width 500ms var(--wwt-ease), opacity 500ms var(--wwt-ease);
+  white-space: nowrap;
+  opacity: 0; transform: translateX(6px);
+  transition: opacity 380ms var(--wwt-ease), transform 380ms var(--wwt-ease);
+  pointer-events: none;
 }
 .wwt2-page .wwt2-rail-tick[data-active='true'] .wwt2-rail-label,
 .wwt2-page .wwt2-rail-tick:hover .wwt2-rail-label {
-  max-width: 120px; opacity: 1;
+  opacity: 1; transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wwt2-page .wwt2-rail-label { transition: none; transform: none; }
 }
 @media (max-width: 1099px) {
   .wwt2-page .wwt2-rail { display: none; }
