@@ -29,6 +29,7 @@ export function WWT2Footer({
 
   const links = [
     { label: 'The Collection', href: `${base}/book-hotel` },
+    { label: 'Yachts', href: `${base}/yachts` },
     { label: 'Wine River Cruises', href: `${base}/find-cruise` },
     { label: 'Wellness', href: `${base}/experiences` },
     { label: 'Villas', href: `${base}/book-villa` },

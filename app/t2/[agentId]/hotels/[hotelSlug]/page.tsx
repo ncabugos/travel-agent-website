@@ -231,6 +231,7 @@ export default async function T2HotelDetailPage({ params }: PageProps) {
       )}
 
       <T2LeadForm
+        agentId={agentId}
         heading="Plan Your Hotel Stay"
         subheading="Tell us when and where you'd like to go — every booking placed through us comes with partner-program perks."
       />

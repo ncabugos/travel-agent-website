@@ -1,21 +1,30 @@
 'use client'
 
-import { useState } from 'react'
+import { useActionState, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { T2LeadFormLight } from './T2LeadFormLight'
+import { submitContactForm, type ContactFormState } from '@/lib/actions/contact'
 
 interface T2LeadFormProps {
   heading?: string
   subheading?: string
+  /** Routes the enquiry to this advisor's inbox. Without it the server action
+   *  falls back to the platform admin address. */
+  agentId?: string
 }
+
+const initialState: ContactFormState = {}
 
 export function T2LeadForm({
   heading = 'Plan Your Trip',
   subheading = 'Tell us where you want to go. We\'ll match you with the right hotels, cruises, and itineraries — and unlock Virtuoso perks on every booking.',
+  agentId,
 }: T2LeadFormProps) {
   // All hooks must be called before any conditional return.
   const pathname = usePathname()
-  const [submitted, setSubmitted] = useState(false)
+  const [state, formAction, isPending] = useActionState(submitContactForm, initialState)
+  const [renderedAt] = useState<number>(() => Date.now())
+  const submitted = state.success === true
 
   // Coast & Compass and Wine & Wellness Travel use the light variant site-wide.
   // Delegating here means every page that already renders <T2LeadForm /> inherits
@@ -24,13 +33,7 @@ export function T2LeadForm({
     pathname?.startsWith('/t2/coast-compass-demo') ||
     pathname?.startsWith('/t2/wwt-demo')
   ) {
-    return <T2LeadFormLight heading={heading} subheading={subheading} />
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // TODO: wire up form submission
-    setSubmitted(true)
+    return <T2LeadFormLight heading={heading} subheading={subheading} agentId={agentId} />
   }
 
   return (
@@ -92,38 +95,66 @@ export function T2LeadForm({
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="t2-lead-form">
+          <form action={formAction} className="t2-lead-form">
+            {agentId && <input type="hidden" name="agent_id" value={agentId} />}
+            <input type="hidden" name="_rendered_at" value={String(renderedAt)} />
+
+            {/* Honeypot — hidden from people, tempting to bots. */}
+            <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, overflow: 'hidden' }}>
+              <input type="text" name="website_url" tabIndex={-1} autoComplete="off" defaultValue="" />
+            </div>
+
             <div className="t2-lead-form-row">
               <input
                 type="text"
+                name="first_name"
                 placeholder="First Name *"
                 required
+                autoComplete="given-name"
                 className="t2-lead-input"
               />
               <input
                 type="text"
+                name="last_name"
                 placeholder="Last Name *"
                 required
+                autoComplete="family-name"
                 className="t2-lead-input"
               />
             </div>
             <input
               type="email"
+              name="email"
               placeholder="Email Address *"
               required
+              autoComplete="email"
               className="t2-lead-input"
             />
             <input
               type="tel"
+              name="phone"
               placeholder="Phone Number"
+              autoComplete="tel"
+              className="t2-lead-input"
+            />
+            <input
+              type="text"
+              name="destination"
+              placeholder="Destination of Interest"
               className="t2-lead-input"
             />
             <textarea
+              name="message"
               placeholder="Tell us about your travel goals..."
               className="t2-lead-input t2-lead-textarea"
             />
-            <button type="submit" className="t2-lead-submit">
-              <span>Submit Request</span>
+            {state.error && (
+              <p role="alert" style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 13, lineHeight: 1.6, color: '#F0A0A0', margin: 0 }}>
+                {state.error}
+              </p>
+            )}
+            <button type="submit" className="t2-lead-submit" disabled={isPending}>
+              <span>{isPending ? 'Sending…' : 'Submit Request'}</span>
             </button>
           </form>
         )}

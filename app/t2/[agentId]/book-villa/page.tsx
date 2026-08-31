@@ -85,6 +85,7 @@ export default async function BookVillaPage({ params }: PageProps) {
 
       {/* Lead Form */}
       <T2LeadForm
+        agentId={agentId}
         heading="Plan Your Villa Stay"
         subheading="Tell us about your ideal villa — destination, dates, group size — and we'll curate the perfect private retreat."
       />

@@ -393,7 +393,7 @@ export default async function T2HomePage({ params }: PageProps) {
 
       {/* ── 12 · Lead capture ──────────────────────────────────────────── */}
       {/* T2LeadForm auto-delegates to T2LeadFormLight on Coast & Compass. */}
-      <T2LeadForm />
+      <T2LeadForm agentId={agentId} />
     </>
   )
 }

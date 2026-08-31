@@ -133,6 +133,7 @@ export default async function FindCruisePage({ params }: PageProps) {
 
         {/* Lead Form */}
         <T2LeadForm
+          agentId={agentId}
           heading="Plan Your Next Cruise"
           subheading="Tell us where and when you'd like to sail — we'll match the line and itinerary and stack every perk available to you."
         />

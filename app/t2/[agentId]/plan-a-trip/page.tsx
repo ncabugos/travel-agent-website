@@ -116,6 +116,7 @@ export default async function PlanATripPage({ params }: PageProps) {
 
       {/* Lead Form */}
       <T2LeadForm
+        agentId={agentId}
         heading="Let's Design Your Trip"
         subheading="Share your travel dreams with us. Our advisors will craft a bespoke itinerary tailored to your style, schedule, and budget."
       />

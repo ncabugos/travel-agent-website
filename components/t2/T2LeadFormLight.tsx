@@ -1,25 +1,33 @@
 'use client'
 
-import { useState } from 'react'
+import { useActionState, useState } from 'react'
+import { submitContactForm, type ContactFormState } from '@/lib/actions/contact'
 
 interface Props {
   heading?: string
   subheading?: string
+  /** Routes the enquiry to this advisor's inbox. Without it the server action
+   *  falls back to the platform admin address. */
+  agentId?: string
 }
+
+const initialState: ContactFormState = {}
 
 // Light-scheme companion to T2LeadForm. Used by personas that want the lead
 // capture to read as bright/editorial rather than the dark gradient default.
-// Currently wired for the Coast & Compass demo via app/t2/[agentId]/page.tsx.
+//
+// Wired to the same submitContactForm server action as T2ContactForm: writes
+// to `inquiries` and emails the advisor. It previously called preventDefault()
+// and rendered the success panel without sending anything — and its inputs
+// carried no `name` attributes — so every lead submitted here was discarded.
 export function T2LeadFormLight({
   heading = 'Plan Your Trip',
   subheading = "Tell us where you want to go. We'll match you with the right hotels, cruises, and itineraries — and unlock Virtuoso perks on every booking.",
+  agentId,
 }: Props) {
-  const [submitted, setSubmitted] = useState(false)
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitted(true)
-  }
+  const [state, formAction, isPending] = useActionState(submitContactForm, initialState)
+  const [renderedAt] = useState<number>(() => Date.now())
+  const submitted = state.success === true
 
   return (
     <section className="t2-lead-light-section">
@@ -36,16 +44,30 @@ export function T2LeadFormLight({
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="t2-lead-light-form">
-            <div className="t2-lead-light-row">
-              <input type="text"  placeholder="First Name *"   required className="t2-lead-light-input" />
-              <input type="text"  placeholder="Last Name *"    required className="t2-lead-light-input" />
+          <form action={formAction} className="t2-lead-light-form">
+            {agentId && <input type="hidden" name="agent_id" value={agentId} />}
+            <input type="hidden" name="_rendered_at" value={String(renderedAt)} />
+
+            {/* Honeypot — hidden from people, tempting to bots. */}
+            <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, overflow: 'hidden' }}>
+              <input type="text" name="website_url" tabIndex={-1} autoComplete="off" defaultValue="" />
             </div>
-            <input type="email"    placeholder="Email Address *" required className="t2-lead-light-input" />
-            <input type="tel"      placeholder="Phone Number"            className="t2-lead-light-input" />
-            <textarea              placeholder="Tell us about your travel goals…" className="t2-lead-light-input t2-lead-light-textarea" />
-            <button type="submit" className="t2-lead-light-submit">
-              <span>Submit Request</span>
+
+            <div className="t2-lead-light-row">
+              <input type="text" name="first_name" placeholder="First Name *" required autoComplete="given-name"  className="t2-lead-light-input" />
+              <input type="text" name="last_name"  placeholder="Last Name *"  required autoComplete="family-name" className="t2-lead-light-input" />
+            </div>
+            <input type="email" name="email"       placeholder="Email Address *" required autoComplete="email" className="t2-lead-light-input" />
+            <input type="tel"   name="phone"       placeholder="Phone Number"             autoComplete="tel"   className="t2-lead-light-input" />
+            <input type="text"  name="destination" placeholder="Destination of Interest"                        className="t2-lead-light-input" />
+            <textarea           name="message"     placeholder="Tell us about your travel goals…" className="t2-lead-light-input t2-lead-light-textarea" />
+
+            {state.error && (
+              <p role="alert" className="t2-lead-light-error">{state.error}</p>
+            )}
+
+            <button type="submit" className="t2-lead-light-submit" disabled={isPending}>
+              <span>{isPending ? 'Sending…' : 'Submit Request'}</span>
             </button>
           </form>
         )}
@@ -95,6 +117,14 @@ export function T2LeadFormLight({
           max-width: 560px;
         }
 
+        .t2-lead-light-error {
+          font-family: var(--t2-font-sans);
+          font-size: 13px;
+          line-height: 1.6;
+          color: #9B2C2C;
+          margin: 0;
+          text-align: left;
+        }
         .t2-lead-light-success {
           padding: 48px 32px;
           background: #FFFFFF;

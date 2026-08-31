@@ -216,6 +216,7 @@ export default async function YTCHomePage({ params }: PageProps) {
 
       {/* ── 10 · Lead capture ──────────────────────────────────────────── */}
       <T2LeadForm
+        agentId={agentId}
         heading="Ready to Begin?"
         subheading="Tell us where you want to go and we'll design the trip of a lifetime — with exclusive VIP access only available through YTC."
       />

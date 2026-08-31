@@ -108,6 +108,7 @@ export default async function BookHotelPage({ params }: PageProps) {
 
       {/* Lead Form */}
       <T2LeadForm
+        agentId={agentId}
         heading="Plan Your Hotel Stay"
         subheading="Let us match you with the ideal property — exclusive rates, preferred amenities, and a personalised welcome."
       />
