@@ -149,3 +149,39 @@ Benefit copy for Six Senses / Jumeirah / Preferred / Couture was written from th
 preferred-partner amenity structure these programmes publish, not from the consortium portal.
 The credit lines say "typically USD 100 equivalent" — confirm the real value per programme before
 treating them as a client-facing promise.
+
+---
+
+## Wellness / Yachts / Jets / Safaris build — 2026-08-31
+
+### Shipped (8d9c601, live)
+- [x] `/experiences` rebuilt as the Wellness page. The `isWWT` branch keyed on
+      `agentId === 'wwt-demo'`, which never matched the real agent, so the live site
+      had been serving the MOCK_SUPPLIER_PRODUCTS placeholders (Tuscany / Maldives /
+      Patagonia). `supplier_products` is declared by migration 012 but absent from the
+      DB, so that mock fallback is always the live path.
+- [x] `/yachts` — new route, four flagship lines, nav + footer entry.
+- [x] Migration 055 — benefits on Ritz-Carlton / Four Seasons / Orient Express,
+      suites on the latter two.
+- [x] **T2LeadForm + T2LeadFormLight were decorative** — preventDefault(), no `name`
+      attributes, no network call. Eight live pages silently discarded every lead.
+      Both now post to `submitContactForm`; `agentId` threaded from all call sites.
+
+### Shipped in this pass
+- [x] Migration 056 `private_journeys` + RLS (public read on `is_active`, super_admin
+      read-all, writes via service role only).
+- [x] Migration 057 seeds Four Seasons Private Jet, Abercrombie & Kent, Micato Safaris.
+- [x] `/private-jets` + `/safaris` with shared detail component; cross-type slugs 404.
+- [x] Nav is now 9 entries.
+
+### Needs operator action
+1. **Photography for the three new operators.** Pages render a typographic hero and
+   skip the gallery until files land. Source from each supplier's partner/media
+   portal — not the public marketing site (fourseasons.com actively 403s automated
+   fetching). Drop zones and expected filenames: `public/media/private-jets/README.md`.
+2. **Verify Micato pricing** ($20,700–$45,100 per person) before it is quoted. Taken
+   from micato.com, not from a rate sheet.
+3. **Verify the hotel-programme benefit copy** for Six Senses / Jumeirah / Preferred /
+   Couture — still outstanding from the earlier pass.
+4. `supplier_products` (migration 012) is recorded in migration history but the table
+   does not exist. Either create it or delete the dead `getSupplierProducts()` path.

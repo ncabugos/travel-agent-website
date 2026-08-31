@@ -31,6 +31,8 @@ export function WWT2Footer({
     { label: 'The Collection', href: `${base}/book-hotel` },
     { label: 'Yachts', href: `${base}/yachts` },
     { label: 'Wine River Cruises', href: `${base}/find-cruise` },
+    { label: 'Private Jets', href: `${base}/private-jets` },
+    { label: 'Safaris', href: `${base}/safaris` },
     { label: 'Wellness', href: `${base}/experiences` },
     { label: 'Villas', href: `${base}/book-villa` },
     { label: 'Journal', href: `${base}/journal` },
