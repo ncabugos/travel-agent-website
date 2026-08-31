@@ -1,6 +1,7 @@
-import { getHotelProgram, getHotelPrograms } from '@/lib/hotel-programs'
+import { getHotelProgram, getHotelPrograms , applyAgencyTokens } from '@/lib/hotel-programs'
 import { getProgramFeaturedHotels } from '@/lib/hotels'
 import { getSupplierPromo } from '@/lib/supplier-promos'
+import { getAgentProfile } from '@/lib/suppliers'
 import { getBlogPostsBySupplier } from '@/lib/blog'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
@@ -24,20 +25,24 @@ export async function generateStaticParams() {
 
 export default async function HotelProgramDetailPage({ params }: PageProps) {
   const { agentId, programSlug } = await params
-  const [program, promo, relatedPosts, featuredHotels] = await Promise.all([
+  const [program, promo, relatedPosts, featuredHotels, agent] = await Promise.all([
     getHotelProgram(programSlug),
     getSupplierPromo('hotel_program', programSlug),
     getBlogPostsBySupplier(`hotel:${programSlug}`, agentId),
     getProgramFeaturedHotels(programSlug, 50),
+    getAgentProfile(agentId),
   ])
   if (!program) notFound()
 
   const base = `/t2/${agentId}`
+  // The programme catalogue is shared across all advisors, so its copy carries
+  // an {{agency_name}} token rather than any one agency's name.
+  const agencyName = agent?.agency_name?.trim() || 'us'
 
   // Fallback promo used until a DB row is configured for this program
   const promoFallback = {
     headline: `Discover ${program.name}`,
-    subheading: `Book through Eden for Your World and unlock exclusive ${program.name} privileges — upgrades, daily breakfast, and VIP recognition unavailable through any other channel.`,
+    subheading: `Book through ${agencyName} and unlock exclusive ${program.name} privileges — upgrades, daily breakfast, and VIP recognition unavailable through any other channel.`,
     cta_label: 'Book Through Us',
     cta_url: `${base}/contact`,
     image_url: program.slider_images?.[1] ?? program.image_url ?? undefined,
@@ -119,22 +124,22 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
 
       {/* ── Description ── */}
       <section className="t2-section" style={{ maxWidth: 900 }}>
-        <div style={{ textAlign: 'center', marginBottom: 56 }}>
+        <div style={{ textAlign: 'center' }}>
           <h2 className="t2-heading t2-heading-lg" style={{ marginBottom: 16 }}>{program.name}</h2>
           {program.description && (
             <p className="t2-body t2-body-center">{program.description}</p>
           )}
         </div>
-
-        {/* ── Benefits — icon grid ── */}
-        {program.benefits.length > 0 && (
-          <T2BenefitsGrid
-            benefits={program.benefits}
-            heading="Your Exclusive Benefits"
-            label="Privileges"
-          />
-        )}
       </section>
+
+      {/* ── Benefits — centred white band, full bleed ── */}
+      {program.benefits.length > 0 && (
+        <T2BenefitsGrid
+          benefits={program.benefits}
+          heading="Your Exclusive Benefits"
+          label="Privileges"
+        />
+      )}
 
       {/* ── Promo Banner ── */}
       <section className="t2-section" style={{ paddingTop: 0 }}>
@@ -197,7 +202,7 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
             margin: '0 auto 40px',
             lineHeight: 1.8,
           }}>
-            {program.eligibility_notes || 'Book through us and unlock exclusive privileges.'}
+            {applyAgencyTokens(program.eligibility_notes, agencyName) || 'Book through us and unlock exclusive privileges.'}
           </p>
           <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href={`${base}/contact`} className="t2-btn t2-btn-accent">

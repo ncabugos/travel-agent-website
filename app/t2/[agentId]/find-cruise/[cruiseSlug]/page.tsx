@@ -1,5 +1,6 @@
 import { getCruiseLine, getAllCruiseLineSlugs } from '@/lib/cruise-lines'
 import { getSupplierPromo } from '@/lib/supplier-promos'
+import { getAgentProfile } from '@/lib/suppliers'
 import { getBlogPostsBySupplier } from '@/lib/blog'
 import { getCruiseLogo, getCruiseGallery } from '@/lib/media-library'
 import { notFound } from 'next/navigation'
@@ -56,14 +57,17 @@ export async function generateStaticParams() {
 
 export default async function CruiseDetailPage({ params }: PageProps) {
   const { agentId, cruiseSlug } = await params
-  const [cruise, promo, relatedPosts] = await Promise.all([
+  const [cruise, promo, relatedPosts, agent] = await Promise.all([
     getCruiseLine(cruiseSlug),
     getSupplierPromo('cruise_line', cruiseSlug),
     getBlogPostsBySupplier(`cruise:${cruiseSlug}`, agentId),
+    getAgentProfile(agentId),
   ])
   if (!cruise) notFound()
 
   const base = `/t2/${agentId}`
+  // Supplier copy is shared across advisors — never name one agency here.
+  const agencyName = agent?.agency_name?.trim() || 'us'
   // Prefer DB value, fall back to slug-based asset lookup so cruise lines
   // whose logo_url_white column is null still get a hero logo when we ship
   // the corresponding asset in public/assets/supplier logos/.../cruise/.
@@ -306,7 +310,7 @@ export default async function CruiseDetailPage({ params }: PageProps) {
           promo={promo}
           fallback={{
             headline: `Sail With ${cruise.name}`,
-            subheading: `Book through Eden for Your World and unlock exclusive Virtuoso benefits on every ${cruise.name} voyage — onboard credits, private receptions, and VIP treatment unavailable anywhere else.`,
+            subheading: `Book through ${agencyName} and unlock exclusive Virtuoso benefits on every ${cruise.name} voyage — onboard credits, private receptions, and VIP treatment unavailable anywhere else.`,
             cta_label: 'Plan This Cruise',
             cta_url: `${base}/contact`,
             image_url: gallerySlides[0] ?? cruise.hero_image_url ?? undefined,

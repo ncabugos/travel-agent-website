@@ -1,4 +1,4 @@
-import { getHotelProgram, getHotelPrograms } from '@/lib/hotel-programs'
+import { getHotelProgram, getHotelPrograms , applyAgencyTokens } from '@/lib/hotel-programs'
 import { getProgramFeaturedHotels } from '@/lib/hotels'
 import { getBlogPostsBySupplier } from '@/lib/blog'
 import { notFound } from 'next/navigation'
@@ -9,6 +9,7 @@ import { T3SiblingPrograms } from '@/components/t3/T3SiblingPrograms'
 import { T3JournalTeaser, type T3JournalPost } from '@/components/t3/T3JournalTeaser'
 import { T3PromoBanner } from '@/components/t3/T3PromoBanner'
 import { getSupplierPromo } from '@/lib/supplier-promos'
+import { getAgentProfile } from '@/lib/suppliers'
 
 interface PageProps {
   params: Promise<{ agentId: string; programSlug: string }>
@@ -39,12 +40,17 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
   const base = `/t3/${agentId}`
 
   // Fetch supplemental modules in parallel; each gracefully renders nothing when empty.
-  const [featuredHotels, relatedPosts, allPrograms, promo] = await Promise.all([
+  const [featuredHotels, relatedPosts, allPrograms, promo, agent] = await Promise.all([
     getProgramFeaturedHotels(programSlug, 50),
     getBlogPostsBySupplier(programSlug, agentId).catch(() => []),
     getHotelPrograms(),
     getSupplierPromo('hotel_program', programSlug),
+    getAgentProfile(agentId),
   ])
+
+  // Programme copy is shared across advisors and carries an {{agency_name}}
+  // token rather than any one agency's name.
+  const agencyName = agent?.agency_name?.trim() || 'us'
 
   // Sibling programs: same category, ordered by sort_order, exclude current.
   const siblingPrograms = allPrograms
@@ -373,7 +379,7 @@ export default async function T3HotelProgramDetailPage({ params }: PageProps) {
                 marginRight: 'auto',
               }}
             >
-              {program.booking_notes ?? program.eligibility_notes}
+              {applyAgencyTokens(program.booking_notes ?? program.eligibility_notes, agencyName)}
             </p>
           )}
         </div>

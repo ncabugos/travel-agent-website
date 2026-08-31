@@ -3,7 +3,12 @@
 /**
  * T2BenefitsGrid
  * Renders a benefit list with contextual SVG icons matched by keyword.
- * Inspired by the Estate Las Palmas amenity icon layout.
+ *
+ * Layout: a self-contained white band. Each benefit is centred under its own
+ * icon with no card, border, or fill — the composition is held together by
+ * whitespace and the centred rule under the heading. Items are laid out with
+ * flex-wrap rather than a fixed grid so an incomplete final row stays centred
+ * instead of hanging left (programmes carry anywhere from 4 to 8 benefits).
  */
 
 interface Benefit {
@@ -179,84 +184,96 @@ export function T2BenefitsGrid({ benefits, heading = 'Your Exclusive Benefits', 
   if (!benefits.length) return null
 
   return (
-    <>
+    <section className="t2-benefits">
       <style>{`
-        .t2-benefits-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          border-top: 1px solid var(--t2-divider);
-          border-left: 1px solid var(--t2-divider);
+        .t2-benefits {
+          background: #FFFFFF;
+          padding: clamp(88px, 11vw, 136px) 24px;
         }
-        @media (max-width: 900px) {
-          .t2-benefits-grid { grid-template-columns: repeat(2, 1fr); }
+        .t2-benefits-head {
+          text-align: center;
+          max-width: 660px;
+          margin: 0 auto clamp(56px, 6vw, 84px);
         }
-        @media (max-width: 560px) {
-          .t2-benefits-grid { grid-template-columns: 1fr; }
+        .t2-benefits-rule {
+          width: 44px;
+          height: 1px;
+          background: var(--t2-accent, #9A8560);
+          margin: 26px auto 0;
         }
-        .t2-benefit-card {
+        .t2-benefits-list {
           display: flex;
-          align-items: flex-start;
-          gap: 18px;
-          padding: 28px 28px;
-          background: var(--t2-bg);
-          border-right: 1px solid var(--t2-divider);
-          border-bottom: 1px solid var(--t2-divider);
-          transition: background 0.2s ease;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: clamp(48px, 6vw, 72px) clamp(32px, 4vw, 56px);
+          max-width: 1100px;
+          margin: 0 auto;
         }
-        .t2-benefit-card:hover {
-          background: var(--t2-bg-alt, #f7f5f1);
+        .t2-benefit {
+          flex: 0 1 300px;
+          max-width: 330px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
         }
         .t2-benefit-icon {
-          flex-shrink: 0;
-          width: 44px;
-          height: 44px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--t2-accent, #B5945A);
+          color: var(--t2-accent, #9A8560);
+          margin-bottom: 24px;
+          transition: transform 0.5s var(--t2-ease, ease);
         }
-        .t2-benefit-body {
-          flex: 1;
-          min-width: 0;
+        /* The shared icon library ships at 28px; scale up for this airier layout. */
+        .t2-benefit-icon svg { width: 32px; height: 32px; }
+        .t2-benefit:hover .t2-benefit-icon {
+          transform: translateY(-3px);
         }
         .t2-benefit-title {
           font-family: var(--t2-font-serif);
-          font-size: 15px;
-          font-weight: 500;
+          font-size: 18px;
+          font-weight: 400;
+          letter-spacing: 0.01em;
           color: var(--t2-text);
-          margin: 0 0 6px 0;
-          line-height: 1.3;
+          margin: 0 0 10px;
+          line-height: 1.35;
+          /* Titles carry hyphenated terms ("Wi-Fi", "Check-In"). Keep the
+             column wide enough that they never split, and never auto-hyphenate. */
+          hyphens: none;
+          text-wrap: balance;
         }
         .t2-benefit-desc {
           font-family: var(--t2-font-sans);
-          font-size: 13px;
-          line-height: 1.65;
+          font-size: 13.5px;
+          line-height: 1.8;
           color: var(--t2-text-muted);
           margin: 0;
+          max-width: 32ch;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .t2-benefit-icon { transition: none; }
+          .t2-benefit:hover .t2-benefit-icon { transform: none; }
         }
       `}</style>
 
-      <div style={{ textAlign: 'center', marginBottom: 40 }}>
-        {label && <p className="t2-label" style={{ marginBottom: 12 }}>{label}</p>}
-        <h3 className="t2-heading t2-heading-md">{heading}</h3>
+      <div className="t2-benefits-head">
+        {label && <p className="t2-label" style={{ marginBottom: 14 }}>{label}</p>}
+        <h3 className="t2-heading t2-heading-md" style={{ margin: 0 }}>{heading}</h3>
+        <div className="t2-benefits-rule" aria-hidden="true" />
       </div>
 
-      <div className="t2-benefits-grid">
+      <div className="t2-benefits-list">
         {benefits.map((benefit, i) => {
           const iconKey = benefit.icon ?? getIconKey(benefit.title)
           return (
-            <div key={i} className="t2-benefit-card">
-              <div className="t2-benefit-icon" aria-hidden="true">
+            <div key={i} className="t2-benefit">
+              <span className="t2-benefit-icon" aria-hidden="true">
                 {ICONS[iconKey] ?? ICONS.default}
-              </div>
-              <div className="t2-benefit-body">
-                <p className="t2-benefit-title">{benefit.title}</p>
-                <p className="t2-benefit-desc">{benefit.description}</p>
-              </div>
+              </span>
+              <p className="t2-benefit-title">{benefit.title}</p>
+              <p className="t2-benefit-desc">{benefit.description}</p>
             </div>
           )
         })}
       </div>
-    </>
+    </section>
   )
 }

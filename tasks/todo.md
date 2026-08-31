@@ -122,3 +122,30 @@ Known dev-env: POST /api/stripe/checkout returns "No such price" locally (live p
       Curated Editorial rail keyboard/click controls (`ScrollRailControls`), sticky CTA hides over closing/footer,
       focus-visible rings, reduced-motion gating, `role="list"`, tabular nums, semantic lists in Pricing/Studio promo
 - [ ] Pre-existing lint errors (not homepage): StudioBanner/StudioInquiryForm/StudioServices `set-state-in-effect`, SupportForm unescaped `'`
+
+---
+
+## Hotel-programme catalogue repair — 2026-08-31
+
+Triggered by "Six Senses has no image content" on wineandwellnesstravel.com/book-hotel/six-senses.
+Root cause was data, not assets: the shared `hotel_programs` rows were incomplete.
+
+- [x] Six Senses: `image_url` + 11 `slider_images` from `public/media/hotel-programs/six-senses`
+- [x] Jumeirah Passport, Preferred Hotels & Resorts, Couture: hero + 10 slides each
+- [x] Benefits filled for the 4 programmes that had `benefits: []` — all 24 now have them
+- [x] **Cross-tenant brand leak fixed.** 19 rows hardcoded "Eden for Your World" in
+      `eligibility_notes` / `booking_notes`, and the t2 book-hotel + find-cruise promo fallbacks
+      hardcoded it in template code. `hotel_programs` is a single global catalogue shared by every
+      advisor, so it now uses the `{{agency_name}}` token (same convention as blog shortcodes),
+      resolved per-advisor via `applyAgencyTokens()` in `lib/hotel-programs.ts`.
+- [x] `Couture` → `Couture by Langham`. The row described it as "the most exclusive tier of the
+      Preferred collection", which is wrong — the logo and `public/media/hotel-programs/couture-by-langham`
+      confirm it is Langham Hospitality Group's advisor programme.
+- [x] `T2BenefitsGrid` redesigned: white band, centred, no cards/borders/fills. Flex-wrap rather
+      than a fixed grid so an incomplete final row stays centred (programmes carry 4–8 benefits).
+
+### Needs operator verification
+Benefit copy for Six Senses / Jumeirah / Preferred / Couture was written from the standard
+preferred-partner amenity structure these programmes publish, not from the consortium portal.
+The credit lines say "typically USD 100 equivalent" — confirm the real value per programme before
+treating them as a client-facing promise.
