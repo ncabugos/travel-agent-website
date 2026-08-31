@@ -126,8 +126,6 @@ export default async function T2Layout({ children, params }: LayoutProps) {
         <WWT2Footer
           base={`/t2/${agentId}`}
           agencyName={agent?.agency_name ?? 'Wine & Wellness Travel'}
-          email={agent?.email}
-          phone={agent?.phone}
           instagram={agent?.instagram_url}
           facebook={agent?.facebook_url}
           heroImage="/media/hotel-programs/four-seasons/fs-lanai_wellness-1500.jpg"

@@ -183,12 +183,20 @@
   overflow: hidden;
   vertical-align: bottom;
   margin-right: 0.26em; /* word gap — a trailing space would be clipped */
+  /* .wwt-display runs line-height 1.06, so Cormorant's descenders sit below the
+     slot's content box and overflow:hidden sheared them off (the "g" in
+     "you want to go."). Extend the mask past the baseline, then pull the extra
+     height back out of layout so line spacing is untouched. */
+  padding-bottom: 0.24em;
+  margin-bottom: -0.24em;
 }
 .wwt2-page .wwt-hr-slot:last-child { margin-right: 0; }
 .wwt2-page .wwt-hr-word { display: inline-block; }
 @media (prefers-reduced-motion: no-preference) {
   .wwt2-page .wwt-hr .wwt-hr-word {
-    transform: translateY(115%);
+    /* Must clear the slot's padded-out bottom edge (see .wwt-hr-slot), not just
+       its content box, or a sliver of the word shows before it rises. */
+    transform: translateY(140%);
     transition: transform 900ms var(--wwt-ease);
     will-change: transform;
   }

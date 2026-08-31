@@ -28,9 +28,6 @@ export default async function ContactPage({ params, searchParams }: PageProps) {
   const advisorIntent = intent === 'advisor'
   const agent = await getAgentProfile(agentId)
 
-  const phone = agent?.phone ?? '+1 (800) 555-0100'
-  const email = agent?.email ?? 'hello@luxurytravelco.com'
-
   return (
     <>
       {/* Hero */}
@@ -69,25 +66,15 @@ export default async function ContactPage({ params, searchParams }: PageProps) {
               {agent?.agency_name ?? 'Luxury Travel'}
             </h3>
 
+            {/* No email or phone by design — enquiries route through the form
+                so advisor contact details stay off the public site. */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               <div>
-                <p className="t2-label" style={{ marginBottom: 6 }}>Email</p>
-                <a
-                  href={`mailto:${email}`}
-                  style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 14, color: 'var(--t2-accent)', textDecoration: 'none' }}
-                >
-                  {email}
-                </a>
-              </div>
-
-              <div>
-                <p className="t2-label" style={{ marginBottom: 6 }}>Phone</p>
-                <a
-                  href={`tel:${phone.replace(/\s|\(|\)|-/g, '')}`}
-                  style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 14, color: 'var(--t2-text)', textDecoration: 'none' }}
-                >
-                  {phone}
-                </a>
+                <p className="t2-label" style={{ marginBottom: 6 }}>Enquiries</p>
+                <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 14, color: 'var(--t2-text-muted)', margin: 0, lineHeight: 1.7 }}>
+                  Send a note using the form and it comes straight to us. We reply
+                  within 24 hours.
+                </p>
               </div>
 
               {agent?.address && (

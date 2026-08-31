@@ -1,14 +1,10 @@
 import Link from 'next/link'
 import { Reveal } from './Reveal'
 import { WWT2HeadlineReveal } from './WWT2HeadlineReveal'
-import { ObfuscatedContact } from '@/components/ui/ObfuscatedContact'
-import { encodeContact } from '@/lib/obfuscate'
 
 interface WWT2FooterProps {
   base: string
   agencyName: string
-  email?: string
-  phone?: string
   instagram?: string
   facebook?: string
   heroImage: string
@@ -16,14 +12,15 @@ interface WWT2FooterProps {
 
 /**
  * Closing CTA + quiet footer. A full-bleed serene image carries a final
- * invitation; the footer beneath stays restrained — contact, a short index,
- * and the Virtuoso affiliation line.
+ * invitation; the footer beneath stays restrained — a short index, the enquiry
+ * link, and the Virtuoso affiliation line.
+ *
+ * Deliberately no email or phone: every enquiry routes through the contact form
+ * so the advisor's personal address and number stay off the public site.
  */
 export function WWT2Footer({
   base,
   agencyName,
-  email,
-  phone,
   instagram,
   facebook,
   heroImage,
@@ -85,24 +82,9 @@ export function WWT2Footer({
           </nav>
 
           <div className="wwt2-foot-contact">
-            {email && (
-              <ObfuscatedContact
-                encoded={encodeContact(email)}
-                kind="email"
-                fallbackHref={`${base}/contact`}
-                fallbackLabel="Email us"
-                className="wwt2-foot-contact-link"
-              />
-            )}
-            {phone && (
-              <ObfuscatedContact
-                encoded={encodeContact(phone)}
-                kind="tel"
-                fallbackHref={`${base}/contact`}
-                fallbackLabel="Call us"
-                className="wwt2-foot-contact-link"
-              />
-            )}
+            <Link href={`${base}/contact`} className="wwt2-foot-contact-link">
+              Start a conversation
+            </Link>
             <div className="wwt2-foot-social">
               {instagram && (
                 <a href={instagram} target="_blank" rel="noopener noreferrer" className="wwt2-foot-social-link">
