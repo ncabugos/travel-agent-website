@@ -201,3 +201,90 @@ export function contactPageSchema(agent: AgentProfile) {
     },
   }
 }
+
+/* ── Category-page builders (t2 surfaces) ───────────────────────────────── */
+
+/**
+ * FAQPage. Answer engines lift these more or less verbatim, so each `a` should
+ * open with the direct answer in one sentence and only then qualify it.
+ */
+export function faqSchema(faqs: { q: string; a: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  }
+}
+
+/**
+ * Service schema for a category surface (yachts, wellness, jets, safaris).
+ *
+ * Deliberately omits telephone/email: the advisor's contact details are kept
+ * off the public site (all enquiries route through the contact form), and
+ * emitting them here would put them straight back into the HTML.
+ */
+export function categoryServiceSchema(
+  agent: AgentProfile,
+  input: { name: string; description: string; path: string; serviceType: string },
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: input.name,
+    description: input.description,
+    serviceType: input.serviceType,
+    areaServed: 'Worldwide',
+    url: canonicalUrl(agent, input.path),
+    provider: {
+      '@type': 'TravelAgency',
+      name: agent.agency_name,
+      url: canonicalUrl(agent),
+      priceRange: '$$$$',
+    },
+  }
+}
+
+/**
+ * ItemList of the brands or itineraries a category page covers. Enumerated,
+ * named entities are what generative engines cite when asked "who books X" —
+ * `offers` is included per item when a real published price exists.
+ */
+export function itemListSchema(
+  agent: AgentProfile,
+  input: {
+    name: string
+    path: string
+    items: { name: string; description?: string | null; path?: string; priceFromUsd?: number | null }[]
+  },
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: input.name,
+    url: canonicalUrl(agent, input.path),
+    numberOfItems: input.items.length,
+    itemListElement: input.items.map((it, i) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const item: Record<string, any> = {
+        '@type': 'ListItem',
+        position: i + 1,
+        name: it.name,
+      }
+      if (it.description) item.description = it.description
+      if (it.path) item.url = canonicalUrl(agent, it.path)
+      if (it.priceFromUsd) {
+        item.offers = {
+          '@type': 'Offer',
+          price: it.priceFromUsd,
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
+        }
+      }
+      return item
+    }),
+  }
+}

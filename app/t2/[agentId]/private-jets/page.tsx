@@ -2,6 +2,11 @@ import { getPrivateJourneys } from '@/lib/private-journeys'
 import { getAgentProfile } from '@/lib/suppliers'
 import { T2JourneyIndex } from '@/components/t2/T2JourneyIndex'
 import { T2LeadForm } from '@/components/t2/T2LeadForm'
+import { T2Faq, type Faq } from '@/components/t2/T2Faq'
+import { T2HowItWorks } from '@/components/t2/T2HowItWorks'
+import {
+  JsonLd, faqSchema, categoryServiceSchema, itemListSchema, breadcrumbSchema,
+} from '@/components/seo/JsonLd'
 import { buildMetadata } from '@/lib/seo'
 import type { Metadata } from 'next'
 
@@ -17,31 +22,117 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!agent) return {}
   return buildMetadata({
     agent,
-    title: 'Private Jet Journeys',
+    title: 'Private Jet Journeys Around the World',
     description:
-      'Around-the-world private jet journeys on a privately configured aircraft, with the hotels, the ground handling, and the days either side arranged as one booking.',
+      'Book the Four Seasons Private Jet: nine itineraries on a customised Airbus A321, staying in Four Seasons hotels throughout, with a journey physician, executive chef and 24/7 concierge on board.',
     path: 'private-jets',
   })
 }
 
+const JET_FAQS: Faq[] = [
+  {
+    q: 'How much does a private jet journey cost?',
+    a: 'Around-the-world private jet journeys are typically priced from roughly $150,000 per person for a three-week itinerary, all-inclusive of flights, hotels, meals, excursions and ground handling. Four Seasons does not publish rates publicly, so we request current pricing for the departure you want.',
+  },
+  {
+    q: 'How many guests travel on the Four Seasons Private Jet?',
+    a: 'The aircraft is a customised Airbus A321 configured for a fraction of the passengers it would normally carry, so the group stays small enough to move through airports and hotels together. A dedicated journey team travels with the group throughout.',
+  },
+  {
+    q: 'What is included in a private jet journey?',
+    a: 'Everything between the first and last day: all flights on the private aircraft, accommodation in Four Seasons hotels and resorts, meals, excursions, ground transfers, luggage handling, visas and gratuities. A 24/7 concierge, an on-board executive chef, and a journey physician travel with the group.',
+  },
+  {
+    q: 'Who operates the Four Seasons Private Jet?',
+    a: 'The journeys are sold and operated by TCS World Travel, and the aircraft is operated by Titan Airways. Four Seasons provides the hotels, the service standard, and the branded cabin crew training.',
+  },
+  {
+    q: 'How far ahead do private jet journeys sell out?',
+    a: 'Departures routinely sell out within days of being announced, often twelve to eighteen months ahead. We register interest before the public on-sale date so you are contacted when a routing you want opens.',
+  },
+]
+
+const JET_STEPS = [
+  {
+    title: 'Tell us the year and the region',
+    body: 'Nothing more specific is needed. Nine itineraries run each year and they do not all repeat.',
+  },
+  {
+    title: 'We confirm what is still open',
+    body: 'Current departures, remaining space, exact pricing, and what each routing actually covers.',
+  },
+  {
+    title: 'We register you before public release',
+    body: 'For sold-out years, you are on the list before the next season is announced.',
+  },
+]
+
 export default async function PrivateJetsPage({ params }: PageProps) {
   const { agentId } = await params
-  const journeys = await getPrivateJourneys('jet')
+  const [journeys, agent] = await Promise.all([
+    getPrivateJourneys('jet'),
+    getAgentProfile(agentId),
+  ])
+  const base = `/t2/${agentId}`
 
   return (
     <>
+      {agent && (
+        <JsonLd
+          data={[
+            categoryServiceSchema(agent, {
+              name: `Private Jet Journey Booking — ${agent.agency_name}`,
+              description:
+                'Booking for around-the-world private jet journeys including the Four Seasons Private Jet, operated on a customised Airbus A321 with Four Seasons hotels throughout.',
+              path: 'private-jets',
+              serviceType: 'Private Jet Journey Booking',
+            }),
+            itemListSchema(agent, {
+              name: 'Private jet programmes',
+              path: 'private-jets',
+              items: journeys.map((j) => ({
+                name: j.name,
+                description: j.description,
+                path: `private-jets/${j.slug}`,
+                priceFromUsd: j.price_from_usd,
+              })),
+            }),
+            faqSchema(JET_FAQS.map((f) => ({ q: f.q, a: f.a }))),
+            breadcrumbSchema(agent, [
+              { name: 'Home', path: '' },
+              { name: 'Private Jets', path: 'private-jets' },
+            ]),
+          ]}
+        />
+      )}
       <T2JourneyIndex
         journeys={journeys}
         agentId={agentId}
         segment="private-jets"
         eyebrow="Private Aviation"
-        heading="No connections. No terminals. No re-packing."
-        intro="A private jet journey removes the part of long-haul travel that costs you days rather than money. One aircraft, one crew, one bag you unpack at the start and repack at the end — across as many countries as the routing takes in."
+        heading="Private jet journeys around the world."
+        intro="The Four Seasons Private Jet flies nine itineraries a year on a customised Airbus A321, staying in Four Seasons hotels throughout. All flights, hotels, meals, excursions and ground handling are included, and a concierge, executive chef and physician travel with the group."
+        ctaHref={`${base}/contact`}
+        ctaLabel="Request current departures"
+        trustLine="Virtuoso member · Departures sell out 12–18 months ahead · Reply within one business day"
       />
+      <T2HowItWorks
+        steps={JET_STEPS}
+        heading="How booking a private jet journey works"
+        ctaHref={`${base}/contact`}
+        ctaLabel="Request current departures"
+      />
+
+      <T2Faq
+        faqs={JET_FAQS}
+        heading="Private jet journey questions"
+        contactHref={`${base}/contact`}
+      />
+
       <T2LeadForm
         agentId={agentId}
-        heading="Plan a private jet journey"
-        subheading="Departures are limited and sell on announcement. Tell us the year and the region, and we'll tell you what is still open."
+        heading="Request current departures"
+        subheading="Departures sell out on announcement. Tell us the year and the region, and we'll come back within one business day with what is still open and what it costs."
       />
     </>
   )

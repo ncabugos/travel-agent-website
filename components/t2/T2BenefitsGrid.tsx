@@ -209,6 +209,9 @@ export function T2BenefitsGrid({ benefits, heading = 'Your Exclusive Benefits', 
           max-width: 1100px;
           margin: 0 auto;
         }
+        /* Four items would otherwise wrap 3 + 1. Narrow the track so they
+           settle into a balanced 2 x 2. */
+        .t2-benefits-list[data-count='4'] { max-width: 720px; }
         .t2-benefit {
           flex: 0 1 300px;
           max-width: 330px;
@@ -260,7 +263,7 @@ export function T2BenefitsGrid({ benefits, heading = 'Your Exclusive Benefits', 
         <div className="t2-benefits-rule" aria-hidden="true" />
       </div>
 
-      <div className="t2-benefits-list">
+      <div className="t2-benefits-list" data-count={benefits.length}>
         {benefits.map((benefit, i) => {
           const iconKey = benefit.icon ?? getIconKey(benefit.title)
           return (

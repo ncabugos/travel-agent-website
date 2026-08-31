@@ -10,6 +10,11 @@ interface Props {
   eyebrow: string
   heading: string
   intro: string
+  /** Above-the-fold CTA. Omit to render the hero without one. */
+  ctaHref?: string
+  ctaLabel?: string
+  /** Small reassurance line under the CTA (membership, response time). */
+  trustLine?: string
 }
 
 /**
@@ -19,7 +24,9 @@ interface Props {
  * name, the territory, and the price. When assets arrive the same markup picks
  * them up with no further change.
  */
-export function T2JourneyIndex({ journeys, agentId, segment, eyebrow, heading, intro }: Props) {
+export function T2JourneyIndex({
+  journeys, agentId, segment, eyebrow, heading, intro, ctaHref, ctaLabel, trustLine,
+}: Props) {
   const base = `/t2/${agentId}`
 
   return (
@@ -33,6 +40,12 @@ export function T2JourneyIndex({ journeys, agentId, segment, eyebrow, heading, i
             {heading}
           </h1>
           <p className="t2-jindex-hero-body">{intro}</p>
+          {ctaHref && (
+            <div style={{ marginTop: 32 }}>
+              <Link href={ctaHref} className="t2-btn t2-btn-accent">{ctaLabel ?? 'Start planning'}</Link>
+            </div>
+          )}
+          {trustLine && <p className="t2-jindex-trust">{trustLine}</p>}
         </div>
       </section>
 
@@ -103,6 +116,10 @@ export function T2JourneyIndex({ journeys, agentId, segment, eyebrow, heading, i
           max-width: 640px; margin: 24px auto 0;
         }
 
+        .t2-jindex-trust {
+          font-family: var(--t2-font-sans); font-size: 12px; font-weight: 300;
+          letter-spacing: 0.04em; color: rgba(255,255,255,0.62); margin: 18px 0 0;
+        }
         .t2-jindex-list {
           display: flex; flex-direction: column;
           gap: clamp(48px, 6vw, 80px);
