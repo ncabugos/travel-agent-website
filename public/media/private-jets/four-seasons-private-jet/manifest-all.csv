@@ -1,0 +1,110 @@
+path,itinerary,stop,width,height,orientation,hero_capable,bytes
+grand-horizons/geneva/fs-hotel-des-bergues-lakefront.jpg,Grand Horizons,geneva,721,1128,portrait,False,99868
+grand-horizons/geneva/lake-geneva-jet-deau.jpg,Grand Horizons,geneva,915,1004,portrait,False,128982
+grand-horizons/geneva/watchmaking-handcrafted-watches.jpg,Grand Horizons,geneva,915,641,landscape,False,80554
+grand-horizons/ha-long-bay/cruise-sundeck-sunset.jpg,Grand Horizons,ha-long-bay,915,641,landscape,False,79703
+grand-horizons/ha-long-bay/dark-and-light-cave-kayak.jpg,Grand Horizons,ha-long-bay,722,1126,portrait,False,169547
+grand-horizons/ha-long-bay/limestone-formations-aerial.jpg,Grand Horizons,ha-long-bay,915,1004,portrait,False,129142
+grand-horizons/ha-long-bay/luxury-cruise-ship-limestone-karsts.jpg,Grand Horizons,ha-long-bay,915,1004,portrait,False,107635
+grand-horizons/istanbul/blue-mosque-domes-detail-COVER.jpg,Grand Horizons,istanbul,1280,1655,portrait,False,227297
+grand-horizons/istanbul/blue-mosque-exterior.jpg,Grand Horizons,istanbul,915,1004,portrait,False,85330
+grand-horizons/istanbul/fs-hotel-hammam.jpg,Grand Horizons,istanbul,915,641,landscape,False,163606
+grand-horizons/istanbul/fs-sultanahmet-terrace-hagia-sophia.jpg,Grand Horizons,istanbul,722,1126,portrait,False,101284
+grand-horizons/istanbul/turkish-textiles-bazaar.jpg,Grand Horizons,istanbul,721,1126,portrait,False,159813
+grand-horizons/jet/cabin-flatbed-seat-window.jpg,Grand Horizons,jet,721,1126,portrait,False,40298
+grand-horizons/mallorca/capdepera-lighthouse.jpg,Grand Horizons,mallorca,925,1446,portrait,False,141545
+grand-horizons/mallorca/chef-food-preparation.jpg,Grand Horizons,mallorca,915,641,landscape,False,58416
+grand-horizons/mallorca/coastal-resort-pool-formentor.jpg,Grand Horizons,mallorca,915,1004,portrait,False,152840
+grand-horizons/milan/duomo-cathedral-facade.jpg,Grand Horizons,milan,915,1004,portrait,False,119700
+grand-horizons/milan/duomo-rooftop-city-view-SPREAD.jpg,Grand Horizons,milan,2077,1655,landscape,True,219959
+grand-horizons/milan/fs-hotel-milano-garden.jpg,Grand Horizons,milan,721,1128,portrait,False,151936
+grand-horizons/milan/fs-hotel-milano-vaulted-pool.jpg,Grand Horizons,milan,915,641,landscape,False,59863
+grand-horizons/milan/galleria-vittorio-emanuele-ii.jpg,Grand Horizons,milan,722,1128,portrait,False,183967
+grand-horizons/napa-valley/calistoga-castle-winery.jpg,Grand Horizons,napa-valley,915,639,landscape,False,112473
+grand-horizons/napa-valley/fs-resort-napa-valley-aerial.jpg,Grand Horizons,napa-valley,915,1002,portrait,False,168191
+grand-horizons/napa-valley/vineyard-terrace-morning.jpg,Grand Horizons,napa-valley,721,1126,portrait,False,110951
+grand-horizons/napa-valley/vineyard-wine-tasting-table.jpg,Grand Horizons,napa-valley,915,641,landscape,False,80656
+grand-horizons/thailand/fs-bangkok-chao-phraya-pool.jpg,Grand Horizons,thailand,915,1655,portrait,False,312183
+grand-horizons/thailand/grand-palace-bangkok.jpg,Grand Horizons,thailand,915,1002,portrait,False,142458
+grand-horizons/thailand/hillside-resort-pool-pavilion.jpg,Grand Horizons,thailand,915,639,landscape,False,120953
+grand-horizons/thailand/resort-infinity-pool-pavilion-sunset.jpg,Grand Horizons,thailand,2555,1355,landscape,True,353179
+grand-horizons/thailand/riverside-dining-wat-arun-view.jpg,Grand Horizons,thailand,722,1128,portrait,False,65729
+grand-horizons/tokyo/bonsai-japanese-maple.jpg,Grand Horizons,tokyo,721,1126,portrait,False,166300
+grand-horizons/tokyo/fs-tokyo-otemachi-room-city-view.jpg,Grand Horizons,tokyo,915,641,landscape,False,63487
+grand-horizons/tokyo/imperial-palace-moat.jpg,Grand Horizons,tokyo,915,1004,portrait,False,106726
+international-intrigue/budapest/chain-bridge-st-stephens-aerial.jpg,International Intrigue,budapest,910,1004,portrait,False,167488
+international-intrigue/budapest/danube-river-dusk.jpg,International Intrigue,budapest,722,1126,portrait,False,106824
+international-intrigue/budapest/fishermans-bastion-stairs.jpg,International Intrigue,budapest,911,641,landscape,False,79301
+international-intrigue/budapest/parliament-through-arches-COVER.jpg,International Intrigue,budapest,1280,1655,portrait,False,112913
+international-intrigue/hoi-an/fs-the-nam-hai-pools-beach-aerial.jpg,International Intrigue,hoi-an,721,1126,portrait,False,166561
+international-intrigue/hoi-an/rice-paddy-aerial-scooter.jpg,International Intrigue,hoi-an,722,1126,portrait,False,168434
+international-intrigue/hoi-an/thu-bon-river-old-town-boats.jpg,International Intrigue,hoi-an,915,929,portrait,False,127427
+international-intrigue/hoi-an/vietnamese-cooking-class.jpg,International Intrigue,hoi-an,915,641,landscape,False,89841
+international-intrigue/jet/cabin-seats-windows.jpg,International Intrigue,jet,470,434,landscape,False,21020
+international-intrigue/jet/fine-dining-dessert-plating.jpg,International Intrigue,jet,470,436,landscape,False,22825
+international-intrigue/jet/guest-relaxing-in-cabin-seat.jpg,International Intrigue,jet,2555,1655,landscape,True,173991
+international-intrigue/jet/inflight-plated-meal-tray.jpg,International Intrigue,jet,721,985,portrait,False,45853
+international-intrigue/jet/inflight-wine-service.jpg,International Intrigue,jet,915,1655,portrait,False,111067
+international-intrigue/jet/model-jet-closing.jpg,International Intrigue,jet,2011,1655,landscape,True,108240
+international-intrigue/jet/window-toast-inflight-SPREAD.jpg,International Intrigue,jet,2078,1655,landscape,True,121161
+international-intrigue/kyoto/arashiyama-bamboo-grove.jpg,International Intrigue,kyoto,325,508,portrait,False,63785
+international-intrigue/kyoto/cherry-blossoms-pond-boat.jpg,International Intrigue,kyoto,214,236,portrait,False,22263
+international-intrigue/kyoto/fs-kyoto-garden-view-room.jpg,International Intrigue,kyoto,915,641,landscape,False,97734
+international-intrigue/kyoto/shoji-lattice-window-tree-shadow.jpg,International Intrigue,kyoto,918,645,landscape,False,61822
+international-intrigue/maldives/guided-yoga-infinity-pool-ocean.jpg,International Intrigue,maldives,915,639,landscape,False,63323
+international-intrigue/maldives/overwater-villa-pool-sandbank.jpg,International Intrigue,maldives,1323,2394,portrait,False,114247
+international-intrigue/maldives/overwater-villas-aerial.jpg,International Intrigue,maldives,915,1004,portrait,False,133041
+international-intrigue/maldives/villa-living-room-interior.jpg,International Intrigue,maldives,721,1126,portrait,False,93251
+international-intrigue/marrakech/atlas-mountains-kasbah.jpg,International Intrigue,marrakech,721,1128,portrait,False,106715
+international-intrigue/marrakech/fs-resort-marrakech-terrace-sunset.jpg,International Intrigue,marrakech,915,641,landscape,False,101258
+international-intrigue/marrakech/koutoubia-minaret-through-arch.jpg,International Intrigue,marrakech,915,1004,portrait,False,128388
+international-intrigue/paris/eiffel-tower-from-balcony-breakfast.jpg,International Intrigue,paris,910,1004,portrait,False,78722
+international-intrigue/paris/fs-george-v-lounge-chandelier.jpg,International Intrigue,paris,721,1124,portrait,False,133843
+international-intrigue/paris/louvre-pyramid.jpg,International Intrigue,paris,915,641,landscape,False,107421
+international-intrigue/seattle/gourmet-cuisine-plates.jpg,International Intrigue,seattle,722,1126,portrait,False,64043
+international-intrigue/seattle/space-needle-city-aerial.jpg,International Intrigue,seattle,282,309,portrait,False,19583
+international-intrigue/seattle/waterfront-lounge-fire-pit.jpg,International Intrigue,seattle,915,641,landscape,False,51676
+international-intrigue/serengeti/acacia-sunset-bush-picnic.jpg,International Intrigue,serengeti,2555,1355,landscape,True,243265
+international-intrigue/serengeti/fs-safari-lodge-infinity-pool-deck.jpg,International Intrigue,serengeti,721,985,portrait,False,80974
+international-intrigue/serengeti/hot-air-balloon-over-plains.jpg,International Intrigue,serengeti,915,1004,portrait,False,88569
+international-intrigue/serengeti/lodge-room-deck-plains-view.jpg,International Intrigue,serengeti,915,641,landscape,False,96015
+new-world-icons/anguilla/barnes-bay-bluff-boats.jpg,New World Icons,anguilla,913,641,landscape,False,126088
+new-world-icons/anguilla/beach-dinner-sunset-palms.jpg,New World Icons,anguilla,915,1655,portrait,False,171785
+new-world-icons/anguilla/oceanfront-yoga.jpg,New World Icons,anguilla,722,985,portrait,False,54231
+new-world-icons/anguilla/resort-pool-cabanas-sea.jpg,New World Icons,anguilla,719,983,portrait,False,118710
+new-world-icons/anguilla/resort-pool-umbrellas-palms.jpg,New World Icons,anguilla,915,1004,portrait,False,148197
+new-world-icons/anguilla/snorkelling-fish-stingray.jpg,New World Icons,anguilla,470,436,landscape,False,50646
+new-world-icons/hong-kong/big-buddha-aerial.jpg,New World Icons,hong-kong,721,985,portrait,False,101332
+new-world-icons/hong-kong/chinese-calligraphy.jpg,New World Icons,hong-kong,915,641,landscape,False,44478
+new-world-icons/hong-kong/fs-hong-kong-room-harbour-view.jpg,New World Icons,hong-kong,470,436,landscape,False,29388
+new-world-icons/hong-kong/tian-tan-big-buddha-COVER.jpg,New World Icons,hong-kong,1280,1656,portrait,False,163223
+new-world-icons/hong-kong/victoria-harbour-red-sail-junk.jpg,New World Icons,hong-kong,915,1004,portrait,False,123103
+new-world-icons/iceland/black-sand-volcanic-landscape.jpg,New World Icons,iceland,915,641,landscape,False,101218
+new-world-icons/iceland/blue-lagoon-retreat-lava-field.jpg,New World Icons,iceland,915,1004,portrait,False,104476
+new-world-icons/iceland/hallgrimskirkja-reykjavik.jpg,New World Icons,iceland,722,985,portrait,False,60265
+new-world-icons/iceland/snowmobiles-on-glacier.jpg,New World Icons,iceland,470,436,landscape,False,21609
+new-world-icons/iceland/snowmobiling-snowfield.jpg,New World Icons,iceland,470,436,landscape,False,20171
+new-world-icons/jaipur/amber-fort-courtyard.jpg,New World Icons,jaipur,913,641,landscape,False,136085
+new-world-icons/jaipur/amber-fort-gardens.jpg,New World Icons,jaipur,926,657,landscape,False,138907
+new-world-icons/jaipur/hawa-mahal-palace-of-winds.jpg,New World Icons,jaipur,915,1004,portrait,False,167016
+new-world-icons/jaipur/marigold-flower-offerings.jpg,New World Icons,jaipur,470,432,landscape,False,59344
+new-world-icons/jaipur/ornate-gate-women-in-saris.jpg,New World Icons,jaipur,1025,1399,portrait,False,219630
+new-world-icons/jet/fine-dining-lobster-plating.jpg,New World Icons,jet,468,436,landscape,False,23863
+new-world-icons/jet/guests-greeted-at-aircraft.jpg,New World Icons,jet,2555,1655,landscape,True,182107
+new-world-icons/jet/model-jet-closing.jpg,New World Icons,jet,2077,1655,landscape,True,110526
+new-world-icons/jet/window-drink-inflight-SPREAD.jpg,New World Icons,jet,2078,1655,landscape,True,77910
+new-world-icons/langkawi/cycling-rice-paddies.jpg,New World Icons,langkawi,470,436,landscape,False,46210
+new-world-icons/langkawi/rainforest-canopy-guides.jpg,New World Icons,langkawi,721,985,portrait,False,183328
+new-world-icons/langkawi/sky-bridge-jungle.jpg,New World Icons,langkawi,2923,1526,landscape,True,414006
+new-world-icons/langkawi/sky-bridge-suspension-detail.jpg,New World Icons,langkawi,721,985,portrait,False,73558
+new-world-icons/langkawi/spa-treatment-pavilion.jpg,New World Icons,langkawi,915,641,landscape,False,73331
+new-world-icons/langkawi/villa-interior-beach-view.jpg,New World Icons,langkawi,924,1012,portrait,False,115557
+new-world-icons/los-cabos/fs-cabo-del-mar-villa-pool.jpg,New World Icons,los-cabos,915,1004,portrait,False,177115
+new-world-icons/los-cabos/plated-scallop-dish.jpg,New World Icons,los-cabos,470,435,landscape,False,20961
+new-world-icons/los-cabos/shoreline-surf-aerial.jpg,New World Icons,los-cabos,721,985,portrait,False,119394
+new-world-icons/los-cabos/sport-fishing-charter.jpg,New World Icons,los-cabos,915,641,landscape,False,101971
+new-world-icons/venice/dolomites-peaks.jpg,New World Icons,venice,915,1004,portrait,False,154765
+new-world-icons/venice/dolomites-seceda-ridge.jpg,New World Icons,venice,470,436,landscape,False,40384
+new-world-icons/venice/gondolier-on-lagoon.jpg,New World Icons,venice,721,985,portrait,False,41052
+new-world-icons/venice/grand-canal-dining-table-view.jpg,New World Icons,venice,915,1004,portrait,False,104958
+new-world-icons/venice/st-marks-basilica.jpg,New World Icons,venice,915,641,landscape,False,142151

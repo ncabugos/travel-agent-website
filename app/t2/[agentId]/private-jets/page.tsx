@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 const JET_FAQS: Faq[] = [
   {
     q: 'How much does a private jet journey cost?',
-    a: 'Around-the-world private jet journeys are typically priced from roughly $150,000 per person for a three-week itinerary, all-inclusive of flights, hotels, meals, excursions and ground handling. Four Seasons does not publish rates publicly, so we request current pricing for the departure you want.',
+    a: 'Four Seasons publishes its rates. The 2027 and 2028 departures run from USD 167,000 per person for the 16-day Asia Unveiled routing to USD 252,000 for the 23-day Grand Horizons circumnavigation, double occupancy, with a solo traveller supplement of roughly ten percent. That price is all-inclusive: flights on the private jet, hotels, meals, excursions, ground transport, luggage handling and gratuities.',
   },
   {
     q: 'How many guests travel on the Four Seasons Private Jet?',

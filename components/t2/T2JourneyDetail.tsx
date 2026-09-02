@@ -18,12 +18,15 @@ interface Props {
  * /safaris — the two surfaces differ in what they list, not in how an operator
  * reads once opened.
  *
+ * The page follows the operator's own brochure order: hero, the aircraft and
+ * team, where the routings go, the published itineraries as image cards with
+ * dates, stops and price, what is on board, a cabin gallery, then what booking
+ * through the advisor adds.
+ *
  * Every section is conditional on its data, so an operator seeded with only
  * copy renders a shorter but complete page rather than a run of empty bands.
- * The hero in particular falls back to a typographic treatment when
- * `hero_image_url` is null: the three launch operators have no licensed
- * photography in the repo yet, and an empty black hero was the exact defect
- * that started this workstream.
+ * The hero falls back to a typographic treatment when `hero_image_url` is null,
+ * and itinerary and region cards render text-only when no image is on file.
  */
 export function T2JourneyDetail({ journey: j, agentId, indexHref, indexLabel }: Props) {
   const base = `/t2/${agentId}`
@@ -98,11 +101,23 @@ export function T2JourneyDetail({ journey: j, agentId, indexHref, indexLabel }: 
           <div style={{ maxWidth: 'var(--t2-content-max, 1280px)', margin: '0 auto' }}>
             <div style={{ textAlign: 'center', maxWidth: 620, margin: '0 auto clamp(40px, 5vw, 64px)' }}>
               <p className="t2-label" style={{ marginBottom: 14 }}>Where It Goes</p>
-              <h2 className="t2-heading t2-heading-lg" style={{ margin: 0 }}>The territory.</h2>
+              <h2 className="t2-heading t2-heading-lg" style={{ margin: 0 }}>Where the journeys go.</h2>
             </div>
             <div className="t2-journey-dests">
               {j.destinations.map((d) => (
                 <div key={d.name} className="t2-journey-dest">
+                  {d.image_url && (
+                    <div className="t2-journey-dest-media">
+                      <Image
+                        src={d.image_url}
+                        alt={d.name}
+                        fill
+                        style={{ objectFit: 'cover' }}
+                        sizes="(max-width: 720px) 100vw, 520px"
+                        unoptimized
+                      />
+                    </div>
+                  )}
                   <h3 className="t2-journey-dest-name">{d.name}</h3>
                   {d.blurb && <p className="t2-journey-dest-blurb">{d.blurb}</p>}
                 </div>
@@ -122,30 +137,59 @@ export function T2JourneyDetail({ journey: j, agentId, indexHref, indexLabel }: 
             </h2>
           </div>
 
-          <div className="t2-journey-list">
+          <div className="t2-journey-grid">
             {j.sample_journeys.map((it) => {
               // The <dt> supplies the word "From", so the value is the bare figure.
               const price = it.price_from_usd
                 ? `$${it.price_from_usd.toLocaleString('en-US')}`
                 : null
+              const stops = it.stops ?? []
               return (
-                <article key={it.name} className="t2-journey-item">
-                  <div className="t2-journey-item-main">
-                    <h3 className="t2-journey-item-name">{it.name}</h3>
-                    {it.blurb && <p className="t2-journey-item-blurb">{it.blurb}</p>}
-                  </div>
-                  <dl className="t2-journey-item-meta">
-                    {it.days ? (
-                      <div><dt>Length</dt><dd>{it.days} days</dd></div>
-                    ) : null}
-                    {it.regions ? (
-                      <div><dt>Region</dt><dd>{it.regions}</dd></div>
-                    ) : null}
-                    <div>
-                      <dt>From</dt>
-                      <dd className="t2-journey-item-price">{price ?? 'On request'}</dd>
+                <article key={it.name} className="t2-journey-card">
+                  {it.image_url && (
+                    <div className="t2-journey-card-media">
+                      <Image
+                        src={it.image_url}
+                        alt={it.name}
+                        fill
+                        style={{ objectFit: 'cover' }}
+                        sizes="(max-width: 860px) 100vw, 540px"
+                        unoptimized
+                      />
                     </div>
-                  </dl>
+                  )}
+                  <div className="t2-journey-card-body">
+                    {it.dates && <p className="t2-journey-card-dates">{it.dates}</p>}
+                    <h3 className="t2-journey-item-name">{it.name}</h3>
+                    {stops.length > 0 && (
+                      <p className="t2-journey-card-stops">{stops.join(' · ')}</p>
+                    )}
+                    {it.blurb && <p className="t2-journey-item-blurb">{it.blurb}</p>}
+                    <dl className="t2-journey-item-meta">
+                      {it.days ? (
+                        <div><dt>Length</dt><dd>{it.days} days</dd></div>
+                      ) : null}
+                      {stops.length > 0 ? (
+                        <div><dt>Destinations</dt><dd>{stops.length}</dd></div>
+                      ) : it.regions ? (
+                        <div><dt>Region</dt><dd>{it.regions}</dd></div>
+                      ) : null}
+                      <div>
+                        <dt>From</dt>
+                        <dd className="t2-journey-item-price">{price ?? 'On request'}</dd>
+                      </div>
+                    </dl>
+                    {it.brochure_url && (
+                      <a
+                        href={it.brochure_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="t2-journey-card-link"
+                      >
+                        Brochure (PDF)
+                      </a>
+                    )}
+                  </div>
                 </article>
               )
             })}
@@ -161,13 +205,18 @@ export function T2JourneyDetail({ journey: j, agentId, indexHref, indexLabel }: 
       {j.experiences.length > 0 && (
         <T2BenefitsGrid
           benefits={j.experiences}
-          heading="What the operator brings."
+          heading={j.journey_type === 'jet' ? 'On board the aircraft.' : 'What the operator brings.'}
           label="The Experience"
         />
       )}
 
       {/* ── Gallery ────────────────────────────────────────────────────── */}
-      {j.slider_images.length > 0 && <T2HotelGallery images={j.slider_images} />}
+      {j.slider_images.length > 0 && (
+        <T2HotelGallery
+          images={j.slider_images}
+          title={j.journey_type === 'jet' ? 'The cabin.' : undefined}
+        />
+      )}
 
       {/* ── What we add ────────────────────────────────────────────────── */}
       {j.benefits.length > 0 && (
@@ -221,41 +270,60 @@ export function T2JourneyDetail({ journey: j, agentId, indexHref, indexLabel }: 
         .t2-journey-dests {
           display: grid; grid-template-columns: repeat(2, 1fr);
           gap: clamp(28px, 3.5vw, 48px);
-          max-width: 1000px; margin: 0 auto;
+          max-width: 1100px; margin: 0 auto;
         }
         @media (max-width: 720px) { .t2-journey-dests { grid-template-columns: 1fr; } }
         .t2-journey-dest { border-top: 1px solid var(--t2-divider); padding-top: 22px; }
+        .t2-journey-dest-media {
+          position: relative; aspect-ratio: 16 / 10; overflow: hidden;
+          margin-bottom: 20px; background: var(--t2-divider);
+        }
         .t2-journey-dest-name {
           font-family: var(--t2-font-serif); font-weight: 400; font-size: 22px;
           color: var(--t2-text); margin: 0 0 10px;
         }
         .t2-journey-dest-blurb {
           font-family: var(--t2-font-sans); font-size: 14px; font-weight: 300;
-          line-height: 1.8; color: var(--t2-text-muted); margin: 0; max-width: 46ch;
+          line-height: 1.8; color: var(--t2-text-muted); margin: 0; max-width: 52ch;
         }
 
-        .t2-journey-list {
-          max-width: 1000px; margin: 0 auto;
-          border-top: 1px solid var(--t2-divider);
+        .t2-journey-grid {
+          display: grid; grid-template-columns: repeat(2, 1fr);
+          gap: clamp(40px, 4.5vw, 64px) clamp(28px, 3vw, 44px);
+          max-width: 1100px; margin: 0 auto;
         }
-        .t2-journey-item {
-          display: grid; grid-template-columns: 1.6fr 1fr;
-          gap: clamp(20px, 3vw, 48px);
-          padding: clamp(24px, 3vw, 34px) 0;
-          border-bottom: 1px solid var(--t2-divider);
-          align-items: start;
+        @media (max-width: 860px) { .t2-journey-grid { grid-template-columns: 1fr; } }
+        .t2-journey-card {
+          display: flex; flex-direction: column;
+          border-top: 1px solid var(--t2-divider); padding-top: 22px;
         }
-        @media (max-width: 720px) { .t2-journey-item { grid-template-columns: 1fr; } }
+        .t2-journey-card-media {
+          position: relative; aspect-ratio: 3 / 2; overflow: hidden;
+          margin-bottom: 22px; background: var(--t2-divider);
+        }
+        .t2-journey-card-media img { transition: transform 1000ms var(--t2-ease, ease); }
+        .t2-journey-card:hover .t2-journey-card-media img { transform: scale(1.035); }
+        .t2-journey-card-body { display: flex; flex-direction: column; flex: 1; }
+        .t2-journey-card-dates {
+          font-family: var(--t2-font-sans); font-size: 10.5px; font-weight: 500;
+          letter-spacing: 0.18em; text-transform: uppercase;
+          color: var(--t2-accent); margin: 0 0 10px;
+        }
         .t2-journey-item-name {
-          font-family: var(--t2-font-serif); font-weight: 400; font-size: 21px;
-          color: var(--t2-text); margin: 0 0 8px; line-height: 1.3;
+          font-family: var(--t2-font-serif); font-weight: 400; font-size: 24px;
+          color: var(--t2-text); margin: 0 0 10px; line-height: 1.25;
+        }
+        .t2-journey-card-stops {
+          font-family: var(--t2-font-sans); font-size: 12.5px; font-weight: 400;
+          letter-spacing: 0.02em; line-height: 1.7;
+          color: var(--t2-text); margin: 0 0 12px;
         }
         .t2-journey-item-blurb {
           font-family: var(--t2-font-sans); font-size: 13.5px; font-weight: 300;
-          line-height: 1.75; color: var(--t2-text-muted); margin: 0; max-width: 52ch;
+          line-height: 1.75; color: var(--t2-text-muted); margin: 0; max-width: 58ch;
         }
         .t2-journey-item-meta {
-          margin: 0; display: flex; flex-wrap: wrap; gap: 18px 34px;
+          margin: 20px 0 0; display: flex; flex-wrap: wrap; gap: 14px 30px;
         }
         .t2-journey-item-meta dt {
           font-family: var(--t2-font-sans); font-size: 9.5px; font-weight: 500;
@@ -267,8 +335,15 @@ export function T2JourneyDetail({ journey: j, agentId, indexHref, indexLabel }: 
           color: var(--t2-text); margin: 0; line-height: 1.4;
         }
         .t2-journey-item-price { white-space: nowrap; }
+        .t2-journey-card-link {
+          align-self: flex-start; margin-top: 20px;
+          font-family: var(--t2-font-sans); font-size: 10.5px; font-weight: 500;
+          letter-spacing: 0.2em; text-transform: uppercase;
+          color: var(--t2-accent); text-decoration: none;
+          border-bottom: 1px solid currentColor; padding-bottom: 3px;
+        }
         .t2-journey-pricenote {
-          max-width: 1000px; margin: 26px auto 0;
+          max-width: 1100px; margin: 30px auto 0;
           font-family: var(--t2-font-sans); font-size: 12px; font-weight: 300;
           line-height: 1.7; color: var(--t2-text-muted); font-style: italic;
         }
@@ -278,6 +353,10 @@ export function T2JourneyDetail({ journey: j, agentId, indexHref, indexLabel }: 
           letter-spacing: 0.2em; text-transform: uppercase;
           color: var(--t2-accent); text-decoration: none;
           border-bottom: 1px solid currentColor; padding-bottom: 3px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .t2-journey-card-media img { transition: none; }
+          .t2-journey-card:hover .t2-journey-card-media img { transform: none; }
         }
       `}</style>
     </>

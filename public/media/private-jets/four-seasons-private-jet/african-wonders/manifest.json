@@ -1,0 +1,308 @@
+[
+  {
+    "path": "athens/acropolis-parthenon.jpg",
+    "section": "athens",
+    "width": 915,
+    "height": 641,
+    "orientation": "landscape",
+    "hero_capable": false,
+    "bytes": 111700
+  },
+  {
+    "path": "athens/fs-astir-palace-hotel-athens-aerial.jpg",
+    "section": "athens",
+    "width": 915,
+    "height": 1004,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 188592
+  },
+  {
+    "path": "athens/porch-of-the-caryatids-sunset.jpg",
+    "section": "athens",
+    "width": 720,
+    "height": 1128,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 115035
+  },
+  {
+    "path": "cairo/lunch-terrace-overlooking-pyramids.jpg",
+    "section": "cairo",
+    "width": 915,
+    "height": 641,
+    "orientation": "landscape",
+    "hero_capable": false,
+    "bytes": 85029
+  },
+  {
+    "path": "cairo/pyramid-of-giza-aerial.jpg",
+    "section": "cairo",
+    "width": 721,
+    "height": 1128,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 166720
+  },
+  {
+    "path": "cairo/pyramids-of-giza.jpg",
+    "section": "cairo",
+    "width": 915,
+    "height": 1004,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 128360
+  },
+  {
+    "path": "cairo/sphinx-of-giza.jpg",
+    "section": "cairo",
+    "width": 722,
+    "height": 1126,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 108251
+  },
+  {
+    "path": "jet/cabin-dining-beverage-service.jpg",
+    "section": "jet",
+    "width": 915,
+    "height": 1655,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 75963
+  },
+  {
+    "path": "jet/cabin-italian-leather-flatbed-seats.jpg",
+    "section": "jet",
+    "width": 721,
+    "height": 1126,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 43165
+  },
+  {
+    "path": "jet/guests-boarding-jet-greeting.jpg",
+    "section": "jet",
+    "width": 2555,
+    "height": 1655,
+    "orientation": "landscape",
+    "hero_capable": true,
+    "bytes": 177591
+  },
+  {
+    "path": "jet/jet-exterior-a321neo-runway-sunset.jpg",
+    "section": "jet",
+    "width": 2555,
+    "height": 1655,
+    "orientation": "landscape",
+    "hero_capable": true,
+    "bytes": 140146
+  },
+  {
+    "path": "jet/model-jet-your-journey-begins.jpg",
+    "section": "jet",
+    "width": 2010,
+    "height": 1655,
+    "orientation": "landscape",
+    "hero_capable": true,
+    "bytes": 106879
+  },
+  {
+    "path": "johannesburg/fs-westcliff-hotel-pool.jpg",
+    "section": "johannesburg",
+    "width": 721,
+    "height": 1128,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 109583
+  },
+  {
+    "path": "johannesburg/fs-westcliff-outdoor-terrace.jpg",
+    "section": "johannesburg",
+    "width": 915,
+    "height": 641,
+    "orientation": "landscape",
+    "hero_capable": false,
+    "bytes": 93295
+  },
+  {
+    "path": "johannesburg/lion-and-game-drive-vehicles.jpg",
+    "section": "johannesburg",
+    "width": 915,
+    "height": 1002,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 89751
+  },
+  {
+    "path": "lifestyle/beach-firepit-gathering-mauritius.jpg",
+    "section": "lifestyle",
+    "width": 915,
+    "height": 1655,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 100655
+  },
+  {
+    "path": "lifestyle/cover-serengeti-giraffe-zebra-game-drive.jpg",
+    "section": "lifestyle",
+    "width": 1280,
+    "height": 1656,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 191825
+  },
+  {
+    "path": "lifestyle/game-drive-vehicle-dust-golden-hour.jpg",
+    "section": "lifestyle",
+    "width": 2036,
+    "height": 1653,
+    "orientation": "landscape",
+    "hero_capable": true,
+    "bytes": 213728
+  },
+  {
+    "path": "luxor/felucca-sailboat-nile-sunset.jpg",
+    "section": "luxor",
+    "width": 722,
+    "height": 1128,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 64633
+  },
+  {
+    "path": "luxor/karnak-temple-columns-ramesses-SPREAD.jpg",
+    "section": "luxor",
+    "width": 2986,
+    "height": 1559,
+    "orientation": "landscape",
+    "hero_capable": true,
+    "bytes": 521755
+  },
+  {
+    "path": "luxor/luxor-temple-colonnade-statues.jpg",
+    "section": "luxor",
+    "width": 915,
+    "height": 1004,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 119269
+  },
+  {
+    "path": "luxor/valley-of-the-kings-tomb-corridor.jpg",
+    "section": "luxor",
+    "width": 915,
+    "height": 641,
+    "orientation": "landscape",
+    "hero_capable": false,
+    "bytes": 122004
+  },
+  {
+    "path": "mauritius/fs-resort-mauritius-anahita-villa-pool.jpg",
+    "section": "mauritius",
+    "width": 915,
+    "height": 1004,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 188138
+  },
+  {
+    "path": "mauritius/ile-aux-cerfs-golf-club-aerial.jpg",
+    "section": "mauritius",
+    "width": 722,
+    "height": 1124,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 131717
+  },
+  {
+    "path": "mauritius/snorkelling-reef-marine-life.jpg",
+    "section": "mauritius",
+    "width": 915,
+    "height": 639,
+    "orientation": "landscape",
+    "hero_capable": false,
+    "bytes": 82866
+  },
+  {
+    "path": "rwanda/mountain-gorilla-family.jpg",
+    "section": "rwanda",
+    "width": 915,
+    "height": 641,
+    "orientation": "landscape",
+    "hero_capable": false,
+    "bytes": 61017
+  },
+  {
+    "path": "rwanda/mountain-gorilla-portrait.jpg",
+    "section": "rwanda",
+    "width": 915,
+    "height": 1004,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 66222
+  },
+  {
+    "path": "rwanda/traditional-intore-performers.jpg",
+    "section": "rwanda",
+    "width": 721,
+    "height": 1128,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 88394
+  },
+  {
+    "path": "rwanda/volcanoes-national-park-virunga.jpg",
+    "section": "rwanda",
+    "width": 915,
+    "height": 641,
+    "orientation": "landscape",
+    "hero_capable": false,
+    "bytes": 49620
+  },
+  {
+    "path": "serengeti/elephants-at-watering-hole.jpg",
+    "section": "serengeti",
+    "width": 915,
+    "height": 1002,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 99163
+  },
+  {
+    "path": "serengeti/fs-safari-lodge-serengeti-lounge-interior.jpg",
+    "section": "serengeti",
+    "width": 915,
+    "height": 641,
+    "orientation": "landscape",
+    "hero_capable": false,
+    "bytes": 94269
+  },
+  {
+    "path": "serengeti/fs-safari-lodge-serengeti-pool-deck-sunset.jpg",
+    "section": "serengeti",
+    "width": 721,
+    "height": 1126,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 83655
+  },
+  {
+    "path": "serengeti/hot-air-balloon-serengeti-dawn.jpg",
+    "section": "serengeti",
+    "width": 915,
+    "height": 1004,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 51245
+  },
+  {
+    "path": "serengeti/hot-air-balloons-serengeti.jpg",
+    "section": "serengeti",
+    "width": 721,
+    "height": 1126,
+    "orientation": "portrait",
+    "hero_capable": false,
+    "bytes": 105397
+  }
+]

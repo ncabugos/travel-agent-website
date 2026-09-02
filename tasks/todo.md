@@ -174,11 +174,27 @@ treating them as a client-facing promise.
 - [x] `/private-jets` + `/safaris` with shared detail component; cross-type slugs 404.
 - [x] Nav is now 9 entries.
 
+### Shipped 2026-09-02: Four Seasons Private Jet content + imagery
+- [x] Brochure imagery (265 files, 6 itineraries) in `public/media/private-jets/four-seasons-private-jet/`.
+- [x] Migration `20260902134913_four_seasons_private_jet_content` (applied via MCP, file
+      saved under the recorded version): jet hero, 8-image cabin gallery, 4 region cards
+      with photos, 9 itineraries in departure order with dates, stops, day counts,
+      published per-person prices and brochure PDFs, refreshed intro / on-board copy.
+- [x] `T2JourneyDetail`: itinerary cards (image, dates, stops, destinations count, brochure
+      link) in a 2-col grid; region cards take an `image_url`; jet-specific section headings.
+- [x] `JourneyItinerary` gained `dates`, `stops`, `brochure_url`; `JourneyExperience` gained `icon`.
+- [ ] Operator: decide whether the six advisor-edition brochure PDFs should stay publicly
+      linked (they carry Four Seasons direct contact details). One SQL update removes
+      `brochure_url` from `sample_journeys` if not.
+- [ ] Operator: move `_incoming-*.zip` (26 MB) and `_manifest/` out of `public/` before the
+      next deploy, and delete the two 403 placeholder files `jet/JTT_600_original.jpg` and
+      `video/fs-private-jet-request.mp4` (they are Akamai "Access Denied" HTML, not media).
+
 ### Needs operator action
-1. **Photography for the three new operators.** Pages render a typographic hero and
-   skip the gallery until files land. Source from each supplier's partner/media
-   portal — not the public marketing site (fourseasons.com actively 403s automated
-   fetching). Drop zones and expected filenames: `public/media/private-jets/README.md`.
+1. **Photography for A&K and Micato.** Four Seasons is done (above). The two safari pages
+   still render a typographic hero and skip the gallery until files land. Source from
+   each supplier's partner/media portal — not the public marketing site. Drop zones and
+   expected filenames: `public/media/private-jets/README.md`.
 2. **Verify Micato pricing** ($20,700–$45,100 per person) before it is quoted. Taken
    from micato.com, not from a rate sheet.
 3. **Verify the hotel-programme benefit copy** for Six Senses / Jumeirah / Preferred /

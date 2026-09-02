@@ -17,6 +17,8 @@ export interface JourneyDestination {
 export interface JourneyExperience {
   title: string
   description: string
+  /** Optional T2BenefitsGrid icon key; keyword matching on the title otherwise. */
+  icon?: string
 }
 
 /**
@@ -32,6 +34,12 @@ export interface JourneyItinerary {
   blurb?: string | null
   price_from_usd?: number | null
   image_url?: string | null
+  /** Published departure window, e.g. "March 1 to 20, 2028". Null when unannounced. */
+  dates?: string | null
+  /** Ordered destination names as the operator lists them on the routing. */
+  stops?: string[] | null
+  /** Operator brochure (PDF) served from /public, when one is on file. */
+  brochure_url?: string | null
 }
 
 export interface JourneyBenefit {
