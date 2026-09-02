@@ -9,7 +9,7 @@ interface NavLink {
 }
 
 interface WWT2NavProps {
-  /** Base path for this tenant, e.g. /t2/wwt-demo */
+  /** Base path for this tenant, e.g. /t2/<agentId> */
   base: string
   agencyName: string
 }

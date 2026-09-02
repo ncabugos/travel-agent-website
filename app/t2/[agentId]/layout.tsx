@@ -9,6 +9,7 @@ import { LidoMobileNav } from '@/components/t2/LidoMobileNav'
 import { T2Footer } from '@/components/t2/T2Footer'
 import { WWT2Nav } from '@/components/t2/wwt2/WWT2Nav'
 import { WWT2Footer } from '@/components/t2/wwt2/WWT2Footer'
+import { T2PersonaProvider } from '@/components/t2/T2Persona'
 import { DemoSignupBanner } from '@/components/ui/DemoSignupBanner'
 import { isDemoSlug, isPublishedDemoSlug } from '@/lib/demo-agents'
 import '@/app/t2/globals-t2.css'
@@ -62,7 +63,7 @@ export default async function T2Layout({ children, params }: LayoutProps) {
   ])
   const isLido = agentId === 'lido-collective'
   // Wine & Wellness flagship (v2) — its own scoped design system + bespoke nav.
-  const isWwt2 = agentId === 'wwt-demo' || agent?.bespoke_layout === 'wwt'
+  const isWwt2 = agent?.bespoke_layout === 'wwt'
   const pageClass = isWwt2 ? 'wwt2-page' : isLido ? 't2-page lido-page' : 't2-page'
 
   return (
@@ -121,7 +122,9 @@ export default async function T2Layout({ children, params }: LayoutProps) {
           modules={agent?.active_modules ?? null}
         />
       )}
-      <main>{children}</main>
+      <T2PersonaProvider value={{ lightLeadForm: isWwt2 || agentId === 'coast-compass-demo' }}>
+        <main>{children}</main>
+      </T2PersonaProvider>
       {isWwt2 ? (
         <WWT2Footer
           base={`/t2/${agentId}`}

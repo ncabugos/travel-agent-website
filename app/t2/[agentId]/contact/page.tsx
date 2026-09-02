@@ -2,6 +2,7 @@ import { getAgentProfile } from '@/lib/suppliers'
 import { buildMetadata } from '@/lib/seo'
 import type { Metadata } from 'next'
 import { T2ContactForm } from '@/components/t2/T2ContactForm'
+import { JsonLd, contactPageSchema } from '@/components/seo/JsonLd'
 import Image from 'next/image'
 
 interface PageProps {
@@ -30,6 +31,8 @@ export default async function ContactPage({ params, searchParams }: PageProps) {
 
   return (
     <>
+      {agent && <JsonLd data={contactPageSchema(agent)} />}
+
       {/* Hero */}
       <section style={{ position: 'relative', height: 400, overflow: 'hidden' }}>
         <Image

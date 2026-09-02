@@ -96,6 +96,15 @@ const DEMOS: DemoCard[] = [
     thumbnail: '/demos/demo-homepage-thumbs-web-optimized/demo-casaSolis-homepage-thumbs-2.webp',
   },
   {
+    // Live client site, not a fixture — links out to the advisor's own domain.
+    slug: 'wine-and-wellness-travel',
+    name: 'Wine & Wellness Travel',
+    kind: 'Custom build',
+    tagline: 'A live Virtuoso agency site — wine country, wellness retreats, villas, and river cruises with VIP hotel benefits.',
+    href: 'https://wineandwellnesstravel.com',
+    thumbnail: '/demos/wine_and_wellness.jpg',
+  },
+  {
     slug: 'ytc',
     name: 'Your Travel Center',
     kind: 'Agency',

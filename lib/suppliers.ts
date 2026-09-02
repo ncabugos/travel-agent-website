@@ -1,4 +1,4 @@
-import { MOCK_AGENT, DEMO_T2_AGENT, DEMO_YTC_AGENT, DEMO_T3_AGENT, DEMO_WWT_AGENT, DEMO_COAST_COMPASS_AGENT, DEMO_LIDO_COLLECTIVE_AGENT, DEMO_CASA_SOLIS_AGENT, MOCK_SUPPLIERS, type DisplaySupplier, type MockAgent } from '@/lib/mock-data'
+import { MOCK_AGENT, DEMO_T2_AGENT, DEMO_YTC_AGENT, DEMO_T3_AGENT, DEMO_COAST_COMPASS_AGENT, DEMO_LIDO_COLLECTIVE_AGENT, DEMO_CASA_SOLIS_AGENT, MOCK_SUPPLIERS, type DisplaySupplier, type MockAgent } from '@/lib/mock-data'
 import { createServiceClient } from '@/lib/supabase/service'
 
 // Re-export for use in lib/blog.ts and other modules
@@ -8,7 +8,6 @@ const DEMO_ID    = 'demo-agent'
 const T2_DEMO_ID = 't2-demo'
 const T3_DEMO_ID = 't3-demo'
 const YTC_DEMO_ID = 'ytc-demo'
-const WWT_DEMO_ID = 'wwt-demo'
 const COAST_COMPASS_DEMO_ID = 'coast-compass-demo'
 const LIDO_COLLECTIVE_DEMO_ID = 'lido-collective'
 const CASA_SOLIS_DEMO_ID = 'casa-solis'
@@ -20,7 +19,6 @@ const isDemo    = (agentId: string) =>
 const isT2Demo  = (agentId: string) => agentId === T2_DEMO_ID
 const isT3Demo  = (agentId: string) => agentId === T3_DEMO_ID
 const isYtcDemo = (agentId: string) => agentId === YTC_DEMO_ID
-const isWwtDemo = (agentId: string) => agentId === WWT_DEMO_ID
 const isCoastCompassDemo = (agentId: string) => agentId === COAST_COMPASS_DEMO_ID
 const isLidoCollectiveDemo = (agentId: string) => agentId === LIDO_COLLECTIVE_DEMO_ID
 const isCasaSolisDemo = (agentId: string) => agentId === CASA_SOLIS_DEMO_ID
@@ -31,7 +29,6 @@ export async function getAgentProfile(agentId: string): Promise<MockAgent | null
   if (isCasaSolisDemo(agentId)) return DEMO_CASA_SOLIS_AGENT
   if (isLidoCollectiveDemo(agentId)) return DEMO_LIDO_COLLECTIVE_AGENT
   if (isCoastCompassDemo(agentId)) return DEMO_COAST_COMPASS_AGENT
-  if (isWwtDemo(agentId)) return DEMO_WWT_AGENT
   if (isYtcDemo(agentId)) return DEMO_YTC_AGENT
   if (isT3Demo(agentId))  return DEMO_T3_AGENT
   if (isT2Demo(agentId))  return DEMO_T2_AGENT

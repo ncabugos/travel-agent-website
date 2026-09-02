@@ -156,7 +156,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const agent = await getAgentProfile(agentId)
   if (!agent) return {}
 
-  const isWwt = agent.bespoke_layout === 'wwt' || agentId === 'wwt-demo'
+  const isWwt = agent.bespoke_layout === 'wwt'
   return buildMetadata({
     agent,
     title: isWwt ? 'Luxury Wellness Retreats & Spa Resorts' : 'Curated Experiences',
@@ -177,10 +177,8 @@ export default async function ExperiencesPage({ params }: PageProps) {
   }
 
   const base = `/t2/${agentId}`
-  // Match the layout's signal (app/t2/[agentId]/layout.tsx) rather than the
-  // demo slug alone — keying on 'wwt-demo' meant the real agent never hit this
-  // branch and shipped the generic placeholder itineraries instead.
-  const isWwt = agent?.bespoke_layout === 'wwt' || agentId === 'wwt-demo'
+  // Match the layout's signal (app/t2/[agentId]/layout.tsx).
+  const isWwt = agent?.bespoke_layout === 'wwt'
 
   if (isWwt) {
     // Intersect the curated list with the live catalogue so the page can never

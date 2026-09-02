@@ -3,9 +3,12 @@ import { getProgramFeaturedHotels } from '@/lib/hotels'
 import { getSupplierPromo } from '@/lib/supplier-promos'
 import { getAgentProfile } from '@/lib/suppliers'
 import { getBlogPostsBySupplier } from '@/lib/blog'
+import { buildMetadata } from '@/lib/seo'
+import { JsonLd, programServiceSchema, breadcrumbSchema } from '@/components/seo/JsonLd'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { T2HotelGallery } from '@/components/t2/T2HotelGallery'
 import { T2FeaturedProperties } from '@/components/t2/T2FeaturedProperties'
 import { T2BenefitsGrid } from '@/components/t2/T2BenefitsGrid'
@@ -21,6 +24,26 @@ export const revalidate = 3600
 export async function generateStaticParams() {
   const programs = await getHotelPrograms()
   return programs.map(p => ({ programSlug: p.slug }))
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { agentId, programSlug } = await params
+  const [program, agent] = await Promise.all([
+    getHotelProgram(programSlug),
+    getAgentProfile(agentId),
+  ])
+  if (!program || !agent) return {}
+  const agencyName = agent.agency_name?.trim() || 'us'
+  return buildMetadata({
+    agent,
+    title: `${program.name} Benefits & Perks`,
+    description:
+      applyAgencyTokens(program.description, agencyName) ||
+      `Book ${program.name} properties with ${agencyName} — exclusive upgrades, breakfast, resort credit and VIP recognition.`,
+    path: `book-hotel/${programSlug}`,
+    image: program.image_url ?? undefined,
+    imageAlt: program.name,
+  })
 }
 
 export default async function HotelProgramDetailPage({ params }: PageProps) {
@@ -50,6 +73,25 @@ export default async function HotelProgramDetailPage({ params }: PageProps) {
 
   return (
     <>
+      {agent && (
+        <JsonLd data={[
+          programServiceSchema(
+            agent,
+            {
+              name: program.name,
+              description: applyAgencyTokens(program.description, agencyName),
+              slug: program.slug,
+            },
+            `book-hotel/${program.slug}`,
+          ),
+          breadcrumbSchema(agent, [
+            { name: 'Home', path: '' },
+            { name: 'Hotels', path: 'book-hotel' },
+            { name: program.name, path: `book-hotel/${program.slug}` },
+          ]),
+        ]} />
+      )}
+
       {/* ── Hero ── */}
       <section
         style={{

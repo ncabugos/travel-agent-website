@@ -14,6 +14,7 @@ import { T2InstagramFeed } from '@/components/t2/T2InstagramFeed'
 import { T2LeadForm } from '@/components/t2/T2LeadForm'
 import { getAgentProfile } from '@/lib/suppliers'
 import { buildMetadata } from '@/lib/seo'
+import { JsonLd, travelAgencySchema, leadAdvisorSchema } from '@/components/seo/JsonLd'
 import type { Metadata } from 'next'
 import {
   getPropertiesDestinations,
@@ -215,11 +216,23 @@ export default async function T2HomePage({ params }: PageProps) {
 
   const agent = await getAgentProfile(agentId)
 
-  // Wine & Wellness Travel — bespoke flagship build. Selected by the staging
-  // slug or, in production, the agent's `bespoke_layout` flag (so the live
-  // domain renders it without hardcoding the tenant UUID here).
-  if (agentId === 'wwt-demo' || agent?.bespoke_layout === 'wwt') {
-    return <WWTHomeV2 params={params} />
+  // TravelAgency (+ Person lead advisor when the SEO facts name one) for the
+  // homepage — emitted on both the bespoke WWT branch and the generic build.
+  const homeSchemas = agent
+    ? ([travelAgencySchema(agent), leadAdvisorSchema(agent)].filter(Boolean) as object[])
+    : []
+  const homeJsonLd = homeSchemas.length > 0 ? <JsonLd data={homeSchemas} /> : null
+
+  // Wine & Wellness Travel — bespoke flagship build, selected by the agent's
+  // `bespoke_layout` flag (so the live domain renders it without hardcoding
+  // the tenant UUID here).
+  if (agent?.bespoke_layout === 'wwt') {
+    return (
+      <>
+        {homeJsonLd}
+        <WWTHomeV2 params={params} />
+      </>
+    )
   }
   const [properties, experiences, programs, cruises, posts] = await Promise.all([
     getPropertiesDestinations(),
@@ -253,6 +266,8 @@ export default async function T2HomePage({ params }: PageProps) {
 
   return (
     <>
+      {homeJsonLd}
+
       {/* ── 01 · Hero ───────────────────────────────────────────────────── */}
       {agentId === 't2-demo' ? (
         <T2HeroSlider

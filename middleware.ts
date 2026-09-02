@@ -65,6 +65,14 @@ function parseTenantPath(pathname: string): { template: string; agentId: string;
   return { template: m[1], agentId: m[2], rest: m[3] ?? '' }
 }
 
+// Demo slugs that were promoted to real tenants. Their old showcase URLs 301
+// to the live site so any links or index entries Google already holds hand off
+// cleanly instead of serving a duplicate copy under the platform host.
+const RETIRED_DEMO_REDIRECTS: Record<string, string> = {
+  'wwt-demo': 'wineandwellnesstravel.com',
+}
+const RETIRED_DEMO_PATH = /^\/(?:frontend|t2|t3|t4)\/([a-z0-9-]+)(\/.*)?$/i
+
 // Known platform hostnames that should NOT trigger domain routing
 const PLATFORM_HOSTS = new Set([
   'localhost',
@@ -112,6 +120,17 @@ export async function middleware(request: NextRequest) {
   //    vanity domain when one is configured. Consolidates SEO equity and
   //    keeps Google indexing only the canonical (vanity) URL.
   if (isPlatformHost(host)) {
+    const retired = RETIRED_DEMO_PATH.exec(pathname)
+    const retiredDomain = retired && RETIRED_DEMO_REDIRECTS[retired[1].toLowerCase()]
+    if (retiredDomain) {
+      const url = request.nextUrl.clone()
+      url.protocol = 'https:'
+      url.host = retiredDomain
+      url.port = ''
+      url.pathname = retired[2] || '/'
+      return NextResponse.redirect(url, 301)
+    }
+
     const tenantPath = parseTenantPath(pathname)
     if (tenantPath) {
       const domainMap = await getDomainMap()

@@ -112,9 +112,12 @@ const WWT_FACTS: AgentSeoFacts = {
   identifier: 'CST #2019108-10',
 }
 
+/** Wine & Wellness Travel — live tenant on wineandwellnesstravel.com (t2, bespoke_layout 'wwt'). */
+export const WWT_AGENT_ID = '14385e4b-7dbe-4642-88b8-1a1a0279f5d2'
+
 const AGENT_SEO_DATA: Record<string, AgentSeoFacts> = {
   '2e18df43-171a-4565-b840-aade259cab69': EDEN_FACTS,
-  'wwt-demo': WWT_FACTS,
+  [WWT_AGENT_ID]: WWT_FACTS,
 }
 
 /** Look up SEO facts for a tenant; returns sensible defaults if none. */

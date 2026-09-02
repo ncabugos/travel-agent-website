@@ -7,7 +7,7 @@
  */
 
 import type { AgentProfile } from '@/lib/suppliers'
-import { canonicalUrl, getSeoFacts } from '@/lib/seo'
+import { canonicalOrigin, canonicalUrl, getSeoFacts } from '@/lib/seo'
 
 export function JsonLd({ data }: { data: object | object[] }) {
   const json = Array.isArray(data) ? { '@context': 'https://schema.org', '@graph': data } : data
@@ -108,13 +108,13 @@ export function breadcrumbSchema(
   }
 }
 
-/** Blog index schema. */
-export function blogSchema(agent: AgentProfile) {
+/** Blog index schema. `path` is the index route below the tenant root ('blog' on frontend, 'journal' on t2). */
+export function blogSchema(agent: AgentProfile, path = 'blog') {
   return {
     '@context': 'https://schema.org',
     '@type': 'Blog',
     name: `${agent.agency_name} Journal`,
-    url: canonicalUrl(agent, 'blog'),
+    url: canonicalUrl(agent, path),
     publisher: {
       '@type': 'Organization',
       name: agent.agency_name,
@@ -123,7 +123,7 @@ export function blogSchema(agent: AgentProfile) {
   }
 }
 
-/** Article schema for a single blog post. */
+/** Article schema for a single blog post. `path` is the post route below the tenant root; defaults to the frontend `blog/<slug>`. */
 export function articleSchema(
   agent: AgentProfile,
   post: {
@@ -134,10 +134,11 @@ export function articleSchema(
     created_at?: string | null
     updated_at?: string | null
     author_name?: string | null
-  }
+  },
+  path = `blog/${post.slug}`
 ) {
   const facts = getSeoFacts(agent)
-  const origin = canonicalUrl(agent).replace(canonicalUrl(agent, ''), '').split('/frontend')[0]
+  const origin = canonicalOrigin(agent)
   const image = post.cover_image_url
     ? post.cover_image_url.startsWith('http')
       ? post.cover_image_url
@@ -160,14 +161,15 @@ export function articleSchema(
       name: agent.agency_name,
       url: canonicalUrl(agent),
     },
-    mainEntityOfPage: canonicalUrl(agent, `blog/${post.slug}`),
+    mainEntityOfPage: canonicalUrl(agent, path),
   }
 }
 
-/** Service schema for an individual hotel program page. */
+/** Service schema for an individual hotel program page. `path` defaults to the frontend `resources/<slug>`. */
 export function programServiceSchema(
   agent: AgentProfile,
-  program: { name: string; description?: string | null; slug: string }
+  program: { name: string; description?: string | null; slug: string },
+  path = `resources/${program.slug}`
 ) {
   return {
     '@context': 'https://schema.org',
@@ -181,7 +183,7 @@ export function programServiceSchema(
     },
     areaServed: 'Worldwide',
     serviceType: 'Luxury Hotel Booking',
-    url: canonicalUrl(agent, `resources/${program.slug}`),
+    url: canonicalUrl(agent, path),
   }
 }
 

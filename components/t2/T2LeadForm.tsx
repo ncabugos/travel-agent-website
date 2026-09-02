@@ -1,8 +1,8 @@
 'use client'
 
 import { useActionState, useState } from 'react'
-import { usePathname } from 'next/navigation'
 import { T2LeadFormLight } from './T2LeadFormLight'
+import { useT2Persona } from './T2Persona'
 import { submitContactForm, type ContactFormState } from '@/lib/actions/contact'
 
 interface T2LeadFormProps {
@@ -21,7 +21,7 @@ export function T2LeadForm({
   agentId,
 }: T2LeadFormProps) {
   // All hooks must be called before any conditional return.
-  const pathname = usePathname()
+  const { lightLeadForm } = useT2Persona()
   const [state, formAction, isPending] = useActionState(submitContactForm, initialState)
   const [renderedAt] = useState<number>(() => Date.now())
   const submitted = state.success === true
@@ -29,10 +29,7 @@ export function T2LeadForm({
   // Coast & Compass and Wine & Wellness Travel use the light variant site-wide.
   // Delegating here means every page that already renders <T2LeadForm /> inherits
   // the swap with no call-site changes. Other personas keep the dark default.
-  if (
-    pathname?.startsWith('/t2/coast-compass-demo') ||
-    pathname?.startsWith('/t2/wwt-demo')
-  ) {
+  if (lightLeadForm) {
     return <T2LeadFormLight heading={heading} subheading={subheading} agentId={agentId} />
   }
 

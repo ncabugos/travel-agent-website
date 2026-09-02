@@ -1,22 +1,32 @@
 import { getHotel, getHotels, type LuxuryHotel } from '@/lib/hotels'
 import { T2LeadForm } from '@/components/t2/T2LeadForm'
 import { HotelCardImage } from '@/components/t2/HotelCardImage'
+import { getAgentProfile } from '@/lib/suppliers'
+import { buildMetadata } from '@/lib/seo'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 
 interface PageProps {
   params: Promise<{ agentId: string; hotelSlug: string }>
 }
 
-export async function generateMetadata({ params }: PageProps) {
-  const { hotelSlug } = await params
-  const hotel = await getHotel(hotelSlug)
-  if (!hotel) return { title: 'Hotel not found' }
-  return {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { agentId, hotelSlug } = await params
+  const [hotel, agent] = await Promise.all([
+    getHotel(hotelSlug),
+    getAgentProfile(agentId),
+  ])
+  if (!hotel || !agent) return { title: 'Hotel not found' }
+  return buildMetadata({
+    agent,
     title: `${hotel.name} — Book through your advisor`,
     description: hotel.description ?? `${hotel.name} in ${[hotel.city, hotel.country].filter(Boolean).join(', ')} — book with Virtuoso benefits through your travel advisor.`,
-  }
+    path: `hotels/${hotelSlug}`,
+    image: hotel.cover_image_url ?? undefined,
+    imageAlt: hotel.name,
+  })
 }
 
 /**

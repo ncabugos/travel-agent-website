@@ -890,7 +890,7 @@ export const MOCK_HOTEL_PROGRAMS: HotelProgram[] = [
 // ─── Data Fetchers ────────────────────────────────────────────────────────────
 
 const DEMO_ID = 'demo-agent'
-const DEMO_AGENT_IDS = new Set(['demo-agent', 't2-demo', 't3-demo', 'ytc-demo', 'wwt-demo'])
+const DEMO_AGENT_IDS = new Set(['demo-agent', 't2-demo', 't3-demo', 'ytc-demo'])
 const isDemo = (agentId?: string) =>
   !agentId || agentId === DEMO_ID || !process.env.NEXT_PUBLIC_SUPABASE_URL
 const isAnyDemoAgent = (agentId?: string) => !!agentId && DEMO_AGENT_IDS.has(agentId)

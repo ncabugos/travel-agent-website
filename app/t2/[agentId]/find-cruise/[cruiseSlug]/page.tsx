@@ -3,9 +3,11 @@ import { getSupplierPromo } from '@/lib/supplier-promos'
 import { getAgentProfile } from '@/lib/suppliers'
 import { getBlogPostsBySupplier } from '@/lib/blog'
 import { getCruiseLogo, getCruiseGallery } from '@/lib/media-library'
+import { buildMetadata } from '@/lib/seo'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { T2HotelGallery } from '@/components/t2/T2HotelGallery'
 import { T2BenefitsGrid } from '@/components/t2/T2BenefitsGrid'
 import { T2PromoBanner } from '@/components/t2/T2PromoBanner'
@@ -53,6 +55,27 @@ interface PageProps {
 export async function generateStaticParams() {
   const slugs = await getAllCruiseLineSlugs()
   return slugs.map(slug => ({ cruiseSlug: slug }))
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { agentId, cruiseSlug } = await params
+  const [cruise, agent] = await Promise.all([
+    getCruiseLine(cruiseSlug),
+    getAgentProfile(agentId),
+  ])
+  if (!cruise || !agent) return {}
+  const agencyName = agent.agency_name?.trim() || 'us'
+  return buildMetadata({
+    agent,
+    // Many lines already carry "Cruises" in their name (Viking Cruises).
+    title: /cruise/i.test(cruise.name) ? cruise.name : `${cruise.name} Cruises`,
+    description:
+      cruise.description ||
+      `Sail ${cruise.name} with ${agencyName} and unlock Virtuoso Voyages benefits — shipboard credit, private receptions, and VIP recognition on every voyage.`,
+    path: `find-cruise/${cruiseSlug}`,
+    image: cruise.hero_image_url ?? undefined,
+    imageAlt: cruise.name,
+  })
 }
 
 export default async function CruiseDetailPage({ params }: PageProps) {

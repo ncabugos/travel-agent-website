@@ -16,7 +16,6 @@ export const DEMO_AGENTS: DemoAgent[] = [
   { slug: 't2-demo',    label: 'Vista — Standard (T2)',    template: 't2' },
   { slug: 't3-demo',    label: 'Meridian Travel — Standard (T3)', template: 't3' },
   { slug: 'ytc-demo',   label: 'Your Travel Center (T2)',  template: 't2' },
-  { slug: 'wwt-demo',   label: 'Wine & Wellness (T2)',     template: 't2' },
   { slug: 'coast-compass-demo', label: 'Coast & Compass Travel (T2 Vista — Growth)', template: 't2' },
   { slug: 'lido-collective', label: 'The Lido Collective (T2 — Agency)', template: 't2' },
   { slug: 'casa-solis', label: 'Casa Solis — Custom (T4)', template: 't4' },
@@ -29,10 +28,11 @@ export const isDemoSlug = (id: string): boolean => DEMO_SLUGS.has(id)
 /**
  * Demo slugs that are ALSO published as live, indexable sites. They render from
  * mock data but should be treated like a real tenant for SEO (indexable + their
- * own canonical). Wine & Wellness Travel runs as both the T2 showcase and the
- * operator's live site.
+ * own canonical). Currently empty — Wine & Wellness Travel was promoted to a
+ * real tenant on wineandwellnesstravel.com and its `wwt-demo` slug now 301s
+ * there (see middleware.ts RETIRED_DEMO_REDIRECTS).
  */
-export const PUBLISHED_DEMO_SLUGS = new Set<string>(['wwt-demo'])
+export const PUBLISHED_DEMO_SLUGS = new Set<string>([])
 
 export const isPublishedDemoSlug = (id: string): boolean =>
   PUBLISHED_DEMO_SLUGS.has(id)

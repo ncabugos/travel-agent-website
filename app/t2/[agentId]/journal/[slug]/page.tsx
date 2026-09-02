@@ -4,16 +4,37 @@ import { notFound } from 'next/navigation'
 import { getBlogPost, getBlogPosts, renderShortcodes } from '@/lib/blog'
 import { sanitizeRichText } from '@/lib/sanitize-html'
 import { getAgentProfile } from '@/lib/suppliers'
+import { buildMetadata } from '@/lib/seo'
+import { JsonLd, articleSchema, breadcrumbSchema } from '@/components/seo/JsonLd'
 import type { GalleryImage } from '@/types/index'
+import type { Metadata } from 'next'
 
 interface PageProps {
   params: Promise<{ agentId: string; slug: string }>
 }
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug, agentId } = await params
-  const post = await getBlogPost(slug, agentId)
-  return post ? { title: post.title, description: post.excerpt } : {}
+  const [post, agent] = await Promise.all([
+    getBlogPost(slug, agentId),
+    getAgentProfile(agentId),
+  ])
+  if (!post || !agent) return {}
+  // SEO overrides win over the post's own title/excerpt.
+  const title = post.seo_title?.trim() || post.title
+  const description =
+    post.seo_description?.trim() ||
+    post.excerpt ||
+    `Insight from ${agent.agency_name}, a luxury travel agency.`
+  return buildMetadata({
+    agent,
+    title,
+    description,
+    path: `journal/${slug}`,
+    image: post.cover_image_url ?? undefined,
+    imageAlt: post.title,
+    ogType: 'article',
+  })
 }
 
 export default async function T2JournalPostPage({ params }: PageProps) {
@@ -33,8 +54,31 @@ export default async function T2JournalPostPage({ params }: PageProps) {
   const renderedBody = sanitizeRichText(autop(rawBody))
   const gallery: GalleryImage[] = post.gallery_images ?? []
 
+  const articleSchemas = agent
+    ? [
+        articleSchema(
+          agent,
+          {
+            title: post.title,
+            slug: post.slug,
+            excerpt: post.excerpt,
+            cover_image_url: post.cover_image_url,
+            created_at: post.published_at,
+          },
+          `journal/${post.slug}`,
+        ),
+        breadcrumbSchema(agent, [
+          { name: 'Home', path: '' },
+          { name: 'Journal', path: 'journal' },
+          { name: post.title, path: `journal/${post.slug}` },
+        ]),
+      ]
+    : []
+
   return (
     <main style={{ background: 'var(--t2-bg)' }}>
+      {articleSchemas.length > 0 && <JsonLd data={articleSchemas} />}
+
       {post.cover_image_url && (
         <div style={{ position: 'relative', height: '60vh', minHeight: 360, overflow: 'hidden' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}

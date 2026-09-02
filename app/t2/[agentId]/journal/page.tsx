@@ -3,6 +3,7 @@ import { getBlogPosts } from '@/lib/blog'
 import type { BlogPost } from '@/types/index'
 import { getAgentProfile } from '@/lib/suppliers'
 import { buildMetadata } from '@/lib/seo'
+import { JsonLd, blogSchema } from '@/components/seo/JsonLd'
 import type { Metadata } from 'next'
 
 interface PageProps {
@@ -24,11 +25,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function T2JournalIndexPage({ params }: PageProps) {
   const { agentId } = await params
-  const posts = await getBlogPosts(agentId)
+  const [posts, agent] = await Promise.all([
+    getBlogPosts(agentId),
+    getAgentProfile(agentId),
+  ])
   const base = `/t2/${agentId}`
 
   return (
     <section style={{ padding: 'var(--t2-section-pad) 48px', background: 'var(--t2-bg)' }}>
+      {agent && <JsonLd data={blogSchema(agent, 'journal')} />}
       <div style={{ maxWidth: 'var(--t2-content-max, 1280px)', margin: '0 auto' }}>
         <div style={{ marginBottom: 56 }}>
           <p className="t2-label" style={{ marginBottom: 16 }}>Journal</p>
