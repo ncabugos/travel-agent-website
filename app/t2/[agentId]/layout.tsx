@@ -1,4 +1,4 @@
-import { Playfair_Display, Inter, Bodoni_Moda } from 'next/font/google'
+import { Playfair_Display, Inter, Bodoni_Moda, Cormorant_Garamond } from 'next/font/google'
 import type { ReactNode } from 'react'
 import { getAgentProfile } from '@/lib/suppliers'
 import { getAgentGaMeasurementId } from '@/lib/agent-ga'
@@ -20,6 +20,17 @@ const playfair = Playfair_Display({
   weight: ['400', '500', '600', '700'],
   style: ['normal', 'italic'],
   variable: '--font-playfair',
+  display: 'swap',
+})
+
+// Cormorant Garamond — the WWT flagship serif, self-hosted so headlines never
+// swap to a wider fallback while the Google Fonts stylesheet loads (or when a
+// blocker stops it). next/font also emits a width-matched fallback face.
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
+  style: ['normal', 'italic'],
+  variable: '--font-cormorant',
   display: 'swap',
 })
 
@@ -67,7 +78,7 @@ export default async function T2Layout({ children, params }: LayoutProps) {
   const pageClass = isWwt2 ? 'wwt2-page' : isLido ? 't2-page lido-page' : 't2-page'
 
   return (
-    <div className={`${playfair.variable} ${inter.variable} ${bodoniModa.variable} ${pageClass}`}>
+    <div className={`${playfair.variable} ${inter.variable} ${bodoniModa.variable} ${cormorant.variable} ${pageClass}`}>
       {gaMeasurementId && <TenantAnalyticsConfig measurementId={gaMeasurementId} />}
       {isDemoSlug(agentId) && <DemoSignupBanner />}
       {/* Inject YTC theme override if this is the YTC demo */}

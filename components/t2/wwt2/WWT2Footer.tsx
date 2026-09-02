@@ -138,6 +138,7 @@ export function WWT2Footer({
           color: var(--wwt-on-night);
           font-size: var(--wwt-t-hero);
           max-width: 18ch; margin: 1.4rem auto 1.6rem;
+          text-wrap: balance;
           text-shadow: 0 1px 40px rgba(0,0,0,0.35);
         }
         .wwt2-cta-sub {

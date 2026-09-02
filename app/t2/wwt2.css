@@ -29,7 +29,11 @@
   --wwt-on-night:  #FFFFFF;   /* white on dark */
 
   /* ── Type ─────────────────────────────────────────────────────────────── */
-  --wwt-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  /* Self-hosted via next/font in app/t2/[agentId]/layout.tsx (the var carries a
+     width-matched fallback). Playfair is deliberately NOT in this chain: when the
+     Google Fonts stylesheet was slow or blocked, display headlines swapped to
+     Playfair, which is far wider, and the closing CTA title overran the shell. */
+  --wwt-serif: var(--font-cormorant, 'Cormorant Garamond'), 'Cormorant Garamond', Georgia, serif;
   --wwt-sans:  'Inter', system-ui, -apple-system, sans-serif;
 
   /* fluid scale — large + airy */
