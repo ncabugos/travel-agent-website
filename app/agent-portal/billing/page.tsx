@@ -23,7 +23,7 @@ export const dynamic = 'force-dynamic'
 // constants in lib/pricing.ts): one public site plan; Growth/Custom remain as
 // grandfathered plans at their current list prices.
 const PRICING = {
-  starter: { name: 'The Site', price: '$59', setup: 'no', features: [...BASE_PLAN.features] },
+  starter: { name: 'The Site', price: usd(BASE_PLAN.monthly), setup: 'no', features: [...BASE_PLAN.features] },
   growth: { name: 'Growth', price: '$179', setup: '$1,499', features: ['Everything in The Site', 'Curated editorial stream (1 post/week)', 'Searchable hotel directory', 'Searchable cruise directory', 'Experiences directory', 'Instagram feed integration', 'Priority support'] },
   custom: { name: 'Custom', price: '$349', setup: '$2,999', features: ['Everything in Growth', 'Fully bespoke design', 'Villa catalog access', 'Topic requests (2 posts/week)', 'Bespoke landing pages'] },
   agency: { name: 'Agency', price: 'Contact for quote', setup: '—', features: ['Everything in Custom', 'Individual advisor pages', 'Agency-wide lead routing', 'Unified agency billing', 'Agency admin dashboard', 'Shared content library', 'Team onboarding & training'] },

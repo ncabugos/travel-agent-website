@@ -30,7 +30,7 @@ This plan is the single content reference. It pulls from and extends:
 ## 2. Business foundation (one-page digest)
 
 - **Product:** Multi-tenant SaaS giving independent luxury travel advisors Virtuoso-grade websites in days. Three layers: SaaS now, Studio content syndication (Phase 3, Month 9+), Supplier Partnerships (Year 2).
-- **Tiers (locked):** Starter $89/$499 · Growth $179/$1,499 · Custom $349/$2,999 · Agency from $899/$4,999. Aurora Signature tier ($599/$7,499) arrives ~Month 6+.
+- **Pricing (business model v2):** The Site $79/mo, no setup fee, first 30 days complimentary · Agency from $899/mo + from $4,999 setup. Growth $179/$1,499 and Custom $349/$2,999 remain internal gates for grandfathered accounts, not public tiers. Aurora Signature tier ($599/$7,499) arrives ~Month 6+.
 - **Current offer:** Founding Advisor. Setup waived, first month free (30-day trial), locked founding rate. Proof point: Eden For Your World (edenforyourworld.com), first paying client and brand ambassador.
 - **Audience tiers (from launch campaign plan):** A) established independents with dated sites, B) boutique multi-advisor agencies, C) newer advisors leaving host agencies or corporate travel.
 - **Positioning:** For the top 1% of travel advisors, and the advisors becoming them. Invitation-worthy, politely repels hobbyists.

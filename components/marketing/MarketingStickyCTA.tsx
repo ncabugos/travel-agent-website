@@ -66,7 +66,7 @@ export function MarketingStickyCTA() {
         {PRIMARY_CTA_LABEL}
       </CheckoutButton>
       <p style={{ margin: '6px 0 0', textAlign: 'center', fontSize: '12px', color: WARM_GRAY_DARK }}>
-        With our compliments · $59/mo from day 31 · cancel anytime
+        With our compliments · $79/mo from day 31 · cancel anytime
       </p>
 
       <style>{`

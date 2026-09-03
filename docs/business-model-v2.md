@@ -17,7 +17,7 @@ in the portal, and make luxury suppliers the profit engine once the network has 
 
 One public entry product. No tier maze, no setup fee, no four-figure number at signup.
 
-- **$59/month. No setup fee. First 30 days complimentary** ("with our compliments" — never
+- **$79/month. No setup fee. First 30 days complimentary** ("with our compliments" — never
   "free trial" in copy). Card on file at signup; Stripe auto-converts on day 30.
 - Includes: custom-branded site on the advisor's domain, full supplier catalog (hotel programs),
   journal + editor, lead inbox, advisor portal.
@@ -71,7 +71,7 @@ supplier content enriches every advisor site at no advisor cost → richer sites
 
 ## Sequencing
 
-1. **Now (Phase 1, shipped with this doc):** 30-day complimentary period, $0 setup, $59 base,
+1. **Now (Phase 1, shipped with this doc):** 30-day complimentary period, $0 setup, $79 base,
    marketing site restructured to one-plan + expansion menu, portal Services tab (request-based).
 2. **Phase 2:** self-serve module billing (Stripe subscription items + per-module entitlement
    columns), trial-expiry gating on `subscription_status`, dunning on `invoice.payment_failed`.
@@ -81,8 +81,10 @@ supplier content enriches every advisor site at no advisor cost → richer sites
 
 - **Auto-provisioning is a prerequisite, not a P1 nice-to-have.** A volume trial funnel feeding a
   manual 24–48h hand-build breaks first. (CLAUDE.md §8.)
-- **Public $59 equals the founding-starter price** — the founding-starter pitch is now redundant;
-  founding-growth/custom invitations retain value. Decide whether to retire the beta funnel.
+- **Founding-starter ($59/mo) is a $20/mo discount off the $79 base** again, now that the public
+  price has moved up. It shares a Stripe price ID with the base plan until the $79 price is minted
+  (see Stripe state below); the two must be decoupled at that point.
+  Decide whether the beta funnel is still worth running.
 - **Editorial COGS**: curated content at $49/mo must be modeled against production cost at scale.
 - **Trial expiry is enforced only by Stripe auto-conversion** (card on file). No in-app gating on
   `subscription_status` yet — middleware gates auth only.
@@ -91,10 +93,14 @@ supplier content enriches every advisor site at no advisor cost → richer sites
 
 ## Stripe state (Phase 1)
 
-- Base plan checkout uses the dedicated live $59/mo price `price_1TvlHU6lYeMpqwzvVyDg1H42`
-  (created 2026-07-21), separate from founding-starter, so founding vs. public revenue stays
-  separable in reporting. The 30-day trial is applied by the checkout route
-  (`trial_period_days`), not by the price object.
+- **2026-09-01: displayed price raised to $79/mo; live Stripe price not yet migrated.**
+  `TIER_PRICES.starter.monthly` in `lib/stripe.ts` still points at the $59/mo price
+  `price_1TZg2r6lYeMpqwzvoUUoY30Z` (shared with founding-starter — see the HOTFIX note there;
+  the dedicated `price_1TvlHU6lYeMpqwzvVyDg1H42` referenced in earlier versions of this doc had
+  a $0.00 bug and was archived, never actually wired in). Checkout currently charges $59, not
+  $79, until a new $79/mo price is created in Stripe and swapped into `TIER_PRICES.starter.monthly`
+  (and `FOUNDING_PRICES.starter.monthly`, which shares the same ID). The 30-day trial is applied
+  by the checkout route (`trial_period_days`), not by the price object.
 - Starter annual and setup-fee price IDs are retired from public checkout (annual returns once a
-  $590/yr price exists).
+  $790/yr price exists).
 - Module + service prices have no Stripe IDs yet (Phase 2).

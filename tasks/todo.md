@@ -60,7 +60,7 @@ After each workstream:
 
 # Business Model v2 — Phase 1 (July 2026)
 
-Strategy: docs/business-model-v2.md (land $59 site / expand via portal / monetize supplier network).
+Strategy: docs/business-model-v2.md (land $79 site / expand via portal / monetize supplier network).
 
 - [x] docs/business-model-v2.md written (canonical)
 - [x] lib/pricing.ts — central display-pricing constants (base, modules, services, agency)
@@ -74,7 +74,9 @@ Strategy: docs/business-model-v2.md (land $59 site / expand via portal / monetiz
 
 ## Operator to-dos (Stripe dashboard)
 - [x] Dedicated base $59/mo price live (price_1TvlHU6lYeMpqwzvVyDg1H42, 2026-07-21) — swapped into TIER_PRICES.starter.monthly
-- [ ] Optional: $590/yr annual price if annual billing returns
+- [ ] **$79/mo live price** on prod_UL1AMnVvNsNdOS → swap into `TIER_PRICES.starter.monthly`
+      (displayed price went to $79 on 2026-09-01; checkout still charges $59 until this lands)
+- [ ] Optional: $790/yr annual price if annual billing returns
 - [x] Beta/founding funnel retired — /beta page, waitlist form/action, and waitlist email removed 2026-07-21; inbound links repointed to /#pricing
 
 ## Phase 2 — module entitlement backend (built 2026-07-21)

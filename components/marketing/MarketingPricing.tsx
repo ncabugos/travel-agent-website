@@ -5,7 +5,7 @@ import { BASE_PLAN, MODULES, SERVICES, AGENCY_PLAN, usd } from '@/lib/pricing'
 /**
  * Pricing section — business model v2 (docs/business-model-v2.md).
  *
- * One public entry product (The Site, $59/mo, first 30 days complimentary, no
+ * One public entry product (The Site, $79/mo, first 30 days complimentary, no
  * setup fee), an expansion menu of modules and studio services fulfilled from
  * the portal, and a consultative Agency band. Growth/Custom are no longer
  * marketed as tiers; their machinery remains for grandfathered accounts.

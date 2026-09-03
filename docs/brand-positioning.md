@@ -11,9 +11,9 @@
 
 Elite Advisor Hub is invitation-worthy infrastructure for advisors who treat their practice as a serious business. The product attracts elite advisors and politely repels hobbyists. Pricing is the floor, not a discount.
 
-## Why this works with a $59 entry plan (business model v2, July 2026)
+## Why this works with a $79 entry plan (business model v2, July 2026)
 
-> Pricing structure is now governed by `docs/business-model-v2.md` — one $59/mo site plan
+> Pricing structure is now governed by `docs/business-model-v2.md` — one $79/mo site plan
 > (first 30 days complimentary, no setup fee), à-la-carte modules and studio services in the
 > portal, supplier partnerships as the long-term profit engine. The voice rules below are
 > unchanged and apply to all of it.
@@ -90,7 +90,7 @@ Restraint. Generous white space. Editorial photography (large, slow, confident) 
 In priority order:
 
 1. **Homepage hero + value proposition** — first impression carries the most weight.
-2. **Pricing page** — currently shows old $79/$149/$299 numbers and reads transactional. Needs the locked tiers AND the new voice.
+2. **Pricing page** — rebuilt for business model v2: one plan at $79/mo, first 30 days complimentary, expansion modules below. Keep the voice non-transactional.
 3. **About / Why EAH** — explain the moat (catalog depth, content pipeline, advisor-first) in plain terms.
 4. **Schedule consultation page** — copy here qualifies Custom/Agency leads; the right copy filters for serious buyers.
 5. **Footer + nav microcopy** — small touches that signal restraint vs. effort.

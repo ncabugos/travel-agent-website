@@ -17,7 +17,7 @@ export const TRIAL_DAYS = 30
 /** The one public entry product. */
 export const BASE_PLAN = {
   name: 'The Site',
-  monthly: 59,
+  monthly: 79,
   setup: 0,
   blurb:
     'A custom-branded site on your own domain, the full supplier catalog kept current for you, your journal, and a private lead inbox. Everything a working advisor needs on day one.',

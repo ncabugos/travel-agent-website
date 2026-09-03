@@ -39,4 +39,4 @@ export const PRIMARY_CTA_STYLE: CSSProperties = {
 export const PRIMARY_CTA_LABEL = 'Begin my 30 days'
 
 /** Click-trigger line that sits under every primary CTA. */
-export const CTA_MICROCOPY = 'With our compliments · $59/mo from day 31 · no setup fee · cancel anytime'
+export const CTA_MICROCOPY = 'With our compliments · $79/mo from day 31 · no setup fee · cancel anytime'

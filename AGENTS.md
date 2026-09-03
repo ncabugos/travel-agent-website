@@ -37,7 +37,7 @@ keyed on `agents.custom_domain → { agentId, template }`).
 **Governing doc: `docs/business-model-v2.md`** (land / expand / monetize-the-network). The
 public offer is **one entry plan + à-la-carte expansion**, not a tier ladder:
 
-- **The Site** — $59/mo, **no setup fee, first 30 days complimentary** (card on file; Stripe
+- **The Site** — $79/mo, **no setup fee, first 30 days complimentary** (card on file; Stripe
   trial auto-converts on day 31). Custom-branded site, supplier catalog, journal, lead inbox,
   portal. In copy the trial is always "with our compliments," never "free trial."
 - **Modules** (portal add-ons; Phase 1 request-based, Phase 2 self-serve billing): curated

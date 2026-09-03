@@ -194,7 +194,7 @@ export default function TemplatesPage() {
             Ready to launch yours?
           </h2>
           <p style={{ fontSize: '16px', color: '#6b7280', lineHeight: 1.7, margin: '0 0 32px' }}>
-            Your site at $59 a month — no setup fee, and your first
+            Your site at $79 a month — no setup fee, and your first
             30 days are with our compliments.
           </p>
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>

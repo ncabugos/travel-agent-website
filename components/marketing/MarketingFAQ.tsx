@@ -12,7 +12,7 @@ import { CHARCOAL, DIVIDER, GOLD, INK, WARM_GRAY_DARK } from './tokens'
 const FAQS: { q: string; a: string }[] = [
   {
     q: 'What happens after the first 30 days?',
-    a: 'Your card is billed $59 on day 31 and monthly after that. There is no setup fee and no contract — cancel from the portal at any point during the 30 days and nothing is charged.',
+    a: 'Your card is billed $79 on day 31 and monthly after that. There is no setup fee and no contract — cancel from the portal at any point during the 30 days and nothing is charged.',
   },
   {
     q: 'Do I need to be a Virtuoso advisor?',

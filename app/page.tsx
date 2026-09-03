@@ -23,7 +23,7 @@ import {
 export const metadata = {
   title: 'Elite Advisor Hub — Websites for Luxury Travel Advisors, Live in Days',
   description:
-    'A custom-branded advisor website on your own domain, backed by 1,795+ maintained luxury hotel programs and a weekly editorial pipeline. $59 a month; your first 30 days are with our compliments.',
+    'A custom-branded advisor website on your own domain, backed by 1,795+ maintained luxury hotel programs and a weekly editorial pipeline. $79 a month; your first 30 days are with our compliments.',
 }
 
 /*
@@ -232,7 +232,7 @@ export default function EliteAdvisorHubHomePage() {
               maxWidth: '54ch', margin: '0 0 32px',
             }}>
               A custom-branded site on your own domain, backed by 1,795+ maintained luxury hotel
-              programs and kept current for you. $59 a month — your first 30 days are with our
+              programs and kept current for you. $79 a month — your first 30 days are with our
               compliments.
             </p>
 
@@ -301,7 +301,7 @@ export default function EliteAdvisorHubHomePage() {
             All of the essentials. Maintenance done for you.
           </h2>
           <p style={{ fontSize: '17px', color: WARM_GRAY_DARK, margin: '0 0 56px', maxWidth: '58ch', lineHeight: 1.6 }}>
-            Everything on the $59 plan, on every site. Modules and studio services are added from
+            Everything on the $79 plan, on every site. Modules and studio services are added from
             the portal only when the practice calls for them.
           </p>
 
