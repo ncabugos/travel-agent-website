@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
     <meta name="supported-color-schemes" content="light dark" />
-    <title>Sign in to Elite Advisor Hub</title>
+    <title>Confirm your email</title>
     <!--
       Elite Advisor Hub auth email. Source of record for the Supabase Auth
       templates; see README.md in this folder for how it is pushed.
@@ -43,7 +43,7 @@
   >
     <!-- Preheader (hidden in body, shown in inbox preview) -->
     <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">
-      Your sign-in link for Elite Advisor Hub. Valid for one hour.
+      Confirm your email to open your Elite Advisor Hub advisor portal.
     </div>
 
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="bg-page" style="background-color:#fafaf5;">
@@ -102,7 +102,7 @@
                     letter-spacing: -0.01em;
                   "
                 >
-                  Sign in to your advisor portal
+                  Confirm your email
                 </h1>
 
                 <p
@@ -114,8 +114,10 @@
                     color: #5c554b;
                   "
                 >
-                  Use the button below to open Elite Advisor Hub. The link is good for one
-                  hour and can be used once.
+                  Use the button below to confirm
+                  <strong style="color:#1a1715; font-weight:600;">{{ .Email }}</strong>
+                  and open your advisor portal. The link is good for one hour and can be
+                  used once.
                 </p>
 
                 <!-- Bulletproof button: purple stays purple in every client and mode -->
@@ -124,9 +126,9 @@
                     <td align="left">
                       <!--[if mso]>
                       <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
-                        href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=email" style="height:48px;v-text-anchor:middle;width:150px;" arcsize="20%" strokecolor="#7c3aed" fillcolor="#7c3aed">
+                        href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=email" style="height:48px;v-text-anchor:middle;width:190px;" arcsize="20%" strokecolor="#7c3aed" fillcolor="#7c3aed">
                         <w:anchorlock/>
-                        <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:15px;font-weight:600;">Sign in</center>
+                        <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:15px;font-weight:600;">Confirm email</center>
                       </v:roundrect>
                       <![endif]-->
                       <!--[if !mso]><!-->
@@ -147,7 +149,7 @@
                           mso-padding-alt: 0;
                         "
                       >
-                        Sign in
+                        Confirm email
                       </a>
                       <!--<![endif]-->
                     </td>
@@ -181,9 +183,9 @@
                     color: #8a8279;
                   "
                 >
-                  You are receiving this because someone requested a sign-in link for
-                  <strong style="color:#5c554b; font-weight:600;">{{ .Email }}</strong>.
-                  If that was not you, no action is needed. The link expires on its own.
+                  You are receiving this because this address was used to sign up for
+                  Elite Advisor Hub. If that was not you, no action is needed. The link
+                  expires on its own.
                 </p>
               </td>
             </tr>

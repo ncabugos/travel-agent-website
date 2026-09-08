@@ -1,11 +1,18 @@
 import { NextResponse } from 'next/server'
+import type { EmailOtpType } from '@supabase/supabase-js'
 import { createServerClient } from '@/lib/supabase/server'
 import { createServiceClient } from '@/lib/supabase/service'
 
 /**
- * Magic-link callback.
+ * Magic-link + OAuth callback.
  *
- * 1. Exchanges the OTP code for a Supabase Auth session (sets cookies).
+ * 1. Creates a Supabase Auth session (sets cookies). Two entry points:
+ *    - `token_hash` + `type`: email links. The auth email templates
+ *      (docs/supabase-email-templates) link here with {{ .TokenHash }}, and
+ *      verifyOtp needs nothing from the requesting browser, so the link works
+ *      when the email is opened on another device or in another browser.
+ *    - `code`: Google OAuth (PKCE). Same browser round-trip, so the code
+ *      verifier cookie is present.
  * 2. Links the newly-authenticated auth.users.id to the agents row matched
  *    by email. This is the point at which a customer who completed Stripe
  *    checkout (which creates agents.email + stripe_* but no auth_user_id)
@@ -16,21 +23,25 @@ import { createServiceClient } from '@/lib/supabase/service'
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
+  const tokenHash = searchParams.get('token_hash')
+  const type = searchParams.get('type') as EmailOtpType | null
   const next = searchParams.get('next') ?? '/agent-portal'
 
-  if (!code) {
+  if (!code && !(tokenHash && type)) {
     return NextResponse.redirect(
       `${origin}/agent-portal/login?error=Missing_login_code`
     )
   }
 
-  // 1. Exchange the code for a session
+  // 1. Create the session
   const supabase = await createServerClient()
-  const { data: sessionData, error: exchangeError } =
-    await supabase.auth.exchangeCodeForSession(code)
+  const { data: sessionData, error: sessionError } =
+    tokenHash && type
+      ? await supabase.auth.verifyOtp({ token_hash: tokenHash, type })
+      : await supabase.auth.exchangeCodeForSession(code!)
 
-  if (exchangeError || !sessionData.session) {
-    console.error('auth-callback: exchange failed', exchangeError)
+  if (sessionError || !sessionData.session) {
+    console.error('auth-callback: session failed', sessionError)
     return NextResponse.redirect(
       `${origin}/agent-portal/login?error=Invalid_or_expired_login_link`
     )

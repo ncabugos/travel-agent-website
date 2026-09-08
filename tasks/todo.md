@@ -203,3 +203,40 @@ treating them as a client-facing promise.
    Couture — still outstanding from the earlier pass.
 4. `supplier_products` (migration 012) is recorded in migration history but the table
    does not exist. Either create it or delete the dead `getSupplierProducts()` path.
+
+# Auth email branding + magic link fix (2026-09-08)
+
+Trigger: nick@wineandwellnesstravel.com login test. Unbranded "Confirm Your Signup" email; link
+clicked but no session created; agents row created with email = null.
+
+## Root causes (verified in Supabase auth logs + DB)
+1. Magic link is PKCE. OTP requested in Firefox, link opened in Chrome. Verifier cookie lives in the
+   first browser, so `exchangeCodeForSession` fails in the second. Any client who opens the email on
+   another device hits this.
+2. Live `handle_new_user` trigger is the migration 001 body (no `email`, no `role`). Migration 019's
+   version never landed (history drift). Every self-signup creates an `agents` row the app cannot
+   find, because every lookup is by email. Two orphans: nick@wineandwellnesstravel.com (09-08),
+   josie@relaxury.travel (09-03, a real prospect who signed in and saw "not linked").
+3. Supabase built-in SMTP: 2 emails per hour. Blocks any real onboarding test.
+4. Only `magic_link` has a custom template (navy palette, off style guide). `confirmation` (what new
+   signups and register receive), `recovery`, `invite` are Supabase defaults.
+
+## Plan
+- [ ] Migration: re-apply 019 `handle_new_user` (email + role) and backfill `email` from auth.users
+      for rows where it is null. Apply to prod via MCP so history stays in sync.
+- [ ] Callback: `/api/agent-portal/auth-callback` accepts `token_hash` + `type` and calls
+      `verifyOtp`. Keeps `code` branch for Google OAuth. Works in any browser.
+- [ ] Templates in `docs/supabase-email-templates/`: confirmation, magic-link, recovery. Style guide
+      palette (cream, charcoal, purple button, gold rule, divider E8E4DC), plain headers, no dashes.
+      Links use `{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=email`.
+- [ ] `scripts/push-auth-email-templates.mjs`: pushes subjects + templates via Management API.
+- [ ] Supabase auth config: custom SMTP via Resend (smtp.resend.com:465, sender = EMAIL_FROM).
+- [ ] Commit on `pricing/base-plan-79` follow-up branch, merge to main, Vercel deploys.
+- [ ] Verify: request link at /agent-portal/login, open the email in a different browser, land on
+      /agent-portal/onboarding, complete wizard, admin notification + welcome email arrive.
+
+## Out of scope, flagged
+- Stripe webhook `checkout.session.completed` inserts a new agent without `id`; `agents.id` has no
+  default and must reference auth.users. Brand-new checkout emails fail to create a row. P1.
+- Login page `signInWithOtp` creates accounts for any email (no checkout). Funnel leak.
+- CLAUDE.md §10 says "magic-link only, no password reset"; admin and agent both have password reset.

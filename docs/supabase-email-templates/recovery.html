@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
     <meta name="supported-color-schemes" content="light dark" />
-    <title>Sign in to Elite Advisor Hub</title>
+    <title>Reset your password</title>
     <!--
       Elite Advisor Hub auth email. Source of record for the Supabase Auth
       templates; see README.md in this folder for how it is pushed.
@@ -43,7 +43,7 @@
   >
     <!-- Preheader (hidden in body, shown in inbox preview) -->
     <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">
-      Your sign-in link for Elite Advisor Hub. Valid for one hour.
+      Reset your Elite Advisor Hub password. Valid for one hour.
     </div>
 
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="bg-page" style="background-color:#fafaf5;">
@@ -102,7 +102,7 @@
                     letter-spacing: -0.01em;
                   "
                 >
-                  Sign in to your advisor portal
+                  Reset your password
                 </h1>
 
                 <p
@@ -114,7 +114,7 @@
                     color: #5c554b;
                   "
                 >
-                  Use the button below to open Elite Advisor Hub. The link is good for one
+                  Use the button below to choose a new password. The link is good for one
                   hour and can be used once.
                 </p>
 
@@ -124,14 +124,14 @@
                     <td align="left">
                       <!--[if mso]>
                       <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
-                        href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=email" style="height:48px;v-text-anchor:middle;width:150px;" arcsize="20%" strokecolor="#7c3aed" fillcolor="#7c3aed">
+                        href="{{ .ConfirmationURL }}" style="height:48px;v-text-anchor:middle;width:200px;" arcsize="20%" strokecolor="#7c3aed" fillcolor="#7c3aed">
                         <w:anchorlock/>
-                        <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:15px;font-weight:600;">Sign in</center>
+                        <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:15px;font-weight:600;">Reset password</center>
                       </v:roundrect>
                       <![endif]-->
                       <!--[if !mso]><!-->
                       <a
-                        href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=email"
+                        href="{{ .ConfirmationURL }}"
                         style="
                           display: inline-block;
                           background-color: #7c3aed !important;
@@ -147,7 +147,7 @@
                           mso-padding-alt: 0;
                         "
                       >
-                        Sign in
+                        Reset password
                       </a>
                       <!--<![endif]-->
                     </td>
@@ -165,9 +165,9 @@
                 >
                   If the button does not open, copy and paste this link into your browser:<br />
                   <a
-                    href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=email"
+                    href="{{ .ConfirmationURL }}"
                     style="color: #b49a5a; text-decoration: none; word-break: break-all;"
-                  >{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=email</a>
+                  >{{ .ConfirmationURL }}</a>
                 </p>
 
                 <hr class="divider" style="border:none; border-top:1px solid #e8e4dc; margin: 32px 0;" />
@@ -181,7 +181,7 @@
                     color: #8a8279;
                   "
                 >
-                  You are receiving this because someone requested a sign-in link for
+                  You are receiving this because someone requested a password reset for
                   <strong style="color:#5c554b; font-weight:600;">{{ .Email }}</strong>.
                   If that was not you, no action is needed. The link expires on its own.
                 </p>
