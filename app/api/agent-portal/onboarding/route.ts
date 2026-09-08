@@ -45,6 +45,11 @@ export async function PUT(request: Request) {
         youtube_url: body.youtube_url || null,
         tiktok_url: body.tiktok_url || null,
         website_url: body.website_url || null,
+        logo_url: body.logo_url || null,
+        host_agency: body.host_agency || null,
+        network_affiliations: body.network_affiliations || [],
+        certifications: body.certifications || [],
+        inspiration_sites: body.inspiration_sites || [],
         onboarding_completed_at: new Date().toISOString(),
       })
       .eq('id', agent.id)
@@ -62,7 +67,7 @@ export async function PUT(request: Request) {
       .insert({
         type: 'onboarding_complete',
         title: `New agent onboarding: ${body.agency_name || agent.agency_name}`,
-        body: `${body.full_name || agent.full_name} (${agent.email}) has completed onboarding.\nTemplate: ${body.template || 'frontend'}\nReady for follow-up, review, and site provisioning.`,
+        body: `${body.full_name || agent.full_name} (${agent.email}) has completed onboarding.\nTemplate: ${body.template || 'frontend'}\nHost agency: ${body.host_agency || 'none'}\nAffiliations: ${(body.network_affiliations || []).join(', ') || 'none'}\nReady for follow-up, review, and site provisioning.`,
         metadata: {
           agent_id: agent.id,
           email: agent.email,
@@ -70,6 +75,8 @@ export async function PUT(request: Request) {
           full_name: body.full_name || agent.full_name,
           template: body.template || 'frontend',
           tier: body.tier || 'starter',
+          host_agency: body.host_agency || null,
+          network_affiliations: body.network_affiliations || [],
         },
       })
 

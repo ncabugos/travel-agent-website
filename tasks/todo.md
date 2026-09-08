@@ -254,3 +254,52 @@ clicked but no session created; agents row created with email = null.
   without the click-tracking redirect. Revert is one PATCH of `smtp_admin_email` + `smtp_pass`.
 - Proof: bogus token_hash on prod returns the verifyOtp error path; generated token in a separate
   browser -> /agent-portal/onboarding; emailed token from Gmail -> /agent-portal (200).
+
+# Onboarding wizard: uploads, host/network/certifications, full supplier list (2026-09-08)
+
+## Plan
+- [x] Migration: `agents` + `logo_url text`, `host_agency text`, `network_affiliations text[]`,
+      `certifications text[]`, `inspiration_sites text[]`; public storage bucket `agent-assets`.
+- [x] `POST /api/agent-portal/upload?kind=headshot|logo`: session-gated, service-role upload to
+      `agent-assets/<agentId>/<kind>-<ts>.<ext>`, jpg/png/webp, 10 MB. Reuses
+      `components/admin/ImageUpload` (drop, browse, paste, or URL) via its `uploadEndpoint` prop.
+- [x] Wizard becomes a server page that loads the supplier catalog (active hotel programs, cruise
+      lines, private journeys) and renders a client `OnboardingWizard`.
+- [x] Step 1 Your Info: + Host agency (text), Network affiliations (chips: Virtuoso, Signature,
+      Ensemble, Travel Leaders, Serandipians, XO Private, Internova Select, GlobalStar, Affluent
+      Traveler Collection, ASTA, Independent), Certifications (chips: CTA, CTC, CTIE, CLIA ACC/MCC/ECC,
+      ASTA VTA, Aussie Specialist, Tahiti Tiare, Japan Specialist, Ireland Specialist + "Other").
+- [x] Step 2 Branding: Headshot upload, Logo upload (replaces the URL field), Tagline, Template,
+      Websites you like (one URL per line, up to 5).
+- [x] Step 3 About You: full option lists.
+      Specialties (18): Luxury, Honeymoons & Romance, Destination Weddings, Family,
+      Multigenerational, Adventure & Expedition, Safari & Wildlife, Wellness & Spa, Culinary & Wine,
+      Cultural & Heritage, Ski & Mountain, Golf, Solo Travel, LGBTQ+ Travel, Group Travel,
+      Corporate & Incentive, Faith-Based, Accessible Travel.
+      Destinations (25): Europe, Mediterranean, British Isles & Ireland, Scandinavia & Iceland,
+      Caribbean, Mexico, Central America, South America, Galapagos, USA, Canada, Alaska, Hawaii,
+      Japan, Southeast Asia, China & Hong Kong, India & Sri Lanka, Maldives & Indian Ocean,
+      Middle East, Africa, Egypt & Morocco, South Pacific & French Polynesia,
+      Australia & New Zealand, Antarctica, Arctic.
+      Preferred suppliers: every active catalog entry, grouped Hotel programs (24), Cruise lines
+      (28), Tour operators (3). Consortia leave this list (they are affiliations now).
+      Types of travel (16): Ocean Cruises, River Cruises, Expedition Cruises, Yacht Charters &
+      Small Ships, Private Jet Journeys, Safaris, Rail Journeys, Luxury Villas, All-Inclusive
+      Resorts, Bespoke Itineraries, Escorted Tours, Self-Drive Touring, Group Travel, Wellness
+      Retreats, Honeymoons, Destination Weddings.
+- [x] Review step + PUT route + admin notification carry the new fields; admin agent detail page
+      shows them so the site can be built from the record.
+- [x] Header: EAH logo instead of the "L" box (brand rule); copy loses the dashes.
+- [x] Verified on the dev server as nick@wineandwellnesstravel.com: upload route returns public
+      URLs for both kinds (400 on a bad kind), steps 2 to 5 carry every new field, supplier
+      groups 24 / 28 / 3 from the catalog, 375px has no overflow, no console errors.
+- [ ] Operator: submit the wizard on production and confirm the row, the admin notification,
+      and the welcome email.
+
+## Not in this pass
+- Portal profile page does not yet edit the new fields or upload images.
+- `agent_hotel_program_selections` does not exist in the database; migration 023 is in the repo
+  but was never applied (same drift as 019). The admin Hotel Programs panel and the portal
+  hotel-programs page read from it.
+- Onboarding stores supplier names in `preferred_suppliers`; it does not seed the per-advisor
+  hotel program curation used by the public site.

@@ -20,6 +20,8 @@ interface Props {
   previewHeight?: number
   /** API endpoint for uploads (defaults to /api/admin/upload) */
   uploadEndpoint?: string
+  /** How the preview fills its box. 'contain' keeps logos whole. Default 'cover' */
+  objectFit?: 'cover' | 'contain'
 }
 
 export function ImageUpload({
@@ -29,6 +31,7 @@ export function ImageUpload({
   showPreview = true,
   previewHeight = 140,
   uploadEndpoint = '/api/admin/upload',
+  objectFit = 'cover',
 }: Props) {
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState('')
@@ -92,7 +95,8 @@ export function ImageUpload({
             style={{
               width: '100%',
               height: `${previewHeight}px`,
-              objectFit: 'cover',
+              objectFit,
+              background: objectFit === 'contain' ? '#f9fafb' : undefined,
               borderRadius: '6px',
               display: 'block',
             }}

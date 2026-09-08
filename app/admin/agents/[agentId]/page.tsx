@@ -192,6 +192,61 @@ export default async function AdminAgentDetailPage({ params }: PageProps) {
           />
         </div>
 
+        {/* Intake details from the onboarding wizard (read-only) */}
+        <div
+          style={{
+            background: '#fff',
+            border: '1px solid #e5e7eb',
+            borderRadius: 12,
+            padding: '16px 20px',
+            marginBottom: 24,
+          }}
+        >
+          <h3 style={{ margin: '0 0 12px', fontSize: 14, fontWeight: 600, color: '#111' }}>
+            Onboarding intake
+          </h3>
+          {(() => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const a = agent as any
+            const sites: string[] = a.inspiration_sites ?? []
+            const rows: [string, React.ReactNode][] = [
+              ['Host agency', a.host_agency || '—'],
+              ['Affiliations', (a.network_affiliations ?? []).join(', ') || '—'],
+              ['Certifications', (a.certifications ?? []).join(', ') || '—'],
+              ['Websites they like', sites.length
+                ? sites.map((u) => (
+                    <a key={u} href={u} target="_blank" rel="noreferrer" style={{ color: '#7c3aed', display: 'block' }}>{u}</a>
+                  ))
+                : '—'],
+            ]
+            return (
+              <>
+                <div style={{ display: 'grid', gridTemplateColumns: '160px 1fr', rowGap: 8, columnGap: 16, fontSize: 13 }}>
+                  {rows.map(([label, value]) => (
+                    <div key={label} style={{ display: 'contents' }}>
+                      <span style={{ color: '#6b7280' }}>{label}</span>
+                      <span style={{ color: '#111', wordBreak: 'break-word' }}>{value}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ display: 'flex', gap: 16, marginTop: 16 }}>
+                  {[['Headshot', a.avatar_url], ['Logo', a.logo_url]].map(([label, url]) => (
+                    <div key={label} style={{ fontSize: 12, color: '#6b7280' }}>
+                      <div style={{ marginBottom: 6 }}>{label}</div>
+                      {url ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={url} alt={label} style={{ height: 96, width: 'auto', maxWidth: 240, objectFit: 'contain', background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 8 }} />
+                      ) : (
+                        <div style={{ height: 96, width: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f9fafb', border: '1px dashed #e5e7eb', borderRadius: 8, color: '#9ca3af' }}>None</div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </>
+            )
+          })()}
+        </div>
+
         {/* Hotel Programs curation */}
         <div style={{ marginBottom: 24 }}>
           <AgentSelectionPanel
