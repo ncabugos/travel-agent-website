@@ -20,5 +20,7 @@ email is opened in a different browser or on a phone: nothing from the requestin
 needed. `recovery.html` keeps `{{ .ConfirmationURL }}` because `/admin/reset-password` handles
 its own session.
 
-Sending: custom SMTP through Resend, sender `Elite Advisor Hub <nick@eliteadvisorhub.com>`.
+Sending: custom SMTP through Resend as `Elite Advisor Hub <no-reply@mail.eliteadvisorhub.com>`,
+using a sending-only Resend key scoped to `mail.eliteadvisorhub.com` (no open or click tracking on
+that domain, so one-time links go out as direct URLs). Rate limit 30 per hour.
 Palette and type follow `brand/EAH_Brand_Style_Guide.html`.
