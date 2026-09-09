@@ -93,14 +93,9 @@ supplier content enriches every advisor site at no advisor cost → richer sites
 
 ## Stripe state (Phase 1)
 
-- **2026-09-01: displayed price raised to $79/mo; live Stripe price not yet migrated.**
-  `TIER_PRICES.starter.monthly` in `lib/stripe.ts` still points at the $59/mo price
-  `price_1TZg2r6lYeMpqwzvoUUoY30Z` (shared with founding-starter — see the HOTFIX note there;
-  the dedicated `price_1TvlHU6lYeMpqwzvVyDg1H42` referenced in earlier versions of this doc had
-  a $0.00 bug and was archived, never actually wired in). Checkout currently charges $59, not
-  $79, until a new $79/mo price is created in Stripe and swapped into `TIER_PRICES.starter.monthly`
-  (and `FOUNDING_PRICES.starter.monthly`, which shares the same ID). The 30-day trial is applied
-  by the checkout route (`trial_period_days`), not by the price object.
+- **2026-09-09: live $79/mo price `price_1UDsH76lYeMpqwzvvcrVbrqg` wired into
+  `TIER_PRICES.starter.monthly`.** Founding-starter keeps `price_1TZg2r6lYeMpqwzvoUUoY30Z` ($59/mo).
+  The 30-day trial is applied by the checkout route (`trial_period_days`), not by the price object.
 - Starter annual and setup-fee price IDs are retired from public checkout (annual returns once a
   $790/yr price exists).
 - Module + service prices have no Stripe IDs yet (Phase 2).

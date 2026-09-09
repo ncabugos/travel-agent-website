@@ -1,14 +1,34 @@
 'use client'
-import { useState, FormEvent } from 'react'
+import { useState, useEffect, FormEvent, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { AuthLayout } from '@/components/auth/AuthLayout'
 import { GoogleButton } from '@/components/auth/GoogleButton'
 
 export default function AgentLoginPage() {
+  return (
+    <Suspense>
+      <AgentLoginForm />
+    </Suspense>
+  )
+}
+
+function AgentLoginForm() {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+  const router = useRouter()
+  // Stripe sends new payers here with ?from=checkout while the webhook emails
+  // their sign-in link.
+  const fromCheckout = useSearchParams().get('from') === 'checkout'
+
+  // Anyone already signed in goes straight to the portal.
+  useEffect(() => {
+    createClient().auth.getSession().then(({ data: { session } }) => {
+      if (session) router.replace('/agent-portal')
+    })
+  }, [router])
 
   async function handleLogin(e: FormEvent) {
     e.preventDefault()
@@ -45,10 +65,12 @@ export default function AgentLoginPage() {
     >
       <div style={{ textAlign: 'center', marginBottom: '28px' }}>
         <h2 style={{ margin: 0, fontSize: '30px', fontWeight: 700, color: '#111', letterSpacing: '-0.02em' }}>
-          Welcome Back
+          {fromCheckout ? 'Check Your Email' : 'Welcome Back'}
         </h2>
         <p style={{ margin: '8px 0 0', fontSize: '14px', color: '#6b7280' }}>
-          Enter your email and we&apos;ll send you a secure sign-in link.
+          {fromCheckout
+            ? 'Your sign-in link is on its way. Open it to set up your profile. If it has not arrived in a few minutes, enter your email below and we send another.'
+            : 'Enter your email and we send you a secure sign-in link.'}
         </p>
       </div>
 

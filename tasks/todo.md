@@ -74,8 +74,7 @@ Strategy: docs/business-model-v2.md (land $79 site / expand via portal / monetiz
 
 ## Operator to-dos (Stripe dashboard)
 - [x] Dedicated base $59/mo price live (price_1TvlHU6lYeMpqwzvVyDg1H42, 2026-07-21) — swapped into TIER_PRICES.starter.monthly
-- [ ] **$79/mo live price** on prod_UL1AMnVvNsNdOS → swap into `TIER_PRICES.starter.monthly`
-      (displayed price went to $79 on 2026-09-01; checkout still charges $59 until this lands)
+- [x] **$79/mo live price** price_1UDsH76lYeMpqwzvvcrVbrqg wired into `TIER_PRICES.starter.monthly` (2026-09-09)
 - [ ] Optional: $790/yr annual price if annual billing returns
 - [x] Beta/founding funnel retired — /beta page, waitlist form/action, and waitlist email removed 2026-07-21; inbound links repointed to /#pricing
 
@@ -238,8 +237,7 @@ clicked but no session created; agents row created with email = null.
       notification + welcome email arrive.
 
 ## Out of scope, flagged
-- Stripe webhook `checkout.session.completed` inserts a new agent without `id`; `agents.id` has no
-  default and must reference auth.users. Brand-new checkout emails fail to create a row. P1.
+- ~~Stripe webhook could not create an agent for a brand-new checkout email.~~ Fixed 2026-09-09.
 - Login page `signInWithOtp` creates accounts for any email (no checkout). Funnel leak.
 - CLAUDE.md §10 says "magic-link only, no password reset"; admin and agent both have password reset.
 
@@ -303,3 +301,25 @@ clicked but no session created; agents row created with email = null.
   hotel-programs page read from it.
 - Onboarding stores supplier names in `preferred_suppliers`; it does not seed the per-advisor
   hotel program curation used by the public site.
+
+# First-time payer provisioning (2026-09-09)
+
+Checkout for a brand-new email left no usable record: the webhook's insert omitted `agents.id`
+(no default, FK to auth.users) and failed, so Stripe IDs were lost and no signup notification fired.
+
+## Plan
+- [x] Webhook `checkout.session.completed`, new-email branch: create the Supabase auth user
+      (`auth.admin.createUser`, email confirmed, full_name in metadata) so the trigger creates the
+      agents row; then write tier, plan, template, Stripe IDs, status; post the signup notification.
+- [x] Send the sign-in link right away (`signInWithOtp` from the server, redirect to the portal
+      callback) so the payer goes from checkout to the wizard without asking for a link.
+- [x] Checkout `success_url` lands on `/agent-portal/login?from=checkout`, which explains that the
+      link is in their inbox.
+- [x] Verify locally: signed synthetic event against the dev webhook, real Supabase user for a
+      plus-addressed Gmail, email read back, row checked, test user removed.
+
+Verified 2026-09-09 on the dev server against prod Supabase: synthetic signed event for a fresh email
+created the auth user + agents row (tier, template, Stripe IDs, trialing), posted the signup
+notification, and the sign-in email arrived in 2s; its link landed on /agent-portal/onboarding. A
+second identical event took the update branch (one row, customer id updated, no second
+notification). Test user removed.

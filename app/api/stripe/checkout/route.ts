@@ -66,7 +66,7 @@ export async function POST(request: Request) {
         // Mirror onto the session so the webhook's checkout.session.completed
         // handler can persist plan/cohort without retrieving the subscription.
         metadata: { tier, plan: 'founding', cohort },
-        success_url: `${origin}/agent-portal/onboarding?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
+        success_url: `${origin}/agent-portal/login?from=checkout`,
         cancel_url: `${origin}/#pricing`,
         // The deal is baked into the price — no promo codes.
         allow_promotion_codes: false,
@@ -122,8 +122,9 @@ export async function POST(request: Request) {
         billingCycle,
         ...(withTrial ? { trial: '30d' } : {}),
       },
-      // After successful checkout, redirect to the onboarding wizard
-      success_url: `${origin}/agent-portal/onboarding?session_id={CHECKOUT_SESSION_ID}&tier=${tier}`,
+      // After checkout the webhook emails a sign-in link; the login page
+      // explains that when ?from=checkout is present.
+      success_url: `${origin}/agent-portal/login?from=checkout`,
       cancel_url: `${origin}/#pricing`,
       // Allow promo codes
       allow_promotion_codes: true,

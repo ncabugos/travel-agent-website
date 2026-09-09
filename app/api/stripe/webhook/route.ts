@@ -1,7 +1,29 @@
 import { NextResponse } from 'next/server'
+import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { stripe, moduleKeyForPrice } from '@/lib/stripe'
 import { createServiceClient } from '@/lib/supabase/service'
 import type Stripe from 'stripe'
+
+/**
+ * Email the payer their portal sign-in link straight after checkout, using
+ * Supabase's own mailer (the branded magic-link template). Non-fatal: if it
+ * fails they can request a link from /agent-portal/login.
+ */
+async function sendPortalSignInLink(email: string, origin: string) {
+  const anon = createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { auth: { persistSession: false } },
+  )
+  const { error } = await anon.auth.signInWithOtp({
+    email,
+    options: {
+      emailRedirectTo: `${origin}/api/agent-portal/auth-callback`,
+      shouldCreateUser: false,
+    },
+  })
+  if (error) console.error(`Failed to send sign-in link to ${email}:`, error.message)
+}
 
 /**
  * Reconcile agent_modules (+ the agents.active_modules cache) from the
@@ -70,6 +92,7 @@ export const dynamic = 'force-dynamic'
 export async function POST(request: Request) {
   const body = await request.text()
   const sig = request.headers.get('stripe-signature')
+  const origin = new URL(request.url).origin
 
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
 
@@ -145,13 +168,26 @@ export async function POST(request: Request) {
 
         console.log(`Updated agent ${existing.id} with Stripe subscription (plan=${plan})`)
       } else {
-        // Create new agent record
-        const { data: newAgent, error } = await supabase
+        // First-time payer: no auth user exists yet. Create one with the email
+        // already confirmed (so Supabase sends no confirmation mail); the
+        // on_auth_user_created trigger inserts the agents row with the same id
+        // and email. Then the Stripe identifiers go onto that row.
+        const fullName = customerName ?? email.split('@')[0]
+        const { data: created, error: createError } = await supabase.auth.admin.createUser({
+          email,
+          email_confirm: true,
+          user_metadata: { full_name: fullName },
+        })
+
+        if (createError || !created.user) {
+          console.error('Failed to create auth user for new checkout:', createError?.message)
+          break
+        }
+        const agentId = created.user.id
+
+        const { error } = await supabase
           .from('agents')
-          .insert({
-            email,
-            full_name: customerName ?? email.split('@')[0],
-            agency_name: customerName ? `${customerName}'s Agency` : 'My Agency',
+          .update({
             tier,
             plan,
             beta_cohort: betaCohort,
@@ -159,36 +195,38 @@ export async function POST(request: Request) {
             stripe_customer_id: stripeCustomerId,
             stripe_subscription_id: stripeSubscriptionId,
             subscription_status: subscriptionStatus,
-            role: 'agent',
           })
-          .select('id')
-          .single()
+          .eq('id', agentId)
 
         if (error) {
-          console.error('Failed to create agent:', error)
-        } else {
-          console.log(`Created new agent ${newAgent.id} for ${email} (plan=${plan})`)
-
-          // Notify admin
-          const planLabel = plan === 'founding'
-            ? `founding ${tier} (${betaCohort})`
-            : tier
-          await supabase
-            .from('admin_notifications')
-            .insert({
-              type: 'new_signup',
-              title: `New ${planLabel} signup: ${email}`,
-              body: `${customerName || email} just signed up for the ${planLabel} plan via Stripe.`,
-              metadata: {
-                agent_id: newAgent.id,
-                email,
-                tier,
-                plan,
-                beta_cohort: betaCohort,
-                stripe_customer_id: stripeCustomerId,
-              },
-            })
+          console.error('Failed to attach Stripe subscription to new agent:', error)
+          break
         }
+        console.log(`Created new agent ${agentId} for ${email} (plan=${plan})`)
+
+        // Notify admin
+        const planLabel = plan === 'founding'
+          ? `founding ${tier} (${betaCohort})`
+          : tier
+        await supabase
+          .from('admin_notifications')
+          .insert({
+            type: 'new_signup',
+            title: `New ${planLabel} signup: ${email}`,
+            body: `${customerName || email} just signed up for the ${planLabel} plan via Stripe.`,
+            metadata: {
+              agent_id: agentId,
+              email,
+              tier,
+              plan,
+              beta_cohort: betaCohort,
+              stripe_customer_id: stripeCustomerId,
+            },
+          })
+
+        // Straight from checkout to the onboarding wizard: the sign-in link
+        // lands in their inbox while Stripe redirects them to the login page.
+        await sendPortalSignInLink(email, origin)
       }
       break
     }

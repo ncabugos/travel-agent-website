@@ -36,24 +36,15 @@ export const stripe = new Proxy({} as Stripe, {
 export const TIER_PRICES = {
   // Business model v2 (docs/business-model-v2.md): the public entry product is
   // $79/mo, no setup fee, 30-day trial (applied by the checkout route via
-  // trial_period_days, not by the price).
-  //
-  // ⚠️ PRICE MISMATCH — checkout charges $59, the site advertises $79.
-  // The ID below is founding-starter's $59/mo live price, carried over from when
-  // the base plan was $59. Display pricing moved to $79 on 2026-09-01
-  // (lib/pricing.ts BASE_PLAN.monthly) but no $79/mo live price exists yet.
-  // TO FIX: create a $79/mo recurring price on product prod_UL1AMnVvNsNdOS in
-  // the live Stripe dashboard and put its ID here. FOUNDING_PRICES.starter keeps
-  // the $59 ID below — the two decouple at that point and founding-starter
-  // becomes a real discount off $79 again.
+  // trial_period_days, not by the price). Founding-starter keeps its own $59
+  // price in FOUNDING_PRICES; the two decoupled on 2026-09-09.
   //
   // Retired IDs, do not reuse: price_1TvlHU6lYeMpqwzvVyDg1H42 (created with a
-  // $0.00 amount — live checkout showed "$0.00/month after trial", archived);
-  // price_1TbUbr6lYeMpqwzvdWFHIMsj ($890/yr); price_1TYYar6lYeMpqwzvksQeEHYh
-  // ($89/mo); price_1TYYbQ6lYeMpqwzv2J7JKEeE ($499 setup).
-  // Annual returns once a $790/yr price exists.
+  // $0.00 amount, archived); price_1TbUbr6lYeMpqwzvdWFHIMsj ($890/yr);
+  // price_1TYYar6lYeMpqwzvksQeEHYh ($89/mo); price_1TYYbQ6lYeMpqwzv2J7JKEeE
+  // ($499 setup). Annual returns once a $790/yr price exists.
   starter: {
-    monthly: 'price_1TZg2r6lYeMpqwzvoUUoY30Z',   // ⚠️ $59/mo (live) — awaiting the $79/mo price
+    monthly: 'price_1UDsH76lYeMpqwzvvcrVbrqg',   // $79/mo (live, created 2026-09-09)
     annual:  '',                                  // no $790/yr price yet — monthly-only
     setup:   '',                                  // no setup fee on the base plan
     product: '',
@@ -109,9 +100,7 @@ export type TierName = keyof typeof TIER_PRICES
  */
 export const FOUNDING_PRICES = {
   starter: {
-    monthly: 'price_1TZg2r6lYeMpqwzvoUUoY30Z',   // $59/mo  — founding-starter (a $20/mo
-                                                 // discount off the $79 base plan; currently
-                                                 // shared with TIER_PRICES.starter, see above)
+    monthly: 'price_1TZg2r6lYeMpqwzvoUUoY30Z',   // $59/mo  — founding-starter ($20/mo off the base plan)
     product: 'prod_UL1AMnVvNsNdOS',
   },
   growth: {
