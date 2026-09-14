@@ -21,6 +21,7 @@ const TEMPLATES = {
   'confirmation.html': { subject: 'mailer_subjects_confirmation', content: 'mailer_templates_confirmation_content', text: 'Confirm your email' },
   'magic-link.html':   { subject: 'mailer_subjects_magic_link',   content: 'mailer_templates_magic_link_content',   text: 'Your sign-in link' },
   'recovery.html':     { subject: 'mailer_subjects_recovery',     content: 'mailer_templates_recovery_content',     text: 'Reset your password' },
+  'invite.html':       { subject: 'mailer_subjects_invite',       content: 'mailer_templates_invite_content',       text: 'Your invitation to Elite Advisor Hub' },
 }
 
 const token = process.env.SUPABASE_ACCESS_TOKEN

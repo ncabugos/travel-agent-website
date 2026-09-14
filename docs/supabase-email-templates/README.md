@@ -13,8 +13,10 @@ SUPABASE_ACCESS_TOKEN=$(security find-generic-password -s "Supabase CLI" -w) nod
 | `confirmation.html` | New email signs in or registers for the first time | Confirm your email |
 | `magic-link.html` | Existing advisor requests a sign-in link | Your sign-in link |
 | `recovery.html` | Admin requests a password reset | Reset your password |
+| `invite.html` | Operator invites an advisor from Admin > Agents > Add Agent | Your invitation to Elite Advisor Hub |
 
-Links use `{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=email`, which
+Links use `{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=email` (`type=invite` for the
+invitation), which
 `/api/agent-portal/auth-callback` verifies server-side. That is why the link works when the
 email is opened in a different browser or on a phone: nothing from the requesting browser is
 needed. `recovery.html` keeps `{{ .ConfirmationURL }}` because `/admin/reset-password` handles

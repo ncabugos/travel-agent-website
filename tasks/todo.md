@@ -323,3 +323,11 @@ created the auth user + agents row (tier, template, Stripe IDs, trialing), poste
 notification, and the sign-in email arrived in 2s; its link landed on /agent-portal/onboarding. A
 second identical event took the update branch (one row, customer id updated, no second
 notification). Test user removed.
+
+## 2026-09-14 — Admin "Add Agent" invite flow
+
+- [x] `POST /api/admin/agents` invites via `auth.admin.inviteUserByEmail` (trigger creates the agents row; tier/template set after)
+- [x] Add Agent modal on `/admin/agents` (name, agency, email, tier, template)
+- [x] Branded `invite.html` auth template (`type=invite`), pushed live with the push script
+- [x] Verified end to end with a plus-address: invite email → callback links auth_user_id → onboarding wizard prefilled → submit → dashboard. Test user and notification row deleted afterwards.
+- [ ] Not verified with a live admin session (admin login is password-based): open Admin > Agents > Add Agent once and send a real invite.
