@@ -87,7 +87,7 @@ const TEAM = [
   {
     name: 'Kelly Daoud',
     title: 'Air Expert',
-    bio: 'Kelly\'s love of travel was ignited by her first trip overseas and has never stopped. She brings thoughtful, personalised service to every client engagement, ensuring seamless travel experiences from start to finish.',
+    bio: 'Kelly\'s love of travel was ignited by his first trip overseas and has never stopped. He brings thoughtful, personalised service to every client engagement, ensuring seamless travel experiences from start to finish.',
     image: '/media/eden/team/kellyDoud-700x875.jpg',
     instagram: 'https://www.instagram.com/edenfyw_wings/',
     email: 'kelly@edenforyourworld.com',
