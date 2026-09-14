@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: PageProps) {
     agent,
     title: 'Press & Awards',
     description: isEden
-      ? 'Recognition for Eden For Your World — Condé Nast Traveler Top Travel Specialist 2024 & 2025, Virtuoso Most Innovative Advisor, and editorial press.'
+      ? 'Recognition for Eden For Your World — Condé Nast Traveler Top Travel Specialist 2025 & 2026, Virtuoso Most Innovative Advisor, and editorial press.'
       : `Press, awards and editorial features for ${agent.agency_name}.`,
     path: 'media',
     ogDescription: isEden

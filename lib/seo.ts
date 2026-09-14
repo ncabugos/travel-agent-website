@@ -57,8 +57,8 @@ const EDEN_FACTS: AgentSeoFacts = {
   brandDescriptionLong:
     'Bespoke luxury journeys curated by Virtuoso advisors. Condé Nast Top Travel Specialist John Oberacker & team craft white-glove trips to 90+ countries.',
   awards: [
-    'Condé Nast Traveler Top Travel Specialist 2024',
     'Condé Nast Traveler Top Travel Specialist 2025',
+    'Condé Nast Traveler Top Travel Specialist 2026',
     'Virtuoso Most Innovative Travel Advisor 2018 (US & Canada)',
   ],
   defaultOgImage: '/assets/eden/overwater-bungalow-hero.jpg',
@@ -76,8 +76,8 @@ const EDEN_FACTS: AgentSeoFacts = {
     name: 'John Oberacker',
     jobTitle: 'Travel Expert',
     awards: [
-      'Condé Nast Traveler Top Travel Specialist 2024',
       'Condé Nast Traveler Top Travel Specialist 2025',
+      'Condé Nast Traveler Top Travel Specialist 2026',
       'Virtuoso Most Innovative Travel Advisor 2018 (US & Canada)',
     ],
     knowsAbout: [

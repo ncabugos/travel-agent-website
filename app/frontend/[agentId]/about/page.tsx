@@ -39,7 +39,7 @@ const TEAM = [
   {
     name: 'John Oberacker',
     title: 'Travel Expert',
-    bio: 'Condé Nast Top Travel Specialist for 2024 & 2025. With 20+ years crafting extraordinary journeys across 80+ countries, John brings unrivalled access and expertise to every itinerary.',
+    bio: 'Condé Nast Top Travel Specialist for 2025 & 2026. With 20+ years crafting extraordinary journeys across 80+ countries, John brings unrivalled access and expertise to every itinerary.',
     image: '/media/eden/team/john-oberacker-badge.jpg',
     instagram: 'https://www.instagram.com/traveltoeden/',
     email: 'john@edenforyourworld.com',
