@@ -9,8 +9,8 @@
     <!--
       Elite Advisor Hub auth email. Source of record for the Supabase Auth
       templates; see README.md in this folder for how it is pushed.
-      Brand: cream page, white card, charcoal text, gold rule, purple action
-      button (brand/EAH_Brand_Style_Guide.html). The button keeps an explicit
+      Design: cream page, white square card with a hairline border, charcoal
+      text, gold rule, flat purple action button. The button keeps an explicit
       purple background and white text with !important in both modes so no
       client dark-mode recoloring can make it unreadable.
     -->
@@ -21,6 +21,7 @@
         .text-primary { color: #fafaf5 !important; }
         .text-secondary { color: #b8b2a7 !important; }
         .text-muted { color: #8a8279 !important; }
+        .text-link { color: #fafaf5 !important; }
         .divider { border-top-color: #2e2b26 !important; }
         .logo-light { display: none !important; }
         .logo-dark { display: inline-block !important; }
@@ -37,7 +38,7 @@
       margin: 0;
       padding: 0;
       background-color: #fafaf5;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
     "
   >
@@ -53,28 +54,28 @@
 
             <!-- Logo -->
             <tr>
-              <td align="center" style="padding-bottom: 8px;">
+              <td align="center" style="padding-bottom: 0;">
                 <img
                   class="logo-light"
                   src="https://www.eliteadvisorhub.com/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
-                  width="180" alt="Elite Advisor Hub"
-                  style="display:inline-block; width:180px; max-width:60%; height:auto; border:0;"
+                  width="160" alt="Elite Advisor Hub"
+                  style="display:inline-block; width:160px; max-width:60%; height:auto; border:0;"
                 />
                 <!--[if !mso]><!-->
                 <img
                   class="logo-dark"
                   src="https://www.eliteadvisorhub.com/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-white.png"
-                  width="180" alt="Elite Advisor Hub"
-                  style="display:none; width:180px; max-width:60%; height:auto; border:0;"
+                  width="160" alt="Elite Advisor Hub"
+                  style="display:none; width:160px; max-width:60%; height:auto; border:0;"
                 />
                 <!--<![endif]-->
               </td>
             </tr>
 
-            <!-- Thin gold rule: editorial accent, per brand palette -->
+            <!-- Gold rule -->
             <tr>
-              <td align="center" style="padding-bottom: 28px;">
-                <div style="width:44px; height:2px; background-color:#b49a5a; margin:14px auto 0; line-height:2px; font-size:0;">&nbsp;</div>
+              <td align="center" style="padding: 16px 0 28px;">
+                <div style="width:40px; height:1px; background-color:#b49a5a; margin:0 auto; line-height:1px; font-size:0;">&nbsp;</div>
               </td>
             </tr>
 
@@ -85,8 +86,8 @@
                 style="
                   background-color: #ffffff;
                   border: 1px solid #e8e4dc;
-                  border-radius: 14px;
-                  padding: 44px 44px;
+                  border-radius: 0;
+                  padding: 44px;
                 "
               >
 
@@ -94,12 +95,12 @@
                   class="h1 text-primary"
                   style="
                     margin: 0 0 16px;
-                    font-family: Georgia, 'Times New Roman', serif;
-                    font-size: 28px;
-                    line-height: 1.25;
+                    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                    font-size: 26px;
+                    line-height: 1.2;
                     font-weight: 400;
                     color: #1a1715;
-                    letter-spacing: -0.01em;
+                    letter-spacing: -0.02em;
                   "
                 >
                   Confirm your email
@@ -111,11 +112,11 @@
                     margin: 0 0 28px;
                     font-size: 15px;
                     line-height: 1.65;
-                    color: #5c554b;
+                    color: #5f5850;
                   "
                 >
                   Use the button below to confirm
-                  <strong style="color:#1a1715; font-weight:600;">{{ .Email }}</strong>
+                  <strong class="text-primary" style="color:#1a1715; font-weight:500;">{{ .Email }}</strong>
                   and open your advisor portal. The link is good for one hour and can be
                   used once.
                 </p>
@@ -126,9 +127,9 @@
                     <td align="left">
                       <!--[if mso]>
                       <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
-                        href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=email" style="height:48px;v-text-anchor:middle;width:190px;" arcsize="20%" strokecolor="#7c3aed" fillcolor="#7c3aed">
+                        href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=email" style="height:48px;v-text-anchor:middle;width:170px;" arcsize="4%" strokecolor="#7c3aed" fillcolor="#7c3aed">
                         <w:anchorlock/>
-                        <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:15px;font-weight:600;">Confirm email</center>
+                        <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:15px;font-weight:500;">Confirm email</center>
                       </v:roundrect>
                       <![endif]-->
                       <!--[if !mso]><!-->
@@ -137,15 +138,12 @@
                         style="
                           display: inline-block;
                           background-color: #7c3aed !important;
-                          background-image: linear-gradient(135deg, #7c3aed, #a78bfa);
                           color: #ffffff !important;
                           text-decoration: none;
-                          padding: 14px 32px;
-                          border-radius: 10px;
-                          border: 1px solid rgba(255,255,255,0.35);
+                          padding: 15px 28px;
+                          border-radius: 2px;
                           font-size: 15px;
-                          font-weight: 600;
-                          letter-spacing: 0.01em;
+                          font-weight: 500;
                           mso-padding-alt: 0;
                         "
                       >
@@ -167,8 +165,9 @@
                 >
                   If the button does not open, copy and paste this link into your browser:<br />
                   <a
+                    class="text-link"
                     href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=email"
-                    style="color: #b49a5a; text-decoration: none; word-break: break-all;"
+                    style="color: #1a1715; text-decoration: underline; word-break: break-all;"
                   >{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=email</a>
                 </p>
 

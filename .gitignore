@@ -60,3 +60,6 @@ launch/EAH_Advisor_Outreach_Email.html
 
 # Supabase CLI local link state — pooler-url embeds the database password
 supabase/.temp/
+
+# local email previews and other throwaway output
+scratch/

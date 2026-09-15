@@ -25,4 +25,6 @@ its own session.
 Sending: custom SMTP through Resend as `Elite Advisor Hub <no-reply@mail.eliteadvisorhub.com>`,
 using a sending-only Resend key scoped to `mail.eliteadvisorhub.com` (no open or click tracking on
 that domain, so one-time links go out as direct URLs). Rate limit 30 per hour.
-Palette and type follow `brand/EAH_Brand_Style_Guide.html`.
+The emails follow the monochrome system (cream ground, white square card, gold rule, flat purple
+button), the same shell as `renderBrandedEmail()` in `lib/email.ts`. All four files share one
+skeleton; only the title, preheader, heading, body copy, button label, and footer sentence differ.
