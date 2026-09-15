@@ -16,7 +16,6 @@ import { encodeContact } from '@/lib/obfuscate'
  */
 
 const PLATFORM_LINKS = [
-  { label: 'Pricing',      href: '/#pricing' },
   { label: 'Features',     href: '/#features' },
   { label: 'Studio',       href: '/studio' },
   { label: 'Insights',     href: '/insights' },

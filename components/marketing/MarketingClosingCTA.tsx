@@ -1,14 +1,12 @@
 import Link from 'next/link'
-import { CheckoutButton } from '@/components/stripe/CheckoutButton'
-import { CTA_MICROCOPY, PRIMARY_CTA_LABEL, PRIMARY_CTA_STYLE } from './tokens'
+import { PRIMARY_CTA_LABEL, PRIMARY_CTA_STYLE } from './tokens'
 
 /**
  * Homepage closing CTA band — the last thing before the footer.
  *
- * Same single goal as the hero: begin the 30 days, straight into Stripe
- * Checkout. The consultation path stays as a text-weight secondary for
- * agencies and advisors who want to talk first. Named proof sits directly
- * under the button (proof adjacent to the CTA outperforms proof elsewhere).
+ * Same single goal as the hero: request a consultation. Named proof sits
+ * directly under the button (proof adjacent to the CTA outperforms proof
+ * elsewhere).
  */
 export function MarketingClosingCTA() {
   return (
@@ -44,35 +42,16 @@ export function MarketingClosingCTA() {
           }}
         >
           When they do, the site should do what you&rsquo;d do in the room — set the standard, then
-          step out of the way. Your first 30 days are with our compliments.
+          step out of the way.
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px' }}>
-          <CheckoutButton
-            tier="starter"
-            popular
+          <Link
+            href="/schedule-consultation"
             className="eah-closing-primary"
             style={{ ...PRIMARY_CTA_STYLE, width: 'auto', minWidth: '260px' }}
           >
             {PRIMARY_CTA_LABEL}
-          </CheckoutButton>
-          <p style={{ margin: 0, fontSize: '13px', color: 'rgba(255,255,255,0.62)' }}>
-            {CTA_MICROCOPY}
-          </p>
-          <Link
-            href="/schedule-consultation"
-            className="eah-closing-secondary eah-focus-ring"
-            style={{
-              marginTop: '10px',
-              color: 'rgba(255,255,255,0.8)',
-              fontSize: '15px',
-              fontWeight: 500,
-              textDecoration: 'underline',
-              textUnderlineOffset: '4px',
-              textDecorationColor: 'rgba(255,255,255,0.35)',
-            }}
-          >
-            Prefer to talk first? Schedule a consultation
           </Link>
         </div>
 
@@ -92,7 +71,6 @@ export function MarketingClosingCTA() {
       </div>
 
       <style>{`
-        .eah-closing-secondary:hover { color: #fff !important; text-decoration-color: #fff !important; }
         .eah-closing-primary:hover {
           transform: translateY(-1px);
           box-shadow: 0 6px 32px rgba(124,58,237,0.5) !important;

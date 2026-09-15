@@ -10,7 +10,7 @@ const SITE_URL =
 /**
  * Public marketing sitemap for the platform host (eliteadvisorhub.com).
  *
- * Lists only real, indexable pages. In-page anchors (#features, #pricing)
+ * Lists only real, indexable pages. In-page anchors (#features, #demos)
  * are excluded — Google collapses URL fragments into the homepage, so they
  * are duplicate URLs, not pages. Admin and advisor-portal routes are excluded
  * (auth-gated; also blocked in robots.ts).

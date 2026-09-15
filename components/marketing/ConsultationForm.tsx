@@ -21,10 +21,10 @@ interface TierOption {
 // portal expansion. The legacy tier values are kept as the form's submit
 // values so the consultation action and admin views stay unchanged.
 const TIERS: TierOption[] = [
-  { value: 'starter', label: 'The Site — $79/mo · first 30 days complimentary' },
-  { value: 'growth',  label: 'The Site + modules — editorial, directories, feeds' },
-  { value: 'custom',  label: 'Bespoke design & premium work' },
-  { value: 'agency',  label: 'Agency — from $899/mo, quoted' },
+  { value: 'starter', label: 'The Site, a custom-branded advisor website' },
+  { value: 'growth',  label: 'The Site with modules: editorial, directories, feeds' },
+  { value: 'custom',  label: 'Bespoke design and premium work' },
+  { value: 'agency',  label: 'Agency, multi-advisor' },
 ]
 
 const TIMELINES = [

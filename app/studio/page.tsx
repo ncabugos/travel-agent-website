@@ -22,7 +22,7 @@ const LAV_GRAD = 'linear-gradient(135deg, #a5b4fc, #c4b5fd)'
 export const metadata = buildMarketingMetadata({
   title: 'Studio — Done-for-You Social, Content & Design for Travel Advisors | Elite Advisor Hub',
   description:
-    'Studio is the done-for-you creative and marketing service from Elite Advisor Hub. Social, content, design, email, and AI visibility — handled for luxury travel advisors at a flat monthly rate.',
+    'Studio is the done-for-you creative and marketing service from Elite Advisor Hub. Social, content, design, email, and AI visibility — handled for luxury travel advisors.',
   path: 'studio',
 })
 
@@ -31,27 +31,25 @@ const HOW_IT_WORKS: { title: string; body: string }[] = [
   { title: 'Fast, predictable turnaround', body: "Most single requests land inside your plan's window. Larger projects are scoped and scheduled up front." },
   { title: 'Unlimited revisions', body: 'We refine until it is right. No per-change fees, no rationing of feedback.' },
   { title: 'You own everything', body: 'Every source file and final asset is yours to keep, reuse, and take with you.' },
-  { title: 'Flat monthly, no surprises', body: 'No hourly billing. Monthly rolling, with the option to pause for a season — travel is seasonal, and so are advisors.' },
-  { title: 'Annual option', body: 'Prepay the year and get two months free. The same work, at a lower effective rate.' },
 ]
 
 const ADD_ONS: string[] = [
-  'Paid ad management (Meta, Google) — 15% of ad spend, $500/mo minimum',
+  'Paid ad management (Meta, Google), quoted per campaign',
   'Photography & videography — art-directed by us, production quoted per project',
   'Website build or redesign on Elite Advisor Hub — one-time',
   'Brand identity package — one-time',
-  'Rush delivery on a specific request — flat rush fee',
+  'Rush delivery on a specific request, quoted per request',
   'Event & print collateral at volume — quoted per project',
 ]
 
-const A_LA_CARTE: { name: string; price: string }[] = [
-  { name: 'AI Visibility Audit — see how AI search describes you today', price: 'from $500' },
-  { name: 'Source-of-Truth Page — one authoritative page AI can trust', price: 'from $750' },
-  { name: 'Journal Jumpstart — four GEO-optimized articles on your specialty', price: 'from $1,200' },
-  { name: 'Social Launch Pack — a month of on-brand content + templates', price: 'from $850' },
-  { name: 'Brand Refresh — palette, type, and usage tune-up', price: 'from $1,500' },
-  { name: 'Marketing Game Plan — a working session + a 90-day plan', price: 'from $750' },
-  { name: 'Website Build on Elite Advisor Hub — branded site + content system', price: 'from $3,000' },
+const A_LA_CARTE: { name: string }[] = [
+  { name: 'AI Visibility Audit — see how AI search describes you today' },
+  { name: 'Source-of-Truth Page — one authoritative page AI can trust' },
+  { name: 'Journal Jumpstart — four GEO-optimized articles on your specialty' },
+  { name: 'Social Launch Pack — a month of on-brand content + templates' },
+  { name: 'Brand Refresh — palette, type, and usage tune-up' },
+  { name: 'Marketing Game Plan — a working session + a 90-day plan' },
+  { name: 'Website Build on Elite Advisor Hub — branded site + content system' },
 ]
 
 export default function StudioPage() {
@@ -74,8 +72,8 @@ export default function StudioPage() {
           </h1>
           <p style={{ fontSize: '19px', lineHeight: 1.65, color: 'rgba(255,255,255,0.88)', maxWidth: '640px', margin: '0 auto 36px' }}>
             Studio is the done-for-you creative and marketing layer on top of your Elite Advisor Hub site.
-            Social, content, design, email, and AI visibility — handled for you at a flat monthly rate,
-            so your presence stays current without you having to think about it.
+            Social, content, design, email, and AI visibility — handled for you, so your presence
+            stays current without you having to think about it.
           </p>
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <a href="#plans" style={btnPrimary}>See the plans</a>
@@ -133,7 +131,7 @@ export default function StudioPage() {
           <div style={{ textAlign: 'center', marginBottom: '48px' }}>
             <p style={eyebrowStyle}>Add-ons &amp; one-time projects</p>
             <h2 style={{ fontSize: 'clamp(28px, 3.2vw, 36px)', fontWeight: 700, letterSpacing: '-0.02em', margin: '0 auto', color: INK, maxWidth: '620px' }}>
-              Beyond the monthly retainer
+              Beyond the monthly plan
             </h2>
           </div>
 
@@ -154,13 +152,12 @@ export default function StudioPage() {
             <div>
               <h3 style={{ fontSize: '18px', fontWeight: 700, letterSpacing: '-0.01em', margin: '0 0 6px', color: INK }}>À la carte</h3>
               <p style={{ fontSize: '14px', color: MUTE, margin: '0 0 20px', lineHeight: 1.6 }}>
-                Not ready to subscribe? Start with a single project — a foundation you can build on. Starting anchors.
+                Not ready to subscribe? Start with a single project — a foundation you can build on.
               </p>
               <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {A_LA_CARTE.map((item) => (
-                  <li key={item.name} style={{ display: 'flex', justifyContent: 'space-between', gap: '16px', fontSize: '14px', color: BODY, lineHeight: 1.55, paddingBottom: '12px', borderBottom: `1px solid ${LINE}` }}>
-                    <span>{item.name}</span>
-                    <span style={{ color: GOLD, fontWeight: 600, whiteSpace: 'nowrap' }}>{item.price}</span>
+                  <li key={item.name} style={{ fontSize: '14px', color: BODY, lineHeight: 1.55, paddingBottom: '12px', borderBottom: `1px solid ${LINE}` }}>
+                    {item.name}
                   </li>
                 ))}
               </ul>

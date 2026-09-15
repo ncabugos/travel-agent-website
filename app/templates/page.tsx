@@ -194,12 +194,11 @@ export default function TemplatesPage() {
             Ready to launch yours?
           </h2>
           <p style={{ fontSize: '16px', color: '#6b7280', lineHeight: 1.7, margin: '0 0 32px' }}>
-            Your site at $79 a month — no setup fee, and your first
-            30 days are with our compliments.
+            A custom-branded site on your own domain, live within days.
           </p>
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link
-              href="/#pricing"
+              href="/schedule-consultation"
               className="eah-btn-lux"
               style={{
                 padding: '14px 32px',
@@ -211,22 +210,7 @@ export default function TemplatesPage() {
                 textDecoration: 'none',
               }}
             >
-              Begin your 30 days
-            </Link>
-            <Link
-              href="/#pricing"
-              style={{
-                padding: '14px 32px',
-                backgroundColor: '#fff',
-                color: '#111',
-                border: '1px solid #d1d5db',
-                borderRadius: '10px',
-                fontSize: '15px',
-                fontWeight: 600,
-                textDecoration: 'none',
-              }}
-            >
-              See pricing
+              Request a consultation
             </Link>
           </div>
         </div>

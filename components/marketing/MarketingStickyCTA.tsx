@@ -1,16 +1,15 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { CheckoutButton } from '@/components/stripe/CheckoutButton'
-import { PRIMARY_CTA_LABEL, PRIMARY_CTA_STYLE, WARM_GRAY_DARK } from './tokens'
+import Link from 'next/link'
+import { PRIMARY_CTA_LABEL, PRIMARY_CTA_STYLE } from './tokens'
 
 /**
  * Mobile-only sticky bottom CTA (≤768px).
  *
  * Appears once the visitor has scrolled past the hero (so it never competes
- * with the hero's own button) and hides again over the pricing block, the
- * closing CTA, and the footer, where it would cover their own controls.
- * Bottom-center placement is
+ * with the hero's own button) and hides again over the closing CTA and the
+ * footer, where it would cover their own controls. Bottom-center placement is
  * the thumb-zone sweet spot; sticky-bottom CTAs lift mobile conversion
  * 12–27% in the meta-analyses behind the redesign.
  */
@@ -21,7 +20,7 @@ export function MarketingStickyCTA() {
     const hero = document.getElementById('hero')
     if (!hero) return
     // Sections whose own CTA / links the bar must never cover.
-    const blockers = [document.getElementById('pricing'), document.getElementById('closing-cta'), document.querySelector('footer')]
+    const blockers = [document.getElementById('closing-cta'), document.querySelector('footer')]
       .filter((el): el is HTMLElement => el instanceof HTMLElement)
 
     let pastHero = false
@@ -44,7 +43,7 @@ export function MarketingStickyCTA() {
     <div
       className="eah-sticky-cta"
       // `inert` removes the hidden bar from the tab order and the a11y tree
-      // (aria-hidden alone would leave a focusable button behind it).
+      // (aria-hidden alone would leave a focusable link behind it).
       inert={!visible}
       style={{
         position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 900,
@@ -58,16 +57,12 @@ export function MarketingStickyCTA() {
         pointerEvents: visible ? 'auto' : 'none',
       }}
     >
-      <CheckoutButton
-        tier="starter"
-        popular
+      <Link
+        href="/schedule-consultation"
         style={{ ...PRIMARY_CTA_STYLE, width: '100%', minHeight: '52px', padding: '14px 20px' }}
       >
         {PRIMARY_CTA_LABEL}
-      </CheckoutButton>
-      <p style={{ margin: '6px 0 0', textAlign: 'center', fontSize: '12px', color: WARM_GRAY_DARK }}>
-        With our compliments · $79/mo from day 31 · cancel anytime
-      </p>
+      </Link>
 
       <style>{`
         @media (min-width: 769px) { .eah-sticky-cta { display: none !important; } }

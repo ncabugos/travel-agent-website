@@ -1,8 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Globe, FileText, Building2, Paintbrush, Lock, TrendingUp } from 'lucide-react'
-import { CheckoutButton } from '@/components/stripe/CheckoutButton'
-import { MarketingPricing } from '@/components/marketing/MarketingPricing'
 import { MarketingNav } from '@/components/marketing/MarketingNav'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 import { MarketingSupplierPrograms } from '@/components/marketing/MarketingSupplierPrograms'
@@ -16,14 +14,14 @@ import { MarketingProof } from '@/components/marketing/MarketingProof'
 import { MarketingFAQ } from '@/components/marketing/MarketingFAQ'
 import { MarketingStickyCTA } from '@/components/marketing/MarketingStickyCTA'
 import {
-  CHARCOAL, CREAM, CTA_MICROCOPY, DIVIDER, GOLD, INK,
+  CHARCOAL, CREAM, DIVIDER, GOLD, INK,
   PRIMARY_CTA_LABEL, PRIMARY_CTA_STYLE, WARM_GRAY_DARK,
 } from '@/components/marketing/tokens'
 
 export const metadata = {
   title: 'Elite Advisor Hub — Websites for Luxury Travel Advisors, Live in Days',
   description:
-    'A custom-branded advisor website on your own domain, backed by 1,795+ maintained luxury hotel programs and a weekly editorial pipeline. $79 a month; your first 30 days are with our compliments.',
+    'A custom-branded advisor website on your own domain, backed by 1,795+ maintained luxury hotel programs and a weekly editorial pipeline.',
 }
 
 /*
@@ -35,14 +33,13 @@ export const metadata = {
  *   → Proof                     (MarketingProof)
  *   → Benefits                  (Features)
  *   → Demos / Suppliers / Editorial
- *   → Offer                     (MarketingPricing)
  *   → FAQ                       (MarketingFAQ)
  *   → Studio cross-sell / Insights
  *   → Closing CTA
  *
- * One primary goal on the page: begin the 30 days. Every primary button posts
- * straight to Stripe Checkout (no detour through #pricing); secondary links
- * are text-weight and never purple.
+ * One primary goal on the page: request a consultation. Every primary button
+ * goes to /schedule-consultation; secondary links are text-weight and never
+ * purple.
  */
 
 interface DemoCard {
@@ -232,21 +229,19 @@ export default function EliteAdvisorHubHomePage() {
               maxWidth: '54ch', margin: '0 0 32px',
             }}>
               A custom-branded site on your own domain, backed by 1,795+ maintained luxury hotel
-              programs and kept current for you. $79 a month — your first 30 days are with our
-              compliments.
+              programs and kept current for you.
             </p>
 
             <div className="eah-hero-actions" style={{ display: 'flex', alignItems: 'center', gap: '24px', flexWrap: 'wrap' }}>
-              <CheckoutButton
-                tier="starter"
-                popular
+              <Link
+                href="/schedule-consultation"
                 className="eah-cta-primary"
                 style={{ ...PRIMARY_CTA_STYLE, width: 'auto' }}
               >
                 {PRIMARY_CTA_LABEL}
-              </CheckoutButton>
+              </Link>
               <a
-                href="#pricing"
+                href="#features"
                 className="eah-hero-secondary eah-focus-ring"
                 style={{
                   color: 'rgba(255,255,255,0.86)', fontSize: '15px', fontWeight: 500,
@@ -257,9 +252,6 @@ export default function EliteAdvisorHubHomePage() {
                 See what&rsquo;s included
               </a>
             </div>
-            <p style={{ margin: '14px 0 0', fontSize: '13px', color: 'rgba(255,255,255,0.68)' }}>
-              {CTA_MICROCOPY}
-            </p>
 
             {/* Proof strip — specific, verifiable, inside the first viewport. */}
             <ul className="eah-hero-proof" role="list" style={{
@@ -301,7 +293,7 @@ export default function EliteAdvisorHubHomePage() {
             All of the essentials. Maintenance done for you.
           </h2>
           <p style={{ fontSize: '17px', color: WARM_GRAY_DARK, margin: '0 0 56px', maxWidth: '58ch', lineHeight: 1.6 }}>
-            Everything on the $79 plan, on every site. Modules and studio services are added from
+            Everything below is on every site. Modules and studio services are added from
             the portal only when the practice calls for them.
           </p>
 
@@ -417,13 +409,10 @@ export default function EliteAdvisorHubHomePage() {
       <MarketingSupplierPrograms />
       <MarketingCuratedEditorial />
 
-      {/* ── Offer ────────────────────────────────────────────────────────── */}
-      <MarketingPricing />
-
       {/* ── Objections ───────────────────────────────────────────────────── */}
       <MarketingFAQ />
 
-      {/* Studio cross-sell + Insights sit after the offer and the objections so
+      {/* Studio cross-sell + Insights sit after the objections so
           they never interrupt the path to the primary action. */}
       <MarketingStudioPromo />
       <MarketingInsightsTeaser />
@@ -434,7 +423,7 @@ export default function EliteAdvisorHubHomePage() {
 
       <MarketingFooter />
 
-      {/* Mobile-only sticky CTA; hidden on desktop and over the pricing block. */}
+      {/* Mobile-only sticky CTA; hidden on desktop and over the closing CTA. */}
       <MarketingStickyCTA />
 
       <style>{`
@@ -466,7 +455,7 @@ export default function EliteAdvisorHubHomePage() {
           .eah-section p { line-height: 1.55 !important; }
           .eah-hero { padding-top: 112px !important; padding-bottom: 56px !important; min-height: 0 !important; }
           .eah-hero-actions { flex-direction: column; align-items: stretch !important; gap: 14px !important; }
-          .eah-hero-actions button { width: 100% !important; }
+          .eah-hero-actions .eah-cta-primary { width: 100% !important; }
           .eah-hero-actions a { text-align: center; }
           .eah-hero-proof { gap: 8px 18px !important; }
         }

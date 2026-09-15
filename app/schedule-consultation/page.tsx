@@ -72,10 +72,10 @@ export default async function ScheduleConsultationPage({ searchParams }: PagePro
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
             <Link
-              href="/#pricing"
+              href="/"
               style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}
             >
-              ← Back to pricing
+              ← Back to home
             </Link>
           </div>
         </div>

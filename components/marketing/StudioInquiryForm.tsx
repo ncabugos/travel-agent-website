@@ -13,11 +13,11 @@ const PURPLE = '#7C3AED'
 const PURPLE_GRAD = 'linear-gradient(135deg, #7c3aed, #a78bfa)'
 
 const PLAN_OPTIONS = [
-  { value: 'essential', label: 'Essential — $950/mo' },
-  { value: 'professional', label: 'Professional — $1,850/mo' },
-  { value: 'full-service', label: 'Full Service — $3,500/mo' },
-  { value: 'agency', label: 'Agency — custom' },
-  { value: 'unsure', label: 'Not sure yet — help me choose' },
+  { value: 'essential', label: 'Essential' },
+  { value: 'professional', label: 'Professional' },
+  { value: 'full-service', label: 'Full Service' },
+  { value: 'agency', label: 'Agency' },
+  { value: 'unsure', label: 'Not sure yet, help me choose' },
 ] as const
 
 const PLAN_VALUES = PLAN_OPTIONS.map((p) => p.value) as readonly string[]
@@ -29,7 +29,7 @@ export function StudioInquiryForm() {
   const [plan, setPlan] = useState<string>('unsure')
 
   // Plan pre-selection comes from two places: a deep link (/studio?plan=…) read
-  // once on mount, and the in-page pricing CTAs, which fire a 'studio:select-plan'
+  // once on mount, and the in-page plan CTAs, which fire a 'studio:select-plan'
   // event as they scroll the visitor down to this form.
   useEffect(() => {
     if (typeof window === 'undefined') return

@@ -16,7 +16,7 @@ function getResend(): Resend {
 }
 
 const FROM_ADDRESS = process.env.EMAIL_FROM ?? 'EliteAdvisorHub <onboarding@resend.dev>'
-const ADMIN_EMAIL = 'cabugosb3@gmail.com'
+import { getAdminNotificationEmail } from '@/lib/platform-settings'
 
 /* ── Founding-email branding constants ──────────────────────────────────────
  * Shared by the Founding Advisor onboarding sequence below. The accent + logo
@@ -50,7 +50,7 @@ interface OnboardingAgent {
 export async function sendAdminOnboardingNotification(agent: OnboardingAgent) {
   const { data, error } = await getResend().emails.send({
     from: FROM_ADDRESS,
-    to: ADMIN_EMAIL,
+    to: await getAdminNotificationEmail(),
     subject: `New Agent Onboarding: ${agent.agency_name}`,
     html: `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 560px; margin: 0 auto; padding: 32px 0;">
@@ -114,9 +114,9 @@ export interface StudioInquiryNotificationInput {
 }
 
 const STUDIO_PLAN_LABELS: Record<string, string> = {
-  essential: 'Essential ($950/mo)',
-  professional: 'Professional ($1,850/mo)',
-  'full-service': 'Full Service ($3,500/mo)',
+  essential: 'Essential',
+  professional: 'Professional',
+  'full-service': 'Full Service',
   agency: 'Agency (custom)',
   unsure: 'Not sure yet',
 }
@@ -133,7 +133,7 @@ export async function sendStudioInquiryNotification(input: StudioInquiryNotifica
 
   const { data, error } = await getResend().emails.send({
     from: FROM_ADDRESS,
-    to: ADMIN_EMAIL,
+    to: await getAdminNotificationEmail(),
     replyTo: input.email,
     subject: `Studio inquiry: ${input.businessName ?? fullName} — ${planLabel}`,
     html: `
@@ -401,9 +401,9 @@ export function buildBetaInvitationEmail(input: BetaInvitationEmailInput): Built
     emailParagraph(`You can see it for yourself at <a href="https://eliteadvisorhub.com" style="color:#7c3aed;text-decoration:none;">eliteadvisorhub.com</a> — there are live demos there that show the difference better than I can describe it.`),
     emailParagraph(`I'm opening it to a small founding group of advisors this month, and I'd love <strong>${brandName}</strong> to be one of them. As a <strong>Founding Advisor</strong>, you'd get:`),
     emailBullets([
-      `A full 30 days free — a complete month to see it live before you commit to anything`,
-      `A locked founding rate after that, roughly a third below standard, held for as long as you're with us`,
       `A site built and launched with my direct, hands-on attention`,
+      `Founding Advisor terms, held for as long as you're with us`,
+      `A direct line to me before and after launch`,
     ]),
     emailParagraph(`In return, I'd just ask for honest feedback and a testimonial once you've seen what it can do. That's it.`),
     emailParagraph(`Easiest next step is a quick call so I can walk you through it on a brand close to yours. Just reply to this email, or grab a time here:`),
@@ -440,10 +440,9 @@ export async function sendWelcomeRegisterEmail(input: WelcomeRegisterEmailInput)
     emailParagraph(`I'm thrilled to have you in the founding group. Here's exactly what to expect, and the two things I need from you to get started.`),
     emailParagraph(`<strong>Your Founding Advisor offer, confirmed:</strong>`),
     emailBullets([
-      `${tier} tier — setup fee waived`,
-      `First month free, a 30-day trial`,
-      `Founding rate after that, locked for as long as you stay with us`,
-      `A card on file so billing is seamless when month two arrives, nothing is charged for the first 30 days`,
+      `${tier} tier, confirmed`,
+      `Your site is built for you from the intake form`,
+      `Reply to this email any time with questions`,
     ]),
     emailParagraph(`I've put together a one-page Founding Advisor summary so everything's in writing.`),
     emailParagraph(`<strong>Step one — create your portal account.</strong> This is where you'll manage your site, blog, and billing. It takes a minute and uses a secure magic link, so there's no password to remember:`),
@@ -655,7 +654,6 @@ export async function sendConsultationBookingEmail(input: ConsultationBookingEma
 
 const HOMEPAGE_LINK = 'https://eliteadvisorhub.com'
 const CONSULT_LINK = 'https://eliteadvisorhub.com/schedule-consultation'
-const PRICING_LINK = 'https://eliteadvisorhub.com/#pricing'
 
 export interface WarmSequenceEmailInput {
   to: string
@@ -714,7 +712,7 @@ export function buildWarmProofEmail(input: WarmSequenceEmailInput): BuiltEmail {
     emailParagraph(`Hi ${firstName},`),
     emailParagraph(`Rather than describe it again, I'd rather show you.`),
     emailParagraph(`Eden For Your World is one of our advisors. Take a look at the site we built and judge the quality for yourself: <a href="https://edenforyourworld.com" style="color:${ACCENT};">edenforyourworld.com</a>`),
-    emailParagraph(`That is the standard. Clean, fast, genuinely premium, and built to bring in the right clients. The same care goes into every Founding Advisor build, including the founding offer: a full 30 days free to see it live, and a locked rate after that.`),
+    emailParagraph(`That is the standard. Clean, fast, genuinely premium, and built to bring in the right clients. The same care goes into every Founding Advisor build.`),
     emailParagraph(`If you can picture ${brandName} looking like this, let's talk:`),
     emailButton('Book a consultation', CONSULT_LINK),
     emailParagraph(`Warmly,`),
@@ -737,9 +735,9 @@ export function buildWarmFoundingWindowEmail(input: WarmSequenceEmailInput): Bui
     emailParagraph(`A quick and honest note. I'm keeping the founding group small on purpose, because each site gets my direct attention and I won't compromise that. The spots are filling.`),
     emailParagraph(`Here's exactly what a Founding Advisor gets:`),
     emailBullets([
-      `A full 30 days free — a complete month to see it live before you commit to anything`,
-      `A locked founding rate after that, roughly a third below standard, held for as long as you stay`,
       `A site built and launched with my hands-on attention`,
+      `Founding Advisor terms, held for as long as you stay`,
+      `A direct line to me before and after launch`,
     ]),
     emailParagraph(`I'd like ${brandName} to have one of the remaining spots. The only next step is a short conversation so I can understand your brand and make sure it's a fit:`),
     emailButton('Book your consultation', CONSULT_LINK),
@@ -762,10 +760,10 @@ export function buildWarmLastCallEmail(input: WarmSequenceEmailInput): BuiltEmai
   const bodyHtml = [
     emailParagraph(`Hi ${firstName},`),
     emailParagraph(`This is the last note I'll send about the founding group. I'm closing it to keep the cohort small and give each site the attention it deserves.`),
-    emailParagraph(`If a Virtuoso-grade site for ${brandName}, with a full 30 days free to try it, is something you want, now is the moment:`),
+    emailParagraph(`If a Virtuoso-grade site for ${brandName} is something you want, now is the moment:`),
     emailButton('Book your consultation', CONSULT_LINK),
-    emailParagraph(`And if the timing simply isn't right, no problem at all. The door stays open — you can begin anytime, and your first 30 days are always with our compliments:`),
-    emailButton('See the offer', PRICING_LINK),
+    emailParagraph(`And if the timing simply isn't right, no problem at all. The door stays open, and you can reach out anytime:`),
+    emailButton('See the platform', HOMEPAGE_LINK),
     emailParagraph(`Thank you for reading this far. Whatever you decide, I wish you and ${brandName} a wonderful season ahead.`),
     emailParagraph(`Warmly,`),
   ].join('')

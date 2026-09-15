@@ -6,7 +6,6 @@ import Image from 'next/image'
 
 const NAV_LINKS = [
   { label: 'Features', href: '/#features' },
-  { label: 'Pricing',  href: '/#pricing'  },
   { label: 'Studio',   href: '/studio'    },
   { label: 'Demos',    href: '/#demos'    },
   { label: 'Insights', href: '/insights'  },
@@ -101,7 +100,7 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
                 Agent Login
               </Link>
               <Link
-                href="/#pricing"
+                href="/schedule-consultation"
                 className="eah-btn-lux"
                 style={{
                   padding: '8px 20px',
@@ -112,7 +111,7 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
                   boxShadow: '0 1px 2px rgba(124,58,237,0.25)',
                 }}
               >
-                Begin my 30 days
+                Request a consultation
               </Link>
             </div>
           )}
@@ -242,7 +241,7 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
             <Link
-              href="/#pricing"
+              href="/schedule-consultation"
               onClick={close}
               className="eah-btn-lux"
               style={{
@@ -256,7 +255,7 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
                 boxShadow: '0 1px 2px rgba(124,58,237,0.25)',
               }}
             >
-              Begin my 30 days
+              Request a consultation
             </Link>
             <Link
               href="/agent-portal/login"

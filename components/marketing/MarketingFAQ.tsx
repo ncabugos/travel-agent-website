@@ -11,8 +11,8 @@ import { CHARCOAL, DIVIDER, GOLD, INK, WARM_GRAY_DARK } from './tokens'
  */
 const FAQS: { q: string; a: string }[] = [
   {
-    q: 'What happens after the first 30 days?',
-    a: 'Your card is billed $79 on day 31 and monthly after that. There is no setup fee and no contract — cancel from the portal at any point during the 30 days and nothing is charged.',
+    q: 'How do I get started?',
+    a: 'Request a consultation. We confirm scope and timeline on a short call, then build your site. Most sites are live within days of receiving your content.',
   },
   {
     q: 'Do I need to be a Virtuoso advisor?',
@@ -20,7 +20,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'How quickly is the site live?',
-    a: 'Within days of your card going on file. We build and brand it — palette, typography, suppliers, journal categories, custom domain — and hand you a live site with a portal for edits.',
+    a: 'Within days of receiving your content. We build and brand it — palette, typography, suppliers, journal categories, custom domain — and hand you a live site with a portal for edits.',
   },
   {
     q: 'Can I use my own domain?',
@@ -28,7 +28,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'Who writes the journal?',
-    a: 'You can publish your own pieces from the portal editor on every plan. The operator-produced curated stream — weekly articles across destinations, hotels, wellness, and wine — is an optional editorial module.',
+    a: 'You can publish your own pieces from the portal editor on every site. The operator-produced curated stream — weekly articles across destinations, hotels, wellness, and wine — is an optional editorial module.',
   },
   {
     q: 'What is the difference between this and Squarespace or Wix?',

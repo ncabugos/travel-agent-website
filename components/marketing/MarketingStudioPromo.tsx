@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 /**
  * Homepage cross-sell for /studio — the done-for-you marketing service.
- * Sits after the platform pricing tiers: "here's the site, and here's who
+ * Sits after the platform features: "here's the site, and here's who
  * can run the marketing on top of it." Dark charcoal ground with the same
  * purple (action) + gold (editorial) accent pairing as /studio itself, kept
  * compact and static (no animation) since it's a teaser, not the sales page.
@@ -71,15 +71,14 @@ export function MarketingStudioPromo() {
             </h2>
             <p style={{ fontSize: '16.5px', lineHeight: 1.7, color: 'rgba(255,255,255,0.72)', margin: '0 0 28px', maxWidth: '480px' }}>
               Your site is the foundation. Studio is the team behind it — social, content, email, and
-              design, delivered every month at a flat rate, so your presence stays current without you
-              lifting a finger.
+              design, delivered every month, so your presence stays current without you lifting a finger.
             </p>
             <Link
               href="/studio"
               className="eah-studio-cta eah-focus-ring"
               style={{
                 // Secondary action — outline, not purple. Purple is reserved
-                // for the one primary CTA on the homepage (begin the 30 days).
+                // for the one primary CTA on the homepage (request a consultation).
                 display: 'inline-block',
                 padding: '14px 30px',
                 borderRadius: '10px',

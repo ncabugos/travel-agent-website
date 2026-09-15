@@ -10,8 +10,8 @@ import { CHARCOAL, DIVIDER, GOLD, INK, WARM_GRAY_DARK } from './tokens'
 const STEPS = [
   {
     n: '01',
-    title: 'Begin your 30 days',
-    body: 'Card on file, two minutes. Nothing is billed until day 31, and you can cancel from the portal at any point before then.',
+    title: 'Request a consultation',
+    body: 'A short call to confirm scope and timeline. Then you send your content: logo, photos, bio, and the suppliers you work with.',
   },
   {
     n: '02',

@@ -36,7 +36,6 @@ export const PRIMARY_CTA_STYLE: CSSProperties = {
 }
 
 /** House CTA copy — first person, benefit-led, one phrase everywhere. */
-export const PRIMARY_CTA_LABEL = 'Begin my 30 days'
+export const PRIMARY_CTA_LABEL = 'Request a consultation'
 
 /** Click-trigger line that sits under every primary CTA. */
-export const CTA_MICROCOPY = 'With our compliments · $79/mo from day 31 · no setup fee · cancel anytime'
