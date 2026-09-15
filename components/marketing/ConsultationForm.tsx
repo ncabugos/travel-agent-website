@@ -6,8 +6,12 @@ import {
   type ConsultationFormState,
 } from '@/lib/actions/consultation'
 
-const serif = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-const sans = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+const serif = 'var(--font-inter-tight), var(--font-inter), system-ui, sans-serif'
+const sans = 'var(--font-inter), system-ui, -apple-system, sans-serif'
+const CHARCOAL = '#1A1715'
+const DIVIDER = '#E8E4DC'
+const WARM_GRAY = '#8A8279'
+const WARM_GRAY_DARK = '#5F5850'
 
 type TierValue = 'starter' | 'growth' | 'custom' | 'agency'
 type BillingCycle = 'monthly' | 'annual'
@@ -93,48 +97,13 @@ export function ConsultationForm({
 
   if (state.success) {
     return (
-      <div
-        style={{
-          textAlign: 'center',
-          padding: '80px 40px',
-          border: '1px solid #e5e7eb',
-          background: '#fff',
-        }}
-      >
-        <div
-          style={{
-            fontFamily: serif,
-            fontSize: '40px',
-            color: '#7c3aed',
-            marginBottom: '24px',
-          }}
-        >
-          ◇
-        </div>
-        <h2
-          style={{
-            fontFamily: serif,
-            fontSize: '28px',
-            fontWeight: 700,
-            letterSpacing: '-0.02em',
-            color: '#111',
-            marginBottom: '16px',
-          }}
-        >
-          Thank You
+      <div style={{ padding: '8px 0' }}>
+        <div aria-hidden style={{ width: '40px', height: '1px', background: '#B49A5A', marginBottom: '24px' }} />
+        <h2 style={{ fontFamily: serif, fontSize: '32px', fontWeight: 400, letterSpacing: '-0.025em', color: CHARCOAL, margin: '0 0 12px' }}>
+          Thank you.
         </h2>
-        <p
-          style={{
-            fontFamily: sans,
-            fontSize: '15px',
-            color: '#6b7280',
-            lineHeight: '1.8',
-            maxWidth: '440px',
-            margin: '0 auto',
-          }}
-        >
-          We&apos;ve received your consultation request. A member of our team
-          will be in touch within one business day to schedule a call.
+        <p style={{ fontFamily: sans, fontSize: '16px', color: WARM_GRAY_DARK, lineHeight: 1.6, maxWidth: '48ch', margin: 0 }}>
+          We have your consultation request. A member of our team will be in touch within one business day to schedule a call.
         </p>
       </div>
     )
@@ -144,20 +113,11 @@ export function ConsultationForm({
   const showCustom = tier === 'custom'
 
   return (
-    <form action={formAction} style={{ background: '#fff', padding: '40px', border: '1px solid #e5e7eb' }}>
+    <form action={formAction} style={{ fontFamily: sans }}>
       {state.error && (
-        <div
-          style={{
-            padding: '14px 20px',
-            marginBottom: '24px',
-            background: '#FEF3CD',
-            border: '1px solid #F5C842',
-          }}
-        >
-          <p style={{ fontFamily: sans, fontSize: '13px', color: '#7A5C00', margin: 0 }}>
-            {state.error}
-          </p>
-        </div>
+        <p style={{ fontFamily: sans, fontSize: '14px', color: '#991b1b', margin: '0 0 24px', paddingBottom: '16px', borderBottom: `1px solid ${DIVIDER}` }}>
+          {state.error}
+        </p>
       )}
 
       {/* ── Tier selection ─────────────────────────────────────────── */}
@@ -185,13 +145,14 @@ export function ConsultationForm({
               alignItems: 'center',
               gap: '10px',
               padding: '14px 16px',
-              border: tier === t.value ? '1px solid #7c3aed' : '1px solid #e5e7eb',
-              background: tier === t.value ? 'rgba(124, 58, 237, 0.06)' : '#fff',
+              border: tier === t.value ? `1px solid ${CHARCOAL}` : `1px solid ${DIVIDER}`,
+              background: tier === t.value ? '#FAFAF5' : '#fff',
+              borderRadius: '2px',
               cursor: 'pointer',
               transition: 'border-color 0.2s ease, background 0.2s ease',
               fontFamily: sans,
               fontSize: '14px',
-              color: '#111',
+              color: CHARCOAL,
             }}
           >
             <input
@@ -200,7 +161,7 @@ export function ConsultationForm({
               value={t.value}
               checked={tier === t.value}
               onChange={() => setTier(t.value)}
-              style={{ accentColor: '#7c3aed' }}
+              style={{ accentColor: CHARCOAL }}
             />
             {t.label}
           </label>
@@ -210,12 +171,12 @@ export function ConsultationForm({
       {/* ── Contact ─────────────────────────────────────────────────── */}
       <SectionLabel>Your contact details</SectionLabel>
       <Grid>
-        <Field label="First Name *" name="first_name" error={state.fieldErrors?.first_name} />
-        <Field label="Last Name *" name="last_name" error={state.fieldErrors?.last_name} />
+        <Field label="First name *" name="first_name" error={state.fieldErrors?.first_name} />
+        <Field label="Last name *" name="last_name" error={state.fieldErrors?.last_name} />
         <Field label="Email *" name="email" type="email" error={state.fieldErrors?.email} />
         <Field label="Phone" name="phone" type="tel" />
         <FullRow>
-          <Field label="Role / Title" name="role_title" placeholder="e.g. Owner, Principal Advisor" />
+          <Field label="Role or title" name="role_title" placeholder="e.g. Owner, Principal Advisor" />
         </FullRow>
       </Grid>
 
@@ -226,34 +187,34 @@ export function ConsultationForm({
           <Grid>
             <FullRow>
               <Field
-                label="Agency Name *"
+                label="Agency name *"
                 name="agency_name"
                 error={state.fieldErrors?.agency_name}
               />
             </FullRow>
-            <Field label="Agency Website" name="agency_website" placeholder="https://" />
+            <Field label="Agency website" name="agency_website" placeholder="https://" />
             <Field
-              label="Number of Advisors *"
+              label="Number of advisors *"
               name="num_advisors"
               type="number"
               error={state.fieldErrors?.num_advisors}
               placeholder="e.g. 8"
             />
             <SelectField
-              label="Host Agency / Consortium"
+              label="Host agency or consortium"
               name="host_affiliation"
               options={HOST_AFFILIATIONS}
             />
-            <Field label="Years in Business" name="years_in_business" type="number" />
+            <Field label="Years in business" name="years_in_business" type="number" />
             <FullRow>
-              <SectionSubLabel>Business Address</SectionSubLabel>
+              <SectionSubLabel>Business address</SectionSubLabel>
             </FullRow>
             <FullRow>
               <Field label="Street" name="agency_street" />
             </FullRow>
             <Field label="City" name="agency_city" />
-            <Field label="State / Region" name="agency_region" />
-            <Field label="Postal Code" name="agency_postal" />
+            <Field label="State or region" name="agency_region" />
+            <Field label="Postal code" name="agency_postal" />
             <Field label="Country" name="agency_country" />
 
             <FullRow>
@@ -274,8 +235,8 @@ export function ConsultationForm({
                       alignItems: 'center',
                       gap: '8px',
                       fontFamily: sans,
-                      fontSize: '13px',
-                      color: '#111',
+                      fontSize: '14px',
+                      color: CHARCOAL,
                       cursor: 'pointer',
                     }}
                   >
@@ -283,7 +244,7 @@ export function ConsultationForm({
                       type="checkbox"
                       name="specialties"
                       value={s}
-                      style={{ accentColor: '#7c3aed' }}
+                      style={{ accentColor: CHARCOAL }}
                     />
                     {s}
                   </label>
@@ -293,7 +254,7 @@ export function ConsultationForm({
 
             <FullRow>
               <Field
-                label="Existing Website URL (if migrating)"
+                label="Existing website (if migrating)"
                 name="existing_website"
                 placeholder="https://"
               />
@@ -303,7 +264,7 @@ export function ConsultationForm({
             <YesNoField label="Want individual advisor pages?" name="wants_advisor_pages" />
             <FullRow>
               <YesNoField
-                label="Need onboarding & training for the advisor team?"
+                label="Need onboarding and training for the advisor team?"
                 name="wants_team_training"
               />
             </FullRow>
@@ -318,28 +279,28 @@ export function ConsultationForm({
           <Grid>
             <FullRow>
               <Field
-                label="Existing Website URL (if any)"
+                label="Existing website (if any)"
                 name="existing_website"
                 placeholder="https://"
               />
             </FullRow>
             <FullRow>
               <TextAreaField
-                label="Design References / Inspiration"
+                label="Design references"
                 name="design_references"
                 placeholder="Links to sites you love, or a description of the feel you're after."
               />
             </FullRow>
             <FullRow>
               <TextAreaField
-                label="Additional Pages Desired"
+                label="Additional pages"
                 name="additional_pages"
                 placeholder="e.g. Press, Team, Case Studies, Destination deep-dives"
               />
             </FullRow>
             <FullRow>
               <TextAreaField
-                label="Integrations Needed"
+                label="Integrations needed"
                 name="integrations_needed"
                 placeholder="e.g. CRM, booking engine, Virtuoso, newsletter platform"
               />
@@ -351,7 +312,7 @@ export function ConsultationForm({
       {/* ── General ──────────────────────────────────────────────────── */}
       <SectionLabel style={{ marginTop: '40px' }}>A few more details</SectionLabel>
       <Grid>
-        <SelectField label="Ideal Launch Timeline" name="timeline" options={TIMELINES} />
+        <SelectField label="Ideal launch timeline" name="timeline" options={TIMELINES} />
         <SelectField label="How did you hear about us?" name="heard_from" options={HEARD_FROM} />
         <FullRow>
           <TextAreaField
@@ -368,22 +329,21 @@ export function ConsultationForm({
           disabled={isPending}
           style={{
             fontFamily: sans,
-            fontSize: '13px',
-            fontWeight: 600,
-            letterSpacing: '0.04em',
+            fontSize: '15px',
+            fontWeight: 500,
             color: '#fff',
-            background: isPending
-              ? 'linear-gradient(135deg, #a78bfa, #c4b5fd)'
-              : 'linear-gradient(135deg, #7c3aed, #a78bfa)',
-            border: 'none',
-            borderRadius: '10px',
-            padding: '14px 32px',
+            background: '#7C3AED',
+            border: '1px solid transparent',
+            borderRadius: '2px',
+            minHeight: '52px',
+            padding: '0 28px',
             cursor: isPending ? 'not-allowed' : 'pointer',
-            boxShadow: '0 1px 2px rgba(124,58,237,0.25)',
-            transition: 'background 0.3s ease, transform 0.15s ease',
+            opacity: isPending ? 0.6 : 1,
+            transition: 'background-color 0.2s ease',
           }}
+          className="eah-cta-primary"
         >
-          {isPending ? 'Sending…' : 'Schedule a Consultation'}
+          {isPending ? 'Sending' : 'Schedule a consultation'}
         </button>
       </div>
 
@@ -431,13 +391,14 @@ function SectionLabel({
     <div
       style={{
         fontFamily: sans,
-        fontSize: '10px',
-        letterSpacing: '0.3em',
+        fontSize: '11px',
+        fontWeight: 500,
+        letterSpacing: '0.14em',
         textTransform: 'uppercase',
-        color: '#7c3aed',
-        marginBottom: '20px',
+        color: WARM_GRAY,
+        marginBottom: '24px',
         paddingBottom: '12px',
-        borderBottom: '1px solid #e5e7eb',
+        borderBottom: `1px solid ${DIVIDER}`,
         ...style,
       }}
     >
@@ -451,10 +412,9 @@ function SectionSubLabel({ children }: { children: React.ReactNode }) {
     <div
       style={{
         fontFamily: sans,
-        fontSize: '11px',
-        letterSpacing: '0.2em',
-        textTransform: 'uppercase',
-        color: '#6b7280',
+        fontSize: '13px',
+        fontWeight: 500,
+        color: CHARCOAL,
         marginBottom: '12px',
         marginTop: '8px',
       }}
@@ -467,10 +427,9 @@ function SectionSubLabel({ children }: { children: React.ReactNode }) {
 const labelStyle: React.CSSProperties = {
   display: 'block',
   fontFamily: sans,
-  fontSize: '9px',
-  letterSpacing: '0.25em',
-  textTransform: 'uppercase',
-  color: '#6b7280',
+  fontSize: '13px',
+  fontWeight: 500,
+  color: CHARCOAL,
   marginBottom: '8px',
 }
 
@@ -478,13 +437,14 @@ const inputStyle: React.CSSProperties = {
   display: 'block',
   width: '100%',
   fontFamily: sans,
-  fontSize: '14px',
-  color: '#111',
-  background: 'transparent',
-  border: 'none',
-  borderBottom: '1px solid #e5e7eb',
-  padding: '10px 0',
+  fontSize: '15px',
+  color: CHARCOAL,
+  background: '#fff',
+  border: `1px solid ${DIVIDER}`,
+  borderRadius: '2px',
+  padding: '12px 14px',
   outline: 'none',
+  boxSizing: 'border-box',
   transition: 'border-color 0.2s ease',
 }
 
@@ -508,12 +468,12 @@ function Field({
         name={name}
         type={type}
         placeholder={placeholder}
-        style={{ ...inputStyle, borderColor: error ? '#C0392B' : '#e5e7eb' }}
+        style={{ ...inputStyle, borderColor: error ? '#991b1b' : DIVIDER }}
         onFocus={(e) => {
-          e.target.style.borderColor = '#7c3aed'
+          e.target.style.borderColor = CHARCOAL
         }}
         onBlur={(e) => {
-          e.target.style.borderColor = error ? '#C0392B' : '#e5e7eb'
+          e.target.style.borderColor = error ? '#991b1b' : DIVIDER
         }}
       />
       {error && (
@@ -521,7 +481,7 @@ function Field({
           style={{
             fontFamily: sans,
             fontSize: '11px',
-            color: '#C0392B',
+            color: '#991b1b',
             marginTop: '4px',
           }}
         >
@@ -552,8 +512,8 @@ function SelectField({
           cursor: 'pointer',
           paddingRight: '20px',
         }}
-        onFocus={(e) => (e.target.style.borderColor = '#7c3aed')}
-        onBlur={(e) => (e.target.style.borderColor = '#e5e7eb')}
+        onFocus={(e) => (e.target.style.borderColor = CHARCOAL)}
+        onBlur={(e) => (e.target.style.borderColor = DIVIDER)}
         defaultValue=""
       >
         {options.map((opt, i) => (
@@ -583,8 +543,8 @@ function TextAreaField({
         placeholder={placeholder}
         rows={4}
         style={{ ...inputStyle, resize: 'vertical', minHeight: '96px' }}
-        onFocus={(e) => (e.target.style.borderColor = '#7c3aed')}
-        onBlur={(e) => (e.target.style.borderColor = '#e5e7eb')}
+        onFocus={(e) => (e.target.style.borderColor = CHARCOAL)}
+        onBlur={(e) => (e.target.style.borderColor = DIVIDER)}
       />
     </div>
   )
@@ -603,8 +563,8 @@ function YesNoField({ label, name }: { label: string; name: string }) {
               alignItems: 'center',
               gap: '6px',
               fontFamily: sans,
-              fontSize: '13px',
-              color: '#111',
+              fontSize: '14px',
+              color: CHARCOAL,
               cursor: 'pointer',
               textTransform: 'capitalize',
             }}
@@ -613,7 +573,7 @@ function YesNoField({ label, name }: { label: string; name: string }) {
               type="radio"
               name={name}
               value={v}
-              style={{ accentColor: '#7c3aed' }}
+              style={{ accentColor: CHARCOAL }}
             />
             {v}
           </label>

@@ -349,3 +349,11 @@ notification). Test user removed.
 - [x] Verified: tsc, eslint (only pre-existing Studio/Support findings), 1440 and 375 views, no forbidden phrases, all links resolve
 - [ ] Operator sign-off on copy and layout, then commit
 - [ ] Follow-up: restyle /studio, /templates, /schedule-consultation, /insights to the same system
+
+## 2026-09-15 — System extended to Studio, Templates, Consultation, brand guide, emails
+
+- [x] /studio, /templates, /schedule-consultation restyled (hairline lists, square photos, flat purple CTA, 2px inputs)
+- [x] brand/EAH_Brand_Style_Guide.html rewritten in the new system (principles, type, color, shape, buttons, imagery, email, downloads)
+- [x] Four Supabase auth templates on one skeleton, pushed live; all Resend emails on one shell via renderBrandedEmail; scripts/preview-emails.ts renders the set to scratch/emails
+- [x] Verified: tsc, eslint (StudioServices animation-hook findings are pre-existing), style sweeps on all three pages, email renders in headless Chrome
+- [ ] Follow-up: /insights, /support, and legal pages still use older inner styling inside the new nav and footer

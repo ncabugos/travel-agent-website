@@ -1,12 +1,11 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { ConsultationForm } from '@/components/marketing/ConsultationForm'
+import { MarketingNav } from '@/components/marketing/MarketingNav'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
+import { ConsultationForm } from '@/components/marketing/ConsultationForm'
+import { BODY_FONT, BODY_STYLE, CHARCOAL, DISPLAY_FONT, LABEL_STYLE } from '@/components/marketing/tokens'
 
 export const metadata = {
   title: 'Schedule a Consultation — Elite Advisor Hub',
-  description:
-    'Talk to our team about a custom-designed advisor site or multi-advisor agency build.',
+  description: 'Talk to our team about a custom-branded advisor site or a multi-advisor agency build.',
 }
 
 const ALLOWED_TIERS = ['starter', 'growth', 'custom', 'agency'] as const
@@ -25,107 +24,28 @@ export default async function ScheduleConsultationPage({ searchParams }: PagePro
   const initialBilling: BillingCycle = billing === 'annual' ? 'annual' : 'monthly'
 
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: '#fafafa',
-        color: '#111',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-      }}
-    >
-      {/* Lightweight header — matches marketing homepage */}
-      <nav
-        style={{
-          borderBottom: '1px solid rgba(0,0,0,0.06)',
-          padding: '0 40px',
-          background: 'rgba(255,255,255,0.95)',
-          backdropFilter: 'blur(12px)',
-        }}
-      >
-        <div
-          style={{
-            maxWidth: '1200px',
-            margin: '0 auto',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            height: '64px',
-          }}
-        >
-          <Link
-            href="/"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              textDecoration: 'none',
-              color: '#111',
-            }}
-          >
-            <Image
-              src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
-              alt="Elite Advisor Hub"
-              width={800}
-              height={134}
-              priority
-              style={{ height: '26px', width: 'auto', display: 'block' }}
-            />
-          </Link>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-            <Link
-              href="/"
-              style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none', fontWeight: 500 }}
-            >
-              ← Back to home
-            </Link>
+    <div className="eah-marketing" style={{ fontFamily: BODY_FONT, color: CHARCOAL, background: '#fff', minHeight: '100vh' }}>
+      <MarketingNav minimal />
+      <main>
+        <section style={{ padding: '176px 0 64px' }}>
+          <div className="eah-container">
+            <p style={{ ...LABEL_STYLE, marginBottom: '24px' }}>Consultation</p>
+            <h1 style={{ fontFamily: DISPLAY_FONT, fontSize: 'clamp(40px, 5.6vw, 80px)', fontWeight: 300, letterSpacing: '-0.035em', lineHeight: 1.0, margin: '0 0 24px', maxWidth: '14ch' }}>
+              Let us talk about your site.
+            </h1>
+            <p style={{ ...BODY_STYLE, fontSize: '19px', maxWidth: '52ch' }}>
+              Tell us a little about you and what you are building. We reply within one business day to schedule a call.
+            </p>
           </div>
-        </div>
-      </nav>
-
-      <main style={{ maxWidth: '860px', margin: '0 auto', padding: '80px 24px 120px' }}>
-        <header style={{ textAlign: 'center', marginBottom: '56px' }}>
-          <div
-            style={{
-              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-              fontSize: '10px',
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              color: '#7c3aed',
-              marginBottom: '20px',
-            }}
-          >
-            Schedule a Consultation
+        </section>
+        <section style={{ padding: '0 0 120px' }}>
+          <div className="eah-container">
+            <div style={{ maxWidth: '880px' }}>
+              <ConsultationForm initialTier={initialTier} initialBilling={initialBilling} />
+            </div>
           </div>
-          <h1
-            style={{
-              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-              fontSize: 'clamp(36px, 5vw, 52px)',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-              lineHeight: 1.15,
-              margin: '0 0 20px',
-              color: '#111',
-            }}
-          >
-            Let&apos;s talk about your site.
-          </h1>
-          <p
-            style={{
-              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-              fontSize: '16px',
-              lineHeight: 1.7,
-              color: '#6b7280',
-              maxWidth: '560px',
-              margin: '0 auto',
-            }}
-          >
-            Tell us a little about you and what you&apos;re building. A member of our
-            team will reach out within one business day to schedule a call.
-          </p>
-        </header>
-
-        <ConsultationForm initialTier={initialTier} initialBilling={initialBilling} />
+        </section>
       </main>
-
       <MarketingFooter />
     </div>
   )

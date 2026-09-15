@@ -96,7 +96,7 @@ function SocialMock() {
   const chip = easeOut(ramp(t, 3300, 3900))
 
   return (
-    <div ref={ref} style={{ width: '248px', borderRadius: '34px', padding: '10px', background: '#0d0b09', boxShadow: '0 30px 60px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(180,154,90,0.18)' }}>
+    <div ref={ref} style={{ width: '248px', borderRadius: '34px', padding: '10px', background: '#0d0b09', boxShadow: '0 0 0 1px rgba(255,255,255,0.12)' }}>
       <div style={{ borderRadius: '26px', overflow: 'hidden', background: '#fff', position: 'relative' }}>
         {/* app bar */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 14px 8px' }}>
@@ -168,7 +168,7 @@ function ContentMock() {
   const feedOp = ramp(t, 4700, 5100)
 
   return (
-    <div ref={ref} style={{ width: '330px', borderRadius: '16px', overflow: 'hidden', background: '#fff', position: 'relative', minHeight: '286px', boxShadow: '0 30px 60px -24px rgba(0,0,0,0.55), 0 0 0 1px rgba(180,154,90,0.16)' }}>
+    <div ref={ref} style={{ width: '330px', borderRadius: '16px', overflow: 'hidden', background: '#fff', position: 'relative', minHeight: '286px', boxShadow: '0 0 0 1px rgba(255,255,255,0.12)' }}>
       <Chrome url="portal.eliteadvisorhub.com / journal" />
       {/* editor */}
       <div style={{ padding: '16px 18px', opacity: editorOp }}>
@@ -231,7 +231,7 @@ function AiMock() {
   const verified = easeOut(ramp(t, 5600, 6100))
 
   return (
-    <div ref={ref} style={{ width: '340px', borderRadius: '16px', overflow: 'hidden', background: '#fff', boxShadow: '0 30px 60px -24px rgba(0,0,0,0.55), 0 0 0 1px rgba(180,154,90,0.16)' }}>
+    <div ref={ref} style={{ width: '340px', borderRadius: '16px', overflow: 'hidden', background: '#fff', boxShadow: '0 0 0 1px rgba(255,255,255,0.12)' }}>
       {/* engine tabs */}
       <div style={{ display: 'flex', gap: '4px', padding: '10px 12px 0', borderBottom: '1px solid #efece6' }}>
         {ENGINES.map((e, i) => (
@@ -294,7 +294,7 @@ function EmailMock() {
   const statsOp = ramp(t, 2800, 3200)
 
   return (
-    <div ref={ref} style={{ width: '330px', borderRadius: '16px', overflow: 'hidden', background: '#fff', boxShadow: '0 30px 60px -24px rgba(0,0,0,0.55), 0 0 0 1px rgba(180,154,90,0.16)' }}>
+    <div ref={ref} style={{ width: '330px', borderRadius: '16px', overflow: 'hidden', background: '#fff', boxShadow: '0 0 0 1px rgba(255,255,255,0.12)' }}>
       <Chrome url="Campaign · This month in slow travel" />
       <div style={{ padding: '16px 18px' }}>
         <div style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.12em', color: GOLD, textTransform: 'uppercase' }}>Newsletter</div>
@@ -341,7 +341,7 @@ function DesignMock() {
   const chip = easeOut(ramp(t, 2000, 2500))
 
   return (
-    <div ref={ref} style={{ width: '330px', borderRadius: '16px', overflow: 'hidden', background: '#fff', boxShadow: '0 30px 60px -24px rgba(0,0,0,0.55), 0 0 0 1px rgba(180,154,90,0.16)' }}>
+    <div ref={ref} style={{ width: '330px', borderRadius: '16px', overflow: 'hidden', background: '#fff', boxShadow: '0 0 0 1px rgba(255,255,255,0.12)' }}>
       <Chrome url="Studio · Brand assets" />
       <div style={{ padding: '18px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
@@ -380,36 +380,36 @@ const SERVICES: Service[] = [
   {
     eyebrow: 'Social media',
     title: 'A feed that never goes quiet',
-    desc: 'We plan, design, and schedule your social — so the grid stays alive whether you are at your desk or on a site inspection in Sicily.',
-    bullets: ['1–2 to all platforms, on a calendar you approve', 'Stories, reels, and short-form video', 'Posted and scheduled for you — nothing to remember'],
+    desc: 'We plan, design, and schedule your social, so the grid stays alive whether you are at your desk or on a site inspection in Sicily.',
+    bullets: ['One to two platforms or all of them, on a calendar you approve', 'Stories, reels, and short-form video', 'Posted and scheduled for you, nothing to remember'],
     visual: <SocialMock />,
   },
   {
-    eyebrow: 'Blog & GEO content',
+    eyebrow: 'Blog and GEO content',
     title: 'Journals written to be quoted',
-    desc: 'Original articles on your specialty, structured so AI search engines cite you by name — not just indexed, but recommended.',
-    bullets: ['1 to 4+ journal articles a month', 'Written for AI Overviews, ChatGPT & Perplexity', 'Full editorial calendar on Full Service'],
+    desc: 'Original articles on your specialty, structured so AI search engines cite you by name, recommended rather than just indexed.',
+    bullets: ['1 to 4+ journal articles a month', 'Written for AI Overviews, ChatGPT, and Perplexity', 'Full editorial calendar on Full Service'],
     visual: <ContentMock />,
   },
   {
     eyebrow: 'AI visibility',
     title: 'Be the answer, and be right',
-    desc: 'We track what ChatGPT, Perplexity, and Google AI say about you across engines — and correct the record when they get it wrong.',
+    desc: 'We track what ChatGPT, Perplexity, and Google AI say about you across engines, and correct the record when they get it wrong.',
     bullets: ['See how every major engine describes you', 'Fix outdated or inaccurate answers', 'Monthly multi-engine tracking on Full Service'],
     visual: <AiMock />,
   },
   {
     eyebrow: 'Email marketing',
     title: 'Stay in the inbox, not just the feed',
-    desc: 'Newsletters, campaigns, and automated sequences that keep past clients booking and new leads warming — measured, not guessed.',
-    bullets: ['Monthly newsletter your clients open', 'Campaigns for launches and offers', 'Automated welcome & re-engagement sequences'],
+    desc: 'Newsletters, campaigns, and automated sequences that keep past clients booking and new leads warming, measured rather than guessed.',
+    bullets: ['Monthly newsletter your clients open', 'Campaigns for launches and offers', 'Automated welcome and re-engagement sequences'],
     visual: <EmailMock />,
   },
   {
-    eyebrow: 'Design & creative',
+    eyebrow: 'Design and creative',
     title: 'Everything on-brand, on demand',
-    desc: 'Submit a request, get it back fast — social graphics, proposal decks, light motion, and brand work, all in your visual language.',
-    bullets: ['Graphics, motion, proposal & pitch decks', 'Brand work and richer motion on Full Service', 'Unlimited revisions until it is right'],
+    desc: 'Submit a request and get it back fast: social graphics, proposal decks, light motion, and brand work, all in your visual language.',
+    bullets: ['Graphics, motion, proposal and pitch decks', 'Brand work and richer motion on Full Service', 'Unlimited revisions until it is right'],
     visual: <DesignMock />,
   },
 ]
@@ -422,23 +422,22 @@ export function StudioServices() {
       style={{
         position: 'relative',
         overflow: 'hidden',
-        padding: '112px 24px',
-        background: 'radial-gradient(1200px 620px at 50% -12%, #241f18 0%, #17130f 55%, #120f0a 100%)',
+        padding: '120px 24px',
+        background: '#0B0A09',
         scrollMarginTop: '80px',
       }}
     >
-      <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'radial-gradient(560px 300px at 82% 12%, rgba(180,154,90,0.12), transparent 70%), radial-gradient(620px 340px at 12% 88%, rgba(124,58,237,0.10), transparent 70%)', pointerEvents: 'none' }} />
 
       <div style={{ position: 'relative', maxWidth: '1140px', margin: '0 auto' }}>
         <div style={{ maxWidth: '680px', marginBottom: '24px' }}>
-          <span style={{ display: 'inline-block', fontSize: '12px', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: GOLD_LIGHT, marginBottom: '18px' }}>
+          <p style={{ margin: '0 0 20px', fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)' }}>
             What we handle
-          </span>
-          <h2 style={{ fontSize: 'clamp(30px, 4vw, 46px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.08, margin: '0 0 18px', color: '#fff' }}>
+          </p>
+          <h2 style={{ fontSize: 'clamp(32px, 4vw, 56px)', fontWeight: 400, letterSpacing: '-0.03em', lineHeight: 1.05, margin: '0 0 20px', color: '#fff' }}>
             Your whole marketing engine, run for you.
           </h2>
           <p style={{ fontSize: '17px', lineHeight: 1.65, color: 'rgba(255,255,255,0.72)', margin: 0 }}>
-            Not templates and a login. Real work, delivered — social, content, email, design, and the AI-search
+            Not templates and a login. Real work, delivered: social, content, email, design, and the AI search
             visibility that decides whether a client ever finds you. Here is what that looks like.
           </p>
         </div>
@@ -446,19 +445,19 @@ export function StudioServices() {
         {SERVICES.map((s, i) => (
           <div key={s.eyebrow} className={`studio-svc-row${i % 2 === 1 ? ' reverse' : ''}`}>
             <div className="svc-text">
-              <span style={{ display: 'inline-block', fontSize: '11px', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: GOLD, marginBottom: '14px' }}>
+              <span style={{ display: 'inline-block', fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', marginBottom: '14px' }}>
                 {s.eyebrow}
               </span>
-              <h3 style={{ fontSize: 'clamp(24px, 2.6vw, 32px)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.14, margin: '0 0 14px', color: '#fff' }}>
+              <h3 style={{ fontSize: 'clamp(24px, 2.6vw, 32px)', fontWeight: 400, letterSpacing: '-0.02em', lineHeight: 1.14, margin: '0 0 14px', color: '#fff' }}>
                 {s.title}
               </h3>
               <p style={{ fontSize: '16px', lineHeight: 1.7, color: 'rgba(255,255,255,0.72)', margin: '0 0 20px' }}>
                 {s.desc}
               </p>
-              <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '11px' }}>
+              <ul style={{ listStyle: 'none', margin: 0, padding: 0, borderTop: '1px solid rgba(255,255,255,0.14)' }}>
                 {s.bullets.map((b) => (
-                  <li key={b} style={{ display: 'flex', gap: '10px', fontSize: '14.5px', color: 'rgba(255,255,255,0.86)', lineHeight: 1.5 }}>
-                    <span style={{ color: GOLD_LIGHT, flexShrink: 0, fontWeight: 700 }}>✓</span> {b}
+                  <li key={b} style={{ padding: '11px 0', borderBottom: '1px solid rgba(255,255,255,0.14)', fontSize: '15px', color: 'rgba(255,255,255,0.86)', lineHeight: 1.5 }}>
+                    {b}
                   </li>
                 ))}
               </ul>
@@ -467,11 +466,8 @@ export function StudioServices() {
           </div>
         ))}
 
-        <div style={{ textAlign: 'center', marginTop: '48px' }}>
-          <a
-            href="#plans"
-            style={{ display: 'inline-block', padding: '14px 32px', borderRadius: '10px', background: 'linear-gradient(135deg, #7c3aed, #a78bfa)', color: '#fff', fontSize: '15px', fontWeight: 600, textDecoration: 'none', boxShadow: '0 4px 24px rgba(124,58,237,0.35)' }}
-          >
+        <div style={{ marginTop: '56px' }}>
+          <a href="#plans" className="eah-cta-secondary" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minHeight: '52px', padding: '0 28px', background: 'transparent', color: '#fff', borderRadius: '2px', fontSize: '15px', fontWeight: 500, textDecoration: 'none', border: '1px solid currentColor' }}>
             See the plans
           </a>
         </div>
@@ -484,7 +480,7 @@ export function StudioServices() {
           gap: 56px;
           align-items: center;
           padding: 46px 0;
-          border-top: 1px solid rgba(255,255,255,0.08);
+          border-top: 1px solid rgba(255,255,255,0.14);
         }
         .studio-svc-row.reverse .svc-text { order: 2; }
         .studio-svc-row.reverse .svc-visual { order: 1; }
