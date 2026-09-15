@@ -1,64 +1,38 @@
-'use client'
-
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import type { SupplierPromo } from '@/lib/supplier-promos'
+import { TopBar } from '@/components/dashboard/TopBar'
+import { PageContent } from '@/components/dashboard/DashboardShell'
+import { buttonStyles } from '@/components/dashboard/FormField'
+import { listSupplierPromos, type SupplierPromo } from '@/lib/supplier-promos'
 
-export default function AdminPromosListPage() {
-  const [promos, setPromos] = useState<SupplierPromo[]>([])
-  const [loading, setLoading] = useState(true)
+export const dynamic = 'force-dynamic'
 
-  useEffect(() => {
-    fetch('/api/admin/promos')
-      .then(r => r.json())
-      .then(data => {
-        setPromos(data.promos ?? [])
-        setLoading(false)
-      })
-      .catch(() => setLoading(false))
-  }, [])
-
+export default async function AdminPromosListPage() {
+  const promos = await listSupplierPromos()
   const hotels = promos.filter(p => p.supplier_type === 'hotel_program')
   const cruises = promos.filter(p => p.supplier_type === 'cruise_line')
 
   return (
-    <div style={{ padding: '24px 32px' }}>
-      <div style={{
-        display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between',
-        marginBottom: 20, gap: 16,
-      }}>
-        <div>
-          <h1 style={{ fontSize: 24, fontWeight: 700, margin: '0 0 4px' }}>Promo Banners</h1>
-          <p style={{ fontSize: 13, color: '#6b7280', margin: 0 }}>
-            Per-supplier promotional banner shown on hotel and cruise detail pages across every advisor site.
-          </p>
-        </div>
-        <Link
-          href="/admin/promos/new"
-          style={{
-            padding: '10px 18px', background: '#111', color: '#fff',
-            borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: 'none',
-          }}
-        >
-          + New promo
-        </Link>
-      </div>
-
-      {loading ? (
-        <p style={{ color: '#9ca3af', fontSize: 13 }}>Loading…</p>
-      ) : (
-        <>
-          <PromoSection title="Hotel programs" promos={hotels} emptyLabel="No hotel program promos yet." />
-          <PromoSection title="Cruise lines" promos={cruises} emptyLabel="No cruise line promos yet." />
-        </>
-      )}
-    </div>
+    <>
+      <TopBar
+        title="Promo Banners"
+        subtitle="Per-supplier banner shown on hotel and cruise detail pages across every advisor site"
+        actions={
+          <Link href="/admin/promos/new" style={{ ...buttonStyles.primary, textDecoration: 'none' }}>
+            + New promo
+          </Link>
+        }
+      />
+      <PageContent>
+        <PromoSection title="Hotel programs" promos={hotels} emptyLabel="No hotel program promos yet." />
+        <PromoSection title="Cruise lines" promos={cruises} emptyLabel="No cruise line promos yet." />
+      </PageContent>
+    </>
   )
 }
 
 function PromoSection({ title, promos, emptyLabel }: { title: string; promos: SupplierPromo[]; emptyLabel: string }) {
   return (
-    <section style={{ marginTop: 32 }}>
+    <section style={{ marginBottom: 32 }}>
       <h2 style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#6b7280', margin: '0 0 12px' }}>
         {title} <span style={{ color: '#9ca3af', fontWeight: 500 }}>({promos.length})</span>
       </h2>

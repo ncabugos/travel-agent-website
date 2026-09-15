@@ -1,6 +1,9 @@
 import Link from 'next/link'
 import { getAdminPosts } from '@/lib/marketing-blog'
 import { InsightsDeleteButton } from '@/components/admin/InsightsDeleteButton'
+import { TopBar } from '@/components/dashboard/TopBar'
+import { PageContent } from '@/components/dashboard/DashboardShell'
+import { buttonStyles } from '@/components/dashboard/FormField'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,24 +13,22 @@ export default async function AdminInsightsPage() {
   const drafts = posts.filter(p => p.status === 'draft').length
 
   return (
-    <div style={{ padding: '24px 32px' }}>
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '20px', gap: 16, flexWrap: 'wrap' }}>
-        <div>
-          <h1 style={{ margin: 0, fontSize: '22px', fontWeight: 700, color: '#1a1a1a' }}>Insights — Company Blog</h1>
-          <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#6b7280' }}>
-            Articles for eliteadvisorhub.com/insights. Separate from advisor journals. {published} published · {drafts} draft{drafts !== 1 ? 's' : ''}.
-          </p>
-        </div>
-        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-          <Link href="/admin/insights/categories" style={{ fontSize: 13, color: '#374151', textDecoration: 'none', padding: '9px 16px', border: '1px solid #d1d5db', borderRadius: 8 }}>
-            Manage pillars
-          </Link>
-          <Link href="/admin/insights/new" style={{ display: 'inline-block', padding: '9px 20px', background: '#1a1a1a', color: '#fff', borderRadius: 8, textDecoration: 'none', fontSize: 13, fontWeight: 600 }}>
-            + New post
-          </Link>
-        </div>
-      </div>
-
+    <>
+      <TopBar
+        title="Insights"
+        subtitle={`Articles for eliteadvisorhub.com/insights, separate from advisor journals. ${published} published · ${drafts} draft${drafts !== 1 ? 's' : ''}`}
+        actions={
+          <>
+            <Link href="/admin/insights/categories" style={{ ...buttonStyles.secondary, textDecoration: 'none' }}>
+              Content pillars
+            </Link>
+            <Link href="/admin/insights/new" style={{ ...buttonStyles.primary, textDecoration: 'none' }}>
+              + New post
+            </Link>
+          </>
+        }
+      />
+      <PageContent>
       <div style={{ background: '#fff', borderRadius: 10, border: '1px solid #e5e7eb', overflow: 'hidden' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
@@ -71,7 +72,8 @@ export default async function AdminInsightsPage() {
           </tbody>
         </table>
       </div>
-    </div>
+      </PageContent>
+    </>
   )
 }
 

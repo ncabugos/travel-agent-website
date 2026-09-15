@@ -1,5 +1,8 @@
 import { getAllCategories } from '@/lib/blog-categories'
 import Link from 'next/link'
+import { TopBar } from '@/components/dashboard/TopBar'
+import { PageContent } from '@/components/dashboard/DashboardShell'
+import { buttonStyles } from '@/components/dashboard/FormField'
 
 export const dynamic = 'force-dynamic'
 
@@ -7,21 +10,17 @@ export default async function AdminCategoriesPage() {
   const categories = await getAllCategories()
 
   return (
-    <div style={{ padding: '24px 32px' }}>
-      {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
-        <div>
-          <h1 style={{ margin: 0, fontSize: '22px', fontWeight: 700, color: '#1a1a1a' }}>Blog Categories</h1>
-          <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#6b7280' }}>
-            Manage categories for broadcast posts that agents can opt into.
-          </p>
-        </div>
-        <Link href="/admin/categories/new" style={{ display: 'inline-block', padding: '9px 20px', background: '#1a1a1a', color: '#fff', borderRadius: '8px', textDecoration: 'none', fontSize: '13px', fontWeight: 600 }}>
-          + New Category
-        </Link>
-      </div>
-
-      {/* Table */}
+    <>
+      <TopBar
+        title="Categories"
+        subtitle="Topics for broadcast journal posts. Agents opt into the categories they want on their site."
+        actions={
+          <Link href="/admin/categories/new" style={{ ...buttonStyles.primary, textDecoration: 'none' }}>
+            + New category
+          </Link>
+        }
+      />
+      <PageContent>
       <div style={{ background: '#fff', borderRadius: '10px', border: '1px solid #e5e7eb', overflow: 'hidden' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
@@ -46,7 +45,8 @@ export default async function AdminCategoriesPage() {
           </tbody>
         </table>
       </div>
-    </div>
+      </PageContent>
+    </>
   )
 }
 

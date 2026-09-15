@@ -331,3 +331,13 @@ notification). Test user removed.
 - [x] Branded `invite.html` auth template (`type=invite`), pushed live with the push script
 - [x] Verified end to end with a plus-address: invite email → callback links auth_user_id → onboarding wizard prefilled → submit → dashboard. Test user and notification row deleted afterwards.
 - [ ] Not verified with a live admin session (admin login is password-based): open Admin > Agents > Add Agent once and send a real invite.
+
+## 2026-09-15 — Admin overhaul + pricing removal (plan: ~/.claude/plans/shiny-mapping-gosling.md)
+
+- [x] Pricing removed from public site, Studio, and emails; primary CTA is Request a consultation
+- [x] /admin/settings: account, password, alert email (platform_settings table, migration 20260914235329)
+- [x] Admin sidebar grouped (Advisors / Content / Catalog), unique icons, client-side navigation, badges
+- [x] Agents, journal, promos, pillars, request detail now server-rendered; catalog pages use standard chrome
+- [x] Middleware caches the super-admin role lookup for 5 minutes
+- [ ] Pre-existing: hydration warning in dev on every page including /admin/login (not from this work)
+- [ ] Pre-existing lint: `any` in app/admin/page.tsx and categories page; setState-in-effect in StudioInquiryForm

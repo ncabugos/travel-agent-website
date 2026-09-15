@@ -14,6 +14,12 @@ let domainCache: DomainMaps = { byDomain: new Map(), byAgentId: new Map() }
 let domainCacheUpdatedAt = 0
 const DOMAIN_CACHE_TTL = 5 * 60 * 1000 // 5 minutes
 
+// ── Super-admin role cache (email → role) ─────────────────────────────────
+// Client-side navigations and link prefetches would otherwise each cost a
+// database round trip.
+const ADMIN_ROLE_CACHE_TTL = 5 * 60 * 1000
+const adminRoleCache = new Map<string, { role: string | null; at: number }>()
+
 async function getDomainMap(): Promise<DomainMaps> {
   if (Date.now() - domainCacheUpdatedAt < DOMAIN_CACHE_TTL && domainCache.byDomain.size > 0) {
     return domainCache
@@ -188,13 +194,20 @@ export async function middleware(request: NextRequest) {
       { auth: { autoRefreshToken: false, persistSession: false } }
     )
 
-    const { data: agent } = await serviceClient
-      .from('agents')
-      .select('role')
-      .eq('email', session.user.email ?? '')
-      .single()
+    const email = session.user.email ?? ''
+    const cached = adminRoleCache.get(email)
+    let role = cached && Date.now() - cached.at < ADMIN_ROLE_CACHE_TTL ? cached.role : undefined
+    if (role === undefined) {
+      const { data: agent } = await serviceClient
+        .from('agents')
+        .select('role')
+        .eq('email', email)
+        .single()
+      role = agent?.role ?? null
+      adminRoleCache.set(email, { role: role ?? null, at: Date.now() })
+    }
 
-    if (!agent || agent.role !== 'super_admin') {
+    if (role !== 'super_admin') {
       // Not an admin — redirect to agent portal or login
       const loginUrl = new URL('/admin/login', request.url)
       loginUrl.searchParams.set('error', 'unauthorized')

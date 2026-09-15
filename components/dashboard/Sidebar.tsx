@@ -1,5 +1,6 @@
 'use client'
-import { useState, ReactNode } from 'react'
+import { useSyncExternalStore, ReactNode } from 'react'
+import Link from 'next/link'
 
 export interface SidebarItem {
   href: string
@@ -8,20 +9,65 @@ export interface SidebarItem {
   badge?: string | number
 }
 
+export interface SidebarSection {
+  /** Optional small uppercase heading above the group. */
+  label?: string
+  items: SidebarItem[]
+}
+
 interface SidebarProps {
   brand: string
   brandSub?: string
   /** Optional logo image (wordmark). If set, replaces the plain text brand. */
   brandLogoSrc?: string
-  items: SidebarItem[]
+  /** Flat list of links (agent portal). Ignored when `sections` is given. */
+  items?: SidebarItem[]
+  /** Grouped links with section headings (admin console). */
+  sections?: SidebarSection[]
   bottomItems?: SidebarItem[]
   currentPath?: string
   avatar?: { name: string; email?: string; src?: string }
   onLogout?: () => void
 }
 
-export function Sidebar({ brand, brandSub, brandLogoSrc, items, bottomItems, currentPath, avatar, onLogout }: SidebarProps) {
-  const [collapsed, setCollapsed] = useState(false)
+const COLLAPSED_KEY = 'eah-sidebar-collapsed'
+
+// Collapsed state lives in localStorage so it survives navigation. Read through
+// useSyncExternalStore: the server snapshot is always "expanded", so the first
+// client render matches the HTML and the stored value applies right after.
+const collapseListeners = new Set<() => void>()
+function subscribeCollapsed(cb: () => void) {
+  collapseListeners.add(cb)
+  window.addEventListener('storage', cb)
+  return () => { collapseListeners.delete(cb); window.removeEventListener('storage', cb) }
+}
+function readCollapsed() {
+  try { return localStorage.getItem(COLLAPSED_KEY) === '1' } catch { return false }
+}
+function writeCollapsed(value: boolean) {
+  try { localStorage.setItem(COLLAPSED_KEY, value ? '1' : '0') } catch {}
+  collapseListeners.forEach(cb => cb())
+}
+
+/**
+ * Active when the path matches exactly, or when it is a descendant of the
+ * link (so /admin/agents/123 keeps "Agents" lit). Root links like /admin only
+ * match exactly, otherwise they would always be active.
+ */
+function isActive(href: string, currentPath?: string) {
+  if (!currentPath) return false
+  if (currentPath === href) return true
+  const isRoot = href.split('/').filter(Boolean).length <= 1
+  return !isRoot && currentPath.startsWith(href + '/')
+}
+
+export function Sidebar({
+  brand, brandSub, brandLogoSrc, items, sections, bottomItems, currentPath, avatar, onLogout,
+}: SidebarProps) {
+  const collapsed = useSyncExternalStore(subscribeCollapsed, readCollapsed, () => false)
+  const toggle = () => writeCollapsed(!collapsed)
+
+  const groups: SidebarSection[] = sections ?? [{ items: items ?? [] }]
 
   return (
     <aside style={{
@@ -34,6 +80,10 @@ export function Sidebar({ brand, brandSub, brandLogoSrc, items, bottomItems, cur
       transition: 'width 0.2s ease',
       flexShrink: 0,
       overflow: 'hidden',
+      position: 'sticky',
+      top: 0,
+      alignSelf: 'flex-start',
+      height: '100vh',
     }}>
       {/* Brand */}
       <div style={{
@@ -64,7 +114,7 @@ export function Sidebar({ brand, brandSub, brandLogoSrc, items, bottomItems, cur
           </div>
         )}
         <button
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={toggle}
           style={{
             background: 'none', border: 'none', cursor: 'pointer', padding: '4px',
             color: '#9ca3af', fontSize: '16px', lineHeight: 1,
@@ -76,9 +126,26 @@ export function Sidebar({ brand, brandSub, brandLogoSrc, items, bottomItems, cur
       </div>
 
       {/* Navigation */}
-      <nav style={{ padding: '12px 8px', flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
-        {items.map((item) => (
-          <SidebarLink key={item.href} item={item} active={currentPath === item.href} collapsed={collapsed} />
+      <nav style={{ padding: '12px 8px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '2px' }}>
+        {groups.map((group, gi) => (
+          <div key={group.label ?? gi} style={{ marginTop: gi === 0 ? 0 : '14px' }}>
+            {group.label && !collapsed && (
+              <div style={{
+                padding: '0 12px 6px', fontSize: '11px', fontWeight: 600,
+                letterSpacing: '0.08em', textTransform: 'uppercase', color: '#9ca3af',
+              }}>
+                {group.label}
+              </div>
+            )}
+            {group.label && collapsed && gi !== 0 && (
+              <div style={{ height: '1px', backgroundColor: '#f3f4f6', margin: '0 8px 8px' }} />
+            )}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+              {group.items.map((item) => (
+                <SidebarLink key={item.href} item={item} active={isActive(item.href, currentPath)} collapsed={collapsed} />
+              ))}
+            </div>
+          </div>
         ))}
       </nav>
 
@@ -86,21 +153,23 @@ export function Sidebar({ brand, brandSub, brandLogoSrc, items, bottomItems, cur
       {(bottomItems || onLogout) && (
         <div style={{ padding: '12px 8px', borderTop: '1px solid #f3f4f6' }}>
           {bottomItems?.map((item) => (
-            <SidebarLink key={item.href} item={item} active={currentPath === item.href} collapsed={collapsed} />
+            <SidebarLink key={item.href} item={item} active={isActive(item.href, currentPath)} collapsed={collapsed} />
           ))}
           {onLogout && (
             <button
               onClick={onLogout}
               style={{
                 display: 'flex', alignItems: 'center', gap: '10px',
-                padding: collapsed ? '10px 12px' : '10px 12px',
+                padding: '10px 12px',
                 borderRadius: '8px', fontSize: '13px', color: '#6b7280',
                 cursor: 'pointer', border: 'none', background: 'none',
                 width: '100%', textAlign: 'left', fontWeight: 500,
                 transition: 'background-color 0.15s',
+                justifyContent: collapsed ? 'center' : 'flex-start',
               }}
               onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#f3f4f6' }}
               onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent' }}
+              title={collapsed ? 'Sign out' : undefined}
             >
               <span style={{ width: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: '#6b7280' }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -149,12 +218,13 @@ export function Sidebar({ brand, brandSub, brandLogoSrc, items, bottomItems, cur
 }
 
 function SidebarLink({ item, active, collapsed }: { item: SidebarItem; active: boolean; collapsed: boolean }) {
+  const showBadge = item.badge !== undefined && item.badge !== 0 && item.badge !== '0'
   return (
-    <a
+    <Link
       href={item.href}
       style={{
         display: 'flex', alignItems: 'center', gap: '10px',
-        padding: collapsed ? '10px 12px' : '10px 12px',
+        padding: '10px 12px',
         borderRadius: '8px', fontSize: '13px',
         color: active ? '#111' : '#4b5563',
         backgroundColor: active ? '#f3f4f6' : 'transparent',
@@ -167,14 +237,14 @@ function SidebarLink({ item, active, collapsed }: { item: SidebarItem; active: b
       onMouseLeave={e => { if (!active) e.currentTarget.style.backgroundColor = 'transparent' }}
       title={collapsed ? item.label : undefined}
     >
-      <span style={{ fontSize: '16px', width: '20px', textAlign: 'center', flexShrink: 0 }}>{item.icon}</span>
+      <span style={{ fontSize: '16px', width: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{item.icon}</span>
       {!collapsed && (
         <>
           <span style={{ flex: 1 }}>{item.label}</span>
-          {item.badge !== undefined && (
+          {showBadge && (
             <span style={{
               fontSize: '11px', fontWeight: 600, color: '#fff',
-              backgroundColor: '#111', borderRadius: '10px',
+              backgroundColor: '#7c3aed', borderRadius: '10px',
               padding: '2px 8px', minWidth: '20px', textAlign: 'center',
             }}>
               {item.badge}
@@ -182,6 +252,12 @@ function SidebarLink({ item, active, collapsed }: { item: SidebarItem; active: b
           )}
         </>
       )}
-    </a>
+      {collapsed && showBadge && (
+        <span style={{
+          position: 'absolute', top: '6px', right: '10px',
+          width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#7c3aed',
+        }} />
+      )}
+    </Link>
   )
 }

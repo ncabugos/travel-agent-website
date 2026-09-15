@@ -5,6 +5,7 @@ import { Badge } from '@/components/dashboard/Badge'
 import { PageContent } from '@/components/dashboard/DashboardShell'
 import { createServiceClient } from '@/lib/supabase/service'
 import { Icons } from '@/components/dashboard/Icons'
+import Link from 'next/link'
 import { Bell, UserPlus, AlertCircle, XCircle } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
@@ -77,7 +78,7 @@ export default async function AdminDashboardPage() {
         {/* Stat Cards */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', marginBottom: '32px' }}>
           <StatCard title="Total Agents" value={stats.totalAgents} icon={Icons.users} />
-          <StatCard title="Active Subscriptions" value={stats.activeAgents} icon={Icons.checkCircle} change="+0 this month" changeType="neutral" />
+          <StatCard title="Active Subscriptions" value={stats.activeAgents} icon={Icons.checkCircle} />
           <StatCard title="Pending Requests" value={stats.pendingRequests} icon={Icons.inbox} />
           <StatCard title="Published Posts" value={stats.publishedPosts} icon={Icons.file} />
         </div>
@@ -91,6 +92,7 @@ export default async function AdminDashboardPage() {
           >
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {notifications.map((n: any) => {
+                const agentId = n.metadata?.agent_id as string | undefined
                 const icon = n.type === 'onboarding_complete' ? <UserPlus size={16} strokeWidth={1.5} style={{ color: '#16a34a', flexShrink: 0 }} />
                   : n.type === 'new_signup' ? <UserPlus size={16} strokeWidth={1.5} style={{ color: '#2563eb', flexShrink: 0 }} />
                   : n.type === 'subscription_canceled' ? <XCircle size={16} strokeWidth={1.5} style={{ color: '#dc2626', flexShrink: 0 }} />
@@ -107,7 +109,11 @@ export default async function AdminDashboardPage() {
                   >
                     <div style={{ marginTop: '2px' }}>{icon}</div>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: '14px', fontWeight: 500, color: '#111' }}>{n.title}</div>
+                      <div style={{ fontSize: '14px', fontWeight: 500, color: '#111' }}>
+                        {agentId
+                          ? <Link href={`/admin/agents/${agentId}`} style={{ color: 'inherit', textDecoration: 'none' }}>{n.title}</Link>
+                          : n.title}
+                      </div>
                       {n.body && (
                         <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '2px', lineHeight: 1.5 }}>{n.body}</div>
                       )}
@@ -138,7 +144,7 @@ export default async function AdminDashboardPage() {
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {recentAgents.map((agent: Record<string, unknown>) => (
-                  <a
+                  <Link
                     key={String(agent.id)}
                     href={`/admin/agents/${agent.id}`}
                     style={{
@@ -155,7 +161,8 @@ export default async function AdminDashboardPage() {
                       label={String(agent.tier ?? 'starter')}
                       variant={agent.tier === 'custom' ? 'info' : agent.tier === 'growth' ? 'success' : 'default'}
                     />
-                  </a>
+
+                    </Link>
                 ))}
               </div>
             )}
@@ -173,11 +180,13 @@ export default async function AdminDashboardPage() {
                     : req.status === 'rejected' ? 'danger'
                     : 'default'
                   return (
-                    <div
+                    <Link
                       key={String(req.id)}
+                      href={`/admin/requests/${req.id}`}
                       style={{
                         padding: '12px', borderRadius: '8px', border: '1px solid #f3f4f6',
                         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                        textDecoration: 'none', color: '#111',
                       }}
                     >
                       <div>
@@ -187,7 +196,7 @@ export default async function AdminDashboardPage() {
                         </div>
                       </div>
                       <Badge label={String(req.status)} variant={statusVariant} />
-                    </div>
+                    </Link>
                   )
                 })}
               </div>

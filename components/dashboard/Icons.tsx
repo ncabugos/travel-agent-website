@@ -85,6 +85,45 @@ export const Icons = {
       <line x1="6" y1="20" x2="6" y2="16" />
     </svg>
   ),
+  calendar: (
+    <svg {...iconStyle} viewBox="0 0 24 24">
+      <rect x="3" y="4" width="18" height="18" rx="2" />
+      <path d="M16 2v4M8 2v4M3 10h18" />
+      <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" />
+    </svg>
+  ),
+  newspaper: (
+    <svg {...iconStyle} viewBox="0 0 24 24">
+      <path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2" />
+      <path d="M18 14h-8M15 18h-5M10 6h8v4h-8V6z" />
+    </svg>
+  ),
+  building: (
+    <svg {...iconStyle} viewBox="0 0 24 24">
+      <path d="M6 22V4a2 2 0 012-2h8a2 2 0 012 2v18z" />
+      <path d="M6 12H4a2 2 0 00-2 2v6a2 2 0 002 2h2M18 9h2a2 2 0 012 2v9a2 2 0 01-2 2h-2" />
+      <path d="M10 6h4M10 10h4M10 14h4M10 18h4" />
+    </svg>
+  ),
+  ship: (
+    <svg {...iconStyle} viewBox="0 0 24 24">
+      <path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1s1.2 1 2.5 1c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+      <path d="M19.38 20A11.6 11.6 0 0021 14l-9-4-9 4c0 2.9.94 5.34 2.81 7.76" />
+      <path d="M19 13V7a2 2 0 00-2-2H7a2 2 0 00-2 2v6M12 10V2" />
+    </svg>
+  ),
+  megaphone: (
+    <svg {...iconStyle} viewBox="0 0 24 24">
+      <path d="M3 11l18-5v12L3 14v-3z" />
+      <path d="M11.6 16.8a3 3 0 11-5.8-1.6" />
+    </svg>
+  ),
+  bell: (
+    <svg {...iconStyle} viewBox="0 0 24 24">
+      <path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9" />
+      <path d="M10.3 21a1.94 1.94 0 003.4 0" />
+    </svg>
+  ),
   logOut: (
     <svg {...iconStyle} viewBox="0 0 24 24">
       <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
