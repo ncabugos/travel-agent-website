@@ -2,210 +2,105 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ObfuscatedContact } from '@/components/ui/ObfuscatedContact'
 import { encodeContact } from '@/lib/obfuscate'
+import { CHARCOAL } from './tokens'
 
 /**
- * MarketingFooter
- *
- * Global footer used across the platform marketing site (eliteadvisorhub.com):
- *   - Marketing home (/)
- *   - /privacy, /terms, /support, /schedule-consultation
- *
- * NOT used on advisor-template routes (/frontend/[agentId], /t2, /t3, /t4),
- * which have their own per-template footers showing the advisor's branding
- * and copyright.
+ * Global footer for the platform marketing site (eliteadvisorhub.com pages).
+ * Not used on advisor-template routes, which carry their own footers.
  */
-
-const PLATFORM_LINKS = [
-  { label: 'Features',     href: '/#features' },
-  { label: 'Studio',       href: '/studio' },
-  { label: 'Insights',     href: '/insights' },
-  { label: 'Schedule a consultation', href: '/schedule-consultation' },
+const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
+  {
+    title: 'Platform',
+    links: [
+      { label: 'The platform', href: '/#platform' },
+      { label: 'The work', href: '/#work' },
+      { label: 'Studio', href: '/studio' },
+      { label: 'Insights', href: '/insights' },
+      { label: 'Schedule a consultation', href: '/schedule-consultation' },
+      { label: 'Support', href: '/support' },
+    ],
+  },
+  {
+    title: 'Sign in',
+    links: [
+      { label: 'Advisor login', href: '/agent-portal/login' },
+      { label: 'Admin', href: '/admin/login' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
+      { label: 'Privacy policy', href: '/privacy' },
+      { label: 'Terms of service', href: '/terms' },
+    ],
+  },
 ]
 
-// Ordered by tier — Starter → Growth → Custom → Agency
-const DEMO_LINKS = [
-  { label: 'Vista',                  href: '/t2/t2-demo' },
-  { label: 'Meridian Travel',        href: '/t3/t3-demo' },
-  { label: 'Coast & Compass Travel', href: '/t2/coast-compass-demo' },
-  { label: 'Eden',                   href: '/frontend/demo-agent' },
-  { label: 'Casa Solis',             href: '/t4/casa-solis' },
-  { label: 'Wine & Wellness Travel', href: 'https://wineandwellnesstravel.com' },
-  { label: 'Your Travel Center',     href: '/t2/ytc-demo' },
-  { label: 'The Lido Collective',    href: '/t2/lido-collective' },
-]
-
-const COMPANY_LINKS = [
-  { label: 'Support',        href: '/support' },
-  { label: 'Contact us',     href: '/support' },
-  { label: 'Admin',          href: '/admin/login' },
-  { label: 'Advisor login',  href: '/agent-portal/login' },
-]
-
-const LEGAL_LINKS = [
-  { label: 'Privacy Policy',   href: '/privacy' },
-  { label: 'Terms of Service', href: '/terms' },
-]
+const MUTED = 'rgba(255,255,255,0.6)'
+const RULE = 'rgba(255,255,255,0.14)'
 
 export function MarketingFooter() {
   const year = new Date().getFullYear()
 
   return (
-    <footer style={{
-      borderTop: '1px solid #e5e7eb',
-      background: '#fafafa',
-    }}>
-      <div style={{
-        maxWidth: 1200,
-        margin: '0 auto',
-        padding: '64px 24px 32px',
-      }}>
-
-        {/* ── Top: brand + 4 link columns ─────────────────────────── */}
-        <div className="footer-grid" style={{
-          display: 'grid',
-          gridTemplateColumns: '1.5fr repeat(4, 1fr)',
-          gap: 40,
-          marginBottom: 48,
-        }}>
-
-          {/* Brand block */}
+    <footer style={{ background: CHARCOAL, color: '#fff', fontFamily: 'var(--font-inter), system-ui, sans-serif' }}>
+      <div className="eah-container" style={{ padding: '72px 40px 32px' }}>
+        <div className="eah-footer-grid" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: '48px', marginBottom: '64px' }}>
           <div>
-            <Link href="/" style={{ display: 'inline-block', marginBottom: 12, textDecoration: 'none' }}>
+            <Link href="/" style={{ display: 'inline-block', marginBottom: '16px' }}>
               <Image
-                src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
+                src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-white.png"
                 alt="Elite Advisor Hub"
                 width={800}
                 height={134}
-                style={{ objectFit: 'contain', height: '28px', width: 'auto' }}
+                style={{ objectFit: 'contain', height: '24px', width: 'auto' }}
               />
             </Link>
-            <p style={{
-              fontSize: 13,
-              color: '#6b7280',
-              lineHeight: 1.55,
-              maxWidth: 320,
-              margin: 0,
-            }}>
-              The premium website platform for luxury travel advisors. Stunning templates,
-              curated editorial, supplier integrations, and zero tech burden.
+            <p style={{ fontSize: '14px', color: MUTED, lineHeight: 1.6, maxWidth: '32ch', margin: 0 }}>
+              Websites for luxury travel advisors.
             </p>
           </div>
-
           <nav aria-label="Footer" style={{ display: 'contents' }}>
-            <FooterColumn title="Platform" links={PLATFORM_LINKS} />
-            <FooterColumn title="Demos"    links={DEMO_LINKS} />
-            <FooterColumn title="Company"  links={COMPANY_LINKS} />
-            <FooterColumn title="Legal"    links={LEGAL_LINKS} />
+            {COLUMNS.map((col) => (
+              <div key={col.title}>
+                <div style={{ fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED, marginBottom: '16px' }}>{col.title}</div>
+                <ul role="list" style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  {col.links.map((l) => (
+                    <li key={l.href + l.label}>
+                      <Link href={l.href} className="eah-footer-link" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </nav>
         </div>
 
-        {/* ── Middle: legal-entity address line ───────────────────── */}
-        <div style={{
-          borderTop: '1px solid #e5e7eb',
-          paddingTop: 24,
-          marginBottom: 16,
-          fontSize: 12,
-          color: '#6b7280',
-          lineHeight: 1.7,
-        }}>
-          <strong style={{ color: '#4b5563', fontWeight: 500 }}>Elite Advisor Hub, LLC</strong>
-          {' · '}
-          1016 Cliff Drive, Santa Barbara, CA 93109
-          {' · '}
+        <div style={{ borderTop: `1px solid ${RULE}`, paddingTop: '24px', fontSize: '13px', color: MUTED, lineHeight: 1.7 }}>
+          <span style={{ color: 'rgba(255,255,255,0.8)' }}>Elite Advisor Hub, LLC</span>
+          {' · '}1016 Cliff Drive, Santa Barbara, CA 93109{' · '}
           <ObfuscatedContact
             encoded={encodeContact('support@eliteadvisorhub.com')}
             kind="email"
             fallbackHref="/support"
             fallbackLabel="Contact support"
-            style={{ color: '#6b7280', textDecoration: 'none' }}
+            style={{ color: MUTED, textDecoration: 'none' }}
           />
         </div>
-
-        {/* ── Bottom: copyright + privacy/terms ───────────────────── */}
-        <div className="footer-bottom" style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: 12,
-          fontSize: 12,
-          color: '#6b7280',
-        }}>
+        <div className="eah-footer-bottom" style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap', marginTop: '12px', fontSize: '13px', color: MUTED }}>
           <div>© {year} Elite Advisor Hub, LLC. All rights reserved.</div>
-          <div style={{ display: 'flex', gap: 20 }}>
-            <Link href="/privacy" className="eah-footer-link eah-focus-ring-dark" style={{ color: '#6b7280', textDecoration: 'none' }}>Privacy</Link>
-            <Link href="/terms" className="eah-footer-link eah-focus-ring-dark" style={{ color: '#6b7280', textDecoration: 'none' }}>Terms</Link>
-            <a href="https://eliteadvisorhub.com" className="eah-footer-link eah-focus-ring-dark" translate="no" style={{ color: '#6b7280', textDecoration: 'none' }}>
-              eliteadvisorhub.com
-            </a>
-          </div>
+          <a href="https://eliteadvisorhub.com" className="eah-footer-link" translate="no" style={{ color: MUTED, textDecoration: 'none' }}>eliteadvisorhub.com</a>
         </div>
-
       </div>
 
       <style>{`
         .eah-footer-link { transition: color 0.15s ease; }
-        .eah-footer-link:hover { color: #111 !important; text-decoration: underline !important; text-underline-offset: 3px; }
-        @media (max-width: 900px) {
-          .footer-grid {
-            grid-template-columns: 1fr 1fr !important;
-            gap: 32px !important;
-          }
-        }
-        @media (max-width: 560px) {
-          .footer-grid {
-            grid-template-columns: 1fr !important;
-          }
-          .footer-bottom {
-            flex-direction: column !important;
-            align-items: flex-start !important;
-          }
-        }
+        .eah-footer-link:hover { color: #fff !important; }
+        @media (max-width: 900px) { .eah-footer-grid { grid-template-columns: 1fr 1fr !important; gap: 36px !important; } }
+        @media (max-width: 560px) { .eah-footer-grid { grid-template-columns: 1fr !important; } .eah-container { padding-left: 20px !important; padding-right: 20px !important; } }
       `}</style>
     </footer>
-  )
-}
-
-function FooterColumn({ title, links }: {
-  title: string
-  links: { label: string; href: string }[]
-}) {
-  return (
-    <div>
-      <div style={{
-        fontSize: 11,
-        fontWeight: 600,
-        color: '#374151',
-        textTransform: 'uppercase',
-        letterSpacing: '0.1em',
-        marginBottom: 14,
-      }}>
-        {title}
-      </div>
-      <ul role="list" style={{
-        listStyle: 'none',
-        padding: 0,
-        margin: 0,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 9,
-      }}>
-        {links.map(l => (
-          <li key={l.href + l.label}>
-            <Link
-              href={l.href}
-              className="eah-footer-link eah-focus-ring-dark"
-              style={{
-                fontSize: 13,
-                color: '#6b7280',
-                textDecoration: 'none',
-              }}
-            >
-              {l.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
   )
 }

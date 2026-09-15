@@ -1,22 +1,20 @@
-import { CHARCOAL, DIVIDER, GOLD, INK, WARM_GRAY_DARK } from './tokens'
+import { Reveal } from './Reveal'
+import { BODY_STYLE, CHARCOAL, DIVIDER, H2_STYLE, LABEL_STYLE, WARM_GRAY_DARK } from './tokens'
 
 /**
- * Homepage §2 — Problem → Plan.
- *
- * PAS in three short paragraphs (problem, agitate, bridge) followed by a
- * StoryBrand-style three-step plan so a visitor knows exactly what happens
- * after they click. Left-aligned, ≤75ch measure, 16px+ body throughout.
+ * Homepage §7: three steps, so the visitor knows what happens after the
+ * consultation request.
  */
 const STEPS = [
   {
     n: '01',
     title: 'Request a consultation',
-    body: 'A short call to confirm scope and timeline. Then you send your content: logo, photos, bio, and the suppliers you work with.',
+    body: 'A short call to confirm scope and timeline. Then you send your logo, photos, bio, and the suppliers you work with.',
   },
   {
     n: '02',
     title: 'We build and brand it',
-    body: 'Your name, your palette, your suppliers. Hotel programs, journal, lead inbox, and custom domain are set up for you — live within days.',
+    body: 'Your palette, your suppliers, your domain. Live within days.',
   },
   {
     n: '03',
@@ -27,84 +25,29 @@ const STEPS = [
 
 export function MarketingHowItWorks() {
   return (
-    <section
-      id="how-it-works"
-      className="eah-section"
-      style={{ padding: '100px 24px', backgroundColor: '#fff', color: INK }}
-    >
-      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-        <div className="eah-hiw-grid" style={{ display: 'grid', gridTemplateColumns: '5fr 6fr', gap: '64px' }}>
-          {/* Problem */}
-          <div>
-            <div style={{
-              fontSize: '12px', fontWeight: 700, letterSpacing: '0.14em',
-              textTransform: 'uppercase', color: GOLD, marginBottom: '18px',
-            }}>
-              The problem
-            </div>
-            <h2 style={{
-              fontSize: 'clamp(30px, 3.4vw, 42px)', fontWeight: 700,
-              letterSpacing: '-0.02em', lineHeight: 1.1, margin: '0 0 22px',
-            }}>
-              Your website is the one part of the client experience you don&rsquo;t control.
-            </h2>
-            <p style={{ fontSize: '17px', lineHeight: 1.65, color: WARM_GRAY_DARK, margin: '0 0 16px', maxWidth: '52ch' }}>
-              A client you placed at Aman before the season opened will look you up before they
-              refer you. Too often what they find is a template from a general-purpose builder, hotel
-              perks that expired last year, and a journal last updated when you had a quiet week.
-            </p>
-            <p style={{ fontSize: '17px', lineHeight: 1.65, color: WARM_GRAY_DARK, margin: 0, maxWidth: '52ch' }}>
-              Fixing it has meant a developer retainer, a hosting bill, and a second job keeping it
-              current. Elite Advisor Hub removes all three.
-            </p>
-          </div>
-
-          {/* Plan */}
-          <div>
-            <div style={{
-              fontSize: '12px', fontWeight: 700, letterSpacing: '0.14em',
-              textTransform: 'uppercase', color: GOLD, marginBottom: '18px',
-            }}>
-              How it works
-            </div>
-            <ol role="list" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-              {STEPS.map((s, i) => (
-                <li
-                  key={s.n}
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '48px 1fr',
-                    gap: '20px',
-                    padding: '24px 0',
-                    borderTop: `1px solid ${DIVIDER}`,
-                    borderBottom: i === STEPS.length - 1 ? `1px solid ${DIVIDER}` : undefined,
-                  }}
-                >
-                  <div style={{
-                    fontSize: '13px', fontWeight: 700, letterSpacing: '0.08em',
-                    color: GOLD, paddingTop: '4px',
-                  }}>
-                    {s.n}
-                  </div>
-                  <div>
-                    <h3 style={{ margin: '0 0 8px', fontSize: '19px', fontWeight: 600, letterSpacing: '-0.01em', color: CHARCOAL }}>
-                      {s.title}
-                    </h3>
-                    <p style={{ margin: 0, fontSize: '16px', lineHeight: 1.6, color: WARM_GRAY_DARK }}>
-                      {s.body}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
+    <section id="how-it-works" className="eah-section" style={{ background: '#fff', color: CHARCOAL, padding: '120px 0' }}>
+      <div className="eah-container eah-hiw-grid" style={{ display: 'grid', gridTemplateColumns: '5fr 7fr', gap: '64px' }}>
+        <Reveal>
+          <p style={{ ...LABEL_STYLE, marginBottom: '20px' }}>How it works</p>
+          <h2 style={{ ...H2_STYLE, maxWidth: '12ch' }}>From call to live site in days.</h2>
+        </Reveal>
+        <ol role="list" style={{ listStyle: 'none', margin: 0, padding: 0, borderTop: `1px solid ${DIVIDER}` }}>
+          {STEPS.map((s, i) => (
+            <li key={s.n} style={{ borderBottom: `1px solid ${DIVIDER}` }}>
+              <Reveal delay={i * 60} className="eah-hiw-row" style={{ display: 'grid', gridTemplateColumns: '48px 1fr', gap: '24px', padding: '28px 0' }}>
+                <span style={{ fontSize: '12px', color: WARM_GRAY_DARK, paddingTop: '6px', fontVariantNumeric: 'tabular-nums' }}>{s.n}</span>
+                <div>
+                  <h3 style={{ margin: '0 0 8px', fontSize: '22px', fontWeight: 400, letterSpacing: '-0.02em', lineHeight: 1.25 }}>{s.title}</h3>
+                  <p style={{ ...BODY_STYLE, fontSize: '16px', maxWidth: '56ch' }}>{s.body}</p>
+                </div>
+              </Reveal>
+            </li>
+          ))}
+        </ol>
       </div>
-
       <style>{`
-        @media (max-width: 900px) {
-          .eah-hiw-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
-        }
+        @media (max-width: 900px) { .eah-hiw-grid { grid-template-columns: 1fr !important; gap: 40px !important; } }
+        @media (max-width: 640px) { .eah-hiw-row { grid-template-columns: 1fr !important; gap: 8px !important; padding: 22px 0 !important; } }
       `}</style>
     </section>
   )

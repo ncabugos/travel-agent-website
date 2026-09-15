@@ -340,3 +340,12 @@ notification). Test user removed.
 - [x] Agents, journal, promos, pillars, request detail now server-rendered; catalog pages use standard chrome
 - [x] Middleware caches the super-admin role lookup for 5 minutes
 - [ ] Pre-existing lint: `any` in app/admin/page.tsx and categories page; setState-in-effect in StudioInquiryForm
+
+## 2026-09-15 — Homepage redesign (plan: ~/.claude/plans/shiny-mapping-gosling.md)
+
+- [x] Monochrome marketing tokens: Inter Tight display, flat purple CTA only, 2px corners, no gradients or shadows
+- [x] Homepage rebuilt: hero, networks, platform spec list, catalog (1,805 hotels / 103 countries / 28 lines), work, editorial, how it works, founder, questions, insights, closing
+- [x] Nav (overlay over hero, white on scroll) and footer (charcoal, three columns) restyled sitewide
+- [x] Verified: tsc, eslint (only pre-existing Studio/Support findings), 1440 and 375 views, no forbidden phrases, all links resolve
+- [ ] Operator sign-off on copy and layout, then commit
+- [ ] Follow-up: restyle /studio, /templates, /schedule-consultation, /insights to the same system

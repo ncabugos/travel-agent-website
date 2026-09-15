@@ -1,210 +1,52 @@
 import Image from 'next/image'
-import { ScrollRailControls } from './ScrollRailControls'
+import { Reveal } from './Reveal'
+import { BODY_STYLE, CHARCOAL, CREAM, DIVIDER, H2_STYLE, LABEL_STYLE, WARM_GRAY } from './tokens'
 
-interface JournalCard {
-  category: string
-  title: string
-  excerpt: string
-  image: string
-  readTime: string
-}
-
-const JOURNAL_CARDS: JournalCard[] = [
-  {
-    category: 'Destination Guide',
-    title: 'The Amalfi Coast in early October — the season you actually want to book',
-    excerpt: 'When the day-trippers are gone, when the lemon harvest begins, and what to ask your advisor to arrange before the boutique hotels close for the year.',
-    image: '/media/hotel-programs/belmond-bellini-club/belmond-hero-2000.jpg',
-    readTime: '6 min read',
-  },
-  {
-    category: 'Hotel Spotlight',
-    title: 'Inside the Dorchester Diamond Club: what changes when you book through an advisor',
-    excerpt: 'A walkthrough of the Mayfair flagship — and the four benefits that arrive automatically on every Diamond Club stay.',
-    image: '/media/hotel-programs/dorchester/dorchester-hero-2000.jpg',
-    readTime: '5 min read',
-  },
-  {
-    category: 'Voyages',
-    title: 'River cruising for first-timers: AMA, Avalon, or Uniworld?',
-    excerpt: 'A side-by-side on cabin design, dining philosophy, and shore experiences — and why the right answer depends entirely on the type of traveler you are.',
-    image: '/media/hotel-programs/four-seasons/fs-hero-2200.jpg',
-    readTime: '8 min read',
-  },
-  {
-    category: "Editor's Notes",
-    title: "Why the best advisors don’t talk about pricing",
-    excerpt: 'A reflection on the kind of conversation that earns long-term clients — and the questions to ask instead.',
-    image: '/media/hotel-programs/aman/aman-hero-2000.jpg',
-    readTime: '4 min read',
-  },
-  {
-    category: 'Destination Guide',
-    title: 'Tokyo in November: the week the city slows down',
-    excerpt: 'Why the autumn shoulder is the city’s best-kept secret for couples — and the three neighborhoods to base yourself in.',
-    image: '/media/hotel-programs/mandarin-oriental/mandarin-hero-2000.jpg',
-    readTime: '7 min read',
-  },
-  {
-    category: 'Itinerary',
-    title: 'A week in the Mara, designed for travelers who’ve done safari before',
-    excerpt: 'Two private conservancies, one mobile camp, and the family-run lodge that most Western travelers haven’t heard of yet.',
-    image: '/media/hotel-programs/peninsula/peninsula-hero.jpg',
-    readTime: '9 min read',
-  },
+/**
+ * Homepage §6: the journal and curated editorial stream. One photograph,
+ * one claim, three sample pieces in a hairline list.
+ */
+const SAMPLES = [
+  { category: 'Destination guide', title: 'The Amalfi Coast in early October, the season you actually want to book' },
+  { category: 'Hotel spotlight', title: 'Inside the Dorchester Diamond Club: what changes when you book through an advisor' },
+  { category: 'Voyages', title: 'River cruising for first-timers: AMA, Avalon, or Uniworld' },
 ]
 
 export function MarketingCuratedEditorial() {
   return (
-    <section
-      className="eah-section"
-      style={{
-        padding: '120px 0 100px',
-        background: '#fafafa',
-      }}
-    >
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
-        <div style={{ maxWidth: '720px', marginBottom: '56px' }}>
-          <span
-            style={{
-              display: 'inline-block',
-              fontSize: '12px',
-              fontWeight: 600,
-              letterSpacing: '0.16em',
-              textTransform: 'uppercase',
-              color: '#7c3aed',
-              marginBottom: '20px',
-            }}
-          >
-            Curated Editorial
-          </span>
-          <h2
-            style={{
-              fontSize: 'clamp(32px, 4vw, 44px)',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-              lineHeight: 1.1,
-              margin: '0 0 20px',
-              color: '#0a0a0a',
-            }}
-          >
-            Keep your site active with a curated journal.
-          </h2>
-          <p
-            style={{
-              fontSize: '17px',
-              lineHeight: 1.65,
-              color: '#52525b',
-              margin: 0,
-              maxWidth: '640px',
-            }}
-          >
-            A dead journal is the fastest way to look inactive. An in-house editorial team
-            publishes destination guides and hotel spotlights to your site weekly — you pick the
-            categories, the articles arrive automatically. And because Google and AI answer
-            engines now reward sites that publish fresh, expert content, an active journal is how
-            clients asking ChatGPT or Perplexity for an advisor actually find you.
-            Real content for search, and for the client email you were going to write anyway.
+    <section id="editorial" className="eah-section" style={{ background: CREAM, color: CHARCOAL, padding: '120px 0' }}>
+      <div className="eah-container eah-editorial-grid" style={{ display: 'grid', gridTemplateColumns: '5fr 7fr', gap: '64px', alignItems: 'center' }}>
+        <Reveal>
+          <div style={{ position: 'relative', aspectRatio: '4 / 5', background: DIVIDER }}>
+            <Image
+              src="/media/hotel-programs/dorchester/dorchester-hero-2000.jpg"
+              alt="The Dorchester, London"
+              fill
+              sizes="(max-width: 900px) 100vw, 40vw"
+              style={{ objectFit: 'cover' }}
+            />
+          </div>
+        </Reveal>
+        <Reveal delay={100}>
+          <p style={{ ...LABEL_STYLE, marginBottom: '20px' }}>Editorial</p>
+          <h2 style={{ ...H2_STYLE, marginBottom: '20px', maxWidth: '16ch' }}>A journal that publishes while you travel.</h2>
+          <p style={{ ...BODY_STYLE, maxWidth: '52ch', marginBottom: '40px' }}>
+            Weekly destination guides, hotel spotlights, and voyage comparisons written for luxury clients, published to your site in the categories you choose. Write your own from the portal editor whenever you like.
           </p>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '-24px', marginBottom: '8px' }}>
-          <ScrollRailControls targetId="eah-journal-rail" label="sample articles" />
-        </div>
+          <ul role="list" style={{ listStyle: 'none', margin: 0, padding: 0, borderTop: `1px solid ${DIVIDER}` }}>
+            {SAMPLES.map((s) => (
+              <li key={s.title} style={{ padding: '18px 0', borderBottom: `1px solid ${DIVIDER}` }}>
+                <div style={{ fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: WARM_GRAY, marginBottom: '6px' }}>{s.category}</div>
+                <div style={{ fontSize: '18px', lineHeight: 1.35, letterSpacing: '-0.01em' }}>{s.title}</div>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
-
-      {/* Horizontal scroll array of cards — Stripe-style */}
-      <div
-        id="eah-journal-rail"
-        className="eah-journal-scroll"
-        role="region"
-        aria-label="Sample journal articles"
-        tabIndex={0}
-        style={{
-          display: 'flex',
-          gap: '20px',
-          padding: '8px 24px 32px',
-          overflowX: 'auto',
-          overscrollBehaviorX: 'contain',
-          scrollbarWidth: 'thin',
-          scrollSnapType: 'x mandatory',
-          scrollPadding: '0 24px',
-          maxWidth: '100vw',
-        }}
-      >
-        {JOURNAL_CARDS.map((card, i) => (
-          <article
-            key={i}
-            style={{
-              flex: '0 0 min(360px, 84vw)',
-              scrollSnapAlign: 'start',
-              background: '#fff',
-              borderRadius: '16px',
-              overflow: 'hidden',
-              border: '1px solid #ececec',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-            className="eah-journal-card"
-          >
-            <div style={{ position: 'relative', aspectRatio: '4 / 3', background: '#f4f4f4' }}>
-              <Image
-                src={card.image}
-                alt=""
-                fill
-                sizes="360px"
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
-            <div style={{ padding: '22px 22px 24px', display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
-              <span
-                style={{
-                  fontSize: '11px',
-                  fontWeight: 600,
-                  letterSpacing: '0.14em',
-                  textTransform: 'uppercase',
-                  color: '#7c3aed',
-                }}
-              >
-                {card.category}
-              </span>
-              <h3
-                style={{
-                  margin: 0,
-                  fontSize: '18px',
-                  fontWeight: 600,
-                  letterSpacing: '-0.01em',
-                  lineHeight: 1.3,
-                  color: '#0a0a0a',
-                }}
-              >
-                {card.title}
-              </h3>
-              <p
-                style={{
-                  margin: 0,
-                  fontSize: '14px',
-                  lineHeight: 1.6,
-                  color: '#71717a',
-                  flex: 1,
-                }}
-              >
-                {card.excerpt}
-              </p>
-              <span style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
-                {card.readTime}
-              </span>
-            </div>
-          </article>
-        ))}
-      </div>
-
       <style>{`
-        .eah-journal-scroll::-webkit-scrollbar { height: 8px; }
-        .eah-journal-scroll::-webkit-scrollbar-track { background: transparent; }
-        .eah-journal-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 4px; }
-        /* Cards are not links — no hover lift (false affordance). */
-        .eah-journal-scroll:focus-visible { outline: 2px solid #7c3aed; outline-offset: -2px; }
+        @media (max-width: 900px) {
+          .eah-editorial-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+        }
       `}</style>
     </section>
   )

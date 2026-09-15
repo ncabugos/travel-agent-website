@@ -3,20 +3,38 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { CHARCOAL, PRIMARY_CTA_STYLE, PRIMARY_CTA_LABEL } from './tokens'
 
 const NAV_LINKS = [
-  { label: 'Features', href: '/#features' },
-  { label: 'Studio',   href: '/studio'    },
-  { label: 'Demos',    href: '/#demos'    },
-  { label: 'Insights', href: '/insights'  },
+  { label: 'Platform', href: '/#platform' },
+  { label: 'Work',     href: '/#work' },
+  { label: 'Studio',   href: '/studio' },
+  { label: 'Insights', href: '/insights' },
 ]
 
-export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
+const LOGO_BLACK = '/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png'
+const LOGO_WHITE = '/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-white.png'
+
+/**
+ * Marketing nav. `overlay` starts it transparent over a dark hero and turns
+ * it white once the page scrolls; other pages render the white bar from the
+ * first paint. `minimal` hides the links (legal pages, consultation form).
+ */
+export function MarketingNav({ minimal = false, overlay = false }: { minimal?: boolean; overlay?: boolean } = {}) {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(!overlay)
   const sheetRef = useRef<HTMLDivElement>(null)
   const hamburgerRef = useRef<HTMLButtonElement>(null)
 
   const close = useCallback(() => setOpen(false), [])
+
+  useEffect(() => {
+    if (!overlay) return
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [overlay])
 
   // Focus management: move focus into the sheet on open, restore to the
   // hamburger on close; page content behind the sheet is made inert.
@@ -46,259 +64,123 @@ export function MarketingNav({ minimal = false }: { minimal?: boolean } = {}) {
     return () => document.removeEventListener('keydown', onKey)
   }, [])
 
+  const light = !scrolled && !open
+  const fg = light ? '#fff' : CHARCOAL
+  const fgMuted = light ? 'rgba(255,255,255,0.8)' : '#5F5850'
+
   return (
     <>
       <nav
         style={{
-          // top offset honours an optional announcement bar (see StudioBanner);
-          // --eah-banner-h defaults to 0px on every page without one.
           position: 'fixed', top: 'var(--eah-banner-h, 0px)', left: 0, right: 0, zIndex: 1000,
-          backgroundColor: 'rgba(255,255,255,0.95)',
-          backdropFilter: 'blur(12px)',
-          borderBottom: '1px solid rgba(0,0,0,0.06)',
+          backgroundColor: light ? 'transparent' : 'rgba(255,255,255,0.96)',
+          backdropFilter: light ? 'none' : 'blur(12px)',
+          borderBottom: light ? '1px solid transparent' : '1px solid #E8E4DC',
+          transition: 'background-color 0.25s ease, border-color 0.25s ease',
+          fontFamily: 'var(--font-inter), system-ui, sans-serif',
         }}
       >
         <div
-          className="marketing-nav-inner"
-          style={{
-            maxWidth: '1200px', margin: '0 auto',
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-            height: '64px',
-            padding: '0 20px',
-          }}
+          className="eah-container marketing-nav-inner"
+          style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '72px' }}
         >
-          {/* Brand */}
-          <Link href="/" onClick={close} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
+          <Link href="/" onClick={close} style={{ display: 'flex', alignItems: 'center' }} aria-label="Elite Advisor Hub home">
             <Image
-              src="/assets/elite-advisor-hub-logos/elite-advisor-hub-logo-black.png"
+              src={light ? LOGO_WHITE : LOGO_BLACK}
               alt="Elite Advisor Hub"
               width={800}
               height={134}
-              style={{ objectFit: 'contain', height: '32px', width: 'auto' }}
+              style={{ objectFit: 'contain', height: '26px', width: 'auto' }}
               priority
             />
           </Link>
 
-          {/* Desktop links */}
           {!minimal && (
-            <div className="marketing-nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+            <div className="marketing-nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
               {NAV_LINKS.map(({ label, href }) => (
-                <a key={label} href={href} className="marketing-nav-link eah-focus-ring-dark" style={{ fontSize: '14px', color: '#5F5850', textDecoration: 'none', fontWeight: 500, transition: 'color 0.15s ease' }}>
+                <Link key={label} href={href} className="marketing-nav-link" style={{ fontSize: '14px', color: fgMuted, textDecoration: 'none', fontWeight: 500, transition: 'color 0.15s ease' }}>
                   {label}
-                </a>
+                </Link>
               ))}
-              <Link
-                href="/agent-portal/login"
-                className="marketing-nav-link eah-focus-ring-dark"
-                style={{
-                  padding: '8px 18px',
-                  color: '#111',
-                  fontSize: '13px', fontWeight: 600,
-                  textDecoration: 'none',
-                }}
-              >
-                Agent Login
+              <Link href="/agent-portal/login" className="marketing-nav-link" style={{ fontSize: '14px', color: fg, textDecoration: 'none', fontWeight: 500 }}>
+                Advisor login
               </Link>
-              <Link
-                href="/schedule-consultation"
-                className="eah-btn-lux"
-                style={{
-                  padding: '8px 20px',
-                  background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
-                  color: '#fff',
-                  borderRadius: '8px', fontSize: '13px', fontWeight: 600,
-                  textDecoration: 'none',
-                  boxShadow: '0 1px 2px rgba(124,58,237,0.25)',
-                }}
-              >
-                Request a consultation
+              <Link href="/schedule-consultation" className="eah-cta-primary" style={{ ...PRIMARY_CTA_STYLE, minHeight: '40px', padding: '0 18px', fontSize: '14px' }}>
+                {PRIMARY_CTA_LABEL}
               </Link>
             </div>
           )}
 
-          {/* Mobile hamburger */}
           {!minimal && (
-          <button
-            ref={hamburgerRef}
-            type="button"
-            className="marketing-nav-hamburger eah-focus-ring-dark"
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
-            aria-controls="marketing-mobile-sheet"
-            onClick={() => setOpen(o => !o)}
-            style={{
-              display: 'none',
-              width: '40px', height: '40px',
-              alignItems: 'center', justifyContent: 'center',
-              background: 'transparent', border: 'none',
-              cursor: 'pointer', padding: 0,
-              borderRadius: '8px',
-              transition: 'background 0.2s ease',
-            }}
-          >
-            <div style={{
-              position: 'relative', width: '20px', height: '14px',
-            }}>
-              <span
-                style={{
-                  position: 'absolute', left: 0, right: 0,
-                  height: '2px', borderRadius: '2px',
-                  background: '#111', top: 0,
-                  transform: open ? 'translateY(6px) rotate(45deg)' : 'none',
-                  transition: 'transform 0.25s ease',
-                }}
-              />
-              <span
-                style={{
-                  position: 'absolute', left: 0, right: 0, top: '6px',
-                  height: '2px', borderRadius: '2px',
-                  background: '#111',
-                  opacity: open ? 0 : 1,
-                  transition: 'opacity 0.15s ease',
-                }}
-              />
-              <span
-                style={{
-                  position: 'absolute', left: 0, right: 0,
-                  height: '2px', borderRadius: '2px',
-                  background: '#111', top: '12px',
-                  transform: open ? 'translateY(-6px) rotate(-45deg)' : 'none',
-                  transition: 'transform 0.25s ease',
-                }}
-              />
-            </div>
-          </button>
+            <button
+              ref={hamburgerRef}
+              type="button"
+              className="marketing-nav-hamburger"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+              aria-controls="marketing-mobile-sheet"
+              onClick={() => setOpen(o => !o)}
+              style={{ display: 'none', width: '40px', height: '40px', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
+            >
+              <div style={{ position: 'relative', width: '22px', height: '12px' }}>
+                <span style={{ position: 'absolute', left: 0, right: 0, height: '1.5px', background: fg, top: 0, transform: open ? 'translateY(5px) rotate(45deg)' : 'none', transition: 'transform 0.25s ease, background 0.25s ease' }} />
+                <span style={{ position: 'absolute', left: 0, right: 0, height: '1.5px', background: fg, top: '10px', transform: open ? 'translateY(-5px) rotate(-45deg)' : 'none', transition: 'transform 0.25s ease, background 0.25s ease' }} />
+              </div>
+            </button>
           )}
         </div>
       </nav>
 
-      {/* Mobile sheet backdrop */}
       {!minimal && (
-      <div
-        onClick={close}
-        aria-hidden="true"
-        style={{
-          position: 'fixed', inset: 0, zIndex: 998,
-          background: 'rgba(17,17,17,0.35)',
-          opacity: open ? 1 : 0,
-          pointerEvents: open ? 'auto' : 'none',
-          transition: 'opacity 0.25s ease',
-        }}
-      />
+        <div
+          onClick={close}
+          aria-hidden="true"
+          style={{ position: 'fixed', inset: 0, zIndex: 998, background: 'rgba(17,17,17,0.35)', opacity: open ? 1 : 0, pointerEvents: open ? 'auto' : 'none', transition: 'opacity 0.25s ease' }}
+        />
       )}
 
-      {/* Mobile sheet */}
       {!minimal && (
-      <div
-        ref={sheetRef}
-        id="marketing-mobile-sheet"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Navigation"
-        className="marketing-mobile-sheet"
-        // inert keeps the closed sheet's links/buttons out of the tab order.
-        inert={!open}
-        style={{
-          position: 'fixed',
-          top: 'calc(64px + var(--eah-banner-h, 0px))', left: 0, right: 0,
-          zIndex: 999,
-          background: '#ffffff',
-          borderBottom: '1px solid rgba(0,0,0,0.08)',
-          boxShadow: '0 12px 24px -12px rgba(0,0,0,0.15)',
-          transform: open ? 'translateY(0)' : 'translateY(-8px)',
-          opacity: open ? 1 : 0,
-          visibility: open ? 'visible' : 'hidden',
-          pointerEvents: open ? 'auto' : 'none',
-          transition: 'opacity 0.22s ease, transform 0.22s ease, visibility 0s linear ' + (open ? '0s' : '0.22s'),
-          maxHeight: 'calc(100dvh - 64px - var(--eah-banner-h, 0px))',
-          overflowY: 'auto',
-          overscrollBehavior: 'contain',
-        }}
-      >
-        <div style={{ padding: '12px 20px 24px' }}>
-          <ul role="list" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-            {NAV_LINKS.map(({ label, href }) => (
-              <li key={label}>
-                <a
-                  href={href}
-                  onClick={close}
-                  style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                    padding: '16px 4px',
-                    fontSize: '17px', fontWeight: 600,
-                    color: '#111', textDecoration: 'none',
-                    borderBottom: '1px solid rgba(0,0,0,0.06)',
-                  }}
-                >
-                  <span>{label}</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M9 18l6-6-6-6" />
-                  </svg>
-                </a>
-              </li>
-            ))}
-          </ul>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
-            <Link
-              href="/schedule-consultation"
-              onClick={close}
-              className="eah-btn-lux"
-              style={{
-                display: 'block', textAlign: 'center',
-                padding: '14px 20px',
-                background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
-                color: '#fff',
-                borderRadius: '10px',
-                fontSize: '15px', fontWeight: 600,
-                textDecoration: 'none',
-                boxShadow: '0 1px 2px rgba(124,58,237,0.25)',
-              }}
-            >
-              Request a consultation
-            </Link>
-            <Link
-              href="/agent-portal/login"
-              onClick={close}
-              style={{
-                display: 'block', textAlign: 'center',
-                padding: '14px 20px',
-                backgroundColor: '#fff', color: '#111',
-                border: '1px solid rgba(0,0,0,0.12)',
-                borderRadius: '10px',
-                fontSize: '15px', fontWeight: 600,
-                textDecoration: 'none',
-              }}
-            >
-              Agent Login
-            </Link>
-            <Link
-              href="/schedule-consultation"
-              onClick={close}
-              style={{
-                display: 'block', textAlign: 'center',
-                padding: '14px 20px',
-                backgroundColor: '#fff', color: '#111',
-                border: '1px solid rgba(0,0,0,0.12)',
-                borderRadius: '10px',
-                fontSize: '15px', fontWeight: 600,
-                textDecoration: 'none',
-              }}
-            >
-              Schedule a consultation
+        <div
+          ref={sheetRef}
+          id="marketing-mobile-sheet"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation"
+          className="marketing-mobile-sheet"
+          inert={!open}
+          style={{
+            position: 'fixed', top: 'calc(72px + var(--eah-banner-h, 0px))', left: 0, right: 0, zIndex: 999,
+            background: '#fff', borderBottom: '1px solid #E8E4DC',
+            transform: open ? 'translateY(0)' : 'translateY(-8px)',
+            opacity: open ? 1 : 0, visibility: open ? 'visible' : 'hidden', pointerEvents: open ? 'auto' : 'none',
+            transition: 'opacity 0.22s ease, transform 0.22s ease, visibility 0s linear ' + (open ? '0s' : '0.22s'),
+            maxHeight: 'calc(100dvh - 72px - var(--eah-banner-h, 0px))', overflowY: 'auto', overscrollBehavior: 'contain',
+            fontFamily: 'var(--font-inter), system-ui, sans-serif',
+          }}
+        >
+          <div style={{ padding: '8px 20px 24px' }}>
+            <ul role="list" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+              {[...NAV_LINKS, { label: 'Advisor login', href: '/agent-portal/login' }].map(({ label, href }) => (
+                <li key={label}>
+                  <Link href={href} onClick={close} style={{ display: 'block', padding: '16px 0', fontSize: '17px', color: CHARCOAL, textDecoration: 'none', borderBottom: '1px solid #E8E4DC' }}>
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <Link href="/schedule-consultation" onClick={close} className="eah-cta-primary" style={{ ...PRIMARY_CTA_STYLE, width: '100%', marginTop: '20px' }}>
+              {PRIMARY_CTA_LABEL}
             </Link>
           </div>
         </div>
-      </div>
       )}
 
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 860px) {
           .marketing-nav-desktop { display: none !important; }
           .marketing-nav-hamburger { display: inline-flex !important; }
         }
-        .marketing-nav-hamburger:hover { background: rgba(0,0,0,0.04); }
-        .marketing-nav-link:hover { color: #111 !important; }
+        .marketing-nav-link:hover { opacity: 0.7; }
         @media (prefers-reduced-motion: reduce) {
           .marketing-mobile-sheet, .marketing-nav-hamburger span { transition: none !important; }
         }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Inter_Tight } from "next/font/google";
 import { Suspense } from "react";
 import { AnalyticsScripts } from "@/components/AnalyticsScripts";
 import "./globals.css";
@@ -12,6 +12,19 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// Marketing surfaces: Inter Tight for display, Inter for body.
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+});
+
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
 });
 
 const SITE_URL =
@@ -72,7 +85,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${interTight.variable} antialiased`}
       >
         {children}
         <Suspense fallback={null}>

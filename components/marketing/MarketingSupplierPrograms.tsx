@@ -1,238 +1,108 @@
 import Image from 'next/image'
 import { getHotelPrograms } from '@/lib/hotel-programs'
+import { Reveal } from './Reveal'
+import { DISPLAY_FONT, DIVIDER_DARK, NEAR_BLACK } from './tokens'
 
-const SAMPLE_BENEFITS = [
-  'Upgrade on arrival',
-  '$100 hotel credit',
+/**
+ * Homepage §4: the supplier catalog. Full-bleed photograph, one number, the
+ * benefits a client receives, and the program marks from the live catalog.
+ */
+const PERKS = [
+  'Room upgrade on arrival',
   'Daily breakfast for two',
-  'Early check-in / late check-out',
-  'Welcome amenity',
+  '$100 hotel or spa credit',
+  'Early check-in and late check-out',
   'VIP recognition',
 ]
 
 export async function MarketingSupplierPrograms() {
-  // Single source of truth: the hotel_programs catalog. Black logos on the
-  // white grid (black/white-only). Falls back to MOCK offline.
   const programs = await getHotelPrograms()
-  const SUPPLIER_LOGOS = programs
-    .map((p) => ({ name: p.name, src: p.logo_url_black ?? p.logo_url ?? '' }))
+  const logos = programs
+    .map((p) => ({ name: p.name, src: p.logo_url_white ?? p.logo_url_black ?? p.logo_url ?? '', invert: !p.logo_url_white }))
     .filter((l) => l.src)
+    .slice(0, 12)
 
   return (
     <section
+      id="catalog"
       className="eah-section"
-      style={{
-        padding: '120px 24px',
-        background: '#0a0a0a',
-        color: '#fafafa',
-      }}
+      style={{ position: 'relative', background: NEAR_BLACK, color: '#fff', padding: '140px 0', overflow: 'hidden' }}
     >
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ maxWidth: '760px', marginBottom: '64px' }}>
-          <span
-            style={{
-              display: 'inline-block',
-              fontSize: '12px',
-              fontWeight: 600,
-              letterSpacing: '0.16em',
-              textTransform: 'uppercase',
-              color: '#a78bfa',
-              marginBottom: '20px',
-            }}
-          >
-            Supplier Programs
-          </span>
-          <h2
-            style={{
-              fontSize: 'clamp(32px, 4vw, 44px)',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-              lineHeight: 1.1,
-              margin: '0 0 20px',
-              color: '#ffffff',
-            }}
-          >
-            Luxury partnerships, already built in.
-          </h2>
-          <p
-            style={{
-              fontSize: '17px',
-              lineHeight: 1.65,
-              color: '#a1a1aa',
-              margin: '0 0 18px',
-              maxWidth: '680px',
-            }}
-          >
-            Every preferred-partner program your clients care about — already on your site, with the
-            benefits they’ll receive on every stay. We keep the catalog maintained. You keep the
-            relationships.
-          </p>
-          <p
-            style={{
-              fontSize: '14px',
-              lineHeight: 1.7,
-              color: '#a1a1aa',
-              margin: '0 0 14px',
-              maxWidth: '680px',
-            }}
-          >
-            At home in every network — Virtuoso, Signature, Ensemble, Travel Leaders, Serandipians,
-            XO Private, Internova Select, GlobalStar, and the Affluent Traveler Collection.
-          </p>
-          <p
-            style={{
-              fontSize: '13px',
-              fontWeight: 600,
-              letterSpacing: '0.08em',
-              color: '#C9B07A',
-              margin: 0,
-            }}
-          >
-            1,795+ luxury hotels &nbsp;·&nbsp; 30+ cruise lines &nbsp;·&nbsp; live within days
-          </p>
-        </div>
+      <Image
+        src="/media/hero images/four-seasons-taormina-pool_2-hero.jpg"
+        alt=""
+        fill
+        sizes="100vw"
+        style={{ objectFit: 'cover', objectPosition: 'center', zIndex: 0, opacity: 0.55 }}
+      />
+      <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'rgba(11,10,9,0.62)', zIndex: 1 }} />
 
-        {/* Logo grid — only rendered when the catalog returned logos. */}
-        {SUPPLIER_LOGOS.length > 0 && (
-        <div
-          className="eah-supplier-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(6, 1fr)',
-            gap: '0',
-            border: '1px solid rgba(255,255,255,0.08)',
-            borderRadius: '20px',
-            overflow: 'hidden',
-            background: '#fff',
-          }}
-        >
-          {SUPPLIER_LOGOS.map((logo) => (
-            <div
-              key={logo.name}
-              title={logo.name}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '32px 20px',
-                background: '#fff',
-                borderRight: '1px solid #f1f1f1',
-                borderBottom: '1px solid #f1f1f1',
-                minHeight: '120px',
-                transition: 'background 0.2s ease',
-              }}
-              className="eah-supplier-cell"
-            >
-              <Image
-                src={logo.src}
-                alt={logo.name}
-                width={140}
-                height={56}
-                style={{ maxHeight: '52px', width: 'auto', objectFit: 'contain', opacity: 0.85 }}
-                unoptimized
-              />
-            </div>
-          ))}
-        </div>
-        )}
-
-        {/* Benefits + cruise note */}
-        <div
-          style={{
-            marginTop: '64px',
-            display: 'grid',
-            gridTemplateColumns: '1.2fr 1fr',
-            gap: '48px',
-            alignItems: 'start',
-          }}
-          className="eah-supplier-detail"
-        >
-          <div>
-            <h3
-              style={{
-                fontSize: '22px',
-                fontWeight: 600,
-                margin: '0 0 18px',
-                letterSpacing: '-0.01em',
-                color: '#ffffff',
-              }}
-            >
-              Every program renders as its own page
-            </h3>
-            <p style={{ fontSize: '15.5px', lineHeight: 1.7, color: '#a1a1aa', margin: '0 0 22px' }}>
-              Each supplier program gets a dedicated landing page on your site — overview, the participating
-              properties, and the privileges your client receives at every check-in. Examples of the
-              benefits surfaced on each program:
+      <div className="eah-container" style={{ position: 'relative', zIndex: 2 }}>
+        <div className="eah-catalog-grid" style={{ display: 'grid', gridTemplateColumns: '7fr 5fr', gap: '64px', alignItems: 'end' }}>
+          <Reveal>
+            <p style={{ margin: '0 0 24px', fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)' }}>
+              Supplier catalog
             </p>
-            <ul
-              role="list"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                gap: '10px',
-                margin: 0,
-                padding: 0,
-                listStyle: 'none',
-              }}
-            >
-              {SAMPLE_BENEFITS.map((b) => (
-                <li
-                  key={b}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    fontSize: '14px',
-                    color: '#e4e4e7',
-                  }}
-                >
-                  <span
-                    style={{
-                      width: '6px',
-                      height: '6px',
-                      borderRadius: '50%',
-                      background: '#a78bfa',
-                      flexShrink: 0,
-                    }}
-                  />
-                  {b}
+            <div style={{ fontFamily: DISPLAY_FONT, fontSize: 'clamp(72px, 11vw, 160px)', fontWeight: 300, letterSpacing: '-0.04em', lineHeight: 0.95, fontVariantNumeric: 'tabular-nums' }}>
+              1,805
+            </div>
+            <h2 style={{ fontFamily: DISPLAY_FONT, fontSize: 'clamp(24px, 2.6vw, 34px)', fontWeight: 400, letterSpacing: '-0.02em', lineHeight: 1.2, margin: '20px 0 24px', maxWidth: '22ch' }}>
+              luxury hotels across 103 countries, maintained so you never have to.
+            </h2>
+            <p style={{ margin: 0, fontSize: '17px', lineHeight: 1.6, color: 'rgba(255,255,255,0.78)', maxWidth: '48ch' }}>
+              Every preferred-partner program your clients ask about is already on your site, with the benefits they receive on every stay.
+            </p>
+          </Reveal>
+
+          <Reveal delay={120}>
+            <p style={{ margin: '0 0 8px', fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)' }}>
+              What clients receive
+            </p>
+            <ul role="list" style={{ listStyle: 'none', margin: 0, padding: 0, borderTop: `1px solid ${DIVIDER_DARK}` }}>
+              {PERKS.map((perk) => (
+                <li key={perk} style={{ padding: '16px 0', borderBottom: `1px solid ${DIVIDER_DARK}`, fontSize: '17px', color: 'rgba(255,255,255,0.92)' }}>
+                  {perk}
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div
-            style={{
-              background: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              borderRadius: '16px',
-              padding: '28px',
-            }}
-          >
-            <p style={{ margin: 0, fontSize: '12px', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#a78bfa', marginBottom: '14px' }}>
-              Cruise & Villa Partners
-            </p>
-            <p style={{ margin: 0, fontSize: '15px', lineHeight: 1.65, color: '#d4d4d8' }}>
-              Regent Seven Seas, Crystal, Silversea, Explora Journeys, Four Seasons Yachts,
-              Ritz-Carlton Yacht Collection, Orient Express Sailing, Aman at Sea, plus AmaWaterways,
-              Avalon, and Uniworld on the river side. The villa catalog is available as an add-on
-              module.
-            </p>
-          </div>
+          </Reveal>
         </div>
+
+        {logos.length > 0 && (
+          <Reveal delay={200}>
+            <ul
+              role="list"
+              className="eah-catalog-logos"
+              style={{
+                listStyle: 'none', margin: '96px 0 0', padding: '40px 0 0',
+                borderTop: `1px solid ${DIVIDER_DARK}`,
+                display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '40px 32px', alignItems: 'center',
+              }}
+            >
+              {logos.map((logo) => (
+                <li key={logo.name} title={logo.name} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '48px' }}>
+                  <Image
+                    src={logo.src}
+                    alt={logo.name}
+                    width={140}
+                    height={48}
+                    unoptimized
+                    style={{ height: 'auto', width: 'auto', maxHeight: '40px', maxWidth: '140px', objectFit: 'contain', opacity: 0.8, filter: logo.invert ? 'brightness(0) invert(1)' : undefined }}
+                  />
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        )}
       </div>
 
       <style>{`
-        .eah-supplier-cell:hover { background: #fafafa; }
-        @media (max-width: 1024px) {
-          .eah-supplier-grid { grid-template-columns: repeat(4, 1fr) !important; }
-        }
-        @media (max-width: 768px) {
-          .eah-supplier-grid { grid-template-columns: repeat(3, 1fr) !important; }
-          .eah-supplier-detail { grid-template-columns: 1fr !important; }
+        @media (max-width: 900px) {
+          .eah-catalog-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+          .eah-catalog-logos { grid-template-columns: repeat(3, 1fr) !important; margin-top: 64px !important; }
         }
         @media (max-width: 480px) {
-          .eah-supplier-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .eah-catalog-logos { grid-template-columns: repeat(2, 1fr) !important; }
         }
       `}</style>
     </section>

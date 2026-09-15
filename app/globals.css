@@ -29,7 +29,25 @@
 /* Marketing-surface interaction defaults (Web Interface Guidelines) */
 button, a, summary { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 /* Scoped to marketing pages (root carries .eah-marketing) so tenant templates are untouched. */
-.eah-marketing :is(h1, h2, h3) { text-wrap: balance; }
+.eah-marketing { font-family: var(--font-inter), system-ui, -apple-system, sans-serif; }
+.eah-marketing :is(h1, h2, h3) {
+  text-wrap: balance;
+  font-family: var(--font-inter-tight), var(--font-inter), system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.eah-container { max-width: 1280px; margin: 0 auto; padding-left: 40px; padding-right: 40px; }
+@media (max-width: 640px) { .eah-container { padding-left: 20px; padding-right: 20px; } }
+.eah-cta-primary:hover { background-color: #6D31D6 !important; }
+.eah-cta-secondary:hover { background-color: rgba(255,255,255,0.12) !important; }
+.eah-cta-secondary.on-light:hover { background-color: rgba(26,23,21,0.06) !important; }
+.eah-link { color: inherit; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(26,23,21,0.3); transition: text-decoration-color 0.2s ease; }
+.eah-link:hover { text-decoration-color: currentColor; }
+.eah-reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.eah-reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .eah-reveal { opacity: 1; transform: none; transition: none; }
+}
 .eah-btn-lux:focus-visible,
 .eah-focus-ring:focus-visible {
   outline: 2px solid #fff;

@@ -1,62 +1,72 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Globe, FileText, Building2, Paintbrush, Lock, TrendingUp } from 'lucide-react'
 import { MarketingNav } from '@/components/marketing/MarketingNav'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
-import { MarketingSupplierPrograms } from '@/components/marketing/MarketingSupplierPrograms'
-import { MarketingClosingCTA } from '@/components/marketing/MarketingClosingCTA'
-import { MarketingCuratedEditorial } from '@/components/marketing/MarketingCuratedEditorial'
-import { MarketingStudioPromo } from '@/components/marketing/MarketingStudioPromo'
-import { MarketingInsightsTeaser } from '@/components/marketing/MarketingInsightsTeaser'
-import { MarketingHowItWorks } from '@/components/marketing/MarketingHowItWorks'
 import { MarketingNetworkBar } from '@/components/marketing/MarketingNetworkBar'
+import { PlatformSpecList } from '@/components/marketing/PlatformSpecList'
+import { MarketingSupplierPrograms } from '@/components/marketing/MarketingSupplierPrograms'
+import { MarketingCuratedEditorial } from '@/components/marketing/MarketingCuratedEditorial'
+import { MarketingHowItWorks } from '@/components/marketing/MarketingHowItWorks'
+import { MarketingStudioPromo } from '@/components/marketing/MarketingStudioPromo'
 import { MarketingProof } from '@/components/marketing/MarketingProof'
 import { MarketingFAQ } from '@/components/marketing/MarketingFAQ'
+import { MarketingInsightsTeaser } from '@/components/marketing/MarketingInsightsTeaser'
+import { MarketingClosingCTA } from '@/components/marketing/MarketingClosingCTA'
 import { MarketingStickyCTA } from '@/components/marketing/MarketingStickyCTA'
+import { Reveal } from '@/components/marketing/Reveal'
 import {
-  CHARCOAL, CREAM, DIVIDER, GOLD, INK,
-  PRIMARY_CTA_LABEL, PRIMARY_CTA_STYLE, WARM_GRAY_DARK,
+  BODY_FONT, BODY_STYLE, CHARCOAL, DISPLAY_FONT, DIVIDER, H2_STYLE, LABEL_STYLE, NEAR_BLACK,
+  PRIMARY_CTA_LABEL, PRIMARY_CTA_STYLE, SECONDARY_CTA_STYLE, WARM_GRAY,
 } from '@/components/marketing/tokens'
 
 export const metadata = {
-  title: 'Elite Advisor Hub — Websites for Luxury Travel Advisors, Live in Days',
+  title: 'Elite Advisor Hub — Websites for Luxury Travel Advisors',
   description:
-    'A custom-branded advisor website on your own domain, backed by 1,795+ maintained luxury hotel programs and a weekly editorial pipeline.',
+    'A custom-branded advisor website on your own domain, with 24 preferred-partner hotel programs, 1,805 luxury hotels, 28 cruise lines, and a journal that publishes every week. Live within days.',
 }
 
 /*
- * Page order follows the conversion research's narrative arc —
- * Relevance → Mechanism → Confidence → Action:
+ * Page order: relevance, mechanism, proof, action. One primary button per
+ * screen, always "Request a consultation". Secondary links are text-weight.
  *
- *   Hero (value + CTA + proof strip)
- *   → Problem + Plan            (MarketingHowItWorks)
- *   → Proof                     (MarketingProof)
- *   → Benefits                  (Features)
- *   → Demos / Suppliers / Editorial
- *   → FAQ                       (MarketingFAQ)
- *   → Studio cross-sell / Insights
- *   → Closing CTA
- *
- * One primary goal on the page: request a consultation. Every primary button
- * goes to /schedule-consultation; secondary links are text-weight and never
- * purple.
+ *   Hero → Networks → Platform (spec list) → Catalog → Work → Editorial
+ *   → How it works → Studio band → Founder → Questions → Insights → Closing
  */
 
-interface DemoCard {
+interface Demo {
   slug: string
   name: string
-  kind: 'Template' | 'Custom build' | 'Agency'
-  tagline: string
+  kind: 'In production' | 'Live' | 'Template' | 'Custom build' | 'Agency'
+  line: string
   href: string
   thumbnail: string
+  external?: boolean
 }
 
-const DEMOS: DemoCard[] = [
+const DEMOS: Demo[] = [
+  {
+    slug: 'eden',
+    name: 'Eden For Your World',
+    kind: 'In production',
+    line: 'A Virtuoso advisor site on the platform since April 2026.',
+    href: 'https://www.edenforyourworld.com',
+    thumbnail: '/demos/eden.png',
+    external: true,
+  },
+  {
+    slug: 'wine-and-wellness-travel',
+    name: 'Wine & Wellness Travel',
+    kind: 'Live',
+    line: 'Wine country, wellness retreats, villas, and river cruises with VIP hotel benefits.',
+    href: 'https://wineandwellnesstravel.com',
+    thumbnail: '/demos/wine_and_wellness.jpg',
+    external: true,
+  },
   {
     slug: 'vista',
     name: 'Vista',
     kind: 'Template',
-    tagline: 'Cinematic widescreen with bold serif typography and antique gold accents.',
+    line: 'Cinematic widescreen, serif typography, antique gold accents.',
     href: '/t2/t2-demo',
     thumbnail: '/demos/demo-homepage-thumbs-web-optimized/demo-luxuryTravel-homepage-thumbs-1.webp',
   },
@@ -64,48 +74,31 @@ const DEMOS: DemoCard[] = [
     slug: 'meridian',
     name: 'Meridian',
     kind: 'Template',
-    tagline: 'Modern editorial in sans-serif — warm ivory, bronze italics, generous whitespace.',
+    line: 'Editorial sans-serif, warm ivory, bronze italics, generous whitespace.',
     href: '/t3/t3-demo',
     thumbnail: '/demos/demo-homepage-thumbs-web-optimized/demo-meridian-homepage-thumbs-3.webp',
-  },
-  {
-    slug: 'coast-and-compass',
-    name: 'Coast & Compass Travel',
-    kind: 'Template',
-    tagline: 'Small-ship voyages and coastal escapes — Bodoni Moda serif, slideshow hero, editorial services index.',
-    href: '/t2/coast-compass-demo',
-    thumbnail: '/demos/demo-homepage-thumbs-web-optimized/demo-CoastCompass-homepage-thumbs-4.webp',
-  },
-  {
-    slug: 'eden',
-    name: 'Eden',
-    kind: 'Custom build',
-    tagline: 'An editorial custom build for a boutique advisor, designed from scratch.',
-    href: '/frontend/demo-agent',
-    thumbnail: '/demos/eden-thumb.jpg',
   },
   {
     slug: 'casa-solis',
     name: 'Casa Solis',
     kind: 'Custom build',
-    tagline: 'Quiet-luxury editorial — warm ivory, burnt ochre, Italian-atelier feel.',
+    line: 'Warm ivory and burnt ochre for a boutique Italian specialist.',
     href: '/t4/casa-solis',
     thumbnail: '/demos/demo-homepage-thumbs-web-optimized/demo-casaSolis-homepage-thumbs-2.webp',
   },
   {
-    // Live client site, not a fixture — links out to the advisor's own domain.
-    slug: 'wine-and-wellness-travel',
-    name: 'Wine & Wellness Travel',
-    kind: 'Custom build',
-    tagline: 'A live Virtuoso agency site — wine country, wellness retreats, villas, and river cruises with VIP hotel benefits.',
-    href: 'https://wineandwellnesstravel.com',
-    thumbnail: '/demos/wine_and_wellness.jpg',
+    slug: 'coast-and-compass',
+    name: 'Coast & Compass Travel',
+    kind: 'Template',
+    line: 'Small-ship voyages and coastal escapes with a slideshow hero.',
+    href: '/t2/coast-compass-demo',
+    thumbnail: '/demos/demo-homepage-thumbs-web-optimized/demo-CoastCompass-homepage-thumbs-4.webp',
   },
   {
     slug: 'ytc',
     name: 'Your Travel Center',
     kind: 'Agency',
-    tagline: 'A real Spokane agency, rebranded on the Vista template with custom identity.',
+    line: 'A Spokane agency on the Vista template with its own identity.',
     href: '/t2/ytc-demo',
     thumbnail: '/demos/ytc.png',
   },
@@ -113,357 +106,155 @@ const DEMOS: DemoCard[] = [
     slug: 'lido-collective',
     name: 'The Lido Collective',
     kind: 'Agency',
-    tagline: 'An invitation-only collective — editorial white with navy accents, a scalable advisor directory, and a searchable cruise atelier.',
+    line: 'An invitation-only collective with an advisor directory and a searchable cruise catalog.',
     href: '/t2/lido-collective',
     thumbnail: '/media/cruises/orient-express-sailing-yacht/Orient-Express-Sailing-Yachts-Corinthian-Exterior-Wind-Luxigon.jpg',
   },
 ]
 
-const FEATURES = [
-  {
-    icon: <Globe size={22} strokeWidth={1.5} />,
-    title: 'Custom-branded website',
-    desc: 'Your name, palette, and typography on your own domain. Three editorial templates underneath — or a build designed from scratch.',
-  },
-  {
-    icon: <Building2 size={22} strokeWidth={1.5} />,
-    title: 'Maintained supplier catalog',
-    desc: 'Hotel programs from Aman, Belmond, Rosewood, and Four Seasons, plus 30+ cruise partners. Perks stay current without you touching them.',
-  },
-  {
-    icon: <FileText size={22} strokeWidth={1.5} />,
-    title: 'Journal + curated editorial',
-    desc: 'Publish your own pieces from the portal, or add the weekly curated stream in the categories that match your niche.',
-  },
-  {
-    icon: <Lock size={22} strokeWidth={1.5} />,
-    title: 'Lead inbox + advisor portal',
-    desc: 'Inquiries land in one place. Edit requests, supplier selections, and journal posts are managed from the same dashboard.',
-  },
-  {
-    icon: <Paintbrush size={22} strokeWidth={1.5} />,
-    title: 'Hosting and updates handled',
-    desc: 'No hosting bill, no developer retainer, no plugin updates. Performance, SEO, and platform changes are on our side.',
-  },
-  {
-    icon: <TrendingUp size={22} strokeWidth={1.5} />,
-    title: 'Grows with the practice',
-    desc: 'Add modules or studio services from the portal as the book grows. Nothing is rebuilt; the site comes with you.',
-  },
+const HERO_PROOF = [
+  { value: '1,805', label: 'luxury hotels' },
+  { value: '103', label: 'countries' },
+  { value: '28', label: 'cruise lines' },
+  { value: 'Days', label: 'to a live site' },
 ]
 
 export default function EliteAdvisorHubHomePage() {
   return (
-    <div className="eah-marketing" style={{
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-      color: INK,
-      background: '#fff',
-    }}>
+    <div className="eah-marketing" style={{ fontFamily: BODY_FONT, color: CHARCOAL, background: '#fff' }}>
       <a href="#main" className="eah-skip-link">Skip to main content</a>
-      <MarketingNav />
+      <MarketingNav overlay />
       <main id="main">
 
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section
-        id="hero"
-        className="eah-section eah-hero"
-        style={{
-          minHeight: '92vh',
-          display: 'flex',
-          alignItems: 'center',
-          padding: '140px 24px 96px',
-          position: 'relative',
-          overflow: 'hidden',
-          background: CHARCOAL,
-        }}
-      >
-        {/* Single still (no slideshow): faster LCP, and video/rotating heroes
-            test negative against a static image in the research corpus. */}
-        <Image
-          src="/media/hotel-programs/aman/aman-hero-2000.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          style={{ objectFit: 'cover', objectPosition: 'center', zIndex: 0 }}
-        />
-        <div style={{
-          position: 'absolute', inset: 0, zIndex: 1,
-          background: 'linear-gradient(90deg, rgba(10,9,8,0.82) 0%, rgba(10,9,8,0.62) 45%, rgba(10,9,8,0.28) 100%)',
-        }} />
-        <div style={{
-          position: 'absolute', left: 0, right: 0, bottom: 0, height: '160px', zIndex: 1,
-          background: 'linear-gradient(180deg, rgba(10,9,8,0) 0%, rgba(10,9,8,0.55) 100%)',
-        }} />
+        {/* ── Hero ─────────────────────────────────────────────────────── */}
+        <section
+          id="hero"
+          className="eah-hero"
+          style={{
+            position: 'relative', minHeight: '100dvh', display: 'flex', alignItems: 'flex-end',
+            background: NEAR_BLACK, color: '#fff', overflow: 'hidden', padding: '160px 0 56px',
+          }}
+        >
+          <Image
+            src="/media/hotel-programs/aman/aman-hero-2000.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: 'cover', objectPosition: 'center', zIndex: 0 }}
+          />
+          <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'rgba(11,10,9,0.5)', zIndex: 1 }} />
 
-        <div style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: '1100px', margin: '0 auto' }}>
-          <div style={{ maxWidth: '640px' }}>
-            <div style={{
-              fontSize: '12px', fontWeight: 700, letterSpacing: '0.16em',
-              textTransform: 'uppercase', color: '#D8C28A', marginBottom: '22px',
-            }}>
+          <div className="eah-container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
+            <p style={{ ...LABEL_STYLE, color: 'rgba(255,255,255,0.7)', marginBottom: '28px' }}>
               Websites for luxury travel advisors
-            </div>
-
-            <h1 style={{
-              fontSize: 'clamp(38px, 5.4vw, 66px)',
-              fontWeight: 800,
-              lineHeight: 1.06,
-              letterSpacing: '-0.03em',
-              margin: '0 0 22px',
-              color: '#fff',
-            }}>
-              Built for the $25,000 booking.{' '}
-              <span style={{
-                display: 'block',
-                background: 'linear-gradient(135deg, #a5b4fc, #c4b5fd)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}>
-                Live within days.
-              </span>
-            </h1>
-
-            <p style={{
-              fontSize: '18px', lineHeight: 1.6, color: 'rgba(255,255,255,0.86)',
-              maxWidth: '54ch', margin: '0 0 32px',
-            }}>
-              A custom-branded site on your own domain, backed by 1,795+ maintained luxury hotel
-              programs and kept current for you.
             </p>
-
-            <div className="eah-hero-actions" style={{ display: 'flex', alignItems: 'center', gap: '24px', flexWrap: 'wrap' }}>
-              <Link
-                href="/schedule-consultation"
-                className="eah-cta-primary"
-                style={{ ...PRIMARY_CTA_STYLE, width: 'auto' }}
-              >
+            <h1 style={{
+              fontFamily: DISPLAY_FONT, fontSize: 'clamp(44px, 6.4vw, 92px)', fontWeight: 300,
+              letterSpacing: '-0.035em', lineHeight: 1.0, margin: '0 0 28px', maxWidth: '14ch',
+            }}>
+              Websites for the world&rsquo;s top travel advisors.
+            </h1>
+            <p style={{ fontSize: '19px', lineHeight: 1.55, color: 'rgba(255,255,255,0.86)', maxWidth: '52ch', margin: '0 0 36px' }}>
+              A custom-branded site on your own domain, with 24 preferred-partner hotel programs, 28 cruise lines, and a journal that publishes every week. Built for you. Live within days.
+            </p>
+            <div className="eah-hero-actions" style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+              <Link href="/schedule-consultation" className="eah-cta-primary" style={PRIMARY_CTA_STYLE}>
                 {PRIMARY_CTA_LABEL}
               </Link>
-              <a
-                href="#features"
-                className="eah-hero-secondary eah-focus-ring"
-                style={{
-                  color: 'rgba(255,255,255,0.86)', fontSize: '15px', fontWeight: 500,
-                  textDecoration: 'underline', textUnderlineOffset: '4px',
-                  textDecorationColor: 'rgba(255,255,255,0.4)',
-                }}
-              >
-                See what&rsquo;s included
+              <a href="#platform" className="eah-cta-secondary" style={{ ...SECONDARY_CTA_STYLE, color: '#fff' }}>
+                See the platform
               </a>
             </div>
 
-            {/* Proof strip — specific, verifiable, inside the first viewport. */}
             <ul className="eah-hero-proof" role="list" style={{
-              listStyle: 'none', margin: '44px 0 0', padding: '20px 0 0',
-              borderTop: '1px solid rgba(255,255,255,0.18)',
-              display: 'flex', flexWrap: 'wrap', gap: '10px 28px',
-              fontSize: '13px', color: 'rgba(255,255,255,0.78)',
+              listStyle: 'none', margin: '72px 0 0', padding: '24px 0 0',
+              borderTop: '1px solid rgba(255,255,255,0.2)',
+              display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '24px',
             }}>
-              <li><strong style={{ color: '#fff', fontWeight: 700 }}>1,795+</strong> luxury hotel programs</li>
-              <li><strong style={{ color: '#fff', fontWeight: 700 }}>30+</strong> cruise lines</li>
-              <li>Trusted by <strong translate="no" style={{ color: '#fff', fontWeight: 600 }}>edenforyourworld.com</strong></li>
+              {HERO_PROOF.map((p) => (
+                <li key={p.label}>
+                  <div style={{ fontFamily: DISPLAY_FONT, fontSize: '30px', fontWeight: 300, letterSpacing: '-0.02em', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{p.value}</div>
+                  <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.68)', marginTop: '8px' }}>{p.label}</div>
+                </li>
+              ))}
             </ul>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── Network logo bar ─────────────────────────────────────────────── */}
-      <MarketingNetworkBar />
+        <MarketingNetworkBar />
+        <PlatformSpecList />
+        <MarketingSupplierPrograms />
 
-      {/* ── Problem → Plan ───────────────────────────────────────────────── */}
-      <MarketingHowItWorks />
-
-      {/* ── Proof ────────────────────────────────────────────────────────── */}
-      <MarketingProof />
-
-      {/* ── Benefits ─────────────────────────────────────────────────────── */}
-      <section id="features" className="eah-section" style={{ padding: '100px 24px', backgroundColor: '#fff' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <div style={{
-            fontSize: '12px', fontWeight: 700, letterSpacing: '0.14em',
-            textTransform: 'uppercase', color: GOLD, marginBottom: '18px',
-          }}>
-            What&rsquo;s included
+        {/* ── Work ─────────────────────────────────────────────────────── */}
+        <section id="work" className="eah-section" style={{ background: '#fff', padding: '120px 0' }}>
+          <div className="eah-container">
+            <Reveal>
+              <p style={{ ...LABEL_STYLE, marginBottom: '20px' }}>The work</p>
+              <h2 style={{ ...H2_STYLE, marginBottom: '20px', maxWidth: '16ch' }}>Sites built on the platform.</h2>
+              <p style={{ ...BODY_STYLE, maxWidth: '56ch', marginBottom: '64px' }}>
+                Every site starts from one of three editorial templates or a build designed from scratch, and ends up under your brand.
+              </p>
+            </Reveal>
+            <div className="eah-work-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '56px 40px' }}>
+              {DEMOS.map((demo, i) => (
+                <Reveal key={demo.slug} delay={(i % 2) * 80}>
+                  <Link
+                    href={demo.href}
+                    target="_blank"
+                    rel="noopener"
+                    aria-label={`${demo.name}, opens in a new tab`}
+                    className="eah-work-item"
+                    style={{ display: 'block', textDecoration: 'none', color: CHARCOAL }}
+                  >
+                    <div style={{ position: 'relative', aspectRatio: '16 / 10', overflow: 'hidden', background: DIVIDER }}>
+                      <Image
+                        src={demo.thumbnail}
+                        alt=""
+                        fill
+                        sizes="(max-width: 900px) 100vw, 50vw"
+                        className="eah-work-thumb"
+                        style={{ objectFit: 'cover', objectPosition: 'top', transition: 'opacity 0.3s ease' }}
+                      />
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '16px', marginTop: '18px' }}>
+                      <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 400, letterSpacing: '-0.015em' }}>{demo.name}</h3>
+                      <span style={{ fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: demo.kind === 'In production' || demo.kind === 'Live' ? CHARCOAL : WARM_GRAY, whiteSpace: 'nowrap' }}>
+                        {demo.kind}
+                      </span>
+                    </div>
+                    <p style={{ ...BODY_STYLE, fontSize: '15px', marginTop: '6px', maxWidth: '48ch' }}>{demo.line}</p>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
           </div>
-          <h2 style={{
-            fontSize: 'clamp(30px, 3.4vw, 42px)', fontWeight: 700,
-            letterSpacing: '-0.02em', lineHeight: 1.1, margin: '0 0 14px', maxWidth: '20ch',
-          }}>
-            All of the essentials. Maintenance done for you.
-          </h2>
-          <p style={{ fontSize: '17px', color: WARM_GRAY_DARK, margin: '0 0 56px', maxWidth: '58ch', lineHeight: 1.6 }}>
-            Everything below is on every site. Modules and studio services are added from
-            the portal only when the practice calls for them.
-          </p>
+        </section>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }} className="eah-features-grid">
-            {FEATURES.map((f, i) => (
-              <div
-                key={f.title}
-                className="eah-feature-card"
-                style={{
-                  padding: '28px', borderRadius: '14px',
-                  border: `1px solid ${DIVIDER}`,
-                  background: '#fff',
-                  transition: 'border-color 0.25s, box-shadow 0.25s, transform 0.25s',
-                  animationDelay: `${i * 80}ms`,
-                }}
-              >
-                <div style={{
-                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                  width: '44px', height: '44px', borderRadius: '12px',
-                  background: CREAM, border: `1px solid ${DIVIDER}`, color: GOLD,
-                  marginBottom: '18px',
-                }}>
-                  {f.icon}
-                </div>
-                <h3 style={{ margin: '0 0 8px', fontSize: '17px', fontWeight: 600, letterSpacing: '-0.01em', color: CHARCOAL }}>{f.title}</h3>
-                <p style={{ margin: 0, fontSize: '16px', color: WARM_GRAY_DARK, lineHeight: 1.6 }}>{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Demos ────────────────────────────────────────────────────────── */}
-      <section id="demos" className="eah-section" style={{ padding: '100px 24px', backgroundColor: CREAM }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{
-            fontSize: '12px', fontWeight: 700, letterSpacing: '0.14em',
-            textTransform: 'uppercase', color: GOLD, marginBottom: '18px',
-          }}>
-            See the work
-          </div>
-          <h2 style={{
-            fontSize: 'clamp(30px, 3.4vw, 42px)', fontWeight: 700,
-            letterSpacing: '-0.02em', lineHeight: 1.1, margin: '0 0 14px', maxWidth: '22ch',
-          }}>
-            Every site starts from one of these — and ends up yours.
-          </h2>
-          <p style={{ fontSize: '17px', color: WARM_GRAY_DARK, margin: '0 0 56px', maxWidth: '58ch', lineHeight: 1.6 }}>
-            Open any demo to see the depth of a finished build. We choose the starting point with
-            you and finish it to your brand.
-          </p>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '28px' }} className="eah-demos-grid">
-            {DEMOS.map((demo) => (
-              <Link
-                key={demo.slug}
-                href={demo.href}
-                target="_blank"
-                rel="noopener"
-                aria-label={`${demo.name} — view demo (opens in a new tab)`}
-                className="eah-demo-card eah-focus-ring-dark"
-                style={{
-                  display: 'block',
-                  borderRadius: '14px',
-                  border: `1px solid ${DIVIDER}`,
-                  overflow: 'hidden',
-                  textDecoration: 'none',
-                  color: INK,
-                  transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-                  background: '#fff',
-                }}
-              >
-                {/* 2:1 crop of a 16:10 full-page screenshot keeps just the hero. */}
-                <div style={{ position: 'relative', width: '100%', aspectRatio: '2 / 1', overflow: 'hidden', background: CREAM }}>
-                  <Image
-                    src={demo.thumbnail}
-                    alt=""
-                    fill
-                    sizes="(max-width: 900px) 100vw, 50vw"
-                    className="eah-demo-thumb"
-                    style={{ objectFit: 'cover', objectPosition: 'top', transition: 'transform 0.6s ease' }}
-                  />
-                  <div style={{
-                    position: 'absolute', top: '16px', left: '16px',
-                    padding: '6px 12px',
-                    background: 'rgba(26,23,21,0.88)', color: '#fff',
-                    fontSize: '12px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase',
-                    borderRadius: '999px', backdropFilter: 'blur(6px)',
-                    border: '1px solid rgba(255,255,255,0.25)',
-                  }}>
-                    {demo.kind}
-                  </div>
-                </div>
-                <div style={{ padding: '22px 26px 26px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', gap: '12px' }}>
-                    <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 700, letterSpacing: '-0.01em', color: CHARCOAL }}>
-                      {demo.name}
-                    </h3>
-                    <span style={{ fontSize: '13px', color: GOLD, fontWeight: 600, whiteSpace: 'nowrap' }}>
-                      View demo →
-                    </span>
-                  </div>
-                  <p style={{ margin: 0, fontSize: '15px', color: WARM_GRAY_DARK, lineHeight: 1.55 }}>
-                    {demo.tagline}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <MarketingSupplierPrograms />
-      <MarketingCuratedEditorial />
-
-      {/* ── Objections ───────────────────────────────────────────────────── */}
-      <MarketingFAQ />
-
-      {/* Studio cross-sell + Insights sit after the objections so
-          they never interrupt the path to the primary action. */}
-      <MarketingStudioPromo />
-      <MarketingInsightsTeaser />
-
-      {/* ── Closing CTA ──────────────────────────────────────────────────── */}
-      <MarketingClosingCTA />
+        <MarketingCuratedEditorial />
+        <MarketingHowItWorks />
+        <MarketingStudioPromo />
+        <MarketingProof />
+        <MarketingFAQ />
+        <MarketingInsightsTeaser />
+        <MarketingClosingCTA />
       </main>
 
       <MarketingFooter />
-
-      {/* Mobile-only sticky CTA; hidden on desktop and over the closing CTA. */}
       <MarketingStickyCTA />
 
       <style>{`
-        html { scroll-padding-top: 80px; }
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        .eah-cta-primary:hover { box-shadow: 0 6px 32px rgba(124,58,237,0.5) !important; }
-        .eah-hero-secondary:hover { color: #fff !important; text-decoration-color: #fff !important; }
-
-        .eah-feature-card { animation: fadeUp 0.5s ease both; }
-        .eah-feature-card:hover {
-          transform: translateY(-3px);
-          border-color: ${GOLD} !important;
-          box-shadow: 0 8px 32px rgba(26,23,21,0.08);
-        }
-        .eah-demo-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 12px 40px rgba(26,23,21,0.10);
-        }
-        .eah-demo-card:hover .eah-demo-thumb { transform: scale(1.04); }
-
+        html { scroll-padding-top: 88px; }
+        .eah-work-item:hover .eah-work-thumb { opacity: 0.9; }
         @media (max-width: 900px) {
-          .eah-features-grid, .eah-demos-grid { grid-template-columns: 1fr !important; }
+          .eah-work-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
         }
         @media (max-width: 640px) {
-          .eah-section { padding-top: 60px !important; padding-bottom: 60px !important; }
-          .eah-section p { line-height: 1.55 !important; }
-          .eah-hero { padding-top: 112px !important; padding-bottom: 56px !important; min-height: 0 !important; }
-          .eah-hero-actions { flex-direction: column; align-items: stretch !important; gap: 14px !important; }
-          .eah-hero-actions .eah-cta-primary { width: 100% !important; }
-          .eah-hero-actions a { text-align: center; }
-          .eah-hero-proof { gap: 8px 18px !important; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .eah-feature-card { animation: none !important; }
-          .eah-feature-card, .eah-demo-card, .eah-demo-thumb { transition: none !important; }
-          .eah-feature-card:hover, .eah-demo-card:hover { transform: none !important; }
-          .eah-demo-card:hover .eah-demo-thumb { transform: none !important; }
+          .eah-section { padding-top: 80px !important; padding-bottom: 80px !important; }
+          .eah-hero { padding-top: 120px !important; padding-bottom: 40px !important; }
+          .eah-hero-actions { flex-direction: column; align-items: stretch !important; }
+          .eah-hero-actions a { width: 100%; }
+          .eah-hero-proof { grid-template-columns: repeat(2, 1fr) !important; margin-top: 48px !important; }
         }
       `}</style>
     </div>
