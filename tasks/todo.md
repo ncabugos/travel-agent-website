@@ -339,5 +339,4 @@ notification). Test user removed.
 - [x] Admin sidebar grouped (Advisors / Content / Catalog), unique icons, client-side navigation, badges
 - [x] Agents, journal, promos, pillars, request detail now server-rendered; catalog pages use standard chrome
 - [x] Middleware caches the super-admin role lookup for 5 minutes
-- [ ] Pre-existing: hydration warning in dev on every page including /admin/login (not from this work)
 - [ ] Pre-existing lint: `any` in app/admin/page.tsx and categories page; setState-in-effect in StudioInquiryForm
