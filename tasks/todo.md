@@ -356,4 +356,4 @@ notification). Test user removed.
 - [x] brand/EAH_Brand_Style_Guide.html rewritten in the new system (principles, type, color, shape, buttons, imagery, email, downloads)
 - [x] Four Supabase auth templates on one skeleton, pushed live; all Resend emails on one shell via renderBrandedEmail; scripts/preview-emails.ts renders the set to scratch/emails
 - [x] Verified: tsc, eslint (StudioServices animation-hook findings are pre-existing), style sweeps on all three pages, email renders in headless Chrome
-- [ ] Follow-up: /insights, /support, and legal pages still use older inner styling inside the new nav and footer
+- [x] /insights (index, article, category, author), /support, /privacy, /terms restyled to the system (2026-09-15)

@@ -3,11 +3,16 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { MarketingNav } from '@/components/marketing/MarketingNav'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
+import { InsightsCard } from '@/components/marketing/InsightsCard'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { articleGraph } from '@/lib/insights-schema'
 import { getPostBySlug, getPublishedPosts, autop, wrapTables, estimateReadMinutes } from '@/lib/marketing-blog'
 import { sanitizeRichText } from '@/lib/sanitize-html'
 import { withUtm } from '@/lib/analytics'
+import {
+  BODY_FONT, BODY_STYLE, CHARCOAL, CREAM, DISPLAY_FONT, DIVIDER, GOLD, LABEL_STYLE,
+  PRIMARY_CTA_STYLE, SECONDARY_CTA_STYLE, WARM_GRAY, WARM_GRAY_DARK,
+} from '@/components/marketing/tokens'
 
 interface PageProps { params: Promise<{ slug: string }> }
 
@@ -48,7 +53,7 @@ export default async function InsightsPostPage({ params }: PageProps) {
     .filter(p => p.id !== post.id && (!post.category_id || p.category_id === post.category_id))
     .slice(0, 3)
   const fallback = all.filter(p => p.id !== post.id).slice(0, 3)
-  const recommended = (related.length ? related : fallback)
+  const recommended = related.length ? related : fallback
 
   const body = wrapTables(autop(sanitizeRichText(post.body_html)))
   const readMin = post.read_minutes || estimateReadMinutes(post.body_html)
@@ -59,146 +64,137 @@ export default async function InsightsPostPage({ params }: PageProps) {
   const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
   const fmtShort = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
 
+  const prose: React.CSSProperties = { maxWidth: '760px', margin: '0 auto' }
+
   return (
-    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', color: '#111', background: '#fff' }}>
+    <div className="eah-marketing" style={{ fontFamily: BODY_FONT, color: CHARCOAL, background: '#fff' }}>
       <JsonLd data={articleGraph(post)} />
       <MarketingNav />
+      <main>
+        <article>
+          <header className="eah-container" style={{ padding: '152px 40px 0' }}>
+            <div style={prose}>
+              <Link href="/insights" className="eah-link" style={{ fontSize: '14px', color: CHARCOAL }}>Insights</Link>
+              {post.category?.label && (
+                <p style={{ ...LABEL_STYLE, margin: '32px 0 20px' }}>
+                  <Link href={`/insights/category/${post.category.slug}`} style={{ color: 'inherit', textDecoration: 'none' }}>{post.category.label}</Link>
+                </p>
+              )}
+              <h1 style={{ fontFamily: DISPLAY_FONT, fontSize: 'clamp(34px, 4.5vw, 60px)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05, margin: '0 0 28px' }}>
+                {post.title}
+              </h1>
+              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '6px 16px', fontSize: '14px', color: WARM_GRAY_DARK, paddingBottom: '24px', borderBottom: `1px solid ${DIVIDER}` }}>
+                <Link href="/insights/author/nick" style={{ color: CHARCOAL, textDecoration: 'none', fontWeight: 500 }}>{post.author_name}</Link>
+                <span style={{ color: WARM_GRAY }}>{post.author_credentials}</span>
+                <span>{fmt(published)}</span>
+                <span>{readMin} min read</span>
+                {wasUpdated && <span style={{ color: WARM_GRAY }}>Updated {fmtShort(updated)}</span>}
+              </div>
+            </div>
+          </header>
 
-      {/* Header */}
-      <article style={{ maxWidth: 760, margin: '0 auto', padding: '120px 24px 0' }}>
-        <Link href="/insights" style={{ fontSize: 13, color: '#7c3aed', textDecoration: 'none', fontWeight: 600 }}>← Insights</Link>
-        {post.category?.label && (
-          <div style={{ marginTop: 24 }}>
-            <Link href={`/insights/category/${post.category.slug}`} style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#7c3aed', textDecoration: 'none' }}>
-              {post.category.label}
-            </Link>
+          {post.cover_image_url && (
+            <div className="eah-container" style={{ padding: '40px 40px 0' }}>
+              <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={post.cover_image_url} alt={post.title} style={{ width: '100%', display: 'block' }} />
+              </div>
+            </div>
+          )}
+
+          <div className="eah-container" style={{ padding: '48px 40px 0' }}>
+            <div className="insights-body" style={prose} dangerouslySetInnerHTML={{ __html: body }} />
           </div>
+
+          {post.faq.length > 0 && (
+            <section className="eah-container" style={{ padding: '64px 40px 0' }}>
+              <div style={prose}>
+                <p style={{ ...LABEL_STYLE, marginBottom: '24px' }}>Questions</p>
+                <dl style={{ margin: 0, borderTop: `1px solid ${DIVIDER}` }}>
+                  {post.faq.map((f, i) => (
+                    <div key={i} style={{ padding: '22px 0', borderBottom: `1px solid ${DIVIDER}` }}>
+                      <dt style={{ fontSize: '19px', fontWeight: 400, letterSpacing: '-0.01em', lineHeight: 1.3, margin: '0 0 10px' }}>{f.q}</dt>
+                      <dd style={{ ...BODY_STYLE, fontSize: '16px', margin: 0 }}>{f.a}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </section>
+          )}
+
+          <section className="eah-container" style={{ padding: '72px 40px 0' }}>
+            <div style={{ ...prose, background: CREAM, border: `1px solid ${DIVIDER}`, padding: '40px' }}>
+              <div aria-hidden style={{ width: '40px', height: '1px', background: GOLD, marginBottom: '24px' }} />
+              <h2 style={{ fontFamily: DISPLAY_FONT, fontSize: 'clamp(26px, 3vw, 36px)', fontWeight: 400, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 12px' }}>A website built for the top 1%.</h2>
+              <p style={{ ...BODY_STYLE, marginBottom: '28px', maxWidth: '48ch' }}>
+                A custom-branded advisor site on your own domain, with the supplier catalog and curated editorial kept current for you. Live within days.
+              </p>
+              <div className="eah-post-cta" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <a
+                  href={withUtm('/schedule-consultation', { source: 'insights', medium: 'blog', campaign: 'post_cta', content: post.slug })}
+                  data-event="insights_cta_click" data-prop-target="consultation" data-prop-slug={post.slug}
+                  className="eah-cta-primary" style={PRIMARY_CTA_STYLE}
+                >
+                  Request a consultation
+                </a>
+                <a
+                  href={withUtm('/agent-portal/register', { source: 'insights', medium: 'blog', campaign: 'post_cta', content: post.slug })}
+                  data-event="insights_cta_click" data-prop-target="register" data-prop-slug={post.slug}
+                  className="eah-cta-secondary on-light" style={{ ...SECONDARY_CTA_STYLE, color: CHARCOAL }}
+                >
+                  Create an advisor account
+                </a>
+              </div>
+            </div>
+          </section>
+        </article>
+
+        {recommended.length > 0 && (
+          <section className="eah-container" style={{ padding: '96px 40px 120px' }}>
+            <p style={{ ...LABEL_STYLE, marginBottom: '32px' }}>More from Insights</p>
+            <div className="eah-insights-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '48px 40px' }}>
+              {recommended.map(p => <InsightsCard key={p.id} post={p} />)}
+            </div>
+          </section>
         )}
-        <h1 style={{ fontSize: 'clamp(30px, 4.5vw, 46px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.12, margin: '14px 0 20px' }}>
-          {post.title}
-        </h1>
-
-        {/* Byline */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '6px 14px', fontSize: 14, color: '#52525b', paddingBottom: 28, borderBottom: '1px solid #ececec' }}>
-          <Link href="/insights/author/nick" style={{ fontWeight: 600, color: '#0a0a0a', textDecoration: 'none' }}>{post.author_name}</Link>
-          <span style={{ color: '#9ca3af' }}>{post.author_credentials}</span>
-          <span style={{ color: '#d4d4d8' }}>·</span>
-          <span>{fmt(published)}</span>
-          <span style={{ color: '#d4d4d8' }}>·</span>
-          <span>{readMin} min read</span>
-          {wasUpdated && <span style={{ color: '#9ca3af', fontStyle: 'italic' }}>Updated {fmtShort(updated)}</span>}
-        </div>
-      </article>
-
-      {/* Cover */}
-      {post.cover_image_url && (
-        <div style={{ maxWidth: 980, margin: '36px auto 0', padding: '0 24px' }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={post.cover_image_url} alt={post.title} style={{ width: '100%', borderRadius: 16, display: 'block' }} />
-        </div>
-      )}
-
-      {/* Body */}
-      <div className="insights-body" style={{ maxWidth: 760, margin: '0 auto', padding: '40px 24px 0' }}
-        dangerouslySetInnerHTML={{ __html: body }} />
-
-      {/* FAQ */}
-      {post.faq.length > 0 && (
-        <section style={{ maxWidth: 760, margin: '56px auto 0', padding: '0 24px' }}>
-          <h2 style={{ fontSize: 26, fontWeight: 700, letterSpacing: '-0.02em', margin: '0 0 24px' }}>Frequently asked questions</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            {post.faq.map((f, i) => (
-              <details key={i} style={{ borderTop: '1px solid #ececec', padding: '18px 0' }}>
-                <summary style={{ fontSize: 17, fontWeight: 600, cursor: 'pointer', listStyle: 'none', color: '#0a0a0a' }}>{f.q}</summary>
-                <p style={{ margin: '12px 0 0', fontSize: 16, lineHeight: 1.7, color: '#3f3f46' }}>{f.a}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* CTA */}
-      <section style={{ maxWidth: 760, margin: '64px auto 0', padding: '0 24px' }}>
-        <div style={{ background: 'linear-gradient(135deg, #faf5ff, #f5f3ff)', border: '1px solid #ede9fe', borderRadius: 20, padding: '40px 36px', textAlign: 'center' }}>
-          <h2 style={{ fontSize: 26, fontWeight: 700, letterSpacing: '-0.02em', margin: '0 0 10px' }}>A website built for the top 1%.</h2>
-          <p style={{ fontSize: 16, lineHeight: 1.6, color: '#52525b', margin: '0 auto 24px', maxWidth: 480 }}>
-            Elite Advisor Hub gives independent luxury advisors a Virtuoso-grade site in days — supplier catalog, curated editorial, and zero tech burden.
-          </p>
-          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a
-              href={withUtm('/agent-portal/register', { source: 'insights', medium: 'blog', campaign: 'post_cta', content: post.slug })}
-              data-event="insights_cta_click" data-prop-target="register" data-prop-slug={post.slug}
-              style={{ padding: '13px 28px', background: 'linear-gradient(135deg, #7c3aed, #a78bfa)', color: '#fff', borderRadius: 10, fontSize: 15, fontWeight: 600, textDecoration: 'none' }}
-            >
-              Sign up Now
-            </a>
-            <a
-              href={withUtm('/schedule-consultation', { source: 'insights', medium: 'blog', campaign: 'post_cta', content: post.slug })}
-              data-event="insights_cta_click" data-prop-target="consultation" data-prop-slug={post.slug}
-              style={{ padding: '13px 28px', background: '#fff', color: '#111', border: '1px solid #d1d5db', borderRadius: 10, fontSize: 15, fontWeight: 600, textDecoration: 'none' }}
-            >
-              Schedule a consultation
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Related */}
-      {recommended.length > 0 && (
-        <section style={{ maxWidth: 1200, margin: '80px auto 0', padding: '0 24px 100px' }}>
-          <h2 style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.02em', margin: '0 0 24px' }}>More from Insights</h2>
-          <div className="eah-insights-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28 }}>
-            {recommended.map(p => (
-              <Link key={p.id} href={`/insights/${p.slug}`} className="eah-insights-card" style={{ display: 'flex', flexDirection: 'column', background: '#fff', borderRadius: 16, overflow: 'hidden', border: '1px solid #ececec', textDecoration: 'none', color: '#0a0a0a', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}>
-                <div style={{ position: 'relative', aspectRatio: '16 / 10', background: '#f4f4f4' }}>
-                  {p.cover_image_url && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={p.cover_image_url} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                  )}
-                </div>
-                <div style={{ padding: '18px 20px 22px' }}>
-                  {p.category?.label && <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#7c3aed' }}>{p.category.label}</span>}
-                  <h3 style={{ margin: '8px 0 0', fontSize: 17, fontWeight: 600, lineHeight: 1.3 }}>{p.title}</h3>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
+      </main>
       <MarketingFooter />
 
       <style>{`
-        .insights-body { font-size: 18px; line-height: 1.8; color: #27272a; }
+        .insights-body { font-size: 18px; line-height: 1.75; color: ${WARM_GRAY_DARK}; }
         .insights-body p { margin: 0 0 22px; }
-        .insights-body h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.25; margin: 44px 0 16px; color: #0a0a0a; }
-        .insights-body h3 { font-size: 22px; font-weight: 600; line-height: 1.3; margin: 32px 0 12px; color: #0a0a0a; }
-        .insights-body h4 { font-size: 18px; font-weight: 600; margin: 24px 0 10px; color: #0a0a0a; }
+        .insights-body h2 { font-family: ${DISPLAY_FONT}; font-size: 32px; font-weight: 400; letter-spacing: -0.03em; line-height: 1.15; margin: 48px 0 16px; color: ${CHARCOAL}; }
+        .insights-body h3 { font-family: ${DISPLAY_FONT}; font-size: 24px; font-weight: 400; letter-spacing: -0.02em; line-height: 1.25; margin: 36px 0 12px; color: ${CHARCOAL}; }
+        .insights-body h4 { font-size: 18px; font-weight: 500; margin: 24px 0 10px; color: ${CHARCOAL}; }
         .insights-body ul, .insights-body ol { padding-left: 24px; margin: 0 0 22px; }
         .insights-body li { margin-bottom: 8px; }
-        .insights-body a { color: #7c3aed; text-decoration: underline; }
-        .insights-body img { max-width: 100%; height: auto; border-radius: 12px; margin: 28px 0; }
-        .insights-body blockquote { border-left: 3px solid #7c3aed; padding: 4px 0 4px 22px; margin: 28px 0; font-style: italic; color: #3f3f46; font-size: 20px; }
-        .insights-body blockquote.insights-cta { font-style: normal; font-size: 16px; color: #3f3f46; background: linear-gradient(135deg, #faf5ff, #f5f3ff); border: 1px solid #ede9fe; border-left: 1px solid #ede9fe; border-radius: 16px; padding: 26px 30px; margin: 40px 0; }
+        .insights-body strong { color: ${CHARCOAL}; font-weight: 500; }
+        .insights-body a { color: ${CHARCOAL}; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(26,23,21,0.35); }
+        .insights-body a:hover { text-decoration-color: currentColor; }
+        .insights-body img { max-width: 100%; height: auto; display: block; margin: 32px 0; }
+        .insights-body blockquote { border-left: 1px solid ${GOLD}; padding: 4px 0 4px 24px; margin: 32px 0; color: ${CHARCOAL}; font-size: 20px; line-height: 1.5; }
+        .insights-body blockquote.insights-cta { font-size: 16px; line-height: 1.6; color: ${WARM_GRAY_DARK}; background: ${CREAM}; border: 1px solid ${DIVIDER}; border-left: 1px solid ${DIVIDER}; padding: 24px 28px; margin: 36px 0; }
         .insights-body blockquote.insights-cta p { margin: 0 0 10px; }
-        .insights-body blockquote.insights-cta p:first-child { font-size: 19px; color: #0a0a0a; }
+        .insights-body blockquote.insights-cta p:first-child { font-size: 19px; color: ${CHARCOAL}; }
         .insights-body blockquote.insights-cta p:last-child { margin: 14px 0 0; }
-        .insights-body blockquote.insights-cta a { color: #7c3aed; text-decoration: none; }
         .insights-body .insights-table-wrap { overflow-x: auto; margin: 32px 0; -webkit-overflow-scrolling: touch; }
         .insights-body table { width: 100%; border-collapse: collapse; margin: 0; font-size: 15px; line-height: 1.5; }
         .insights-body th, .insights-body td { padding: 12px 16px; text-align: left; vertical-align: top; }
         .insights-body td p, .insights-body th p { margin: 0; }
-        .insights-body th { background: #1a1a1a; color: #fff; font-weight: 600; }
-        .insights-body tbody td { border-bottom: 1px solid #ececec; }
-        .insights-body tbody tr:nth-child(even) { background: #faf7ff; }
-        .insights-body tbody tr:last-child { background: #f5f3ff; }
-        .insights-body tbody tr:last-child td { border-bottom: 2px solid #7c3aed; }
-        .insights-body tbody tr:last-child td:first-child { font-weight: 600; }
-        .insights-body iframe { width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; border-radius: 12px; margin: 28px 0; }
-        .eah-insights-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px -12px rgba(0,0,0,0.15); }
-        details > summary::-webkit-details-marker { display: none; }
-        @media (max-width: 900px) { .eah-insights-grid { grid-template-columns: 1fr 1fr !important; } }
-        @media (max-width: 600px) { .eah-insights-grid { grid-template-columns: 1fr !important; } }
+        .insights-body th { background: ${CHARCOAL}; color: #fff; font-weight: 500; }
+        .insights-body tbody td { border-bottom: 1px solid ${DIVIDER}; }
+        .insights-body tbody tr:nth-child(even) { background: ${CREAM}; }
+        .insights-body tbody tr:last-child { background: ${CREAM}; }
+        .insights-body tbody tr:last-child td { border-bottom: 1px solid ${CHARCOAL}; color: ${CHARCOAL}; }
+        .insights-body tbody tr:last-child td:first-child { font-weight: 500; }
+        .insights-body iframe { width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; margin: 32px 0; }
+        .eah-insights-card img { transition: opacity 0.3s ease; }
+        .eah-insights-card:hover img { opacity: 0.88; }
+        @media (max-width: 900px) { .eah-insights-grid { grid-template-columns: 1fr 1fr !important; gap: 32px 24px !important; } }
+        @media (max-width: 640px) {
+          .eah-insights-grid { grid-template-columns: 1fr !important; }
+          .eah-post-cta a { width: 100%; }
+        }
       `}</style>
     </div>
   )

@@ -2,6 +2,7 @@
 
 import { useActionState } from 'react'
 import { submitSupportRequest, type SupportFormState } from '@/lib/actions/support'
+import { BODY_FONT, CHARCOAL, DIVIDER, GOLD, PRIMARY_CTA_STYLE, WARM_GRAY, WARM_GRAY_DARK } from './tokens'
 
 const CATEGORIES = [
   { value: 'technical', label: 'Technical issue' },
@@ -18,56 +19,39 @@ export function SupportForm() {
 
   if (state.success) {
     return (
-      <div style={{
-        background: '#f0fdf4',
-        border: '1px solid #bbf7d0',
-        borderRadius: 12,
-        padding: '32px 28px',
-        textAlign: 'center',
-      }}>
-        <div style={{ fontSize: 24, marginBottom: 8 }}>✓</div>
-        <h2 style={{ fontSize: 20, fontWeight: 600, color: '#111', margin: '0 0 8px' }}>
-          Message received
-        </h2>
-        <p style={{ fontSize: 14, color: '#374151', margin: '0 0 4px' }}>
-          We've sent a copy to your inbox. Our team will get back to you within one business day.
+      <div style={{ padding: '8px 0', fontFamily: BODY_FONT }}>
+        <div aria-hidden style={{ width: '40px', height: '1px', background: GOLD, marginBottom: '24px' }} />
+        <h2 style={{ fontSize: '28px', fontWeight: 400, letterSpacing: '-0.02em', color: CHARCOAL, margin: '0 0 12px' }}>Message received.</h2>
+        <p style={{ fontSize: '16px', color: WARM_GRAY_DARK, lineHeight: 1.6, maxWidth: '48ch', margin: '0 0 16px' }}>
+          We have sent a copy to your inbox. Our team will get back to you within one business day.
         </p>
-        <p style={{ fontSize: 13, color: '#6b7280', margin: '12px 0 0' }}>
-          Need to send another? <a href="/support" style={{ color: '#b45309', textDecoration: 'underline' }}>Open a new request</a>.
+        <p style={{ fontSize: '14px', color: WARM_GRAY, margin: 0 }}>
+          Need to send another? <a href="/support" className="eah-link" style={{ color: CHARCOAL }}>Open a new request</a>.
         </p>
       </div>
     )
   }
 
   return (
-    <form action={formAction} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+    <form action={formAction} style={{ display: 'flex', flexDirection: 'column', gap: '20px', fontFamily: BODY_FONT }}>
       {state.error && (
-        <div style={{
-          background: '#fef2f2',
-          border: '1px solid #fecaca',
-          color: '#991b1b',
-          padding: '12px 14px',
-          borderRadius: 8,
-          fontSize: 13,
-        }}>
-          {state.error}
-        </div>
+        <p style={{ fontSize: '14px', color: '#991b1b', margin: 0, paddingBottom: '16px', borderBottom: `1px solid ${DIVIDER}` }}>{state.error}</p>
       )}
 
       <Field label="Your name" htmlFor="name" required error={state.fieldErrors?.name}>
-        <input id="name" name="name" type="text" required style={inputStyle} placeholder="Jane Advisor" />
+        <input id="name" name="name" type="text" required className="eah-input" style={inputStyle} />
       </Field>
 
-      <Field label="Email address" htmlFor="email" required error={state.fieldErrors?.email}>
-        <input id="email" name="email" type="email" required style={inputStyle} placeholder="you@example.com" />
+      <Field label="Email" htmlFor="email" required error={state.fieldErrors?.email}>
+        <input id="email" name="email" type="email" required className="eah-input" style={inputStyle} />
       </Field>
 
-      <Field label="Agency name" htmlFor="agency" hint="Optional — helps us pull up your account.">
-        <input id="agency" name="agency" type="text" style={inputStyle} placeholder="e.g. Eden For Your World" />
+      <Field label="Agency name" htmlFor="agency" hint="Optional. Helps us find your account.">
+        <input id="agency" name="agency" type="text" className="eah-input" style={inputStyle} />
       </Field>
 
-      <Field label="What can we help with?" htmlFor="category">
-        <select id="category" name="category" defaultValue="technical" style={{ ...inputStyle, cursor: 'pointer' }}>
+      <Field label="What can we help with" htmlFor="category">
+        <select id="category" name="category" defaultValue="technical" className="eah-input" style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }}>
           {CATEGORIES.map(c => (
             <option key={c.value} value={c.value}>{c.label}</option>
           ))}
@@ -75,7 +59,7 @@ export function SupportForm() {
       </Field>
 
       <Field label="Subject" htmlFor="subject" required error={state.fieldErrors?.subject}>
-        <input id="subject" name="subject" type="text" required maxLength={120} style={inputStyle} placeholder="One-line summary" />
+        <input id="subject" name="subject" type="text" required maxLength={120} className="eah-input" style={inputStyle} />
       </Field>
 
       <Field label="Tell us more" htmlFor="message" required error={state.fieldErrors?.message}>
@@ -85,41 +69,22 @@ export function SupportForm() {
           required
           rows={6}
           maxLength={5000}
-          style={{ ...inputStyle, resize: 'vertical', fontFamily: 'inherit', lineHeight: 1.5 }}
-          placeholder="Steps to reproduce, screenshots if helpful, what you expected, what happened…"
+          className="eah-input"
+          style={{ ...inputStyle, resize: 'vertical', lineHeight: 1.6 }}
+          placeholder="Steps to reproduce, what you expected, and what happened."
         />
       </Field>
 
-      <button
-        type="submit"
-        disabled={pending}
-        style={{
-          marginTop: 8,
-          padding: '14px 24px',
-          background: pending ? '#6b7280' : '#111',
-          color: '#fff',
-          border: 'none',
-          borderRadius: 10,
-          fontSize: 14,
-          fontWeight: 600,
-          letterSpacing: '0.02em',
-          cursor: pending ? 'not-allowed' : 'pointer',
-          transition: 'background 0.2s',
-        }}
-      >
-        {pending ? 'Sending…' : 'Send message'}
+      <button type="submit" disabled={pending} className="eah-cta-primary" style={{ ...PRIMARY_CTA_STYLE, alignSelf: 'flex-start', marginTop: '8px', opacity: pending ? 0.6 : 1 }}>
+        {pending ? 'Sending' : 'Send message'}
       </button>
 
-      <p style={{ fontSize: 12, color: '#6b7280', margin: '4px 0 0', textAlign: 'center' }}>
-        Or email us directly at <a href="mailto:support@eliteadvisorhub.com" style={{ color: '#b45309' }}>support@eliteadvisorhub.com</a>
-      </p>
+      <style>{`.eah-input:focus { border-color: ${CHARCOAL} !important; }`}</style>
     </form>
   )
 }
 
-function Field({
-  label, htmlFor, required, hint, error, children,
-}: {
+function Field({ label, htmlFor, required, hint, error, children }: {
   label: string
   htmlFor: string
   required?: boolean
@@ -129,34 +94,26 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={htmlFor} style={{
-        display: 'block',
-        fontSize: 13,
-        fontWeight: 500,
-        color: '#374151',
-        marginBottom: 6,
-      }}>
-        {label}{required && <span style={{ color: '#dc2626', marginLeft: 3 }}>*</span>}
+      <label htmlFor={htmlFor} style={{ display: 'block', fontSize: '13px', fontWeight: 500, color: CHARCOAL, marginBottom: '8px' }}>
+        {label}{required && <span style={{ color: WARM_GRAY, marginLeft: '4px' }}>*</span>}
       </label>
       {children}
-      {hint && !error && (
-        <div style={{ fontSize: 12, color: '#9ca3af', marginTop: 4 }}>{hint}</div>
-      )}
-      {error && (
-        <div style={{ fontSize: 12, color: '#dc2626', marginTop: 4 }}>{error}</div>
-      )}
+      {hint && !error && <div style={{ fontSize: '13px', color: WARM_GRAY, marginTop: '6px' }}>{hint}</div>}
+      {error && <div style={{ fontSize: '13px', color: '#991b1b', marginTop: '6px' }}>{error}</div>}
     </div>
   )
 }
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
-  padding: '11px 14px',
-  fontSize: 14,
-  border: '1px solid #d1d5db',
-  borderRadius: 8,
+  padding: '12px 14px',
+  fontSize: '15px',
+  fontFamily: BODY_FONT,
+  border: `1px solid ${DIVIDER}`,
+  borderRadius: '2px',
   outline: 'none',
   background: '#fff',
-  color: '#111',
+  color: CHARCOAL,
   boxSizing: 'border-box',
+  transition: 'border-color 0.15s ease',
 }

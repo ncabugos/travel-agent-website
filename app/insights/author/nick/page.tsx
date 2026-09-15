@@ -6,13 +6,14 @@ import { InsightsCard } from '@/components/marketing/InsightsCard'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { organizationNode, SITE_URL } from '@/lib/insights-schema'
 import { getPublishedPosts } from '@/lib/marketing-blog'
+import { BODY_FONT, BODY_STYLE, CHARCOAL, DISPLAY_FONT, LABEL_STYLE, WARM_GRAY } from '@/components/marketing/tokens'
 
-const LINKEDIN = process.env.NEXT_PUBLIC_FOUNDER_LINKEDIN // optional, e.g. https://linkedin.com/in/...
+const LINKEDIN = process.env.NEXT_PUBLIC_FOUNDER_LINKEDIN
 
 export const metadata: Metadata = {
   title: 'Nick Cabugos — Founder, Elite Advisor Hub',
   description:
-    'Nick Cabugos is the founder of Elite Advisor Hub and a working luxury travel advisor. He writes Insights on advisor websites, SEO/AEO, and building a top-tier practice.',
+    'Nick Cabugos is the founder of Elite Advisor Hub and a working luxury travel advisor. He writes Insights on advisor websites, SEO and AI search, and building a top-tier practice.',
   alternates: { canonical: '/insights/author/nick' },
 }
 
@@ -36,48 +37,47 @@ export default async function AuthorPage() {
   ]
 
   return (
-    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', color: '#111', background: '#fff' }}>
+    <div className="eah-marketing" style={{ fontFamily: BODY_FONT, color: CHARCOAL, background: '#fff' }}>
       <JsonLd data={personGraph} />
       <MarketingNav />
-
-      <section style={{ padding: '128px 24px 48px', maxWidth: 760, margin: '0 auto' }}>
-        <Link href="/insights" style={{ fontSize: 13, color: '#7c3aed', textDecoration: 'none', fontWeight: 600 }}>← Insights</Link>
-        <span style={{ display: 'block', fontSize: 12, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#7c3aed', margin: '24px 0 12px' }}>Author</span>
-        <h1 style={{ fontSize: 'clamp(30px, 4.5vw, 44px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 12px' }}>Nick Cabugos</h1>
-        <p style={{ fontSize: 16, fontWeight: 600, color: '#7c3aed', margin: '0 0 20px' }}>Founder of Elite Advisor Hub · Working luxury travel advisor</p>
-        <p style={{ fontSize: 18, lineHeight: 1.7, color: '#3f3f46', margin: '0 0 16px' }}>
-          Nick founded Elite Advisor Hub to give independent luxury advisors the website infrastructure the
-          top 1% of the industry expects — without the developer retainers, hosting headaches, or year-long builds.
-        </p>
-        <p style={{ fontSize: 18, lineHeight: 1.7, color: '#3f3f46', margin: 0 }}>
-          He is a working luxury travel advisor, which means every article here is written by someone who does
-          the work — the kind of first-hand expertise Google and AI answer engines now reward.
-        </p>
-        <div style={{ display: 'flex', gap: 12, marginTop: 24, flexWrap: 'wrap' }}>
-          {LINKEDIN && (
-            <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" style={chipLink}>LinkedIn ↗</a>
-          )}
-          <Link href="/schedule-consultation" style={chipLink}>Explore Elite Advisor Hub →</Link>
-        </div>
-      </section>
-
-      {posts.length > 0 && (
-        <section style={{ padding: '0 24px 100px', maxWidth: 1200, margin: '0 auto' }}>
-          <h2 style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.02em', margin: '0 0 24px' }}>Recent articles by Nick</h2>
-          <div className="eah-insights-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28 }}>
-            {posts.map(p => <InsightsCard key={p.id} post={p} />)}
+      <main>
+        <section style={{ padding: '176px 0 72px' }}>
+          <div className="eah-container">
+            <Link href="/insights" className="eah-link" style={{ fontSize: '14px', color: CHARCOAL }}>Insights</Link>
+            <p style={{ ...LABEL_STYLE, margin: '32px 0 24px' }}>Author</p>
+            <h1 style={{ fontFamily: DISPLAY_FONT, fontSize: 'clamp(40px, 5.6vw, 80px)', fontWeight: 300, letterSpacing: '-0.035em', lineHeight: 1.0, margin: '0 0 16px' }}>Nick Cabugos</h1>
+            <p style={{ fontSize: '15px', color: WARM_GRAY, margin: '0 0 32px' }}>Founder of Elite Advisor Hub. Working luxury travel advisor.</p>
+            <p style={{ ...BODY_STYLE, fontSize: '18px', maxWidth: '58ch', marginBottom: '16px' }}>
+              Nick founded Elite Advisor Hub to give independent luxury advisors the website infrastructure the top 1% of the industry expects, without the developer retainers, hosting headaches, or year-long builds.
+            </p>
+            <p style={{ ...BODY_STYLE, fontSize: '18px', maxWidth: '58ch', marginBottom: '32px' }}>
+              He is a working luxury travel advisor, which means every article here is written by someone who does the work: the kind of first-hand expertise Google and AI answer engines now reward.
+            </p>
+            <div style={{ display: 'flex', gap: '28px', flexWrap: 'wrap' }}>
+              {LINKEDIN && <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="eah-link" style={{ fontSize: '15px', color: CHARCOAL }}>LinkedIn</a>}
+              <Link href="/schedule-consultation" className="eah-link" style={{ fontSize: '15px', color: CHARCOAL }}>Schedule a consultation</Link>
+            </div>
           </div>
         </section>
-      )}
 
+        {posts.length > 0 && (
+          <section style={{ padding: '0 0 120px' }}>
+            <div className="eah-container">
+              <p style={{ ...LABEL_STYLE, marginBottom: '32px' }}>Recent articles by Nick</p>
+              <div className="eah-insights-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '48px 40px' }}>
+                {posts.map(p => <InsightsCard key={p.id} post={p} />)}
+              </div>
+            </div>
+          </section>
+        )}
+      </main>
       <MarketingFooter />
       <style>{`
-        .eah-insights-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px -12px rgba(0,0,0,0.15); border-color: rgba(124,58,237,0.25) !important; }
-        @media (max-width: 900px) { .eah-insights-grid { grid-template-columns: 1fr 1fr !important; } }
+        .eah-insights-card img { transition: opacity 0.3s ease; }
+        .eah-insights-card:hover img { opacity: 0.88; }
+        @media (max-width: 900px) { .eah-insights-grid { grid-template-columns: 1fr 1fr !important; gap: 32px 24px !important; } }
         @media (max-width: 600px) { .eah-insights-grid { grid-template-columns: 1fr !important; } }
       `}</style>
     </div>
   )
 }
-
-const chipLink: React.CSSProperties = { padding: '10px 20px', borderRadius: 10, border: '1px solid #d1d5db', fontSize: 14, fontWeight: 600, color: '#111', textDecoration: 'none', background: '#fff' }

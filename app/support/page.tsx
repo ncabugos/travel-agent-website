@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { SupportForm } from '@/components/marketing/SupportForm'
+import { MarketingNav } from '@/components/marketing/MarketingNav'
 import { MarketingFooter } from '@/components/marketing/MarketingFooter'
+import { SupportForm } from '@/components/marketing/SupportForm'
+import { BODY_FONT, BODY_STYLE, CHARCOAL, DISPLAY_FONT, DIVIDER, LABEL_STYLE, WARM_GRAY } from '@/components/marketing/tokens'
 
 export const metadata: Metadata = {
   title: 'Customer Support',
@@ -9,132 +11,57 @@ export const metadata: Metadata = {
     'Get help with your Elite Advisor Hub account, billing, or technical issues. We respond within one business day.',
 }
 
+const CONTACTS = [
+  { label: 'Email', value: 'support@eliteadvisorhub.com', href: 'mailto:support@eliteadvisorhub.com' },
+  { label: 'Billing', value: 'billing@eliteadvisorhub.com', href: 'mailto:billing@eliteadvisorhub.com' },
+  { label: 'Mailing address', value: '1016 Cliff Drive, Santa Barbara, CA 93109' },
+]
+
 export default function SupportPage() {
   return (
-    <main style={{ background: '#fafafa', minHeight: '100vh' }}>
-      <div style={{ maxWidth: 640, margin: '0 auto', padding: '64px 24px 96px' }}>
-        <Link
-          href="/"
-          style={{
-            display: 'inline-block',
-            marginBottom: 32,
-            fontSize: 12,
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color: '#6b7280',
-            textDecoration: 'none',
-          }}
-        >
-          ← Elite Advisor Hub
-        </Link>
+    <div className="eah-marketing" style={{ fontFamily: BODY_FONT, color: CHARCOAL, background: '#fff', minHeight: '100vh' }}>
+      <MarketingNav minimal />
+      <main>
+        <section style={{ padding: '176px 0 64px' }}>
+          <div className="eah-container">
+            <p style={{ ...LABEL_STYLE, marginBottom: '24px' }}>Support</p>
+            <h1 style={{ fontFamily: DISPLAY_FONT, fontSize: 'clamp(40px, 5.6vw, 80px)', fontWeight: 300, letterSpacing: '-0.035em', lineHeight: 1.0, margin: '0 0 24px', maxWidth: '14ch' }}>
+              How can we help?
+            </h1>
+            <p style={{ ...BODY_STYLE, fontSize: '19px', maxWidth: '52ch' }}>
+              We respond to every message within one business day. Tell us what is going on and we take it from there.
+            </p>
+          </div>
+        </section>
 
-        <h1 style={{
-          fontSize: 'clamp(2rem, 4vw, 2.6rem)',
-          fontWeight: 600,
-          color: '#111',
-          margin: '0 0 12px',
-          lineHeight: 1.2,
-        }}>
-          How can we help?
-        </h1>
-
-        <p style={{
-          fontSize: 16,
-          color: '#4b5563',
-          lineHeight: 1.55,
-          margin: '0 0 14px',
-        }}>
-          Our team responds to every message within one business day. Tell us what's going on
-          and we'll take it from there.
-        </p>
-
-        {/* Quick contact cards */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 12,
-          margin: '0 0 32px',
-        }} className="support-quick">
-          <ContactCard
-            label="Email"
-            value="support@eliteadvisorhub.com"
-            href="mailto:support@eliteadvisorhub.com"
-          />
-          <ContactCard
-            label="Mailing address"
-            value="1016 Cliff Drive, Santa Barbara, CA 93109"
-          />
-        </div>
-
-        {/* Form card */}
-        <div style={{
-          background: '#fff',
-          border: '1px solid #e5e7eb',
-          borderRadius: 14,
-          padding: '28px 26px',
-          boxShadow: '0 1px 2px rgba(0,0,0,0.02)',
-        }}>
-          <SupportForm />
-        </div>
-
-        <p style={{
-          marginTop: 24,
-          fontSize: 13,
-          color: '#9ca3af',
-          textAlign: 'center',
-        }}>
-          For billing questions you can also reach out at{' '}
-          <a href="mailto:billing@eliteadvisorhub.com" style={{ color: '#6b7280' }}>billing@eliteadvisorhub.com</a>
-          {' · '}
-          For privacy or legal inquiries, see our{' '}
-          <Link href="/privacy" style={{ color: '#6b7280' }}>Privacy Policy</Link>.
-        </p>
-      </div>
-
-      <style>{`
-        @media (max-width: 600px) {
-          .support-quick {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
-
+        <section style={{ padding: '0 0 120px' }}>
+          <div className="eah-container support-grid" style={{ display: 'grid', gridTemplateColumns: '4fr 8fr', gap: '64px', alignItems: 'start' }}>
+            <div>
+              <dl style={{ margin: 0, borderTop: `1px solid ${DIVIDER}` }}>
+                {CONTACTS.map((c) => (
+                  <div key={c.label} style={{ padding: '18px 0', borderBottom: `1px solid ${DIVIDER}` }}>
+                    <dt style={{ ...LABEL_STYLE, marginBottom: '8px' }}>{c.label}</dt>
+                    <dd style={{ margin: 0, fontSize: '15px', lineHeight: 1.5 }}>
+                      {c.href ? <a href={c.href} className="eah-link" style={{ color: CHARCOAL }}>{c.value}</a> : c.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <p style={{ fontSize: '14px', color: WARM_GRAY, lineHeight: 1.6, margin: '24px 0 0' }}>
+                For privacy or legal inquiries, see the{' '}
+                <Link href="/privacy" className="eah-link" style={{ color: CHARCOAL }}>privacy policy</Link>.
+              </p>
+            </div>
+            <div style={{ maxWidth: '640px' }}>
+              <SupportForm />
+            </div>
+          </div>
+        </section>
+      </main>
       <MarketingFooter />
-    </main>
+      <style>{`
+        @media (max-width: 900px) { .support-grid { grid-template-columns: 1fr !important; gap: 40px !important; } }
+      `}</style>
+    </div>
   )
-}
-
-function ContactCard({ label, value, href }: { label: string; value: string; href?: string }) {
-  const inner = (
-    <>
-      <div style={{
-        fontSize: 11,
-        textTransform: 'uppercase',
-        letterSpacing: '0.12em',
-        color: '#9ca3af',
-        marginBottom: 4,
-      }}>
-        {label}
-      </div>
-      <div style={{
-        fontSize: 13,
-        color: '#1f2937',
-        fontWeight: 500,
-        wordBreak: 'break-word',
-      }}>
-        {value}
-      </div>
-    </>
-  )
-  const baseStyle: React.CSSProperties = {
-    background: '#fff',
-    border: '1px solid #e5e7eb',
-    borderRadius: 10,
-    padding: '14px 16px',
-    textDecoration: 'none',
-    display: 'block',
-  }
-  return href
-    ? <a href={href} style={baseStyle}>{inner}</a>
-    : <div style={baseStyle}>{inner}</div>
 }
