@@ -59,7 +59,7 @@ const DEMOS: Demo[] = [
     kind: 'Live',
     line: 'Wine country, wellness retreats, villas, and river cruises with VIP hotel benefits.',
     href: 'https://wineandwellnesstravel.com',
-    thumbnail: '/demos/wine_and_wellness.jpg',
+    thumbnail: '/demos/wine_and_wellness-v2.jpg',
     external: true,
   },
   {
