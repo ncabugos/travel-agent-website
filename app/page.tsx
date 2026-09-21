@@ -8,7 +8,6 @@ import { MarketingSupplierPrograms } from '@/components/marketing/MarketingSuppl
 import { MarketingCuratedEditorial } from '@/components/marketing/MarketingCuratedEditorial'
 import { MarketingHowItWorks } from '@/components/marketing/MarketingHowItWorks'
 import { MarketingStudioPromo } from '@/components/marketing/MarketingStudioPromo'
-import { MarketingProof } from '@/components/marketing/MarketingProof'
 import { MarketingFAQ } from '@/components/marketing/MarketingFAQ'
 import { MarketingInsightsTeaser } from '@/components/marketing/MarketingInsightsTeaser'
 import { MarketingClosingCTA } from '@/components/marketing/MarketingClosingCTA'
@@ -30,7 +29,7 @@ export const metadata = {
  * screen, always "Request a consultation". Secondary links are text-weight.
  *
  *   Hero → Networks → Platform (spec list) → Catalog → Work → Editorial
- *   → How it works → Studio band → Founder → Questions → Insights → Closing
+ *   → How it works → Studio band → Questions → Insights → Closing
  */
 
 interface Demo {
@@ -234,7 +233,6 @@ export default function EliteAdvisorHubHomePage() {
         <MarketingCuratedEditorial />
         <MarketingHowItWorks />
         <MarketingStudioPromo />
-        <MarketingProof />
         <MarketingFAQ />
         <MarketingInsightsTeaser />
         <MarketingClosingCTA />
