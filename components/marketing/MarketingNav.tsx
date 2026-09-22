@@ -8,6 +8,7 @@ import { CHARCOAL, PRIMARY_CTA_STYLE, PRIMARY_CTA_LABEL } from './tokens'
 const NAV_LINKS = [
   { label: 'Platform', href: '/#platform' },
   { label: 'Work',     href: '/#work' },
+  { label: 'Pricing',  href: '/#pricing' },
   { label: 'Studio',   href: '/studio' },
   { label: 'Insights', href: '/insights' },
 ]

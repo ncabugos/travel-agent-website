@@ -7,6 +7,7 @@ import { PlatformSpecList } from '@/components/marketing/PlatformSpecList'
 import { MarketingSupplierPrograms } from '@/components/marketing/MarketingSupplierPrograms'
 import { MarketingCuratedEditorial } from '@/components/marketing/MarketingCuratedEditorial'
 import { MarketingHowItWorks } from '@/components/marketing/MarketingHowItWorks'
+import { MarketingPricing } from '@/components/marketing/MarketingPricing'
 import { MarketingStudioPromo } from '@/components/marketing/MarketingStudioPromo'
 import { MarketingFAQ } from '@/components/marketing/MarketingFAQ'
 import { MarketingInsightsTeaser } from '@/components/marketing/MarketingInsightsTeaser'
@@ -232,6 +233,7 @@ export default function EliteAdvisorHubHomePage() {
 
         <MarketingCuratedEditorial />
         <MarketingHowItWorks />
+        <MarketingPricing />
         <MarketingStudioPromo />
         <MarketingFAQ />
         <MarketingInsightsTeaser />

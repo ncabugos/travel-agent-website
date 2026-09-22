@@ -138,3 +138,79 @@ export const usd = (n: number) =>
     currency: 'USD',
     maximumFractionDigits: 0,
   }).format(n)
+
+/**
+ * Public plans (September 2026). Three tiers shown on the homepage pricing
+ * section; every consultation is quoted from these. Stripe still bills the
+ * BASE_PLAN above until per-tier prices exist — see docs/business-model-v2.md.
+ */
+export interface PublicTier {
+  key: 'starter' | 'growth' | 'agency'
+  name: string
+  /** Omitted when the monthly rate is quoted on a consultation. */
+  monthly?: number
+  setup: number
+  audience: string
+  highlight: boolean
+  includes?: string
+  features: string[]
+}
+
+export const PUBLIC_TIERS: PublicTier[] = [
+  {
+    key: 'starter',
+    name: 'Starter',
+    monthly: 59,
+    setup: 1499,
+    audience: 'For solo advisors launching a first independent site.',
+    highlight: false,
+    features: [
+      'Custom-branded 4-page site on your own domain',
+      'Hotel program pages: Aman, Four Seasons, Belmond, and more',
+      'Journal: write and publish your own posts',
+      'Contact form and private lead inbox',
+      'SEO, AEO, and GEO: sitemap and structured data',
+      'Client testimonials',
+      'Instagram feed',
+      'Curated supplier media gallery',
+      'One-on-one support',
+      'Analytics and tracking',
+    ],
+  },
+  {
+    key: 'growth',
+    name: 'Boutique Agency',
+    monthly: 79,
+    setup: 2500,
+    audience: 'For established advisors and small teams with real volume.',
+    highlight: true,
+    includes: 'Everything in Starter, plus',
+    features: [
+      'Hotel directory: 1,795+ properties with lead routing',
+      'Cruise directory',
+      'Curated editorial: one written post a week',
+      'YouTube integration',
+      'CRM integration',
+      'Team page with advisor profiles',
+      'Villa catalog add-on, $29/mo',
+    ],
+  },
+  {
+    key: 'agency',
+    name: 'Agency',
+    setup: 4999,
+    audience: 'For multi-advisor agencies under one brand and one bill.',
+    highlight: false,
+    includes: 'Everything in Boutique Agency, plus',
+    features: [
+      'Multiple advisors under one agency brand',
+      'Every affiliate site managed in one place',
+      'Advisor directory with a profile page per advisor',
+      'Per-advisor lead routing',
+      'Co-authored editorial: two posts a week per advisor',
+      'White-label branding',
+      'Villa catalog and bespoke design',
+      'Unified billing across advisors',
+    ],
+  },
+]

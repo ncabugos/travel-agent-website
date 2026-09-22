@@ -357,3 +357,13 @@ notification). Test user removed.
 - [x] Four Supabase auth templates on one skeleton, pushed live; all Resend emails on one shell via renderBrandedEmail; scripts/preview-emails.ts renders the set to scratch/emails
 - [x] Verified: tsc, eslint (StudioServices animation-hook findings are pre-existing), style sweeps on all three pages, email renders in headless Chrome
 - [x] /insights (index, article, category, author), /support, /privacy, /terms restyled to the system (2026-09-15)
+
+## 2026-09-22 — Three-tier pricing on the homepage
+
+- [x] `PUBLIC_TIERS` added to lib/pricing.ts (Starter $1,499/$59 · Boutique Agency $2,500/$79 · Agency $4,999 setup, monthly quoted per site count) with the operator's revised feature lists
+- [x] `MarketingPricing` section on the homepage after How it works: three cards, middle card inverted and lifted with "Most popular", one purple CTA, checkmark lists, freelance-build anchor line
+- [x] "Pricing" added to the marketing nav; consultation form tier labels aligned to the new names
+- [x] Verified: tsc, eslint, 1280 and 375 views, no console errors, no horizontal scroll on phone
+- [ ] Stripe: per-tier prices + setup-fee line items; portal billing page still shows the $79 no-setup base plan
+- [ ] Decide whether the 30-day complimentary period survives alongside setup fees
+- [ ] Not built yet but listed: YouTube integration, CRM integration, white-label, per-advisor lead routing, affiliate site management
