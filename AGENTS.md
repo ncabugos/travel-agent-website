@@ -32,38 +32,52 @@ keyed on `agents.custom_domain → { agentId, template }`).
 
 ---
 
-## 3. Pricing model (business model v2, July 2026)
+## 3. Pricing model (three public tiers, September 2026)
 
-**Governing doc: `docs/business-model-v2.md`** (land / expand / monetize-the-network). The
-public offer is **one entry plan + à-la-carte expansion**, not a tier ladder:
+**Governing doc: `docs/business-model-v2.md`** (land / expand / monetize-the-network, with the
+September 2026 tier update at the top). The public offer is **three tiers on the homepage
+`#pricing` section**, rendered from `PUBLIC_TIERS` in `lib/pricing.ts`:
 
-- **The Site** — $79/mo, **no setup fee, first 30 days complimentary** (card on file; Stripe
-  trial auto-converts on day 31). Custom-branded site, supplier catalog, journal, lead inbox,
-  portal. In copy the trial is always "with our compliments," never "free trial."
-- **Modules** (portal add-ons; Phase 1 request-based, Phase 2 self-serve billing): curated
-  editorial $49/mo · Editorial+ $99/mo · hotel/cruise directories $39/mo · Instagram feed
-  $19/mo · villa catalog $29/mo. Display constants live in `lib/pricing.ts`.
-- **Studio services** (ordered from the portal Services page, rides `edit_requests`): new page
-  from $450, design refresh from $750, social from $500/mo, etc.
-- **Agency** — consultative, from $899/mo + from $4,999 setup. Unchanged.
+- **Starter** — $1,499 setup + $59/mo. Custom-branded 4-page site, hotel program pages,
+  journal, contact form + lead inbox, SEO/AEO/GEO, testimonials, Instagram feed, supplier media
+  gallery, one-on-one support, analytics. Internal tier key `starter`.
+- **Boutique Agency** — $2,500 setup + $79/mo, the highlighted "Most popular" card. Everything
+  in Starter plus searchable hotel directory (1,795+ properties, lead routing), cruise directory,
+  curated editorial (one post a week), YouTube and CRM integration, team page, villa catalog
+  add-on $29/mo. Internal tier key `growth`.
+- **Agency** — $4,999 setup, **monthly quoted on the number of sites** (never show a monthly
+  figure). Everything in Boutique Agency plus multi-advisor under one brand, affiliate sites
+  managed in one place, advisor directory with profile pages, per-advisor lead routing,
+  co-authored editorial (two posts a week per advisor), white-label, villa catalog and bespoke
+  design, unified billing. Internal tier key `agency`.
+- **Positioning line:** "The site your CRM doesn't give you." Competitor names stay off the
+  public site; the TravelJoy / Tern / Travefy comparisons are for outreach.
+- **Modules** (portal add-ons; still request-based until per-module billing ships): curated
+  editorial $49/mo · Editorial+ $99/mo · directories $39/mo · Instagram $19/mo · villas $29/mo.
+- **Studio services** (portal Services page, rides `edit_requests`): new page from $450, design
+  refresh from $750, social from $500/mo, etc.
 - **Supplier partnerships** — featured placement + sponsored editorial sold to luxury suppliers
   once the network reaches ~30 advisors (the ApproachGuides play).
 
-**The internal Growth ($179/$1,499) and Custom ($349/$2,999) tiers still exist** as feature
-gates and for grandfathered accounts (Eden For Your World). They are no longer marketed as
-public tiers; module gating maps onto them until per-module entitlements ship. Every site
-remains a **custom-branded build** — the internal template is an implementation detail, not a
-marketing axis.
+**Billing lag:** Stripe still bills the July 2026 base plan ($79/mo, no setup, 30-day
+complimentary period) and the portal billing page still shows `BASE_PLAN`. Per-tier Stripe
+prices, setup-fee line items, and whether the complimentary period survives are open items.
+The pricing cards do not mention a trial.
 
-**Curated editorials are hard-gated to Growth+.** Starter advisors get the journal module (M18) so
+**The internal Custom tier ($349/$2,999) still exists** as a feature gate and for grandfathered
+accounts (Eden For Your World is on `growth`). It is not marketed. Every site remains a
+**custom-branded build** — the internal template is an implementation detail, not a marketing
+axis.
+
+**Curated editorials are hard-gated to Growth+ (Boutique Agency and up).** Starter advisors get the journal module (M18) so
 they can publish their own pieces via the Tiptap editor, but the operator-produced curated stream
-does not flow to Starter sites. Upgrade to Growth is the only path in.
+does not flow to Starter sites. Upgrade to Boutique Agency is the only path in.
 
 **Core modules on every tier:** M05 Virtuoso · M06 Partner Tabs · M07 Hotel Programs teaser ·
 M09/M10 brand pages · M18 Journal (writeable on all tiers; curated stream Growth+) · M20 Contact.
 
-**Villa module** lives at Custom and above only. The villa catalog is being refined for specialized
-advisors; do not surface villas on Starter or Growth UIs.
+**Villa module** is an add-on at Boutique Agency and included at Agency (internal gate: Custom+ or the
+`villas` module). Do not surface villas on Starter UIs.
 
 **Agent directory** is the Agency-tier differentiator — a unified listing of advisors under one
 agency brand, with individual profiles, agency-wide lead routing, and a shared content library.

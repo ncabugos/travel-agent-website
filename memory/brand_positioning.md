@@ -10,7 +10,7 @@ EAH is positioned for **the top 1% of travel advisors — and the advisors becom
 
 **How to apply:** all marketing copy, journal posts that surface on eliteadvisorhub.com, supplier pitch decks, and onboarding emails route through `docs/brand-positioning.md`. Voice test: would a senior advisor at a $5M-revenue agency read this copy and respect the platform? If unsure, ask the operator.
 
-**Why this works alongside the $89 Starter tier:** Starter is the foothold for advisors *on the path* to top 1%. Copy reads "built by and for the world's top travel advisors" — aspirational without exclusionary. Same play Notion, Linear, Figma run successfully.
+**Why this works alongside the $59 Starter tier ($1,499 setup):** Starter is the foothold for advisors *on the path* to top 1%. Copy reads "built by and for the world's top travel advisors" — aspirational without exclusionary. Same play Notion, Linear, Figma run successfully.
 
 **Forbidden phrases:** "modern travel agency website," "unlock your potential," "take your business to the next level," "affordable solutions," "all-in-one platform," "game-changer," "disruptor," "beautiful, modern design." Full list in docs/brand-positioning.md.
 

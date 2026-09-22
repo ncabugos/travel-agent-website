@@ -26,7 +26,7 @@ A module is "must render" if a prospect would reasonably expect to see it after 
 
 ---
 
-## Tier 1 — Starter · $89/mo · $499 setup
+## Tier 1 — Starter · $59/mo · $1,499 setup
 
 **Templates eligible:** `frontend` only.
 **Why locked to frontend:** Removes the t2/t3-curated-grid build dependency from launch. Curated t2/t3 Starter variants follow in Month 2–3 (Feature Matrix sheet 7, P2).
@@ -77,7 +77,7 @@ A module is "must render" if a prospect would reasonably expect to see it after 
 
 ---
 
-## Tier 2 — Growth · $179/mo · $1,499 setup
+## Tier 2 — Boutique Agency (internal key `growth`) · $79/mo · $2,500 setup
 
 **Templates eligible:** `t2 Vista` OR `t3 Meridian`.
 **Two demos are required at this tier** — one for each template, so prospects can choose the look.
@@ -130,7 +130,7 @@ Each is ~4 hours end-to-end via the `scripts/seed_*.js` pattern.
 
 ---
 
-## Tier 3 — Custom · $349/mo · $2,999 setup
+## Tier 3 — Custom · internal gate only, not marketed since September 2026
 
 **Templates eligible:** any (`frontend`, `t2`, `t3`, `t4` Casa Solis).
 **Why "any":** Custom is where bespoke design and the flagship `t4` template live. A Custom advisor may want a polished `frontend` site too, just hand-tuned.
@@ -171,7 +171,7 @@ Each is ~4 hours end-to-end via the `scripts/seed_*.js` pattern.
 
 ---
 
-## Tier 4 — Agency · from $899/mo · from $4,999 setup
+## Tier 4 — Agency · $4,999 setup · monthly quoted on number of sites
 
 **Templates eligible:** typically `t2` (multi-advisor density). `t3` and `t4` Agency variants are not viable until P3 gaps close.
 

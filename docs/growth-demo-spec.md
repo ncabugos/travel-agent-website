@@ -1,6 +1,6 @@
 # Growth Demo — Outline & Sitemap
 
-**Tier:** Growth · $179/mo · $1,499 setup
+**Tier:** Boutique Agency (internal key `growth`) · $79/mo · $2,500 setup
 **Templates:** `t2 Vista` AND `t3 Meridian` (two demos required — prospects choose their look)
 **Demo slugs:** `t2-demo` and `t3-demo` (existing placeholders — this spec is what they should become)
 **Persona used in this spec:** Coast & Compass Travel — coastal escapes and small-ship voyage specialist. _Same persona on both templates so content and supplier data are reusable._
@@ -29,7 +29,7 @@ The Coast & Compass persona works on both because the niche (coastal escapes + s
 
 A prospect lands here from the pricing page after reading the Growth row. The demo has to answer four questions:
 
-1. **"Is $179/month enough website to actually compete for $30k–$80k trips?"** Yes — the searchable hotel directory, searchable cruise directory, and Experiences module together prove the advisor has real inventory depth, not just a marketing site.
+1. **"Is $79/month enough website to actually compete for $30k–$80k trips?"** Yes — the searchable hotel directory, searchable cruise directory, and Experiences module together prove the advisor has real inventory depth, not just a marketing site.
 2. **"What does Growth add that Starter doesn't?"** The searchable directories, `/experiences`, `/plan-a-trip`, Instagram feed, and testimonials grid are visible and tangible. A prospect can flip between `starter-demo` and this demo and feel the gap immediately.
 3. **"What's the upgrade path to Custom?"** The villa add-on isn't visible (correct — it's an add-on, not standard at Growth). No `/atelier`, no `/press`, no bespoke layout. Custom feels earned, not arbitrary.
 4. **"Do I like the look?"** Two templates, same persona, side-by-side. The prospect picks before they buy.

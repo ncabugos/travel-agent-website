@@ -6,7 +6,7 @@ type: project
 
 EAH revenue compounds across three product layers, each launching in a different phase:
 
-**Layer 1 — SaaS (live now, public Phase 2 ~Sep–Oct 2026).** Tier matrix is LOCKED: Starter $89/$499, Growth $179/$1,499, Custom $349/$2,999, Agency from $899/$4,999. Locked in `CLAUDE.md` §3 and authoritative in `Elite_Advisor_Hub_Feature_Matrix.xlsx`.
+**Layer 1 — SaaS (live now, public Phase 2 ~Sep–Oct 2026).** Public tiers since 2026-09-22: Starter $1,499/$59, Boutique Agency $2,500/$79 (internal key `growth`), Agency $4,999 setup with monthly quoted per site count. Custom ($349/$2,999) is an internal gate only. Defined in `CLAUDE.md` §3; feature lists in `lib/pricing.ts`; the May 2026 module matrix in `Elite_Advisor_Hub_Feature_Matrix.xlsx` still governs which module ships on which internal tier.
 
 **Layer 2 — Studio (Phase 3, ~Nov 2026–Feb 2027, Month 9+).** Content syndication: operator-produced articles, social posts, email templates that advisors rebrand and push to their own clients. Plans: Lite $79, Pro $149, Agency $399+. Sold standalone OR bundled with SaaS. **Why:** Why: infinite operating leverage — one Claude-produced article rides 40 advisor distributions. How to apply: do NOT launch Studio at SaaS launch; wait until 25+ advisors are on platform so there is a distribution network to syndicate through.
 

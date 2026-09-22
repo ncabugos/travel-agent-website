@@ -1,5 +1,28 @@
 # EAH Business Model v2 — Land, Expand, Monetize the Network
 
+> **September 2026 update (v2.1): three public tiers.** The one-plan offer below was replaced
+> on 2026-09-22 by three tiers on the homepage `#pricing` section (`PUBLIC_TIERS` in
+> `lib/pricing.ts`, rendered by `components/marketing/MarketingPricing.tsx`):
+>
+> | Tier | Setup | Monthly | Internal key |
+> |---|---|---|---|
+> | Starter | $1,499 | $59 | `starter` |
+> | Boutique Agency (highlighted, "Most popular") | $2,500 | $79 | `growth` |
+> | Agency | $4,999 | Quoted on number of sites, never shown | `agency` |
+>
+> Positioning: "The site your CRM doesn't give you." Rationale: Starter sits above CRM tools
+> (TravelJoy, Tern) but those are not sites; against a freelance build ($800 to $6,500 upfront
+> plus $20 to $5,000/mo maintenance) $1,499 to launch is cheap and $59/mo replaces an open-ended
+> bill. Boutique Agency undercuts a custom agency build by half. Agency beats a ten-advisor
+> shop's Travefy bill before they have paid for a single website; use that math in outreach,
+> not on the site. Feature lists live in `CLAUDE.md` §3.
+>
+> Still on the old model until wired: Stripe (bills the $79 no-setup base plan with the
+> 30-day complimentary period), the portal billing page, and the Stripe section below.
+> Open: per-tier prices, setup-fee line items, whether the complimentary period survives.
+> Listed but not built: YouTube integration, CRM integration, white-label, per-advisor lead
+> routing, affiliate site management.
+
 > Adopted July 2026. Supersedes the tier-ladder pricing in `docs/brand-positioning.md` §"Why this
 > works for a $89 Starter tier" and the May 2026 tier matrix in `CLAUDE.md` §3.
 > Reference model: HubSpot (cheap land, paid expansion, ecosystem revenue) and

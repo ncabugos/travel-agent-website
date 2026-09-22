@@ -1,6 +1,6 @@
 # Starter Demo — Outline & Sitemap
 
-**Tier:** Starter · $89/mo · $499 setup
+**Tier:** Starter · $59/mo · $1,499 setup
 **Template:** `frontend` (only template eligible at this tier)
 **Demo slug:** `starter-demo` (replaces colliding `demo-agent` slug)
 **Persona used in this spec:** Aspen Alpine Travel — alpine & mountain luxury specialist. _Swap the persona freely; the structure stays the same._
@@ -14,7 +14,7 @@ This spec is build-ready. A junior dev or the operator can hand this to `scripts
 
 A prospect lands here from the pricing page after reading the Starter row. The demo has to answer three questions in under sixty seconds:
 
-1. **"Is $89/month enough website for me to look credible to a luxury client?"** Yes — and the way the demo proves it is the brand-story prose, the Virtuoso lockup, and the supplier-programs grid on the home page.
+1. **"Is $59/month enough website for me to look credible to a luxury client?"** Yes — and the way the demo proves it is the brand-story prose, the Virtuoso lockup, and the supplier-programs grid on the home page.
 2. **"What am I giving up vs. Growth?"** No searchable hotel directory, no `/experiences`, no `/plan-a-trip`, no Instagram feed, no testimonials grid. The demo should _feel complete_ without those — so the prospect doesn't feel cheated, but also clearly sees the gap when they compare to a Growth demo on `t2-demo` or `t3-demo`.
 3. **"Can I see myself running this in 30 days?"** The blog shows the advisor's own posts (Starter is advisor-written only — the curated editorial stream is a Growth upgrade), the inquiry form works, and the about page reads like a real advisor's about page.
 

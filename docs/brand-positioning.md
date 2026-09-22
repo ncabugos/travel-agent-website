@@ -11,16 +11,17 @@
 
 Elite Advisor Hub is invitation-worthy infrastructure for advisors who treat their practice as a serious business. The product attracts elite advisors and politely repels hobbyists. Pricing is the floor, not a discount.
 
-## Why this works with a $79 entry plan (business model v2, July 2026)
+## Why this works with a $59 entry tier (three tiers, September 2026)
 
-> Pricing structure is now governed by `docs/business-model-v2.md` — one $79/mo site plan
-> (first 30 days complimentary, no setup fee), à-la-carte modules and studio services in the
-> portal, supplier partnerships as the long-term profit engine. The voice rules below are
-> unchanged and apply to all of it.
+> Pricing is governed by `docs/business-model-v2.md` (September 2026 update): Starter $1,499 +
+> $59/mo, Boutique Agency $2,500 + $79/mo, Agency $4,999 setup with the monthly quoted on the
+> number of sites. Modules and studio services stay in the portal, supplier partnerships remain
+> the long-term profit engine. The voice rules below are unchanged and apply to all of it.
 
 There is no tension. The entry plan is for advisors on the path to top 1% — early in their independent practice, often transitioning out of a host agency or a corporate travel role. The copy reads "built by and for the world's top travel advisors" — aspirational without being exclusionary. Notion, Linear, and Figma all run this play successfully. The entry price is a foothold; the brand promise is the destination. The premium register lives in the presentation, not the price tag — the Four Seasons move: the brand is the luxury, the entry point is gracious.
 
-**Trial language:** always "your first 30 days are with our compliments" — never "free trial,"
+**Trial language:** the pricing cards do not mention a trial. If a complimentary period is
+reintroduced, it is always "your first 30 days are with our compliments" — never "free trial,"
 never "30-DAY FREE TRIAL" badges. "Complimentary" is the house word.
 
 ## Voice rules
@@ -33,7 +34,7 @@ never "30-DAY FREE TRIAL" badges. "Complimentary" is the house word.
 
 **Acknowledge the work advisors actually do.** They source experiences, negotiate upgrades, manage clients through crises mid-trip, and build referral networks over years. Copy that respects this earns trust. Copy that pretends advisors "just need a website" insults the buyer.
 
-**Pricing language matters.** Use "investment" only sparingly — most luxury buyers find it slightly precious. "$89/month" is fine. "Setup fee from $499" is fine. Phrases to avoid: "affordable," "easy on the budget," "won't break the bank." These are not the cues a top-1% buyer responds to.
+**Pricing language matters.** Use "investment" only sparingly — most luxury buyers find it slightly precious. "$59/month" is fine. "$1,499 one-time setup" is fine. Phrases to avoid: "affordable," "easy on the budget," "won't break the bank." These are not the cues a top-1% buyer responds to.
 
 ## Forbidden phrases
 
@@ -90,7 +91,7 @@ Restraint. Generous white space. Editorial photography (large, slow, confident) 
 In priority order:
 
 1. **Homepage hero + value proposition** — first impression carries the most weight.
-2. **Pricing page** — rebuilt for business model v2: one plan at $79/mo, first 30 days complimentary, expansion modules below. Keep the voice non-transactional.
+2. **Homepage pricing section** — three cards (Starter, Boutique Agency highlighted, Agency quote-only) under "The site your CRM doesn't give you." Keep the voice non-transactional; no competitor names on the site.
 3. **About / Why EAH** — explain the moat (catalog depth, content pipeline, advisor-first) in plain terms.
 4. **Schedule consultation page** — copy here qualifies Custom/Agency leads; the right copy filters for serious buyers.
 5. **Footer + nav microcopy** — small touches that signal restraint vs. effort.
