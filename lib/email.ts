@@ -564,7 +564,7 @@ export async function sendEditRequestNotification(input: EditRequestNotification
  * written by the webhook stays the source of truth; this is a second channel.
  */
 export interface BillingEventNotificationInput {
-  eventType: 'signup' | 'cancellation' | 'payment_failed'
+  eventType: 'signup' | 'cancellation' | 'payment_failed' | 'trial_ending' | 'unlinked'
   agentName: string
   agencyName: string | null
   email: string
@@ -573,12 +573,16 @@ export interface BillingEventNotificationInput {
   amount?: number
   stripeCustomerId: string
   agentId?: string
+  /** Extra context, e.g. why a payment could not be linked to an account. */
+  note?: string
 }
 
 const BILLING_EVENT_LABELS: Record<BillingEventNotificationInput['eventType'], string> = {
   signup: 'New signup',
   cancellation: 'Subscription canceled',
   payment_failed: 'Payment failed',
+  trial_ending: 'Trial ends in 3 days',
+  unlinked: 'Action needed: payment not linked to an account',
 }
 
 /** Render the billing event notification without sending (for previews). */
@@ -597,6 +601,7 @@ export function renderBillingEventNotificationHtml(input: BillingEventNotificati
     : `${EMAIL_ASSET_ORIGIN}/admin/agents`
   const bodyHtml = [
     emailHeading(label),
+    input.note ? emailParagraph(escapeHtml(input.note)) : '',
     emailDetailRows(rows),
     emailButton('View advisor', href),
   ].join('')
@@ -633,6 +638,8 @@ export interface DailyDigestInput {
   consultations: { name: string; email: string; source: string; tier: string | null; timeline: string | null; createdAt: string }[]
   editRequests: { agencyName: string; subject: string; createdAt: string }[]
   adminEvents: { title: string; createdAt: string }[]
+  /** Advisors whose onboarding is still incomplete, regardless of age (up to 60 days). */
+  stalledOnboarding: { name: string; email: string; status: string; createdAt: string }[]
 }
 
 /** Render the daily digest without sending (for previews). */
@@ -641,7 +648,7 @@ export function renderDailyDigestHtml(input: DailyDigestInput): string {
     items.length > 0 ? emailLabel(`${title} (${items.length})`) + emailBullets(items) : ''
   const bodyHtml = [
     emailHeading('Daily digest'),
-    emailParagraph('Everything that came in since yesterday. Each item should also have arrived as its own email.'),
+    emailParagraph('Everything that came in since yesterday, plus advisors still waiting on onboarding.'),
     section(
       'Consultations',
       input.consultations.map(
@@ -659,17 +666,25 @@ export function renderDailyDigestHtml(input: DailyDigestInput): string {
       'Account events',
       input.adminEvents.map((e) => escapeHtml(e.title)),
     ),
+    section(
+      'Onboarding not finished',
+      input.stalledOnboarding.map(
+        (a) =>
+          `${escapeHtml(a.name)} (${emailLink(escapeHtml(a.email), `mailto:${escapeHtml(a.email)}`)}), ${escapeHtml(a.status)}, signed up ${escapeHtml(a.createdAt.slice(0, 10))}`,
+      ),
+    ),
     emailButton('Open admin', `${EMAIL_ASSET_ORIGIN}/admin`),
   ].join('')
   return renderBrandedEmail({
-    preheader: `${input.consultations.length} consultations, ${input.editRequests.length} edit requests, ${input.adminEvents.length} account events.`,
+    preheader: `${input.consultations.length} consultations, ${input.editRequests.length} edit requests, ${input.adminEvents.length} account events, ${input.stalledOnboarding.length} onboarding not finished.`,
     bodyHtml,
     signature: 'none',
   })
 }
 
 export async function sendDailyDigest(input: DailyDigestInput) {
-  const total = input.consultations.length + input.editRequests.length + input.adminEvents.length
+  const total =
+    input.consultations.length + input.editRequests.length + input.adminEvents.length + input.stalledOnboarding.length
   const { data, error } = await getResend().emails.send({
     from: FROM_ADDRESS,
     to: await getAdminNotificationEmail(),

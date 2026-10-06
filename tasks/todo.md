@@ -415,3 +415,19 @@ Spec: NOTIFICATION_AUDIT_FIX.md. All sends route through `getAdminNotificationEm
 - [ ] `invoice.payment_failed` handler does not exist yet (P1 dunning); wire `eventType: 'payment_failed'` when it lands
 - [ ] Optional: per-row `notified_at` tracking if the full digest gets noisy
 - [ ] Reply to Dara Teller (waiting since 2026-09-26)
+
+## Checkout to account linking (2026-10-06)
+
+Zero checkouts have ever linked in production (no agent has a Stripe ID, admin_notifications is empty). Josie paid $59 on 2026-10-03 with an unlinked, un-onboarded account.
+
+- [x] Webhook: case-insensitive email match; existing accounts get linked, notified, and sent a sign-in link
+- [x] Webhook: unlinkable checkouts and subscription events alert the operator (billing_unlinked)
+- [x] Webhook: subscription events self-link by customer email when the checkout was missed
+- [x] Webhook: invoice.payment_failed and trial_will_end notify the operator
+- [x] Daily digest lists advisors with onboarding not finished (60-day window)
+- [ ] Stripe Dashboard: confirm live endpoint is https://www.eliteadvisorhub.com/api/stripe/webhook (apex 307s), events enabled, signing secret matches Vercel STRIPE_WEBHOOK_SECRET; check Sep 3 and Oct 3 delivery log
+- [ ] Repair Josie's agents row (customer cus_VC1UucMVV2pUe7, name, status active)
+- [ ] Contact Josie: finish onboarding or pause billing
+- [ ] Decide: agents.subscription_status default 'trialing' -> 'inactive' (migration)
+- [ ] Decide: login page signInWithOtp creates accounts for any typed email (shouldCreateUser)
+- [ ] Verify with `stripe login` + `stripe listen` + `stripe trigger checkout.session.completed`
