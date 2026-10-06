@@ -87,16 +87,43 @@ export async function submitConsultationRequest(
   const additionalPages   = get('additional_pages')
   const integrationsNeeded = get('integrations_needed')
 
-  // Validate
+  // Validate. Every field the form shows for the chosen tier is required,
+  // except "existing website", which not every lead has.
   const fieldErrors: Partial<Record<string, string>> = {}
-  if (!firstName) fieldErrors.first_name = 'First name is required.'
-  if (!lastName) fieldErrors.last_name = 'Last name is required.'
+  const requireText = (key: string, value: string, label: string) => {
+    if (!value) fieldErrors[key] = `${label} is required.`
+  }
+  if (!tier) fieldErrors.tier = 'Choose a plan.'
+  requireText('first_name', firstName, 'First name')
+  requireText('last_name', lastName, 'Last name')
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     fieldErrors.email = 'A valid email is required.'
   }
+  requireText('phone', phone, 'Phone')
+  requireText('role_title', roleTitle, 'Role or title')
+  requireText('timeline', timeline, 'Timeline')
+  requireText('heard_from', heardFrom, 'This')
+  requireText('message', message, 'This')
   if (tier === 'agency') {
-    if (!agencyName) fieldErrors.agency_name = 'Agency name is required.'
+    requireText('agency_name', agencyName, 'Agency name')
+    requireText('agency_website', agencyWebsite, 'Agency website')
     if (!numAdvisors || numAdvisors < 1) fieldErrors.num_advisors = 'Enter the number of advisors.'
+    requireText('host_affiliation', hostAffiliation, 'Host agency or consortium')
+    if (yearsInBusiness == null || yearsInBusiness < 0) fieldErrors.years_in_business = 'Years in business is required.'
+    requireText('agency_street', agencyStreet, 'Street')
+    requireText('agency_city', agencyCity, 'City')
+    requireText('agency_region', agencyRegion, 'State or region')
+    requireText('agency_postal', agencyPostal, 'Postal code')
+    requireText('agency_country', agencyCountry, 'Country')
+    if (specialties.length === 0) fieldErrors.specialties = 'Select at least one specialty.'
+    if (wantsCustomDom == null) fieldErrors.wants_custom_domain = 'Choose yes or no.'
+    if (wantsAdvisorPgs == null) fieldErrors.wants_advisor_pages = 'Choose yes or no.'
+    if (wantsTeamTrain == null) fieldErrors.wants_team_training = 'Choose yes or no.'
+  }
+  if (tier === 'custom') {
+    requireText('design_references', designReferences, 'Design references')
+    requireText('additional_pages', additionalPages, 'Additional pages')
+    requireText('integrations_needed', integrationsNeeded, 'Integrations needed')
   }
 
   if (Object.keys(fieldErrors).length > 0) {
@@ -134,7 +161,7 @@ export async function submitConsultationRequest(
       host_affiliation:    tier === 'agency' ? hostAffiliation || null : null,
       years_in_business:   tier === 'agency' ? yearsInBusiness : null,
       specialties:         tier === 'agency' && specialties.length > 0 ? specialties : null,
-      existing_website:    tier === 'agency' ? existingWebsite || null : null,
+      existing_website:    tier === 'agency' || tier === 'custom' ? existingWebsite || null : null,
       wants_custom_domain: tier === 'agency' ? wantsCustomDom : null,
       wants_advisor_pages: tier === 'agency' ? wantsAdvisorPgs : null,
       wants_team_training: tier === 'agency' ? wantsTeamTrain : null,
@@ -167,11 +194,24 @@ export async function submitConsultationRequest(
         roleTitle:       roleTitle || null,
         heardFrom:       heardFrom || null,
         message:         message || null,
-        agencyName:      tier === 'agency' ? agencyName || null : null,
-        agencyWebsite:   tier === 'agency' ? agencyWebsite || null : null,
-        numAdvisors:     tier === 'agency' ? numAdvisors : null,
-        hostAffiliation: tier === 'agency' ? hostAffiliation || null : null,
-        existingWebsite: tier === 'agency' ? existingWebsite || null : null,
+        existingWebsite: tier === 'agency' || tier === 'custom' ? existingWebsite || null : null,
+        agency: tier === 'agency'
+          ? {
+              name:            agencyName,
+              website:         agencyWebsite,
+              numAdvisors,
+              hostAffiliation,
+              yearsInBusiness,
+              address:         [agencyStreet, agencyCity, agencyRegion, agencyPostal, agencyCountry].filter(Boolean).join(', '),
+              specialties,
+              wantsCustomDomain: wantsCustomDom,
+              wantsAdvisorPages: wantsAdvisorPgs,
+              wantsTeamTraining: wantsTeamTrain,
+            }
+          : null,
+        custom: tier === 'custom'
+          ? { designReferences, additionalPages, integrationsNeeded }
+          : null,
       })
       console.info('[consultation] admin notification sent', sent?.id)
     } catch (emailErr) {

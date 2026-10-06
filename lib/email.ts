@@ -374,12 +374,37 @@ export interface ConsultationNotificationInput {
   roleTitle: string | null
   heardFrom: string | null
   message: string | null
-  // Agency-tier extras, all nullable
-  agencyName: string | null
-  agencyWebsite: string | null
-  numAdvisors: number | null
-  hostAffiliation: string | null
+  /** Agency and Custom tiers. */
   existingWebsite: string | null
+  /** Agency tier only. */
+  agency: {
+    name: string
+    website: string
+    numAdvisors: number | null
+    hostAffiliation: string
+    yearsInBusiness: number | null
+    address: string
+    specialties: string[]
+    wantsCustomDomain: boolean | null
+    wantsAdvisorPages: boolean | null
+    wantsTeamTraining: boolean | null
+  } | null
+  /** Custom tier only. */
+  custom: {
+    designReferences: string
+    additionalPages: string
+    integrationsNeeded: string
+  } | null
+}
+
+const yesNo = (v: boolean | null) => (v == null ? 'Not answered' : v ? 'Yes' : 'No')
+
+/** A labeled block of free text, line breaks kept. */
+function emailTextBlock(label: string, text: string): string {
+  return (
+    emailLabel(label) +
+    `<p class="text-secondary" style="margin:0 0 24px;font-size:15px;line-height:1.65;color:${COLOR_BODY};white-space:pre-wrap;">${escapeHtml(text)}</p>`
+  )
 }
 
 const CONSULTATION_TIER_LABELS: Record<string, string> = {
@@ -412,20 +437,27 @@ export function renderConsultationNotificationHtml(input: ConsultationNotificati
     ...(input.roleTitle ? [{ label: 'Role', value: escapeHtml(input.roleTitle) }] : []),
     ...(input.heardFrom ? [{ label: 'Heard from', value: escapeHtml(input.heardFrom) }] : []),
   ]
-  const agencyRows =
-    input.tier === 'agency'
-      ? [
-          ...(input.agencyName ? [{ label: 'Agency', value: escapeHtml(input.agencyName) }] : []),
-          ...(input.agencyWebsite
-            ? [{ label: 'Website', value: emailLink(escapeHtml(input.agencyWebsite), escapeHtml(input.agencyWebsite)) }]
-            : []),
-          ...(input.numAdvisors != null ? [{ label: 'Advisors', value: String(input.numAdvisors) }] : []),
-          ...(input.hostAffiliation ? [{ label: 'Host agency', value: escapeHtml(input.hostAffiliation) }] : []),
-          ...(input.existingWebsite
-            ? [{ label: 'Current site', value: emailLink(escapeHtml(input.existingWebsite), escapeHtml(input.existingWebsite)) }]
-            : []),
-        ]
-      : []
+  const linkRow = (label: string, url: string) => ({
+    label,
+    value: emailLink(escapeHtml(url), escapeHtml(url)),
+  })
+  const a = input.agency
+  const agencyRows = a
+    ? [
+        { label: 'Agency', value: escapeHtml(a.name) },
+        ...(a.website ? [linkRow('Website', a.website)] : []),
+        ...(a.numAdvisors != null ? [{ label: 'Advisors', value: String(a.numAdvisors) }] : []),
+        ...(a.hostAffiliation ? [{ label: 'Host agency', value: escapeHtml(a.hostAffiliation) }] : []),
+        ...(a.yearsInBusiness != null ? [{ label: 'Years in business', value: String(a.yearsInBusiness) }] : []),
+        ...(a.address ? [{ label: 'Address', value: escapeHtml(a.address) }] : []),
+        ...(a.specialties.length > 0 ? [{ label: 'Specialties', value: escapeHtml(a.specialties.join(', ')) }] : []),
+        ...(input.existingWebsite ? [linkRow('Current site', input.existingWebsite)] : []),
+        { label: 'Custom domain', value: yesNo(a.wantsCustomDomain) },
+        { label: 'Advisor pages', value: yesNo(a.wantsAdvisorPages) },
+        { label: 'Team training', value: yesNo(a.wantsTeamTraining) },
+      ]
+    : []
+  const c = input.custom
   const bodyHtml = [
     emailHeading('New consultation request'),
     emailParagraph(
@@ -435,10 +467,11 @@ export function renderConsultationNotificationHtml(input: ConsultationNotificati
     ),
     emailDetailRows(rows),
     agencyRows.length > 0 ? emailLabel('Agency details') + emailDetailRows(agencyRows) : '',
-    input.message
-      ? emailLabel('Message') +
-        `<p class="text-secondary" style="margin:0 0 24px;font-size:15px;line-height:1.65;color:${COLOR_BODY};white-space:pre-wrap;">${escapeHtml(input.message)}</p>`
-      : '',
+    c && input.existingWebsite ? emailDetailRows([linkRow('Current site', input.existingWebsite)]) : '',
+    c?.designReferences ? emailTextBlock('Design references', c.designReferences) : '',
+    c?.additionalPages ? emailTextBlock('Additional pages', c.additionalPages) : '',
+    c?.integrationsNeeded ? emailTextBlock('Integrations needed', c.integrationsNeeded) : '',
+    input.message ? emailTextBlock('Message', input.message) : '',
     emailButton('View consultations', `${EMAIL_ASSET_ORIGIN}/admin/consultations`),
     emailMutedParagraph(
       `Reply to this email to reach ${escapeHtml(input.firstName)} directly. The reply-to is set to their address.`,

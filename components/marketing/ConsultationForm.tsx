@@ -111,6 +111,7 @@ export function ConsultationForm({
   }
 
   const showAgency = tier === 'agency'
+  const errors = state.fieldErrors ?? {}
   const showCustom = tier === 'custom'
 
   return (
@@ -172,12 +173,12 @@ export function ConsultationForm({
       {/* ── Contact ─────────────────────────────────────────────────── */}
       <SectionLabel>Your contact details</SectionLabel>
       <Grid>
-        <Field label="First name *" name="first_name" error={state.fieldErrors?.first_name} />
-        <Field label="Last name *" name="last_name" error={state.fieldErrors?.last_name} />
-        <Field label="Email *" name="email" type="email" error={state.fieldErrors?.email} />
-        <Field label="Phone" name="phone" type="tel" />
+        <Field label="First name" name="first_name" required error={errors.first_name} />
+        <Field label="Last name" name="last_name" required error={errors.last_name} />
+        <Field label="Email" name="email" type="email" required error={errors.email} />
+        <Field label="Phone" name="phone" type="tel" required error={errors.phone} />
         <FullRow>
-          <Field label="Role or title" name="role_title" placeholder="e.g. Owner, Principal Advisor" />
+          <Field label="Role or title" name="role_title" placeholder="e.g. Owner, Principal Advisor" required error={errors.role_title} />
         </FullRow>
       </Grid>
 
@@ -187,39 +188,38 @@ export function ConsultationForm({
           <SectionLabel style={{ marginTop: '40px' }}>About your agency</SectionLabel>
           <Grid>
             <FullRow>
-              <Field
-                label="Agency name *"
-                name="agency_name"
-                error={state.fieldErrors?.agency_name}
-              />
+              <Field label="Agency name" name="agency_name" required error={errors.agency_name} />
             </FullRow>
-            <Field label="Agency website" name="agency_website" placeholder="https://" />
+            <Field label="Agency website" name="agency_website" placeholder="https://" required error={errors.agency_website} />
             <Field
-              label="Number of advisors *"
+              label="Number of advisors"
               name="num_advisors"
               type="number"
-              error={state.fieldErrors?.num_advisors}
+              required
+              error={errors.num_advisors}
               placeholder="e.g. 8"
             />
             <SelectField
               label="Host agency or consortium"
               name="host_affiliation"
               options={HOST_AFFILIATIONS}
+              required
+              error={errors.host_affiliation}
             />
-            <Field label="Years in business" name="years_in_business" type="number" />
+            <Field label="Years in business" name="years_in_business" type="number" required error={errors.years_in_business} />
             <FullRow>
               <SectionSubLabel>Business address</SectionSubLabel>
             </FullRow>
             <FullRow>
-              <Field label="Street" name="agency_street" />
+              <Field label="Street" name="agency_street" required error={errors.agency_street} />
             </FullRow>
-            <Field label="City" name="agency_city" />
-            <Field label="State or region" name="agency_region" />
-            <Field label="Postal code" name="agency_postal" />
-            <Field label="Country" name="agency_country" />
+            <Field label="City" name="agency_city" required error={errors.agency_city} />
+            <Field label="State or region" name="agency_region" required error={errors.agency_region} />
+            <Field label="Postal code" name="agency_postal" required error={errors.agency_postal} />
+            <Field label="Country" name="agency_country" required error={errors.agency_country} />
 
             <FullRow>
-              <SectionSubLabel>Specialties (select all that apply)</SectionSubLabel>
+              <SectionSubLabel>Specialties (select all that apply) *</SectionSubLabel>
               <div
                 style={{
                   display: 'grid',
@@ -251,6 +251,7 @@ export function ConsultationForm({
                   </label>
                 ))}
               </div>
+              <ErrorText error={errors.specialties} />
             </FullRow>
 
             <FullRow>
@@ -261,12 +262,13 @@ export function ConsultationForm({
               />
             </FullRow>
 
-            <YesNoField label="Need a custom domain?" name="wants_custom_domain" />
-            <YesNoField label="Want individual advisor pages?" name="wants_advisor_pages" />
+            <YesNoField label="Need a custom domain?" name="wants_custom_domain" error={errors.wants_custom_domain} />
+            <YesNoField label="Want individual advisor pages?" name="wants_advisor_pages" error={errors.wants_advisor_pages} />
             <FullRow>
               <YesNoField
                 label="Need onboarding and training for the advisor team?"
                 name="wants_team_training"
+                error={errors.wants_team_training}
               />
             </FullRow>
           </Grid>
@@ -289,6 +291,8 @@ export function ConsultationForm({
               <TextAreaField
                 label="Design references"
                 name="design_references"
+                required
+                error={errors.design_references}
                 placeholder="Links to sites you love, or a description of the feel you're after."
               />
             </FullRow>
@@ -296,6 +300,8 @@ export function ConsultationForm({
               <TextAreaField
                 label="Additional pages"
                 name="additional_pages"
+                required
+                error={errors.additional_pages}
                 placeholder="e.g. Press, Team, Case Studies, Destination deep-dives"
               />
             </FullRow>
@@ -303,6 +309,8 @@ export function ConsultationForm({
               <TextAreaField
                 label="Integrations needed"
                 name="integrations_needed"
+                required
+                error={errors.integrations_needed}
                 placeholder="e.g. CRM, booking engine, Virtuoso, newsletter platform"
               />
             </FullRow>
@@ -313,12 +321,14 @@ export function ConsultationForm({
       {/* ── General ──────────────────────────────────────────────────── */}
       <SectionLabel style={{ marginTop: '40px' }}>A few more details</SectionLabel>
       <Grid>
-        <SelectField label="Ideal launch timeline" name="timeline" options={TIMELINES} />
-        <SelectField label="How did you hear about us?" name="heard_from" options={HEARD_FROM} />
+        <SelectField label="Ideal launch timeline" name="timeline" options={TIMELINES} required error={errors.timeline} />
+        <SelectField label="How did you hear about us?" name="heard_from" options={HEARD_FROM} required error={errors.heard_from} />
         <FullRow>
           <TextAreaField
             label="Anything else we should know?"
             name="message"
+            required
+            error={errors.message}
             placeholder="Goals, constraints, questions — anything that helps us prepare."
           />
         </FullRow>
@@ -450,46 +460,54 @@ const inputStyle: React.CSSProperties = {
   transition: 'border-color 0.2s ease',
 }
 
+const ERROR_RED = '#991b1b'
+
+function FieldLabel({ label, required }: { label: string; required?: boolean }) {
+  return <label style={labelStyle}>{required ? `${label} *` : label}</label>
+}
+
+function ErrorText({ error }: { error?: string }) {
+  if (!error) return null
+  return (
+    <p style={{ fontFamily: sans, fontSize: '11px', color: ERROR_RED, marginTop: '4px' }}>
+      {error}
+    </p>
+  )
+}
+
 function Field({
   label,
   name,
   type = 'text',
   placeholder,
+  required,
   error,
 }: {
   label: string
   name: string
   type?: string
   placeholder?: string
+  required?: boolean
   error?: string
 }) {
   return (
     <div>
-      <label style={labelStyle}>{label}</label>
+      <FieldLabel label={label} required={required} />
       <input
         name={name}
         type={type}
         placeholder={placeholder}
-        style={{ ...inputStyle, borderColor: error ? '#991b1b' : DIVIDER }}
+        required={required}
+        min={type === 'number' ? 0 : undefined}
+        style={{ ...inputStyle, borderColor: error ? ERROR_RED : DIVIDER }}
         onFocus={(e) => {
           e.target.style.borderColor = CHARCOAL
         }}
         onBlur={(e) => {
-          e.target.style.borderColor = error ? '#991b1b' : DIVIDER
+          e.target.style.borderColor = error ? ERROR_RED : DIVIDER
         }}
       />
-      {error && (
-        <p
-          style={{
-            fontFamily: sans,
-            fontSize: '11px',
-            color: '#991b1b',
-            marginTop: '4px',
-          }}
-        >
-          {error}
-        </p>
-      )}
+      <ErrorText error={error} />
     </div>
   )
 }
@@ -498,32 +516,39 @@ function SelectField({
   label,
   name,
   options,
+  required,
+  error,
 }: {
   label: string
   name: string
   options: string[]
+  required?: boolean
+  error?: string
 }) {
   return (
     <div>
-      <label style={labelStyle}>{label}</label>
+      <FieldLabel label={label} required={required} />
       <select
         name={name}
+        required={required}
         style={{
           ...inputStyle,
+          borderColor: error ? ERROR_RED : DIVIDER,
           appearance: 'none',
           cursor: 'pointer',
           paddingRight: '20px',
         }}
         onFocus={(e) => (e.target.style.borderColor = CHARCOAL)}
-        onBlur={(e) => (e.target.style.borderColor = DIVIDER)}
+        onBlur={(e) => (e.target.style.borderColor = error ? ERROR_RED : DIVIDER)}
         defaultValue=""
       >
         {options.map((opt, i) => (
-          <option key={opt} value={i === 0 ? '' : opt}>
+          <option key={opt} value={i === 0 ? '' : opt} disabled={i === 0}>
             {opt}
           </option>
         ))}
       </select>
+      <ErrorText error={error} />
     </div>
   )
 }
@@ -532,30 +557,37 @@ function TextAreaField({
   label,
   name,
   placeholder,
+  required,
+  error,
 }: {
   label: string
   name: string
   placeholder?: string
+  required?: boolean
+  error?: string
 }) {
   return (
     <div>
-      <label style={labelStyle}>{label}</label>
+      <FieldLabel label={label} required={required} />
       <textarea
         name={name}
         placeholder={placeholder}
+        required={required}
         rows={4}
-        style={{ ...inputStyle, resize: 'vertical', minHeight: '96px' }}
+        style={{ ...inputStyle, borderColor: error ? ERROR_RED : DIVIDER, resize: 'vertical', minHeight: '96px' }}
         onFocus={(e) => (e.target.style.borderColor = CHARCOAL)}
-        onBlur={(e) => (e.target.style.borderColor = DIVIDER)}
+        onBlur={(e) => (e.target.style.borderColor = error ? ERROR_RED : DIVIDER)}
       />
+      <ErrorText error={error} />
     </div>
   )
 }
 
-function YesNoField({ label, name }: { label: string; name: string }) {
+/** Yes/No radios. Always required: one radio carries `required` for the group. */
+function YesNoField({ label, name, error }: { label: string; name: string; error?: string }) {
   return (
     <div>
-      <label style={labelStyle}>{label}</label>
+      <FieldLabel label={label} required />
       <div style={{ display: 'flex', gap: '20px', paddingTop: '6px' }}>
         {['yes', 'no'].map((v) => (
           <label
@@ -575,12 +607,14 @@ function YesNoField({ label, name }: { label: string; name: string }) {
               type="radio"
               name={name}
               value={v}
+              required
               style={{ accentColor: CHARCOAL }}
             />
             {v}
           </label>
         ))}
       </div>
+      <ErrorText error={error} />
     </div>
   )
 }
