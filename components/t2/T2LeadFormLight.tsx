@@ -1,7 +1,8 @@
 'use client'
 
-import { useActionState, useState } from 'react'
+import { useActionState } from 'react'
 import { submitContactForm, type ContactFormState } from '@/lib/actions/contact'
+import { SpamFields } from '@/components/ui/SpamFields'
 
 interface Props {
   heading?: string
@@ -26,7 +27,6 @@ export function T2LeadFormLight({
   agentId,
 }: Props) {
   const [state, formAction, isPending] = useActionState(submitContactForm, initialState)
-  const [renderedAt] = useState<number>(() => Date.now())
   const submitted = state.success === true
 
   return (
@@ -46,12 +46,6 @@ export function T2LeadFormLight({
         ) : (
           <form action={formAction} className="t2-lead-light-form">
             {agentId && <input type="hidden" name="agent_id" value={agentId} />}
-            <input type="hidden" name="_rendered_at" value={String(renderedAt)} />
-
-            {/* Honeypot — hidden from people, tempting to bots. */}
-            <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, overflow: 'hidden' }}>
-              <input type="text" name="website_url" tabIndex={-1} autoComplete="off" defaultValue="" />
-            </div>
 
             <div className="t2-lead-light-row">
               <input type="text" name="first_name" placeholder="First Name *" required autoComplete="given-name"  className="t2-lead-light-input" />
@@ -66,6 +60,7 @@ export function T2LeadFormLight({
               <p role="alert" className="t2-lead-light-error">{state.error}</p>
             )}
 
+            <SpamFields resetKey={state} />
             <button type="submit" className="t2-lead-light-submit" disabled={isPending}>
               <span>{isPending ? 'Sending…' : 'Submit Request'}</span>
             </button>

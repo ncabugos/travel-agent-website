@@ -10,6 +10,9 @@ interface PageProps {
   searchParams?: Promise<{ hotel?: string; intent?: string }>
 }
 
+// Reads ?hotel= from the link, so this page can't use the layout's cache.
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { agentId } = await params
   const agent = await getAgentProfile(agentId)

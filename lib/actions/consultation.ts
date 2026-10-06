@@ -14,6 +14,8 @@
  * DB so the single endpoint can handle both.
  */
 
+import { checkForBot } from '@/lib/spam'
+
 export type ConsultationFormState = {
   success?: boolean
   error?: string
@@ -46,6 +48,12 @@ export async function submitConsultationRequest(
 ): Promise<ConsultationFormState> {
   const get = (key: string) => (formData.get(key) as string | null)?.trim() ?? ''
   const getAll = (key: string) => formData.getAll(key).map(v => String(v).trim()).filter(Boolean)
+
+  const bot = await checkForBot(formData, 'consultation')
+  if (bot === 'drop') return { success: true }
+  if (bot === 'challenge_failed') {
+    return { success: false, error: 'We could not verify this submission. Please refresh the page and try again.' }
+  }
 
   const tier        = coerceTier(get('tier'))
   const firstName   = get('first_name')
@@ -142,6 +150,32 @@ export async function submitConsultationRequest(
         success: false,
         error: 'We could not save your request. Please try again in a moment or email us directly.',
       }
+    }
+
+    // Notify the operator. The DB insert already succeeded, so an email failure
+    // must not surface as a form error. Log it and return success. The row is
+    // visible in /admin/consultations regardless.
+    try {
+      const { sendConsultationNotification } = await import('@/lib/email')
+      const sent = await sendConsultationNotification({
+        firstName,
+        lastName,
+        email,
+        phone:           phone || null,
+        tier,
+        timeline:        timeline || null,
+        roleTitle:       roleTitle || null,
+        heardFrom:       heardFrom || null,
+        message:         message || null,
+        agencyName:      tier === 'agency' ? agencyName || null : null,
+        agencyWebsite:   tier === 'agency' ? agencyWebsite || null : null,
+        numAdvisors:     tier === 'agency' ? numAdvisors : null,
+        hostAffiliation: tier === 'agency' ? hostAffiliation || null : null,
+        existingWebsite: tier === 'agency' ? existingWebsite || null : null,
+      })
+      console.info('[consultation] admin notification sent', sent?.id)
+    } catch (emailErr) {
+      console.error('[consultation] admin notification email failed', emailErr)
     }
 
     return { success: true }

@@ -6,6 +6,9 @@ interface PageProps {
   searchParams?: Promise<{ hotel?: string }>
 }
 
+// Reads ?hotel= from the link, so this page can't use the layout's cache.
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'Contact | Casa Solis',
   description: 'Begin a conversation with Casa Solis.',

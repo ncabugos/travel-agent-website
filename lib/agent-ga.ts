@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { createServiceClient } from '@/lib/supabase/service'
 
 const VALID_GA_ID = /^G-[A-Z0-9]{4,}$/
@@ -18,7 +19,7 @@ const DEMO_GA: Record<string, string> = {
  * keeps rendering, it just won't fire the per-advisor property until the
  * migration lands and an ID is set.
  */
-export async function getAgentGaMeasurementId(agentId: string): Promise<string | null> {
+export const getAgentGaMeasurementId = cache(async (agentId: string): Promise<string | null> => {
   if (DEMO_GA[agentId]) return DEMO_GA[agentId]
   // Non-UUID ids are demo slugs with no DB row — skip the roundtrip.
   if (!UUID.test(agentId)) return null
@@ -38,4 +39,4 @@ export async function getAgentGaMeasurementId(agentId: string): Promise<string |
   } catch {
     return null
   }
-}
+})

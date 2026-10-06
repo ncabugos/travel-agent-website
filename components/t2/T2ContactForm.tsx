@@ -1,7 +1,8 @@
 'use client'
 
-import { useActionState, useState } from 'react'
+import { useActionState } from 'react'
 import { submitContactForm, type ContactFormState } from '@/lib/actions/contact'
+import { SpamFields } from '@/components/ui/SpamFields'
 
 interface T2ContactFormProps {
   agentId: string
@@ -26,7 +27,6 @@ const initialState: ContactFormState = {}
  */
 export function T2ContactForm({ agentId, hotel, advisorIntent }: T2ContactFormProps) {
   const [state, formAction, isPending] = useActionState(submitContactForm, initialState)
-  const [renderedAt] = useState<number>(() => Date.now())
 
   if (state.success) {
     return (
@@ -43,14 +43,8 @@ export function T2ContactForm({ agentId, hotel, advisorIntent }: T2ContactFormPr
   return (
     <form action={formAction}>
       <input type="hidden" name="agent_id" value={agentId} />
-      <input type="hidden" name="_rendered_at" value={String(renderedAt)} />
       {hotel && <input type="hidden" name="hotel_name" value={hotel} />}
       {advisorIntent && <input type="hidden" name="inquiry_type" value="advisor" />}
-
-      {/* Honeypot */}
-      <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}>
-        <input type="text" name="website_url" tabIndex={-1} autoComplete="off" defaultValue="" />
-      </div>
 
       {/* Visible hotel chip */}
       {hotel && (
@@ -112,6 +106,7 @@ export function T2ContactForm({ agentId, hotel, advisorIntent }: T2ContactFormPr
         style={{ marginBottom: 24 }}
         rows={4}
       />
+      <SpamFields resetKey={state} />
       <button
         type="submit"
         disabled={isPending}

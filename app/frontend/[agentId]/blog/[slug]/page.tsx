@@ -12,6 +12,11 @@ interface PageProps {
   params: Promise<{ agentId: string; slug: string }>
 }
 
+// Needed for this page to be cached; see the note in ../../layout.tsx.
+export function generateStaticParams() {
+  return []
+}
+
 export async function generateMetadata({ params }: PageProps) {
   const { slug, agentId } = await params
   const [post, agent] = await Promise.all([

@@ -1,6 +1,7 @@
 'use client'
-import { useActionState, useState } from 'react'
+import { useActionState } from 'react'
 import { submitContactForm, type ContactFormState } from '@/lib/actions/contact'
+import { SpamFields } from '@/components/ui/SpamFields'
 import { ObfuscatedContact } from '@/components/ui/ObfuscatedContact'
 
 interface T3ContactSectionProps {
@@ -34,8 +35,6 @@ export function T3ContactSection({
   hotel,
 }: T3ContactSectionProps) {
   const [state, formAction, isPending] = useActionState(submitContactForm, initialState)
-  // Sub-2-second submission protection (matches Eden + T4 forms).
-  const [renderedAt] = useState<number>(() => Date.now())
 
   return (
     <section id="contact" className="t3-section t3-section-alt" style={{ maxWidth: '100%' }}>
@@ -85,13 +84,7 @@ export function T3ContactSection({
             className="t3-contact-form"
           >
             <input type="hidden" name="agent_id" value={agentId ?? ''} />
-            <input type="hidden" name="_rendered_at" value={String(renderedAt)} />
             {hotel && <input type="hidden" name="hotel_name" value={hotel} />}
-
-            {/* Honeypot — invisible to humans, blindly filled by spam bots. */}
-            <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}>
-              <input type="text" name="website_url" tabIndex={-1} autoComplete="off" defaultValue="" />
-            </div>
 
             {/* Visible chip showing which hotel triggered this enquiry. */}
             {hotel && (
@@ -165,6 +158,8 @@ export function T3ContactSection({
                 />
               </div>
             </div>
+
+            <SpamFields resetKey={state} />
 
             <div
               style={{

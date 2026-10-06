@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/service'
 import { getCurrentSuperAdmin } from '@/lib/admin-auth'
+import { revalidateTenantSites } from '@/lib/revalidate-tenant-sites'
 
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const adminUser = await getCurrentSuperAdmin()
@@ -40,6 +41,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 })
+  revalidateTenantSites()
   return NextResponse.json(data)
 }
 
@@ -53,5 +55,6 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ id: 
   const supabase = createServiceClient()
   const { error } = await supabase.from('blog_categories').delete().eq('id', id)
   if (error) return NextResponse.json({ error: error.message }, { status: 400 })
+  revalidateTenantSites()
   return NextResponse.json({ ok: true })
 }

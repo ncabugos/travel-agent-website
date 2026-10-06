@@ -1,3 +1,34 @@
+# Form spam protection (Sept 16, 2026)
+
+Why: marketing pitches getting through contact + support forms and landing in inboxes. Scope approved: content filter, Turnstile, protect support + consultation, close timer gap.
+
+- [x] `lib/spam.ts`: `checkForBot` (honeypot, fill time, Turnstile verify) + `spamContentReason` (links, pitch phrases)
+- [x] `components/ui/SpamFields.tsx`: honeypot, client-measured fill time, Turnstile widget (reset after each submit)
+- [x] Contact action: use helpers; content-flagged leads saved with `status = 'spam'`, no email
+- [x] Support action: bot checks; content-flagged (phrases only, advisors paste links) get `[Spam]` subject, no confirmation email
+- [x] Consultation action: bot checks (no email sent from this form, so no content filter)
+- [x] Swap inline honeypot/timestamp for `<SpamFields />` in 5 tenant forms; add to Support + Consultation forms
+- [x] `.env.local.example`: Turnstile keys
+- [x] Verify: content filter against both real spam samples + legit messages; tsc; lint; build; browser submits with Cloudflare test keys
+
+**Review.** Content filter: both real spam samples flagged, 4 legit travel/support messages clean. Browser (dev, Cloudflare test keys): real submit passes bot checks on /support and t2-demo; 500ms fill time, missing fill time, and filled honeypot all silently dropped (logged); always-fail secret shows "could not verify" on /support and /schedule-consultation and resets the widget; widget present on t2-demo home lead form, t3-demo, casa-solis. Visible challenge fits layouts, gets spacing, and switches to compact under 300px (t3 mobile form is 215px). Fresh page loads have no console errors. tsc, lint, build clean. Not exercised end to end: content-flagged contact submission writing `status = 'spam'` (would write to prod `inquiries`). Not in scope: Studio form (has its own honeypot, no Turnstile).
+
+**Go-live (operator):** create a Turnstile widget in Cloudflare with hostnames eliteadvisorhub.com, edenforyourworld.com, wineandwellnesstravel.com; set `NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` in Vercel; redeploy. Add each new advisor custom domain to the widget (free plan: 10 hostnames per widget).
+
+# Tenant page caching (Sept 16, 2026)
+
+Why: Supabase Disk IO warning. Tenant pages hit the DB on every visit. Plan: ~/.claude/plans/playful-yawning-lynx.md
+
+- [x] ISR on `[agentId]` layouts (frontend, t2, t3, t4) + empty `generateStaticParams` on nested `[slug]`/`[hotelSlug]` pages
+- [x] `lib/revalidate-tenant-sites.ts` helper
+- [x] Call helper from every write route (agents, Stripe webhook, blog, categories, preferences, selections, promos)
+- [x] `/api/agent-portal/revalidate` + call from portal profile save
+- [x] React `cache()` on `getAgentProfile` and `getAgentGaMeasurementId`
+- [x] Verify: tsc, lint, build route table, `x-nextjs-cache: HIT`, invalidation, contact form
+- [x] Contact pages set to `force-dynamic` (they read `?hotel=`; ISR made them 500)
+
+**Review.** Build shows every tenant route as ● (ISR). Local prod server: second request `x-nextjs-cache: HIT` on t2/t3/t4/frontend demos, nested journal and hotel pages, and WWT via Host header. Revalidation proven with a temporary route (deleted): all entries went MISS then HIT. Contact pages render with `?hotel=`. `/api/agent-portal/revalidate` returns 401 without a session. tsc clean; lint unchanged vs HEAD. Not yet done: check Supabase edge log volume 24h after deploy against the ~11k/day baseline.
+
 # Meridian (T3) UI overhaul — plan
 
 ## Tier matrix change — May 2026 (logged for cross-session visibility)
@@ -367,3 +398,20 @@ notification). Test user removed.
 - [ ] Stripe: per-tier prices + setup-fee line items; portal billing page still shows the $79 no-setup base plan
 - [ ] Decide whether the 30-day complimentary period survives alongside setup fees
 - [ ] Not built yet but listed: YouTube integration, CRM integration, white-label, per-advisor lead routing, affiliate site management
+
+## Operator notification gaps (2026-10-05)
+
+Spec: NOTIFICATION_AUDIT_FIX.md. All sends route through `getAdminNotificationEmail()` and never fail the caller.
+
+- [x] Consultation form emails the operator (`sendConsultationNotification`, ASAP in subject)
+- [x] Advisor edit requests email the operator (`sendEditRequestNotification`)
+- [x] Stripe signup + cancellation email the operator (`sendBillingEventNotification`); `admin_notifications` stays source of truth
+- [x] Advisor contact-form leads BCC the operator
+- [x] Success/failure logged at every call site
+- [x] `consultation_requests.status` default confirmed `'new'` NOT NULL on live DB
+- [x] Daily digest cron `/api/cron/notification-digest` + `vercel.json` (13:00 UTC)
+- [ ] Set `CRON_SECRET` in Vercel production env, then deploy
+- [ ] Manual: submit consultation (starter/ASAP, agency), edit request, Stripe test signup; bad RESEND_API_KEY still returns success
+- [ ] `invoice.payment_failed` handler does not exist yet (P1 dunning); wire `eventType: 'payment_failed'` when it lands
+- [ ] Optional: per-row `notified_at` tracking if the full digest gets noisy
+- [ ] Reply to Dara Teller (waiting since 2026-09-26)

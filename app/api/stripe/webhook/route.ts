@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { stripe, moduleKeyForPrice } from '@/lib/stripe'
 import { createServiceClient } from '@/lib/supabase/service'
+import { revalidateTenantSites } from '@/lib/revalidate-tenant-sites'
 import type Stripe from 'stripe'
 
 /**
@@ -224,6 +225,25 @@ export async function POST(request: Request) {
             },
           })
 
+        // Email the operator too. Never let this throw: a non-2xx makes Stripe
+        // retry the event and the signup gets processed twice.
+        try {
+          const { sendBillingEventNotification } = await import('@/lib/email')
+          const sent = await sendBillingEventNotification({
+            eventType: 'signup',
+            agentName: customerName || email,
+            agencyName: null,
+            email,
+            tier: planLabel,
+            amount: session.amount_total != null ? session.amount_total / 100 : undefined,
+            stripeCustomerId,
+            agentId,
+          })
+          console.info('[stripe-webhook] signup admin notification sent', sent?.id)
+        } catch (emailErr) {
+          console.error('[stripe-webhook] signup admin notification email failed', emailErr)
+        }
+
         // Straight from checkout to the onboarding wizard: the sign-in link
         // lands in their inbox while Stripe redirects them to the login page.
         await sendPortalSignInLink(email, origin)
@@ -282,7 +302,7 @@ export async function POST(request: Request) {
       // Notify admin
       const { data: agent } = await supabase
         .from('agents')
-        .select('id, email, agency_name')
+        .select('id, email, agency_name, full_name, tier')
         .eq('stripe_customer_id', customerId)
         .single()
 
@@ -309,6 +329,30 @@ export async function POST(request: Request) {
             body: `${(agent as any).email} has canceled their subscription.`,
             metadata: { agent_id: (agent as any).id },
           })
+
+        // Email the operator too. Never let this throw (see signup above).
+        try {
+          const a = agent as {
+            id: string
+            email: string | null
+            agency_name: string | null
+            full_name: string | null
+            tier: string | null
+          }
+          const { sendBillingEventNotification } = await import('@/lib/email')
+          const sent = await sendBillingEventNotification({
+            eventType: 'cancellation',
+            agentName: a.full_name ?? a.email ?? customerId,
+            agencyName: a.agency_name,
+            email: a.email ?? '',
+            tier: a.tier,
+            stripeCustomerId: customerId,
+            agentId: a.id,
+          })
+          console.info('[stripe-webhook] cancellation admin notification sent', sent?.id)
+        } catch (emailErr) {
+          console.error('[stripe-webhook] cancellation admin notification email failed', emailErr)
+        }
       }
 
       console.log(`Subscription canceled for customer ${customerId}`)
@@ -337,6 +381,10 @@ export async function POST(request: Request) {
     default:
       // Unhandled event type — log and ignore
       console.log(`Unhandled Stripe event: ${event.type}`)
+  }
+
+  if (['checkout.session.completed', 'customer.subscription.updated', 'customer.subscription.deleted'].includes(event.type)) {
+    revalidateTenantSites()
   }
 
   return NextResponse.json({ received: true })

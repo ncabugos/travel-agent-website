@@ -1,9 +1,10 @@
 'use client'
 
-import { useActionState, useState } from 'react'
+import { useActionState } from 'react'
 import { T2LeadFormLight } from './T2LeadFormLight'
 import { useT2Persona } from './T2Persona'
 import { submitContactForm, type ContactFormState } from '@/lib/actions/contact'
+import { SpamFields } from '@/components/ui/SpamFields'
 
 interface T2LeadFormProps {
   heading?: string
@@ -23,7 +24,6 @@ export function T2LeadForm({
   // All hooks must be called before any conditional return.
   const { lightLeadForm } = useT2Persona()
   const [state, formAction, isPending] = useActionState(submitContactForm, initialState)
-  const [renderedAt] = useState<number>(() => Date.now())
   const submitted = state.success === true
 
   // Coast & Compass and Wine & Wellness Travel use the light variant site-wide.
@@ -94,12 +94,6 @@ export function T2LeadForm({
         ) : (
           <form action={formAction} className="t2-lead-form">
             {agentId && <input type="hidden" name="agent_id" value={agentId} />}
-            <input type="hidden" name="_rendered_at" value={String(renderedAt)} />
-
-            {/* Honeypot — hidden from people, tempting to bots. */}
-            <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, overflow: 'hidden' }}>
-              <input type="text" name="website_url" tabIndex={-1} autoComplete="off" defaultValue="" />
-            </div>
 
             <div className="t2-lead-form-row">
               <input
@@ -150,6 +144,7 @@ export function T2LeadForm({
                 {state.error}
               </p>
             )}
+            <SpamFields resetKey={state} />
             <button type="submit" className="t2-lead-submit" disabled={isPending}>
               <span>{isPending ? 'Sending…' : 'Submit Request'}</span>
             </button>

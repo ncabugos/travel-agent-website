@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/service'
 import { getCurrentSuperAdmin } from '@/lib/admin-auth'
+import { revalidateTenantSites } from '@/lib/revalidate-tenant-sites'
 
 /**
  * PATCH /api/admin/agents/[agentId]
@@ -71,5 +72,6 @@ export async function PATCH(
     return NextResponse.json({ error: error.message }, { status: 400 })
   }
 
+  revalidateTenantSites()
   return NextResponse.json(data)
 }

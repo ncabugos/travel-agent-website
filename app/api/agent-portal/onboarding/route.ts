@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createServiceClient } from '@/lib/supabase/service'
 import { NextResponse } from 'next/server'
 import { sendAdminOnboardingNotification, sendAgentWelcomeEmail } from '@/lib/email'
+import { revalidateTenantSites } from '@/lib/revalidate-tenant-sites'
 
 export async function PUT(request: Request) {
   try {
@@ -57,6 +58,8 @@ export async function PUT(request: Request) {
     if (updateError) {
       return NextResponse.json({ error: updateError.message }, { status: 500 })
     }
+
+    revalidateTenantSites()
 
     // Create admin notification so Nick can follow up. Uses the service role:
     // admin_notifications is RLS-locked to super_admin reads (migration 044),

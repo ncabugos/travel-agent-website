@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/service'
 import { getCurrentSuperAdmin } from '@/lib/admin-auth'
 import { checkBlogPostWarnings } from '@/lib/blog-warnings'
+import { revalidateTenantSites } from '@/lib/revalidate-tenant-sites'
 import type { BlogPost } from '@/types/index'
 
 const ALL_COLUMNS =
@@ -66,6 +67,8 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     }
   }
 
+  revalidateTenantSites()
+
   const warnings = await checkBlogPostWarnings({
     bodyHtml: data.body_html ?? '',
     agentId: data.agent_id,
@@ -85,5 +88,6 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ id: 
   const supabase = createServiceClient()
   const { error } = await supabase.from('blog_posts').delete().eq('id', id)
   if (error) return NextResponse.json({ error: error.message }, { status: 400 })
+  revalidateTenantSites()
   return NextResponse.json({ ok: true })
 }

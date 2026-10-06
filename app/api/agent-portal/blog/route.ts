@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabase/server'
 import { createServiceClient } from '@/lib/supabase/service'
 import { checkBlogPostWarnings } from '@/lib/blog-warnings'
+import { revalidateTenantSites } from '@/lib/revalidate-tenant-sites'
 import type { BlogPost } from '@/types/index'
 
 const ALL_COLUMNS =
@@ -109,6 +110,8 @@ export async function POST(request: Request) {
     }))
     await admin.from('blog_post_categories').insert(records)
   }
+
+  revalidateTenantSites()
 
   const warnings = await checkBlogPostWarnings({
     bodyHtml: data.body_html ?? '',

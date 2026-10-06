@@ -2,6 +2,7 @@
 
 import { useActionState } from 'react'
 import { submitSupportRequest, type SupportFormState } from '@/lib/actions/support'
+import { SpamFields } from '@/components/ui/SpamFields'
 import { BODY_FONT, CHARCOAL, DIVIDER, GOLD, PRIMARY_CTA_STYLE, WARM_GRAY, WARM_GRAY_DARK } from './tokens'
 
 const CATEGORIES = [
@@ -74,6 +75,8 @@ export function SupportForm() {
           placeholder="Steps to reproduce, what you expected, and what happened."
         />
       </Field>
+
+      <SpamFields resetKey={state} />
 
       <button type="submit" disabled={pending} className="eah-cta-primary" style={{ ...PRIMARY_CTA_STYLE, alignSelf: 'flex-start', marginTop: '8px', opacity: pending ? 0.6 : 1 }}>
         {pending ? 'Sending' : 'Send message'}

@@ -91,7 +91,7 @@ export async function submitStudioInquiry(
     // is still visible in /admin/consultations regardless.
     try {
       const { sendStudioInquiryNotification } = await import('@/lib/email')
-      await sendStudioInquiryNotification({
+      const sent = await sendStudioInquiryNotification({
         firstName,
         lastName,
         email,
@@ -101,6 +101,7 @@ export async function submitStudioInquiry(
         plan,
         message:      message || null,
       })
+      console.info('[studio] admin notification sent', sent?.id)
     } catch (emailErr) {
       console.error('[studio] admin notification email failed', emailErr)
     }

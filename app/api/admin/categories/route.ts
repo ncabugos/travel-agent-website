@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/service'
 import { getCurrentSuperAdmin } from '@/lib/admin-auth'
+import { revalidateTenantSites } from '@/lib/revalidate-tenant-sites'
 
 export async function GET() {
   const adminUser = await getCurrentSuperAdmin()
@@ -36,5 +37,6 @@ export async function POST(request: Request) {
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 })
+  revalidateTenantSites()
   return NextResponse.json(data, { status: 201 })
 }

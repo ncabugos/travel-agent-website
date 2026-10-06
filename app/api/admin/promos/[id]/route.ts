@@ -7,6 +7,7 @@ import {
   type SupplierPromoInput,
 } from '@/lib/supplier-promos'
 import { getCurrentSuperAdmin } from '@/lib/admin-auth'
+import { revalidateTenantSites } from '@/lib/revalidate-tenant-sites'
 
 interface Ctx {
   params: Promise<{ id: string }>
@@ -52,6 +53,7 @@ export async function PUT(request: Request, { params }: Ctx) {
 
   try {
     const promo = await updateSupplierPromo(id, body)
+    revalidateTenantSites()
     return NextResponse.json(promo)
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Failed to update promo'
@@ -68,6 +70,7 @@ export async function DELETE(_req: Request, { params }: Ctx) {
   const { id } = await params
   try {
     await deleteSupplierPromo(id)
+    revalidateTenantSites()
     return NextResponse.json({ ok: true })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Failed to delete promo'

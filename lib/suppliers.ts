@@ -1,4 +1,5 @@
 import { MOCK_AGENT, DEMO_T2_AGENT, DEMO_YTC_AGENT, DEMO_T3_AGENT, DEMO_COAST_COMPASS_AGENT, DEMO_LIDO_COLLECTIVE_AGENT, DEMO_CASA_SOLIS_AGENT, MOCK_SUPPLIERS, type DisplaySupplier, type MockAgent } from '@/lib/mock-data'
+import { cache } from 'react'
 import { createServiceClient } from '@/lib/supabase/service'
 
 // Re-export for use in lib/blog.ts and other modules
@@ -25,7 +26,9 @@ const isCasaSolisDemo = (agentId: string) => agentId === CASA_SOLIS_DEMO_ID
 
 // ─── Agent Profile ────────────────────────────────────────────────────────────
 
-export async function getAgentProfile(agentId: string): Promise<MockAgent | null> {
+// cache() dedupes within one render: layout, generateMetadata and page all ask
+// for the same agent.
+export const getAgentProfile = cache(async (agentId: string): Promise<MockAgent | null> => {
   if (isCasaSolisDemo(agentId)) return DEMO_CASA_SOLIS_AGENT
   if (isLidoCollectiveDemo(agentId)) return DEMO_LIDO_COLLECTIVE_AGENT
   if (isCoastCompassDemo(agentId)) return DEMO_COAST_COMPASS_AGENT
@@ -113,7 +116,7 @@ export async function getAgentProfile(agentId: string): Promise<MockAgent | null
   } catch {
     return null
   }
-}
+})
 
 // ─── Supplier Selections ──────────────────────────────────────────────────────
 

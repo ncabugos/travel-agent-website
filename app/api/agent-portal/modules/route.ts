@@ -3,6 +3,7 @@ import { createServerClient } from '@/lib/supabase/server'
 import { createServiceClient } from '@/lib/supabase/service'
 import { stripe, MODULE_PRICES } from '@/lib/stripe'
 import type { ModuleKey } from '@/lib/tier-features'
+import { revalidateTenantSites } from '@/lib/revalidate-tenant-sites'
 
 /**
  * Self-serve module billing (business model v2, docs/business-model-v2.md).
@@ -137,6 +138,7 @@ export async function POST(request: Request) {
       { onConflict: 'agent_id,module_key' },
     )
     const activeModules = await refreshModuleCache(agent.id)
+    revalidateTenantSites()
 
     return NextResponse.json({ ok: true, module: key, activeModules })
   } catch (err) {
@@ -188,6 +190,7 @@ export async function DELETE(request: Request) {
       })
       .eq('id', row.id)
     const activeModules = await refreshModuleCache(agent.id)
+    revalidateTenantSites()
 
     return NextResponse.json({ ok: true, module: key, activeModules })
   } catch (err) {

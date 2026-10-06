@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { replaceAgentHotelProgramSelections } from '@/lib/hotel-programs'
 import { getCurrentSuperAdmin } from '@/lib/admin-auth'
+import { revalidateTenantSites } from '@/lib/revalidate-tenant-sites'
 
 /**
  * POST /api/admin/agents/[agentId]/hotel-programs
@@ -38,6 +39,7 @@ export async function POST(
 
   try {
     await replaceAgentHotelProgramSelections(agentId, ids)
+    revalidateTenantSites()
     return NextResponse.json({ ok: true, count: ids.length })
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Save failed'

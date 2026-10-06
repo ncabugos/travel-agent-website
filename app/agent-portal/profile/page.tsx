@@ -113,6 +113,8 @@ export default function AgentProfilePage() {
     if (updateError) {
       setError(updateError.message)
     } else {
+      // Refresh the cached public site so the change shows right away.
+      fetch('/api/agent-portal/revalidate', { method: 'POST' }).catch(() => {})
       initialProfileRef.current = profile
       setInitial(snapshot(profile))
       setSuccess(true)

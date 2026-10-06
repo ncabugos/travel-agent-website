@@ -7,6 +7,11 @@ interface PageProps {
   params: Promise<{ agentId: string; hotelSlug: string }>
 }
 
+// Needed for this page to be cached; see the note in ../../layout.tsx.
+export function generateStaticParams() {
+  return []
+}
+
 export async function generateMetadata({ params }: PageProps) {
   const { hotelSlug } = await params
   const hotel = await getHotel(hotelSlug)

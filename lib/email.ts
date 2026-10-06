@@ -278,8 +278,8 @@ export async function sendAdminOnboardingNotification(agent: OnboardingAgent) {
 /**
  * Notify the admin that a new lead came in through the public Studio services
  * page at /studio. Studio leads are time-sensitive sales inquiries, so this
- * fires an email (unlike the silent Custom/Agency consultation form). The row
- * is also visible in /admin/consultations with the "Studio" chip.
+ * fires an email. The row is also visible in /admin/consultations with the
+ * "Studio" chip.
  */
 export interface StudioInquiryNotificationInput {
   firstName: string
@@ -354,6 +354,298 @@ export async function sendStudioInquiryNotification(input: StudioInquiryNotifica
 
   if (error) {
     console.error('[email] Failed to send studio inquiry notification:', error)
+    throw error
+  }
+  return data
+}
+
+/**
+ * Notify the admin that a lead submitted the "Schedule a Consultation" form on
+ * the marketing site. The row is also visible in /admin/consultations.
+ */
+export interface ConsultationNotificationInput {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string | null
+  /** starter | growth | custom | agency */
+  tier: string | null
+  timeline: string | null
+  roleTitle: string | null
+  heardFrom: string | null
+  message: string | null
+  // Agency-tier extras, all nullable
+  agencyName: string | null
+  agencyWebsite: string | null
+  numAdvisors: number | null
+  hostAffiliation: string | null
+  existingWebsite: string | null
+}
+
+const CONSULTATION_TIER_LABELS: Record<string, string> = {
+  starter: 'Starter',
+  growth: 'Boutique Agency',
+  custom: 'Custom',
+  agency: 'Agency',
+}
+
+function consultationTierLabel(tier: string | null): string {
+  return tier ? (CONSULTATION_TIER_LABELS[tier] ?? tier) : 'Unspecified'
+}
+
+/** Render the consultation notification without sending (for previews). */
+export function renderConsultationNotificationHtml(input: ConsultationNotificationInput): string {
+  const fullName = `${input.firstName} ${input.lastName}`.trim()
+  const tierLabel = consultationTierLabel(input.tier)
+  const isAsap = input.timeline === 'ASAP'
+  const timelineValue = input.timeline
+    ? isAsap
+      ? `<strong style="color:${ACCENT};">ASAP</strong>`
+      : escapeHtml(input.timeline)
+    : null
+  const rows = [
+    { label: 'Name', value: escapeHtml(fullName) },
+    { label: 'Email', value: emailLink(escapeHtml(input.email), `mailto:${escapeHtml(input.email)}`) },
+    ...(input.phone ? [{ label: 'Phone', value: escapeHtml(input.phone) }] : []),
+    { label: 'Tier', value: escapeHtml(tierLabel) },
+    ...(timelineValue ? [{ label: 'Timeline', value: timelineValue }] : []),
+    ...(input.roleTitle ? [{ label: 'Role', value: escapeHtml(input.roleTitle) }] : []),
+    ...(input.heardFrom ? [{ label: 'Heard from', value: escapeHtml(input.heardFrom) }] : []),
+  ]
+  const agencyRows =
+    input.tier === 'agency'
+      ? [
+          ...(input.agencyName ? [{ label: 'Agency', value: escapeHtml(input.agencyName) }] : []),
+          ...(input.agencyWebsite
+            ? [{ label: 'Website', value: emailLink(escapeHtml(input.agencyWebsite), escapeHtml(input.agencyWebsite)) }]
+            : []),
+          ...(input.numAdvisors != null ? [{ label: 'Advisors', value: String(input.numAdvisors) }] : []),
+          ...(input.hostAffiliation ? [{ label: 'Host agency', value: escapeHtml(input.hostAffiliation) }] : []),
+          ...(input.existingWebsite
+            ? [{ label: 'Current site', value: emailLink(escapeHtml(input.existingWebsite), escapeHtml(input.existingWebsite)) }]
+            : []),
+        ]
+      : []
+  const bodyHtml = [
+    emailHeading('New consultation request'),
+    emailParagraph(
+      isAsap
+        ? `${escapeHtml(fullName)} wants to launch <strong>ASAP</strong>. Follow up today.`
+        : 'A lead just submitted the consultation form on the marketing site.',
+    ),
+    emailDetailRows(rows),
+    agencyRows.length > 0 ? emailLabel('Agency details') + emailDetailRows(agencyRows) : '',
+    input.message
+      ? emailLabel('Message') +
+        `<p class="text-secondary" style="margin:0 0 24px;font-size:15px;line-height:1.65;color:${COLOR_BODY};white-space:pre-wrap;">${escapeHtml(input.message)}</p>`
+      : '',
+    emailButton('View consultations', `${EMAIL_ASSET_ORIGIN}/admin/consultations`),
+    emailMutedParagraph(
+      `Reply to this email to reach ${escapeHtml(input.firstName)} directly. The reply-to is set to their address.`,
+    ),
+  ].join('')
+  return renderBrandedEmail({
+    preheader: `${fullName}, ${tierLabel} tier${input.timeline ? `, timeline ${input.timeline}` : ''}.`,
+    bodyHtml,
+    signature: 'none',
+  })
+}
+
+export async function sendConsultationNotification(input: ConsultationNotificationInput) {
+  const fullName = `${input.firstName} ${input.lastName}`.trim()
+  const asap = input.timeline === 'ASAP' ? ', ASAP' : ''
+
+  const { data, error } = await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: await getAdminNotificationEmail(),
+    replyTo: input.email,
+    subject: `New consultation: ${fullName}, ${consultationTierLabel(input.tier)} tier${asap}`,
+    html: renderConsultationNotificationHtml(input),
+  })
+
+  if (error) {
+    console.error('[email] Failed to send consultation notification:', error)
+    throw error
+  }
+  return data
+}
+
+/**
+ * Notify the admin that an advisor submitted a site change request from the
+ * portal. The row is also visible in /admin/requests.
+ */
+export interface EditRequestNotificationInput {
+  advisorName: string
+  agencyName: string
+  agentId: string
+  advisorEmail: string
+  subject: string
+  description: string | null
+}
+
+/** Render the edit request notification without sending (for previews). */
+export function renderEditRequestNotificationHtml(input: EditRequestNotificationInput): string {
+  const rows = [
+    { label: 'Advisor', value: escapeHtml(input.advisorName) },
+    { label: 'Agency', value: escapeHtml(input.agencyName) },
+    { label: 'Email', value: emailLink(escapeHtml(input.advisorEmail), `mailto:${escapeHtml(input.advisorEmail)}`) },
+    { label: 'Agent ID', value: escapeHtml(input.agentId) },
+    { label: 'Request', value: escapeHtml(input.subject) },
+  ]
+  const bodyHtml = [
+    emailHeading('New edit request'),
+    emailParagraph(`${escapeHtml(input.advisorName)} asked for a change to their site.`),
+    emailDetailRows(rows),
+    input.description
+      ? emailLabel('Details') +
+        `<p class="text-secondary" style="margin:0 0 24px;font-size:15px;line-height:1.65;color:${COLOR_BODY};white-space:pre-wrap;">${escapeHtml(input.description)}</p>`
+      : '',
+    emailButton('View requests', `${EMAIL_ASSET_ORIGIN}/admin/requests`),
+    emailMutedParagraph('Reply to this email to reach the advisor directly.'),
+  ].join('')
+  return renderBrandedEmail({
+    preheader: `${input.agencyName}: ${input.subject}`,
+    bodyHtml,
+    signature: 'none',
+  })
+}
+
+export async function sendEditRequestNotification(input: EditRequestNotificationInput) {
+  const { data, error } = await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: await getAdminNotificationEmail(),
+    replyTo: input.advisorEmail || undefined,
+    subject: `Edit request: ${input.agencyName}, ${input.subject}`,
+    html: renderEditRequestNotificationHtml(input),
+  })
+
+  if (error) {
+    console.error('[email] Failed to send edit request notification:', error)
+    throw error
+  }
+  return data
+}
+
+/**
+ * Notify the admin of a Stripe billing event. The admin_notifications row
+ * written by the webhook stays the source of truth; this is a second channel.
+ */
+export interface BillingEventNotificationInput {
+  eventType: 'signup' | 'cancellation' | 'payment_failed'
+  agentName: string
+  agencyName: string | null
+  email: string
+  tier: string | null
+  /** In dollars. */
+  amount?: number
+  stripeCustomerId: string
+  agentId?: string
+}
+
+const BILLING_EVENT_LABELS: Record<BillingEventNotificationInput['eventType'], string> = {
+  signup: 'New signup',
+  cancellation: 'Subscription canceled',
+  payment_failed: 'Payment failed',
+}
+
+/** Render the billing event notification without sending (for previews). */
+export function renderBillingEventNotificationHtml(input: BillingEventNotificationInput): string {
+  const label = BILLING_EVENT_LABELS[input.eventType]
+  const rows = [
+    { label: 'Name', value: escapeHtml(input.agentName) },
+    ...(input.agencyName ? [{ label: 'Agency', value: escapeHtml(input.agencyName) }] : []),
+    { label: 'Email', value: emailLink(escapeHtml(input.email), `mailto:${escapeHtml(input.email)}`) },
+    ...(input.tier ? [{ label: 'Tier', value: escapeHtml(input.tier) }] : []),
+    ...(input.amount != null ? [{ label: 'Amount', value: `$${input.amount.toFixed(2)}` }] : []),
+    { label: 'Stripe customer', value: escapeHtml(input.stripeCustomerId) },
+  ]
+  const href = input.agentId
+    ? `${EMAIL_ASSET_ORIGIN}/admin/agents/${encodeURIComponent(input.agentId)}`
+    : `${EMAIL_ASSET_ORIGIN}/admin/agents`
+  const bodyHtml = [
+    emailHeading(label),
+    emailDetailRows(rows),
+    emailButton('View advisor', href),
+  ].join('')
+  return renderBrandedEmail({
+    preheader: `${label}: ${input.agencyName ?? input.agentName}`,
+    bodyHtml,
+    signature: 'none',
+  })
+}
+
+export async function sendBillingEventNotification(input: BillingEventNotificationInput) {
+  const label = BILLING_EVENT_LABELS[input.eventType]
+  const { data, error } = await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: await getAdminNotificationEmail(),
+    replyTo: input.email || undefined,
+    subject: `${label}: ${input.agencyName ?? input.agentName}${input.tier ? `, ${input.tier}` : ''}`,
+    html: renderBillingEventNotificationHtml(input),
+  })
+
+  if (error) {
+    console.error('[email] Failed to send billing event notification:', error)
+    throw error
+  }
+  return data
+}
+
+/**
+ * Daily safety-net digest: everything that came in over the last 24 hours,
+ * sent by the cron at app/api/cron/notification-digest. If an individual
+ * notification was dropped, the lead still shows up here.
+ */
+export interface DailyDigestInput {
+  consultations: { name: string; email: string; source: string; tier: string | null; timeline: string | null; createdAt: string }[]
+  editRequests: { agencyName: string; subject: string; createdAt: string }[]
+  adminEvents: { title: string; createdAt: string }[]
+}
+
+/** Render the daily digest without sending (for previews). */
+export function renderDailyDigestHtml(input: DailyDigestInput): string {
+  const section = (title: string, items: string[]) =>
+    items.length > 0 ? emailLabel(`${title} (${items.length})`) + emailBullets(items) : ''
+  const bodyHtml = [
+    emailHeading('Daily digest'),
+    emailParagraph('Everything that came in since yesterday. Each item should also have arrived as its own email.'),
+    section(
+      'Consultations',
+      input.consultations.map(
+        (c) =>
+          `${escapeHtml(c.name)} (${emailLink(escapeHtml(c.email), `mailto:${escapeHtml(c.email)}`)}), ${
+            c.source === 'studio' ? 'Studio' : escapeHtml(consultationTierLabel(c.tier))
+          }${c.timeline ? `, ${escapeHtml(c.timeline)}` : ''}`,
+      ),
+    ),
+    section(
+      'Edit requests',
+      input.editRequests.map((r) => `${escapeHtml(r.agencyName)}: ${escapeHtml(r.subject)}`),
+    ),
+    section(
+      'Account events',
+      input.adminEvents.map((e) => escapeHtml(e.title)),
+    ),
+    emailButton('Open admin', `${EMAIL_ASSET_ORIGIN}/admin`),
+  ].join('')
+  return renderBrandedEmail({
+    preheader: `${input.consultations.length} consultations, ${input.editRequests.length} edit requests, ${input.adminEvents.length} account events.`,
+    bodyHtml,
+    signature: 'none',
+  })
+}
+
+export async function sendDailyDigest(input: DailyDigestInput) {
+  const total = input.consultations.length + input.editRequests.length + input.adminEvents.length
+  const { data, error } = await getResend().emails.send({
+    from: FROM_ADDRESS,
+    to: await getAdminNotificationEmail(),
+    subject: `Daily digest: ${total} new item${total === 1 ? '' : 's'}`,
+    html: renderDailyDigestHtml(input),
+  })
+
+  if (error) {
+    console.error('[email] Failed to send daily digest:', error)
     throw error
   }
   return data

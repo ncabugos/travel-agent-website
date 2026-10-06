@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { stripe, TIER_PRICES, type TierName } from '@/lib/stripe'
 import { createServiceClient } from '@/lib/supabase/service'
 import { getCurrentSuperAdmin } from '@/lib/admin-auth'
+import { revalidateTenantSites } from '@/lib/revalidate-tenant-sites'
 
 /**
  * PATCH /api/admin/agents/[agentId]/subscription
@@ -80,6 +81,7 @@ export async function PATCH(
       .update({ tier })
       .eq('id', agentId)
 
+    revalidateTenantSites()
     return NextResponse.json({
       ok: true,
       tier,
@@ -159,6 +161,7 @@ export async function DELETE(
       // via the webhook when the period actually ends.
     }
 
+    revalidateTenantSites()
     return NextResponse.json({ ok: true, mode })
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown Stripe error'

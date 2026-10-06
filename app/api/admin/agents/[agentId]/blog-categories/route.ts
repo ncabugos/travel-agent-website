@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/service'
 import { getCurrentSuperAdmin } from '@/lib/admin-auth'
+import { revalidateTenantSites } from '@/lib/revalidate-tenant-sites'
 
 /**
  * POST /api/admin/agents/[agentId]/blog-categories
@@ -59,5 +60,6 @@ export async function POST(
     }
   }
 
+  revalidateTenantSites()
   return NextResponse.json({ ok: true, count: ids.length })
 }

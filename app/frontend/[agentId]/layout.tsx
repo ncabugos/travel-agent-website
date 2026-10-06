@@ -31,6 +31,16 @@ interface LayoutProps {
   params: Promise<{ agentId: string }>
 }
 
+// Cache each advisor's pages (ISR). The empty list means nothing is built at
+// deploy: a page renders on its first request, then serves from cache. Saves
+// clear it through lib/revalidate-tenant-sites.ts; the hour is a fallback for
+// edits made outside the app (scripts, Supabase dashboard).
+export const revalidate = 3600
+
+export function generateStaticParams() {
+  return []
+}
+
 export default async function AgentFrontendLayout({ children, params }: LayoutProps) {
   const { agentId } = await params
   const [agent, gaMeasurementId] = await Promise.all([

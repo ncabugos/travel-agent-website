@@ -6,6 +6,7 @@ import {
   type SupplierPromoInput,
 } from '@/lib/supplier-promos'
 import { getCurrentSuperAdmin } from '@/lib/admin-auth'
+import { revalidateTenantSites } from '@/lib/revalidate-tenant-sites'
 
 export async function GET() {
   const adminUser = await getCurrentSuperAdmin()
@@ -30,6 +31,7 @@ export async function POST(request: Request) {
 
   try {
     const promo = await createSupplierPromo(body as SupplierPromoInput)
+    revalidateTenantSites()
     return NextResponse.json(promo, { status: 201 })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Failed to create promo'

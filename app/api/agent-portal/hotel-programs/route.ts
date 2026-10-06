@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabase/server'
 import { createServiceClient } from '@/lib/supabase/service'
 import { replaceAgentHotelProgramSelections } from '@/lib/hotel-programs'
+import { revalidateTenantSites } from '@/lib/revalidate-tenant-sites'
 
 /**
  * POST /api/agent-portal/hotel-programs
@@ -50,6 +51,7 @@ export async function POST(request: Request) {
 
   try {
     await replaceAgentHotelProgramSelections(agent.id, ids, admin)
+    revalidateTenantSites()
     return NextResponse.json({ ok: true, count: ids.length })
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Save failed'

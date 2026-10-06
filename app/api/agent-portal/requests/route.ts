@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     .select('*')
     .eq('email', session.user.email ?? '')
     .single()
-  const agent = agentRaw as { id: string } | null
+  const agent = agentRaw as { id: string; full_name: string; agency_name: string } | null
 
   if (!agent) return NextResponse.json({ error: 'Agent profile not found' }, { status: 404 })
 
@@ -54,6 +54,23 @@ export async function POST(request: Request) {
   })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 })
+
+  // Notify the operator. The row is already saved, so an email failure is
+  // logged and never changes the response.
+  try {
+    const { sendEditRequestNotification } = await import('@/lib/email')
+    const sent = await sendEditRequestNotification({
+      advisorName:  agent.full_name,
+      agencyName:   agent.agency_name,
+      agentId:      agent.id,
+      advisorEmail: session.user.email ?? '',
+      subject,
+      description:  description || null,
+    })
+    console.info('[edit-request] admin notification sent', sent?.id)
+  } catch (emailErr) {
+    console.error('[edit-request] admin notification email failed', emailErr)
+  }
 
   return NextResponse.json({ ok: true })
 }

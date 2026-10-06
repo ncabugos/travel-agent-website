@@ -7,6 +7,9 @@ interface PageProps {
   searchParams?: Promise<{ hotel?: string }>
 }
 
+// Reads ?hotel= from the link, so this page can't use the layout's cache.
+export const dynamic = 'force-dynamic'
+
 export default async function T3ContactPage({ params, searchParams }: PageProps) {
   const { agentId } = await params
   const { hotel } = (await searchParams) ?? {}

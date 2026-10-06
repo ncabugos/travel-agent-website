@@ -5,6 +5,7 @@ import {
   submitConsultationRequest,
   type ConsultationFormState,
 } from '@/lib/actions/consultation'
+import { SpamFields } from '@/components/ui/SpamFields'
 
 const serif = 'var(--font-inter-tight), var(--font-inter), system-ui, sans-serif'
 const sans = 'var(--font-inter), system-ui, -apple-system, sans-serif'
@@ -324,6 +325,7 @@ export function ConsultationForm({
       </Grid>
 
       <div style={{ marginTop: '40px' }}>
+        <SpamFields resetKey={state} />
         <button
           type="submit"
           disabled={isPending}

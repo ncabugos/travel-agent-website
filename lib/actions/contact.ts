@@ -2,6 +2,8 @@
 
 import { Resend } from 'resend'
 import { getAgentProfile } from '@/lib/suppliers'
+import { checkForBot, spamContentReason } from '@/lib/spam'
+import { getAdminNotificationEmail } from '@/lib/platform-settings'
 
 export type ContactFormState = {
   success?: boolean
@@ -9,8 +11,6 @@ export type ContactFormState = {
   fieldErrors?: Partial<Record<string, string>>
 }
 
-const ADMIN_FALLBACK = 'cabugosb3@gmail.com'
-const MIN_FILL_TIME_MS = 2000 // forms submitted in <2s are almost certainly bots
 
 function escape(s: string): string {
   return s
@@ -44,21 +44,11 @@ export async function submitContactForm(
   // request from a quick-access CTA. Tags the subject line.
   const inquiryType = get('inquiry_type')
 
-  // ── Spam protection ──────────────────────────────────────────────────
-  // 1. Honeypot — hidden field that real users never fill.
-  const honeypot = get('website_url')
-  if (honeypot) {
-    // Pretend it succeeded so the bot doesn't probe further. No DB write,
-    // no email — drop it silently.
-    console.warn('[contact] honeypot tripped, dropping submission')
-    return { success: true }
-  }
-
-  // 2. Form-fill time — reject sub-2-second submissions.
-  const renderedAt = Number(get('_rendered_at') || '0')
-  if (renderedAt > 0 && Date.now() - renderedAt < MIN_FILL_TIME_MS) {
-    console.warn('[contact] sub-2s submission, dropping')
-    return { success: true }
+  // ── Bot checks (honeypot, fill time, Turnstile) ──────────────────────
+  const bot = await checkForBot(formData, 'contact')
+  if (bot === 'drop') return { success: true }
+  if (bot === 'challenge_failed') {
+    return { success: false, error: 'We could not verify this submission. Please refresh the page and try again.' }
   }
 
   // ── Field validation ────────────────────────────────────────────────
@@ -80,6 +70,10 @@ export async function submitContactForm(
     message    ? message                            : null,
   ].filter(Boolean).join('\n') || null
 
+  // Sales pitches are kept for the record but never emailed to the advisor.
+  const spamReason = spamContentReason([fullName, phone, destination, message].join('\n'))
+  if (spamReason) console.warn(`[contact] content flagged as spam (${spamReason}), skipping email`)
+
   // ── DB write (audit trail) ───────────────────────────────────────────
   if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
     try {
@@ -93,7 +87,7 @@ export async function submitContactForm(
         phone:       phone || null,
         destination: destination || null,
         message:     fullMessage,
-        status:      'new',
+        status:      spamReason ? 'spam' : 'new',
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { error: dbError } = await (supabase.from('inquiries') as any).insert(payload)
@@ -108,12 +102,22 @@ export async function submitContactForm(
     }
   }
 
+  if (spamReason) return { success: true }
+
   // ── Email the advisor via Resend ────────────────────────────────────
   if (process.env.RESEND_API_KEY) {
     try {
       // Look up the advisor's email so we route to the right inbox.
       // Falls back to the platform admin if the agent has no email set.
-      let recipient = ADMIN_FALLBACK
+      // The operator is BCC'd on every lead (never TO, so the advisor sees no
+      // extra recipient). A settings lookup failure must not block the send.
+      let adminEmail = 'cabugosb3@gmail.com'
+      try {
+        adminEmail = await getAdminNotificationEmail()
+      } catch (e) {
+        console.error('[contact] admin email lookup failed, using fallback', e)
+      }
+      let recipient = adminEmail
       let agencyName = ''
       if (agentId) {
         const agent = await getAgentProfile(agentId)
@@ -139,6 +143,7 @@ export async function submitContactForm(
       const { data: sendData, error: sendError } = await resend.emails.send({
         from: FROM,
         to: recipient,
+        ...(recipient !== adminEmail ? { bcc: adminEmail } : {}),
         replyTo: email,
         subject,
         html: `

@@ -13,6 +13,7 @@
  */
 
 import { Resend } from 'resend'
+import { checkForBot, spamContentReason } from '@/lib/spam'
 
 export type SupportFormState = {
   success?: boolean
@@ -57,6 +58,12 @@ export async function submitSupportRequest(
   const subject    = get('subject')
   const message    = get('message')
 
+  const bot = await checkForBot(formData, 'support')
+  if (bot === 'drop') return { success: true }
+  if (bot === 'challenge_failed') {
+    return { success: false, error: 'We could not verify this submission. Please refresh the page and try again.' }
+  }
+
   // Validate
   const fieldErrors: Partial<Record<string, string>> = {}
   if (!name) fieldErrors.name = 'Your name is required.'
@@ -72,6 +79,12 @@ export async function submitSupportRequest(
   if (Object.keys(fieldErrors).length > 0) {
     return { success: false, error: 'Please correct the errors below.', fieldErrors }
   }
+
+  // Advisors paste links to their own sites here, so only pitch phrases count.
+  // Flagged requests still reach the admin inbox, tagged [Spam] so a mail
+  // filter can file them, and never trigger the confirmation email.
+  const spamReason = spamContentReason([name, agency, subject, message].join('\n'), { allowLinks: true })
+  if (spamReason) console.warn(`[support] content flagged as spam (${spamReason})`)
 
   if (!process.env.RESEND_API_KEY) {
     // Dev mode without Resend — log and treat as success so the UX is testable.
@@ -91,7 +104,7 @@ export async function submitSupportRequest(
       from: FROM,
       to: ADMIN,
       replyTo: email,
-      subject: `[Support · ${CATEGORY_LABELS[category]}] ${subject}`,
+      subject: `${spamReason ? '[Spam] ' : ''}[Support · ${CATEGORY_LABELS[category]}] ${subject}`,
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px 0; color: #1f2937;">
           <h2 style="margin: 0 0 4px; font-size: 18px; color: #111;">New support request</h2>
@@ -112,6 +125,8 @@ export async function submitSupportRequest(
         </div>
       `,
     })
+
+    if (spamReason) return { success: true }
 
     // ── 2. Customer confirmation ────────────────────────────────────────
     await resend.emails.send({

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabase/server'
 import { createServiceClient } from '@/lib/supabase/service'
+import { revalidateTenantSites } from '@/lib/revalidate-tenant-sites'
 
 /**
  * POST /api/agent-portal/preferences
@@ -57,5 +58,6 @@ export async function POST(request: Request) {
     if (error) return NextResponse.json({ error: error.message }, { status: 400 })
   }
 
+  revalidateTenantSites()
   return NextResponse.json({ ok: true, count: ids.length })
 }
