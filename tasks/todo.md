@@ -1,3 +1,26 @@
+# GA4 report follow-up: content + SEO/GEO (Oct 6, 2026)
+
+Source: GA4 "Generate leads overview", Sep 8 to Oct 5. ~92% of 1,598 "users" are Direct from data-center cities plus a 414-user spike on Oct 4: bots. Real sessions ~190: Google 80, ChatGPT 31, Instagram 21, Bing 15. Leads show 0 because nothing fired a lead event. Search queries empty because Search Console is not linked. No Insights post since Aug 13.
+
+**Code (uncommitted)**
+- [x] Consultation form fires `generate_lead` on successful submit
+- [x] Tenant layouts (t2/t3/t4/frontend) noindex any slug that is not a real tenant UUID or published demo (`isIndexableTenantSlug`). Fixes soft 404s like `/t2/t2-demoVista/...`
+- [x] `postModifiedAt()`: JSON-LD dateModified, OG modified_time, and sitemap lastModified never earlier than published
+- [x] `app/llms.txt/route.ts`, tiers from `PUBLIC_TIERS`, posts from DB
+
+**New posts (drafts in /admin/insights, no cover image yet)**
+- [x] travel-consortium-vs-host-agency (Oct 6)
+- [x] how-luxury-travel-advisors-charge (Oct 13)
+- [x] multi-advisor-travel-agency-website: **published Oct 7** with cover, 2 demo screenshots, a three-brand comparison, and 2 animated WebP diagrams (scripts/gen_multi_advisor_media.js, assets in blog-assets). Figure/figcaption CSS in app/insights/[slug]/page.tsx is uncommitted: captions render unstyled on prod until deployed
+
+**Existing posts: staged, needs operator to run**
+- [x] `node scripts/fix_insights_2026_10.js --apply` (applied Oct 6: 17/17, DB re-scan clean): old tiers and prices, retired Founding Advisor offer, dead `/beta` links -> /schedule-consultation, how-tiers-stack-modules rewrite, AI-search de-dup, hotel-programs FAQ
+
+**Operator actions (GA4 admin)**
+- [ ] Mark `generate_lead` as a key event; link Search Console; filter bot traffic
+
+**Review.** Verified on dev: unknown slugs on all four templates and demos emit `noindex, nofollow`; UUID tenant paths and Eden via its domain stay `index, follow`; curated-editorial-stream now emits dateModified = datePublished (was earlier); /llms.txt returns 200 text/plain with three tiers and 23 post links; /schedule-consultation renders with no console errors (lead event not fired end to end, since a submit writes a real prod lead). tsc clean. Lint clean except require() in the new script, same as the existing scripts. Live post edits were blocked by the auto-mode classifier, so they are staged in the script.
+
 # Form spam protection (Sept 16, 2026)
 
 Why: marketing pitches getting through contact + support forms and landing in inboxes. Scope approved: content filter, Turnstile, protect support + consultation, close timer gap.
