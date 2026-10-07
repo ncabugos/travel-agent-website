@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { getPublishedPosts, getCategories } from '@/lib/marketing-blog'
+import { getPublishedPosts, getCategories, postModifiedAt } from '@/lib/marketing-blog'
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??
@@ -52,7 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     ...posts.map((p) => ({
       url: `${SITE_URL}/insights/${p.slug}`,
-      lastModified: new Date(p.updated_at),
+      lastModified: new Date(postModifiedAt(p)),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),

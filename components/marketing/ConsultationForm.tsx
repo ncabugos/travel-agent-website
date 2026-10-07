@@ -1,11 +1,12 @@
 'use client'
 
-import { useActionState, useState } from 'react'
+import { useActionState, useEffect, useState } from 'react'
 import {
   submitConsultationRequest,
   type ConsultationFormState,
 } from '@/lib/actions/consultation'
 import { SpamFields } from '@/components/ui/SpamFields'
+import { track } from '@/lib/analytics'
 
 const serif = 'var(--font-inter-tight), var(--font-inter), system-ui, sans-serif'
 const sans = 'var(--font-inter), system-ui, -apple-system, sans-serif'
@@ -95,6 +96,12 @@ export function ConsultationForm({
   const [tier, setTier] = useState<TierValue>(initialTier)
   // Monthly-only under business model v2 — kept as submit metadata.
   const billing: BillingCycle = initialBilling
+
+  // GA4 recommended lead event. Mark it as a key event in GA4 admin so the
+  // "Generate leads" report counts consultation requests.
+  useEffect(() => {
+    if (state.success) track('generate_lead', { form: 'consultation', tier })
+  }, [state.success]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (state.success) {
     return (

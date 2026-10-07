@@ -37,6 +37,20 @@ export const PUBLISHED_DEMO_SLUGS = new Set<string>([])
 export const isPublishedDemoSlug = (id: string): boolean =>
   PUBLISHED_DEMO_SLUGS.has(id)
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
+/**
+ * Whether a tenant route segment should be indexable. Real tenants are always
+ * addressed by their `agents.id` UUID (custom domains rewrite to it), so any
+ * other segment is either an unpublished demo or a slug that matches no
+ * advisor. Those still render (200, "not found" content), and without this
+ * they inherit the root layout's index directive and show up in Google as
+ * soft 404s. Decided from the slug alone so a transient DB error can never
+ * noindex a live tenant.
+ */
+export const isIndexableTenantSlug = (id: string): boolean =>
+  isPublishedDemoSlug(id) || (!isDemoSlug(id) && UUID_RE.test(id))
+
 export function journalBasePath(slug: string): string {
   const demo = DEMO_AGENTS.find(d => d.slug === slug)
   if (!demo) return `/frontend/${slug}/blog`

@@ -6,7 +6,7 @@ import { MarketingFooter } from '@/components/marketing/MarketingFooter'
 import { InsightsCard } from '@/components/marketing/InsightsCard'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { articleGraph } from '@/lib/insights-schema'
-import { getPostBySlug, getPublishedPosts, autop, wrapTables, estimateReadMinutes } from '@/lib/marketing-blog'
+import { getPostBySlug, getPublishedPosts, autop, wrapTables, estimateReadMinutes, postModifiedAt } from '@/lib/marketing-blog'
 import { sanitizeRichText } from '@/lib/sanitize-html'
 import { withUtm } from '@/lib/analytics'
 import {
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: `/insights/${slug}`,
       images: image ? [{ url: image, alt: post.title }] : undefined,
       publishedTime: post.published_at,
-      modifiedTime: post.updated_at,
+      modifiedTime: postModifiedAt(post),
       authors: [post.author_name],
     },
     twitter: { card: 'summary_large_image', title, description, images: image ? [image] : undefined },
@@ -58,7 +58,7 @@ export default async function InsightsPostPage({ params }: PageProps) {
   const body = wrapTables(autop(sanitizeRichText(post.body_html)))
   const readMin = post.read_minutes || estimateReadMinutes(post.body_html)
   const published = new Date(post.published_at)
-  const updated = new Date(post.updated_at)
+  const updated = new Date(postModifiedAt(post))
   const wasUpdated = updated.getTime() - published.getTime() > 1000 * 60 * 60 * 24
 
   const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
@@ -172,6 +172,9 @@ export default async function InsightsPostPage({ params }: PageProps) {
         .insights-body a { color: ${CHARCOAL}; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(26,23,21,0.35); }
         .insights-body a:hover { text-decoration-color: currentColor; }
         .insights-body img { max-width: 100%; height: auto; display: block; margin: 32px 0; }
+        .insights-body figure { margin: 36px 0 40px; }
+        .insights-body figure img { margin: 0 0 14px; }
+        .insights-body figcaption { font-size: 14px; line-height: 1.55; color: ${WARM_GRAY}; }
         .insights-body blockquote { border-left: 1px solid ${GOLD}; padding: 4px 0 4px 24px; margin: 32px 0; color: ${CHARCOAL}; font-size: 20px; line-height: 1.5; }
         .insights-body blockquote.insights-cta { font-size: 16px; line-height: 1.6; color: ${WARM_GRAY_DARK}; background: ${CREAM}; border: 1px solid ${DIVIDER}; border-left: 1px solid ${DIVIDER}; padding: 24px 28px; margin: 36px 0; }
         .insights-body blockquote.insights-cta p { margin: 0 0 10px; }

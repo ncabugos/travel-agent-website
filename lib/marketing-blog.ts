@@ -158,6 +158,16 @@ export function wrapTables(html: string): string {
 }
 
 /** Estimate reading time from body HTML at ~225 wpm. Used when read_minutes is unset. */
+/**
+ * When a post last changed, never earlier than its publish date. Drafts written
+ * ahead and scheduled later carry an updated_at before published_at, which
+ * would emit dateModified < datePublished (Google flags it as invalid).
+ */
+export function postModifiedAt(post: { published_at: string; updated_at?: string | null }): string {
+  const updated = post.updated_at ?? post.published_at
+  return new Date(updated) > new Date(post.published_at) ? updated : post.published_at
+}
+
 export function estimateReadMinutes(bodyHtml: string): number {
   const text = bodyHtml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
   const words = text ? text.split(' ').length : 0
