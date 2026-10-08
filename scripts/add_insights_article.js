@@ -88,13 +88,13 @@ async function main() {
     faq,
     read_minutes: Math.max(1, Math.round(wordCount(md) / 225)),
     featured: false,
-    cover_image_url: null,   // operator supplies the featured image
-    og_image_url: null,
+    cover_image_url: fm.cover_image ?? null,   // else the operator supplies it in admin
+    og_image_url: fm.og_image ?? fm.cover_image ?? null,
     published_at: fm.date ? new Date(fm.date + 'T09:00:00Z').toISOString() : new Date().toISOString(),
   }
   if (/wine\s*(and|&)\s*wellness|montecito/i.test(html)) console.warn('⚠️  residual agency reference — review')
   const { error } = await supabase.from('marketing_posts').upsert(row, { onConflict: 'slug' })
   if (error) { console.error('❌', error.message); process.exit(1) }
-  console.log(`✓ ${STATUS}  "${fm.title}"  [${cat.label}, ${faq.length} FAQs, ${row.read_minutes}min, cover=none (you add it)]`)
+  console.log(`✓ ${STATUS}  "${fm.title}"  [${cat.label}, ${faq.length} FAQs, ${row.read_minutes}min, cover=${row.cover_image_url ? 'set' : 'none (you add it)'}]`)
 }
 main()

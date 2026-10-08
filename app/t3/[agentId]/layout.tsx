@@ -6,7 +6,7 @@ import TenantAnalyticsConfig from '@/components/analytics/TenantAnalyticsConfig'
 import { T3Nav } from '@/components/t3/T3Nav'
 import { T3Footer } from '@/components/t3/T3Footer'
 import { DemoSignupBanner } from '@/components/ui/DemoSignupBanner'
-import { isDemoSlug } from '@/lib/demo-agents'
+import { isDemoSlug, isIndexableTenantSlug } from '@/lib/demo-agents'
 import '@/app/t3/globals-t3.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -43,7 +43,7 @@ export function generateStaticParams() {
 // Real tenant sites get no robots override here and stay indexable.
 export async function generateMetadata({ params }: { params: Promise<{ agentId: string }> }) {
   const { agentId } = await params
-  return isDemoSlug(agentId) ? { robots: { index: false, follow: false } } : {}
+  return isIndexableTenantSlug(agentId) ? {} : { robots: { index: false, follow: false } }
 }
 
 export default async function T3Layout({ children, params }: LayoutProps) {

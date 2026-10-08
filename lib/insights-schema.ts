@@ -7,6 +7,7 @@
  * Organization sitewide, FAQPage per post, BreadcrumbList on interior pages.
  */
 import type { MarketingPost } from '@/types/index'
+import { postModifiedAt } from '@/lib/marketing-blog'
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??
@@ -57,7 +58,7 @@ export function articleGraph(post: MarketingPost): Record<string, any>[] {
       description: post.seo_description?.trim() || post.excerpt || undefined,
       image: absolute(post.og_image_url || post.cover_image_url),
       datePublished: post.published_at,
-      dateModified: post.updated_at || post.published_at,
+      dateModified: postModifiedAt(post),
       author: { '@id': `${SITE_URL}/insights/author/nick#person` },
       publisher: { '@id': ORG_ID },
       mainEntityOfPage: url,

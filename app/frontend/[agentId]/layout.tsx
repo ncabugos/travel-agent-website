@@ -7,7 +7,7 @@ import { TopBar } from '@/components/layout/TopBar'
 import { SiteNav } from '@/components/layout/SiteNav'
 import { SiteFooter } from '@/components/layout/SiteFooter'
 import { DemoSignupBanner } from '@/components/ui/DemoSignupBanner'
-import { isDemoSlug } from '@/lib/demo-agents'
+import { isDemoSlug, isIndexableTenantSlug } from '@/lib/demo-agents'
 import { tenantBase } from '@/lib/tenant-paths'
 import { encodeContact } from '@/lib/obfuscate'
 
@@ -39,6 +39,12 @@ export const revalidate = 3600
 
 export function generateStaticParams() {
   return []
+}
+
+// Demos and unknown slugs stay out of the index (see isIndexableTenantSlug).
+export async function generateMetadata({ params }: { params: Promise<{ agentId: string }> }) {
+  const { agentId } = await params
+  return isIndexableTenantSlug(agentId) ? {} : { robots: { index: false, follow: false } }
 }
 
 export default async function AgentFrontendLayout({ children, params }: LayoutProps) {

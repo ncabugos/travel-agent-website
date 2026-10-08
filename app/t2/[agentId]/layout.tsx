@@ -11,7 +11,7 @@ import { WWT2Nav } from '@/components/t2/wwt2/WWT2Nav'
 import { WWT2Footer } from '@/components/t2/wwt2/WWT2Footer'
 import { T2PersonaProvider } from '@/components/t2/T2Persona'
 import { DemoSignupBanner } from '@/components/ui/DemoSignupBanner'
-import { isDemoSlug, isPublishedDemoSlug } from '@/lib/demo-agents'
+import { isDemoSlug, isIndexableTenantSlug } from '@/lib/demo-agents'
 import '@/app/t2/globals-t2.css'
 import '@/app/t2/wwt2.css'
 
@@ -65,15 +65,13 @@ export function generateStaticParams() {
   return []
 }
 
-// Showcase demos are fixtures, not real businesses. Emit a noindex directive
-// for them at the layout level so it cascades to every page in this template
-// (home + journal/hotels/destinations/advisors). Real tenant sites get no
-// robots override here and stay indexable.
+// Showcase demos are fixtures, not real businesses, and unknown slugs are soft
+// 404s. Emit a noindex directive for both at the layout level so it cascades to
+// every page in this template (home + journal/hotels/destinations/advisors).
+// Real tenant sites get no robots override here and stay indexable.
 export async function generateMetadata({ params }: { params: Promise<{ agentId: string }> }) {
   const { agentId } = await params
-  return isDemoSlug(agentId) && !isPublishedDemoSlug(agentId)
-    ? { robots: { index: false, follow: false } }
-    : {}
+  return isIndexableTenantSlug(agentId) ? {} : { robots: { index: false, follow: false } }
 }
 
 export default async function T2Layout({ children, params }: LayoutProps) {
