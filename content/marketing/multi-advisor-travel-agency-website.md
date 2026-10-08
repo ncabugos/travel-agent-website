@@ -6,8 +6,8 @@ meta_description: "How a multi-advisor travel agency should structure its websit
 audience: travel advisors (marketing site)
 category: The Luxury Travel Business
 date: 2026-10-07
-cover_image: https://zcllngvctqthvqaupxyt.supabase.co/storage/v1/object/public/blog-assets/1791414367483-multi-advisor-cover.webp
-og_image: https://zcllngvctqthvqaupxyt.supabase.co/storage/v1/object/public/blog-assets/1791414367483-multi-advisor-cover.png
+cover_image: https://zcllngvctqthvqaupxyt.supabase.co/storage/v1/object/public/blog-assets/1791418081374-multi-advisor-cover.webp
+og_image: https://zcllngvctqthvqaupxyt.supabase.co/storage/v1/object/public/blog-assets/1791418081374-multi-advisor-cover.png
 verify: "Agency tier features and $4,999 setup match lib/pricing.ts PUBLIC_TIERS as of Oct 7, 2026. Own-domain advisor sites, shared catalog, category-based editorial delivery, and per-advisor records describe the platform as built (agents.custom_domain, logo_url, template, shared catalog tables, agent_blog_preferences). Agency branding is not inherited from an agency-level record; the copy does not claim it is."
 ---
 

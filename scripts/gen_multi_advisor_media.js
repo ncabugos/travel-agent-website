@@ -2,7 +2,7 @@
 /**
  * gen_multi_advisor_media.js
  * Media for the Insights post "multi-advisor-travel-agency-website":
- *   - cover (1200x630, same style as gen_insights_covers.js)
+ *   - cover: 1600x1000 WebP for cards and the post hero, 1200x630 PNG for link previews
  *   - cropped demo screenshots (Lido Collective directory + profile)
  *   - a three-brand comparison of one catalog record (Belmond Bellini Club)
  *   - two animated WebP diagrams: network update, and lead routing
@@ -51,37 +51,40 @@ const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2)
 const ramp = (t, a, b) => ease(clamp((t - a) / (b - a)))
 
 /* ── 1. cover ────────────────────────────────────────────────────────────── */
-function cover() {
-  const W = 1200, H = 630, M = 84
+// Text-free, like the other Insights covers, so it survives the 16:10 card
+// crop: three real demo sites as overlapping browser windows, one record
+// shown in three brands. Group is centered and scaled to fit any canvas.
+async function cover(W, H) {
+  const { loadImage } = require('@napi-rs/canvas')
   const c = createCanvas(W, H), ctx = c.getContext('2d')
-  const g = ctx.createLinearGradient(0, 0, W, H); g.addColorStop(0, CHARCOAL); g.addColorStop(1, '#272019')
+  const g = ctx.createLinearGradient(0, 0, W, H)
+  g.addColorStop(0, '#EFE9DF'); g.addColorStop(1, '#D8CDBB')
   ctx.fillStyle = g; ctx.fillRect(0, 0, W, H)
 
-  // Network motif on the right: one source, three sites
-  const src = { x: 960, y: 190 }
-  const sites = [{ x: 860, y: 430 }, { x: 960, y: 470 }, { x: 1060, y: 430 }]
-  ctx.strokeStyle = 'rgba(180,154,90,0.55)'; ctx.lineWidth = 1.5
-  for (const s of sites) { ctx.beginPath(); ctx.moveTo(src.x, src.y + 22); ctx.lineTo(s.x, s.y - 22); ctx.stroke() }
-  ctx.fillStyle = GOLD; ctx.beginPath(); ctx.arc(src.x, src.y, 22, 0, Math.PI * 2); ctx.fill()
-  for (const s of sites) {
-    ctx.strokeStyle = 'rgba(250,250,245,0.8)'; ctx.lineWidth = 1.5
-    roundRect(ctx, s.x - 30, s.y - 22, 60, 44, 4); ctx.stroke()
-    ctx.fillStyle = 'rgba(250,250,245,0.8)'; ctx.fillRect(s.x - 20, s.y - 12, 40, 3)
+  const SRC_H = 1140 // hero only: no cut-off body text, and clear of the dev badge
+  const WIN_W = 900, BAR = 34, SHOT_H = Math.round(WIN_W * (SRC_H / 2880)), WIN_H = BAR + SHOT_H
+  const OFF_X = 240, OFF_Y = 150 // step between windows
+  const gw = WIN_W + OFF_X * 2, gh = WIN_H + OFF_Y * 2
+  const k = Math.min((W * 0.86) / gw, (H * 0.84) / gh)
+  const ox = (W - gw * k) / 2, oy = (H - gh * k) / 2
+
+  const order = ['t3-belmond', 'cs-belmond', 'cc-belmond'] // back to front
+  for (let i = 0; i < order.length; i++) {
+    const buf = await sharp(path.join(SHOTS, `${order[i]}.png`))
+      .extract({ left: 0, top: 80, width: 2880, height: SRC_H }).resize({ width: Math.round(WIN_W * k * 2) }).png().toBuffer()
+    const img = await loadImage(buf)
+    const x = ox + i * OFF_X * k, y = oy + i * OFF_Y * k, w = WIN_W * k, h = WIN_H * k, bar = BAR * k
+    ctx.save()
+    ctx.shadowColor = 'rgba(26,23,21,0.28)'; ctx.shadowBlur = 40 * k; ctx.shadowOffsetY = 18 * k
+    ctx.fillStyle = '#FFFFFF'; roundRect(ctx, x, y, w, h, 10 * k); ctx.fill()
+    ctx.restore()
+    ctx.save(); roundRect(ctx, x, y, w, h, 10 * k); ctx.clip()
+    ctx.fillStyle = '#F4F1EC'; ctx.fillRect(x, y, w, bar)
+    for (let d = 0; d < 3; d++) { ctx.fillStyle = '#D6D1C7'; ctx.beginPath(); ctx.arc(x + (18 + d * 15) * k, y + bar / 2, 4.5 * k, 0, Math.PI * 2); ctx.fill() }
+    ctx.fillStyle = '#FFFFFF'; roundRect(ctx, x + 80 * k, y + 8 * k, w - 100 * k, bar - 16 * k, (bar - 16 * k) / 2); ctx.fill()
+    ctx.drawImage(img, x, y + bar, w, h - bar)
+    ctx.restore()
   }
-
-  ctx.fillStyle = CREAM; ctx.font = `46px ${SERIF}`
-  const lines = ['One Website for a', 'Multi-Advisor Travel', 'Agency']
-  let y = 200
-  for (const ln of lines) { ctx.fillText(ln, M, y); y += 60 }
-  ctx.strokeStyle = GOLD; ctx.lineWidth = 3
-  ctx.beginPath(); ctx.moveTo(M, y - 14); ctx.lineTo(M + 72, y - 14); ctx.stroke()
-  ctx.fillStyle = 'rgba(250,250,245,0.7)'; ctx.font = `20px ${SANS}`
-  ctx.fillText('One brand or many. One source of truth.', M, y + 26)
-
-  ctx.font = `600 16px ${SANS}`; ctx.fillStyle = 'rgba(250,247,240,0.55)'
-  spaced(ctx, 'THE LUXURY TRAVEL BUSINESS', M, H - 70, 2)
-  ctx.fillStyle = GOLD
-  spaced(ctx, 'ELITEADVISORHUB.COM', W - M - spacedWidth(ctx, 'ELITEADVISORHUB.COM', 2), H - 70, 2)
   return c.toBuffer('image/png')
 }
 
@@ -313,7 +316,8 @@ function animate(name, frameFn, seconds, fps = 15) {
 }
 
 async function main() {
-  fs.writeFileSync(path.join(OUT, 'cover.png'), cover())
+  fs.writeFileSync(path.join(OUT, 'cover.png'), await cover(1200, 630))
+  await sharp(await cover(1600, 1000)).webp({ quality: 84 }).toFile(path.join(OUT, 'cover.webp'))
   await crop('lido-advisors', 80, 1640, 'agency-advisor-directory.webp')
   await crop('lido-profile', 80, 1640, 'agency-advisor-profile.webp')
   await triptych()
