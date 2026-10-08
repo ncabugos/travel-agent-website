@@ -51,40 +51,88 @@ const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2)
 const ramp = (t, a, b) => ease(clamp((t - a) / (b - a)))
 
 /* ── 1. cover ────────────────────────────────────────────────────────────── */
-// Text-free, like the other Insights covers, so it survives the 16:10 card
-// crop: three real demo sites as overlapping browser windows, one record
-// shown in three brands. Group is centered and scaled to fit any canvas.
+// Text-free illustration so it survives the 16:10 card crop: one data source
+// distributing to several advisor websites. Every site has its own brand
+// color, and every site carries the same gold catalog tiles.
+// Laid out on a 1600x1000 design grid, then scaled and centered on W x H.
 async function cover(W, H) {
-  const { loadImage } = require('@napi-rs/canvas')
   const c = createCanvas(W, H), ctx = c.getContext('2d')
-  const g = ctx.createLinearGradient(0, 0, W, H)
-  g.addColorStop(0, '#EFE9DF'); g.addColorStop(1, '#D8CDBB')
-  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H)
+  const bg = ctx.createRadialGradient(W * 0.42, H * 0.5, 0, W * 0.5, H * 0.5, Math.max(W, H) * 0.75)
+  bg.addColorStop(0, '#2C251E'); bg.addColorStop(1, '#141210')
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H)
 
-  const SRC_H = 1140 // hero only: no cut-off body text, and clear of the dev badge
-  const WIN_W = 900, BAR = 34, SHOT_H = Math.round(WIN_W * (SRC_H / 2880)), WIN_H = BAR + SHOT_H
-  const OFF_X = 240, OFF_Y = 150 // step between windows
-  const gw = WIN_W + OFF_X * 2, gh = WIN_H + OFF_Y * 2
-  const k = Math.min((W * 0.86) / gw, (H * 0.84) / gh)
-  const ox = (W - gw * k) / 2, oy = (H - gh * k) / 2
+  // faint dot grid
+  ctx.fillStyle = 'rgba(250,250,245,0.05)'
+  for (let x = 20; x < W; x += 32) for (let y = 20; y < H; y += 32) { ctx.beginPath(); ctx.arc(x, y, 1.1, 0, Math.PI * 2); ctx.fill() }
 
-  const order = ['t3-belmond', 'cs-belmond', 'cc-belmond'] // back to front
-  for (let i = 0; i < order.length; i++) {
-    const buf = await sharp(path.join(SHOTS, `${order[i]}.png`))
-      .extract({ left: 0, top: 80, width: 2880, height: SRC_H }).resize({ width: Math.round(WIN_W * k * 2) }).png().toBuffer()
-    const img = await loadImage(buf)
-    const x = ox + i * OFF_X * k, y = oy + i * OFF_Y * k, w = WIN_W * k, h = WIN_H * k, bar = BAR * k
-    ctx.save()
-    ctx.shadowColor = 'rgba(26,23,21,0.28)'; ctx.shadowBlur = 40 * k; ctx.shadowOffsetY = 18 * k
-    ctx.fillStyle = '#FFFFFF'; roundRect(ctx, x, y, w, h, 10 * k); ctx.fill()
-    ctx.restore()
-    ctx.save(); roundRect(ctx, x, y, w, h, 10 * k); ctx.clip()
-    ctx.fillStyle = '#F4F1EC'; ctx.fillRect(x, y, w, bar)
-    for (let d = 0; d < 3; d++) { ctx.fillStyle = '#D6D1C7'; ctx.beginPath(); ctx.arc(x + (18 + d * 15) * k, y + bar / 2, 4.5 * k, 0, Math.PI * 2); ctx.fill() }
-    ctx.fillStyle = '#FFFFFF'; roundRect(ctx, x + 80 * k, y + 8 * k, w - 100 * k, bar - 16 * k, (bar - 16 * k) / 2); ctx.fill()
-    ctx.drawImage(img, x, y + bar, w, h - bar)
+  const k = Math.min(W / 1600, H / 1000)
+  ctx.save(); ctx.translate((W - 1600 * k) / 2, (H - 1000 * k) / 2); ctx.scale(k, k)
+
+  const SRC = { x: 400, y: 500 }
+  const CW = 260, CH = 164
+  const sites = [
+    { x: 1010, y: 168, head: '#1F3347' },
+    { x: 1150, y: 334, head: '#8C4A32' },
+    { x: 1200, y: 500, head: '#2F4A3A' },
+    { x: 1150, y: 666, head: '#2B2B2B' },
+    { x: 1010, y: 832, head: '#5B3A55' },
+  ]
+
+  // connectors with flowing dots
+  for (const st of sites) {
+    const sx = SRC.x + 120, sy = SRC.y, ex = st.x - CW / 2, ey = st.y
+    const c1x = sx + (ex - sx) * 0.45, c2x = sx + (ex - sx) * 0.55
+    const grad = ctx.createLinearGradient(sx, 0, ex, 0)
+    grad.addColorStop(0, 'rgba(180,154,90,0.9)'); grad.addColorStop(1, 'rgba(180,154,90,0.25)')
+    ctx.strokeStyle = grad; ctx.lineWidth = 2.5
+    ctx.beginPath(); ctx.moveTo(sx, sy); ctx.bezierCurveTo(c1x, sy, c2x, ey, ex, ey); ctx.stroke()
+    for (const t of [0.28, 0.55, 0.8]) {
+      const q = 1 - t
+      const bx = q ** 3 * sx + 3 * q * q * t * c1x + 3 * q * t * t * c2x + t ** 3 * ex
+      const by = q ** 3 * sy + 3 * q * q * t * sy + 3 * q * t * t * ey + t ** 3 * ey
+      ctx.fillStyle = 'rgba(212,190,130,0.95)'; ctx.beginPath(); ctx.arc(bx, by, 5, 0, Math.PI * 2); ctx.fill()
+      ctx.fillStyle = 'rgba(212,190,130,0.18)'; ctx.beginPath(); ctx.arc(bx, by, 12, 0, Math.PI * 2); ctx.fill()
+    }
+  }
+
+  // data source: glowing gold cylinder
+  const glow = ctx.createRadialGradient(SRC.x, SRC.y, 20, SRC.x, SRC.y, 260)
+  glow.addColorStop(0, 'rgba(180,154,90,0.35)'); glow.addColorStop(1, 'rgba(180,154,90,0)')
+  ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(SRC.x, SRC.y, 260, 0, Math.PI * 2); ctx.fill()
+  const RX = 120, RY = 34, TIER = 62, top = SRC.y - TIER * 1.5
+  const body = ctx.createLinearGradient(SRC.x - RX, 0, SRC.x + RX, 0)
+  body.addColorStop(0, '#8E7642'); body.addColorStop(0.45, '#D9C189'); body.addColorStop(1, '#8E7642')
+  for (let i = 2; i >= 0; i--) {
+    const y = top + i * TIER
+    ctx.fillStyle = body
+    ctx.beginPath(); ctx.ellipse(SRC.x, y + TIER - 8, RX, RY, 0, 0, Math.PI); ctx.lineTo(SRC.x - RX, y); ctx.ellipse(SRC.x, y, RX, RY, 0, Math.PI, 0, true); ctx.closePath(); ctx.fill()
+    ctx.strokeStyle = 'rgba(26,23,21,0.35)'; ctx.lineWidth = 2
+    ctx.beginPath(); ctx.ellipse(SRC.x, y + TIER - 8, RX, RY, 0, 0, Math.PI); ctx.stroke()
+  }
+  ctx.fillStyle = '#E8D6A6'; ctx.beginPath(); ctx.ellipse(SRC.x, top, RX, RY, 0, 0, Math.PI * 2); ctx.fill()
+  ctx.strokeStyle = 'rgba(26,23,21,0.25)'; ctx.lineWidth = 2; ctx.stroke()
+
+  // website cards
+  for (const st of sites) {
+    const x = st.x - CW / 2, y = st.y - CH / 2
+    ctx.save(); ctx.shadowColor = 'rgba(0,0,0,0.45)'; ctx.shadowBlur = 30; ctx.shadowOffsetY = 12
+    ctx.fillStyle = '#FAFAF5'; roundRect(ctx, x, y, CW, CH, 9); ctx.fill(); ctx.restore()
+    ctx.save(); roundRect(ctx, x, y, CW, CH, 9); ctx.clip()
+    ctx.fillStyle = '#ECE7DE'; ctx.fillRect(x, y, CW, 20)
+    for (let d = 0; d < 3; d++) { ctx.fillStyle = '#CFC8BB'; ctx.beginPath(); ctx.arc(x + 12 + d * 10, y + 10, 3, 0, Math.PI * 2); ctx.fill() }
+    ctx.fillStyle = st.head; ctx.fillRect(x, y + 20, CW, 46)              // brand hero
+    ctx.fillStyle = 'rgba(255,255,255,0.85)'; ctx.fillRect(x + 16, y + 38, 70, 6)
+    ctx.fillStyle = 'rgba(255,255,255,0.45)'; ctx.fillRect(x + 16, y + 50, 44, 4)
+    ctx.fillStyle = '#D9D3C8'; ctx.fillRect(x + 16, y + 80, 96, 5); ctx.fillRect(x + 16, y + 92, 78, 5)
+    for (let t = 0; t < 3; t++) {                                          // shared catalog tiles
+      const tx = x + 16 + t * 78, ty = y + 110
+      const tg = ctx.createLinearGradient(tx, ty, tx + 68, ty + 40)
+      tg.addColorStop(0, '#C9AE6E'); tg.addColorStop(1, '#9C8450')
+      ctx.fillStyle = tg; roundRect(ctx, tx, ty, 68, 40, 4); ctx.fill()
+    }
     ctx.restore()
   }
+  ctx.restore()
   return c.toBuffer('image/png')
 }
 
