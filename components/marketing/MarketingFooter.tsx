@@ -14,7 +14,7 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
     links: [
       { label: 'The platform', href: '/#platform' },
       { label: 'The work', href: '/#work' },
-      { label: 'Studio', href: '/studio' },
+      { label: 'Marketing services', href: '/studio' },
       { label: 'Insights', href: '/insights' },
       { label: 'Schedule a consultation', href: '/schedule-consultation' },
       { label: 'Support', href: '/support' },

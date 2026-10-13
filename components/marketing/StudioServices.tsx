@@ -181,7 +181,7 @@ function ContentMock() {
           <div key={i} style={{ height: '8px', borderRadius: '4px', background: '#efece6', marginBottom: '9px', width: `${w * (i === 2 ? 66 : 100)}%`, transition: 'width 120ms linear' }} />
         ))}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '14px' }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '10px', fontWeight: 700, color: '#0f7a3d', opacity: geoBadge, padding: '4px 9px', background: '#eafaf0', borderRadius: '999px' }}>✓ GEO-optimized</span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '10px', fontWeight: 700, color: '#0f7a3d', opacity: geoBadge, padding: '4px 9px', background: '#eafaf0', borderRadius: '999px' }}>✓ Ready to publish</span>
           <span style={{ fontSize: '11px', fontWeight: 600, color: '#fff', background: GOLD, padding: '7px 14px', borderRadius: '8px', transform: press ? 'scale(0.94)' : 'scale(1)', boxShadow: press ? `0 0 0 5px rgba(180,154,90,0.22)` : 'none', transition: 'transform 140ms, box-shadow 200ms' }}>Publish</span>
         </div>
       </div>
@@ -195,7 +195,7 @@ function ContentMock() {
               <span style={{ width: '30px', height: '30px', borderRadius: '7px', flexShrink: 0, background: 'linear-gradient(135deg,#c9b78f,#7d6842)' }} />
               <span style={{ flex: 1, minWidth: 0 }}>
                 <span style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#0a0a0a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title2}</span>
-                <span style={{ fontSize: '10px', color: '#9a948b' }}>GEO ✓ · 5 min read</span>
+                <span style={{ fontSize: '10px', color: '#9a948b' }}>5 min read</span>
               </span>
             </div>
           )
@@ -207,7 +207,7 @@ function ContentMock() {
 
 // ── AI visibility — multi-engine chat ────────────────────────────────────────
 
-const ENGINES = ['ChatGPT', 'Perplexity', 'Google AI']
+const ENGINES = ['ChatGPT', 'Google']
 const Q = 'Best advisor for a Bordeaux wine trip?'
 const A_PRE = 'For a Bordeaux wine journey, '
 const A_NAME = 'Wine & Wellness Travel'
@@ -272,7 +272,7 @@ function AiMock() {
         )}
         {/* verified */}
         <div style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: '6px', opacity: verified, transform: `scale(${0.9 + 0.1 * verified})`, fontSize: '10.5px', fontWeight: 700, color: '#0f7a3d', background: '#eafaf0', padding: '5px 10px', borderRadius: '999px' }}>
-          ✓ Accuracy verified across engines
+          ✓ Details checked and correct
         </div>
       </div>
     </div>
@@ -369,8 +369,7 @@ function DesignMock() {
 // ── Section ──────────────────────────────────────────────────────────────────
 
 interface Service {
-  eyebrow: string
-  title: string
+  name: string
   desc: string
   bullets: string[]
   visual: React.ReactNode
@@ -378,38 +377,33 @@ interface Service {
 
 const SERVICES: Service[] = [
   {
-    eyebrow: 'Social media',
-    title: 'A feed that never goes quiet',
-    desc: 'We plan, design, and schedule your social, so the grid stays alive whether you are at your desk or on a site inspection in Sicily.',
-    bullets: ['One to two platforms or all of them, on a calendar you approve', 'Stories, reels, and short-form video', 'Posted and scheduled for you, nothing to remember'],
+    name: 'Social media',
+    desc: 'We plan, design, and post to your social accounts, like Instagram and Facebook. You approve the month\'s posts in advance.',
+    bullets: ['Posts, stories, and reels', 'A monthly calendar you approve', 'Posted for you'],
     visual: <SocialMock />,
   },
   {
-    eyebrow: 'Blog and GEO content',
-    title: 'Journals written to be quoted',
-    desc: 'Original articles on your specialty, structured so AI search engines cite you by name, recommended rather than just indexed.',
-    bullets: ['1 to 4+ journal articles a month', 'Written for AI Overviews, ChatGPT, and Perplexity', 'Full editorial calendar on Full Service'],
+    name: 'Blog articles',
+    desc: 'Articles about your destinations and specialties, written and published on your site for you. They help new clients find you on Google and ChatGPT.',
+    bullets: ['One to four or more articles a month', 'Written in your voice', 'Published to your site for you'],
     visual: <ContentMock />,
   },
   {
-    eyebrow: 'AI visibility',
-    title: 'Be the answer, and be right',
-    desc: 'We track what ChatGPT, Perplexity, and Google AI say about you across engines, and correct the record when they get it wrong.',
-    bullets: ['See how every major engine describes you', 'Fix outdated or inaccurate answers', 'Monthly multi-engine tracking on Full Service'],
+    name: 'AI search',
+    desc: 'More travelers now ask ChatGPT and Google to recommend an advisor. We check what they say about you and fix anything wrong or missing.',
+    bullets: ['A report on what AI search says about you', 'We correct wrong or outdated details', 'Checked monthly on Full Service'],
     visual: <AiMock />,
   },
   {
-    eyebrow: 'Email marketing',
-    title: 'Stay in the inbox, not just the feed',
-    desc: 'Newsletters, campaigns, and automated sequences that keep past clients booking and new leads warming, measured rather than guessed.',
-    bullets: ['Monthly newsletter your clients open', 'Campaigns for launches and offers', 'Automated welcome and re-engagement sequences'],
+    name: 'Email newsletter',
+    desc: 'A newsletter to your past clients and leads, written and sent for you, so they think of you when it is time to book.',
+    bullets: ['Monthly newsletter', 'Emails for special offers and announcements', 'Automatic welcome emails for new leads'],
     visual: <EmailMock />,
   },
   {
-    eyebrow: 'Design and creative',
-    title: 'Everything on-brand, on demand',
-    desc: 'Submit a request and get it back fast: social graphics, proposal decks, light motion, and brand work, all in your visual language.',
-    bullets: ['Graphics, motion, proposal and pitch decks', 'Brand work and richer motion on Full Service', 'Unlimited revisions until it is right'],
+    name: 'Design',
+    desc: 'Social graphics, client presentations, and flyers in your brand colors and fonts. Ask for it and we make it.',
+    bullets: ['Graphics, presentations, and flyers', 'Changes until you are happy', 'You keep every file'],
     visual: <DesignMock />,
   },
 ]
@@ -430,26 +424,19 @@ export function StudioServices() {
 
       <div style={{ position: 'relative', maxWidth: '1140px', margin: '0 auto' }}>
         <div style={{ maxWidth: '680px', marginBottom: '24px' }}>
-          <p style={{ margin: '0 0 20px', fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)' }}>
-            What we handle
-          </p>
           <h2 style={{ fontSize: 'clamp(32px, 4vw, 56px)', fontWeight: 400, letterSpacing: '-0.03em', lineHeight: 1.05, margin: '0 0 20px', color: '#fff' }}>
-            Your whole marketing engine, run for you.
+            What you get
           </h2>
           <p style={{ fontSize: '17px', lineHeight: 1.65, color: 'rgba(255,255,255,0.72)', margin: 0 }}>
-            Not templates and a login. Real work, delivered: social, content, email, design, and the AI search
-            visibility that decides whether a client ever finds you. Here is what that looks like.
+            Five things we take off your plate.
           </p>
         </div>
 
         {SERVICES.map((s, i) => (
-          <div key={s.eyebrow} className={`studio-svc-row${i % 2 === 1 ? ' reverse' : ''}`}>
+          <div key={s.name} className={`studio-svc-row${i % 2 === 1 ? ' reverse' : ''}`}>
             <div className="svc-text">
-              <span style={{ display: 'inline-block', fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', marginBottom: '14px' }}>
-                {s.eyebrow}
-              </span>
               <h3 style={{ fontSize: 'clamp(24px, 2.6vw, 32px)', fontWeight: 400, letterSpacing: '-0.02em', lineHeight: 1.14, margin: '0 0 14px', color: '#fff' }}>
-                {s.title}
+                {s.name}
               </h3>
               <p style={{ fontSize: '16px', lineHeight: 1.7, color: 'rgba(255,255,255,0.72)', margin: '0 0 20px' }}>
                 {s.desc}

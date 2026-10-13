@@ -9,7 +9,7 @@ const NAV_LINKS = [
   { label: 'Platform', href: '/#platform' },
   { label: 'Work',     href: '/#work' },
   { label: 'Pricing',  href: '/#pricing' },
-  { label: 'Studio',   href: '/studio' },
+  { label: 'Marketing services', href: '/studio' },
   { label: 'Insights', href: '/insights' },
 ]
 
@@ -99,11 +99,11 @@ export function MarketingNav({ minimal = false, overlay = false }: { minimal?: b
           {!minimal && (
             <div className="marketing-nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
               {NAV_LINKS.map(({ label, href }) => (
-                <Link key={label} href={href} className="marketing-nav-link" style={{ fontSize: '14px', color: fgMuted, textDecoration: 'none', fontWeight: 500, transition: 'color 0.15s ease' }}>
+                <Link key={label} href={href} className="marketing-nav-link" style={{ fontSize: '14px', color: fgMuted, textDecoration: 'none', fontWeight: 500, whiteSpace: 'nowrap', transition: 'color 0.15s ease' }}>
                   {label}
                 </Link>
               ))}
-              <Link href="/agent-portal/login" className="marketing-nav-link" style={{ fontSize: '14px', color: fg, textDecoration: 'none', fontWeight: 500 }}>
+              <Link href="/agent-portal/login" className="marketing-nav-link" style={{ fontSize: '14px', color: fg, textDecoration: 'none', fontWeight: 500, whiteSpace: 'nowrap' }}>
                 Advisor login
               </Link>
               <Link href="/schedule-consultation" className="eah-cta-primary" style={{ ...PRIMARY_CTA_STYLE, minHeight: '40px', padding: '0 18px', fontSize: '14px' }}>
@@ -177,7 +177,10 @@ export function MarketingNav({ minimal = false, overlay = false }: { minimal?: b
       )}
 
       <style>{`
-        @media (max-width: 860px) {
+        @media (max-width: 1180px) {
+          .marketing-nav-desktop { gap: 20px !important; }
+        }
+        @media (max-width: 1023px) {
           .marketing-nav-desktop { display: none !important; }
           .marketing-nav-hamburger { display: inline-flex !important; }
         }

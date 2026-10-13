@@ -44,7 +44,7 @@ export function StudioInquiryForm() {
           Thank you. We will be in touch.
         </h3>
         <p style={{ fontSize: '16px', color: WARM_GRAY_DARK, lineHeight: 1.6, maxWidth: '48ch', margin: 0 }}>
-          Your inquiry is in. We reply personally, usually within one business day, to talk through what Studio can take off your plate.
+          Your inquiry is in. We reply personally, usually within one business day, with a recommendation.
         </p>
       </div>
     )
@@ -74,7 +74,7 @@ export function StudioInquiryForm() {
           <Field label="Current website" name="website_url" type="url" placeholder="https://" optional />
         </FullRow>
         <FullRow>
-          <label htmlFor="plan" style={labelStyle}>Which plan fits</label>
+          <label htmlFor="plan" style={labelStyle}>Which plan interests you</label>
           <select id="plan" name="plan" value={plan} onChange={(e) => setPlan(e.target.value)} className="sif-input" style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }}>
             {PLAN_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>{o.label}</option>
@@ -89,7 +89,7 @@ export function StudioInquiryForm() {
             id="message"
             name="message"
             rows={4}
-            placeholder="Social that has gone quiet, a journal you do not have time to write, a brand refresh. Tell us where you are stretched."
+            placeholder="For example: my Instagram has gone quiet, or I never have time to write a blog."
             className="sif-input"
             style={{ ...inputStyle, resize: 'vertical', lineHeight: 1.6 }}
           />
@@ -97,7 +97,7 @@ export function StudioInquiryForm() {
       </div>
 
       <button type="submit" disabled={isPending} className="eah-cta-primary" style={{ ...PRIMARY_CTA_STYLE, width: '100%', marginTop: '28px', opacity: isPending ? 0.6 : 1 }}>
-        {isPending ? 'Sending' : 'Request a conversation'}
+        {isPending ? 'Sending' : 'Schedule a consultation'}
       </button>
 
       <p style={{ fontSize: '13px', color: WARM_GRAY, lineHeight: 1.6, margin: '16px 0 0' }}>
