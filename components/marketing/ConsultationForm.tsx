@@ -27,7 +27,7 @@ interface TierOption {
 // portal expansion. The legacy tier values are kept as the form's submit
 // values so the consultation action and admin views stay unchanged.
 const TIERS: TierOption[] = [
-  { value: 'starter', label: 'Starter, a custom-branded advisor site' },
+  { value: 'starter', label: 'Single Agent, a custom-branded advisor site' },
   { value: 'growth',  label: 'Boutique Agency, directories and curated editorial' },
   { value: 'custom',  label: 'Bespoke design and premium work' },
   { value: 'agency',  label: 'Agency, multi-advisor' },

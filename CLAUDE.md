@@ -38,11 +38,11 @@ keyed on `agents.custom_domain → { agentId, template }`).
 September 2026 tier update at the top). The public offer is **three tiers on the homepage
 `#pricing` section**, rendered from `PUBLIC_TIERS` in `lib/pricing.ts`:
 
-- **Starter** — $1,499 setup + $59/mo. Custom-branded 4-page site, hotel program pages,
+- **Single Agent** (formerly Starter) — $499 setup + $59/mo. Custom-branded 4-page site, hotel program pages,
   journal, contact form + lead inbox, SEO/AEO/GEO, testimonials, Instagram feed, supplier media
   gallery, one-on-one support, analytics. Internal tier key `starter`.
-- **Boutique Agency** — $2,500 setup + $79/mo, the highlighted "Most popular" card. Everything
-  in Starter plus searchable hotel directory (1,795+ properties, lead routing), cruise directory,
+- **Boutique Agency** — $2,500 setup + $79/mo, up to 5 agents, the highlighted "Most popular" card. Everything
+  in Single Agent plus searchable hotel directory (1,795+ properties, lead routing), cruise directory,
   curated editorial (one post a week), YouTube and CRM integration, team page, villa catalog
   add-on $29/mo. Internal tier key `growth`.
 - **Agency** — $4,999 setup, **monthly quoted on the number of sites** (never show a monthly

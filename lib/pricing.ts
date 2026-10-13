@@ -159,9 +159,9 @@ export interface PublicTier {
 export const PUBLIC_TIERS: PublicTier[] = [
   {
     key: 'starter',
-    name: 'Starter',
+    name: 'Single Agent',
     monthly: 59,
-    setup: 1499,
+    setup: 499,
     audience: 'For solo advisors launching a first independent site.',
     highlight: false,
     features: [
@@ -182,9 +182,9 @@ export const PUBLIC_TIERS: PublicTier[] = [
     name: 'Boutique Agency',
     monthly: 79,
     setup: 2500,
-    audience: 'For established advisors and small teams with real volume.',
+    audience: 'For established advisors and small teams, up to 5 agents.',
     highlight: true,
-    includes: 'Everything in Starter, plus',
+    includes: 'Everything in Single Agent, plus',
     features: [
       'Hotel directory: 1,795+ properties with lead routing',
       'Cruise directory',
@@ -199,7 +199,7 @@ export const PUBLIC_TIERS: PublicTier[] = [
     key: 'agency',
     name: 'Agency',
     setup: 4999,
-    audience: 'For multi-advisor agencies under one brand and one bill.',
+    audience: 'Built to host multiple agents under one brand and one bill.',
     highlight: false,
     includes: 'Everything in Boutique Agency, plus',
     features: [
