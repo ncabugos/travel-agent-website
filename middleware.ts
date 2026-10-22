@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import { createClient } from '@supabase/supabase-js'
+import { isPlatformHost } from '@/lib/platform-hosts'
 
 // ── Custom domain → agentId cache ─────────────────────────────────────────
 // In-memory map refreshed every 5 minutes so we don't hit Supabase on every request.
@@ -78,15 +79,6 @@ const RETIRED_DEMO_REDIRECTS: Record<string, string> = {
   'wwt-demo': 'wineandwellnesstravel.com',
 }
 const RETIRED_DEMO_PATH = /^\/(?:frontend|t2|t3|t4)\/([a-z0-9-]+)(\/.*)?$/i
-
-// Known platform hostnames that should NOT trigger domain routing
-const PLATFORM_HOSTS = new Set([
-  'localhost',
-  'eliteadvisorhub.com',
-  'www.eliteadvisorhub.com',
-])
-const isPlatformHost = (host: string) =>
-  PLATFORM_HOSTS.has(host) || host.endsWith('.vercel.app') || host.includes('localhost')
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl

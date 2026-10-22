@@ -5,10 +5,9 @@ import Script from 'next/script'
 /**
  * Per-advisor Google Analytics (GA4).
  *
- * Registers the advisor's OWN GA4 property alongside the platform-wide property
- * mounted in the root layout (components/AnalyticsScripts.tsx). On an advisor's
- * public tenant site, hits flow to BOTH the operator's aggregate property and
- * the advisor's isolated property.
+ * Registers the advisor's OWN GA4 property. On an advisor's custom domain this
+ * is the only property that receives hits: the platform property in
+ * components/AnalyticsScripts.tsx loads on eliteadvisorhub.com hosts only.
  *
  * Pageviews: we set `send_page_view: false` and deliberately do NOT fire our
  * own page_view. The platform's shared `pageview()` (lib/analytics.ts) already

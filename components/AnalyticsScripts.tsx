@@ -10,25 +10,41 @@
  * Dormant by default: with no NEXT_PUBLIC_GA_ID / NEXT_PUBLIC_POSTHOG_KEY set,
  * nothing loads and track() no-ops. Add a key later and events flow immediately.
  */
-import { useEffect } from 'react'
+import { useEffect, useSyncExternalStore } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import Script from 'next/script'
 import { pageview, track } from '@/lib/analytics'
+import { isPlatformHost } from '@/lib/platform-hosts'
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 const PH_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY
 const PH_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? 'https://us.i.posthog.com'
 
+// The hostname never changes during a page's life, so there is nothing to subscribe to.
+const noopSubscribe = () => () => {}
+
 export function AnalyticsScripts() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  // SPA pageviews.
+  // The platform GA property belongs to eliteadvisorhub.com only. Advisor sites
+  // on their own domains report to their own property (TenantAnalyticsConfig).
+  // The host is only known in the browser: null on the server and during
+  // hydration, then resolved on the client.
+  const onPlatformHost = useSyncExternalStore(
+    noopSubscribe,
+    () => isPlatformHost(window.location.hostname),
+    () => null,
+  )
+
+  // SPA pageviews. Wait for the host check so the first pageview fires after
+  // the right GA tags are configured.
   useEffect(() => {
+    if (onPlatformHost === null) return
     if (!GA_ID && !PH_KEY) return
     const qs = searchParams?.toString()
     pageview(pathname + (qs ? `?${qs}` : ''))
-  }, [pathname, searchParams])
+  }, [pathname, searchParams, onPlatformHost])
 
   // Delegated click tracking for [data-event] elements.
   useEffect(() => {
@@ -51,7 +67,7 @@ export function AnalyticsScripts() {
 
   return (
     <>
-      {GA_ID && (
+      {GA_ID && onPlatformHost && (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}

@@ -4,12 +4,6 @@ import { createServiceClient } from '@/lib/supabase/service'
 const VALID_GA_ID = /^G-[A-Z0-9]{4,}$/
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
-// Demo fixtures resolve to mock agents (no DB row), so map their GA IDs here.
-// `demo-agent` is the Eden For Your World demo, which mirrors the live site.
-const DEMO_GA: Record<string, string> = {
-  'demo-agent': 'G-BJK7FMBR0J',
-}
-
 /**
  * Returns the advisor's own GA4 measurement ID, or null if none is set.
  *
@@ -20,7 +14,6 @@ const DEMO_GA: Record<string, string> = {
  * migration lands and an ID is set.
  */
 export const getAgentGaMeasurementId = cache(async (agentId: string): Promise<string | null> => {
-  if (DEMO_GA[agentId]) return DEMO_GA[agentId]
   // Non-UUID ids are demo slugs with no DB row — skip the roundtrip.
   if (!UUID.test(agentId)) return null
 
