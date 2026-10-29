@@ -334,8 +334,7 @@
   }
   .wwt2-page .wwt2-footer .wwt2-foot-grid { padding-bottom: 1rem; }
   .wwt2-page .wwt2-footer .wwt2-foot-base { padding-top: 1rem; }
-  .wwt2-page .wwt2-footer .wwt2-foot-nav,
-  .wwt2-page .wwt2-footer .wwt2-foot-contact { gap: 0.55rem; }
+  .wwt2-page .wwt2-footer .wwt2-foot-col { gap: 0.55rem; }
 }
 
 /* ── Focus visibility (a11y as a luxury floor) ───────────────────────────── */

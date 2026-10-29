@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { Reveal } from './Reveal'
 import { WWT2HeadlineReveal } from './WWT2HeadlineReveal'
@@ -12,8 +13,8 @@ interface WWT2FooterProps {
 
 /**
  * Closing CTA + quiet footer. A full-bleed serene image carries a final
- * invitation; the footer beneath stays restrained — a short index, the enquiry
- * link, and the Virtuoso affiliation line.
+ * invitation; the footer beneath stays restrained — the Virtuoso mark with the
+ * host-agency line, and the index grouped into Stays / Journeys / Connect.
  *
  * Deliberately no email or phone: every enquiry routes through the contact form
  * so the advisor's personal address and number stay off the public site.
@@ -27,16 +28,31 @@ export function WWT2Footer({
 }: WWT2FooterProps) {
   const year = 2026
 
-  const links = [
-    { label: 'The Collection', href: `${base}/book-hotel` },
-    { label: 'Yachts', href: `${base}/yachts` },
-    { label: 'Wine River Cruises', href: `${base}/find-cruise` },
-    { label: 'Private Jets', href: `${base}/private-jets` },
-    { label: 'Safaris', href: `${base}/safaris` },
-    { label: 'Wellness', href: `${base}/experiences` },
-    { label: 'Villas', href: `${base}/book-villa` },
-    { label: 'Journal', href: `${base}/journal` },
-    { label: 'Enquire', href: `${base}/contact` },
+  const groups = [
+    {
+      title: 'Stays',
+      links: [
+        { label: 'The Collection', href: `${base}/book-hotel` },
+        { label: 'Villas', href: `${base}/book-villa` },
+      ],
+    },
+    {
+      title: 'Journeys',
+      links: [
+        { label: 'Yachts', href: `${base}/yachts` },
+        { label: 'Wine River Cruises', href: `${base}/find-cruise` },
+        { label: 'Private Jets', href: `${base}/private-jets` },
+        { label: 'Safaris', href: `${base}/safaris` },
+        { label: 'Wellness', href: `${base}/experiences` },
+      ],
+    },
+    {
+      title: 'Connect',
+      links: [
+        { label: 'Journal', href: `${base}/journal` },
+        { label: 'Enquire', href: `${base}/contact` },
+      ],
+    },
   ]
 
   return (
@@ -71,36 +87,39 @@ export function WWT2Footer({
         <div className="wwt-shell wwt2-foot-grid">
           <div className="wwt2-foot-brand">
             <p className="wwt2-foot-name">{agencyName}</p>
-            <p className="wwt2-foot-aff">
-              A proud member of Virtuoso — the world’s leading network of luxury travel advisors.
-            </p>
+            <Image
+              src="/assets/virtuoso-footer.png"
+              alt="Virtuoso Member"
+              width={595}
+              height={287}
+              className="wwt2-foot-virtuoso"
+              unoptimized
+            />
+            <p className="wwt2-foot-aff">An affiliate of Montecito Village Travel</p>
           </div>
 
           <nav className="wwt2-foot-nav" aria-label="Footer">
-            {links.map((l) => (
-              <Link key={l.href} href={l.href} className="wwt2-foot-link">
-                {l.label}
-              </Link>
+            {groups.map((g) => (
+              <div key={g.title} className="wwt2-foot-col">
+                <p className="wwt2-foot-col-title">{g.title}</p>
+                {g.links.map((l) => (
+                  <Link key={l.href} href={l.href} className="wwt2-foot-link">
+                    {l.label}
+                  </Link>
+                ))}
+                {g.title === 'Connect' && instagram && (
+                  <a href={instagram} target="_blank" rel="noopener noreferrer" className="wwt2-foot-link">
+                    Instagram
+                  </a>
+                )}
+                {g.title === 'Connect' && facebook && (
+                  <a href={facebook} target="_blank" rel="noopener noreferrer" className="wwt2-foot-link">
+                    Facebook
+                  </a>
+                )}
+              </div>
             ))}
           </nav>
-
-          <div className="wwt2-foot-contact">
-            <Link href={`${base}/contact`} className="wwt2-foot-contact-link">
-              Start a conversation
-            </Link>
-            <div className="wwt2-foot-social">
-              {instagram && (
-                <a href={instagram} target="_blank" rel="noopener noreferrer" className="wwt2-foot-social-link">
-                  Instagram
-                </a>
-              )}
-              {facebook && (
-                <a href={facebook} target="_blank" rel="noopener noreferrer" className="wwt2-foot-social-link">
-                  Facebook
-                </a>
-              )}
-            </div>
-          </div>
         </div>
 
         <div className="wwt-shell wwt2-foot-base">
@@ -148,23 +167,26 @@ export function WWT2Footer({
 
         .wwt2-foot { background: var(--wwt-night-2); color: var(--wwt-on-night); padding-block: clamp(3.5rem, 7vw, 5.5rem) 2rem; }
         .wwt2-foot-grid {
-          display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: clamp(2rem, 5vw, 4rem);
+          display: grid; grid-template-columns: minmax(17rem, 1fr) 2fr; gap: clamp(2rem, 5vw, 4rem);
           padding-bottom: clamp(3rem, 6vw, 4.5rem);
           border-bottom: 1px solid rgba(255,255,255,0.14);
         }
-        .wwt2-foot-name { font-family: var(--wwt-serif); font-size: 1.7rem; margin: 0 0 1rem; color: var(--wwt-on-night); }
-        .wwt2-foot-aff { font-family: var(--wwt-sans); font-weight: 300; font-size: 0.9rem; color: rgba(255,255,255,0.6); max-width: 34ch; margin: 0; }
-        .wwt2-foot-nav { display: flex; flex-direction: column; gap: 0.85rem; }
-        .wwt2-foot-link, .wwt2-foot-contact-link, .wwt2-foot-social-link {
-          font-family: var(--wwt-sans); font-size: 0.8rem; font-weight: 400;
-          letter-spacing: 0.04em; color: rgba(255,255,255,0.78); text-decoration: none;
+        .wwt2-foot-name { font-family: var(--wwt-serif); font-size: 1.7rem; margin: 0 0 1.4rem; color: var(--wwt-on-night); }
+        /* Source PNG is grey for light grounds — knock it to white on the night band. */
+        .wwt2-foot-virtuoso { display: block; width: 112px; height: auto; filter: brightness(0) invert(1); opacity: 0.85; }
+        .wwt2-foot-aff { font-family: var(--wwt-sans); font-weight: 300; font-size: 0.85rem; color: rgba(255,255,255,0.6); margin: 0.9rem 0 0; }
+        .wwt2-foot-nav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.5rem, 4vw, 3rem); }
+        .wwt2-foot-col { display: flex; flex-direction: column; gap: 0.85rem; }
+        .wwt2-foot-col-title {
+          font-family: var(--wwt-sans); font-size: 0.8rem; font-weight: 500;
+          color: rgba(255,255,255,0.45); margin: 0 0 0.3rem;
+        }
+        .wwt2-foot-link {
+          font-family: var(--wwt-sans); font-size: 0.85rem; font-weight: 400;
+          letter-spacing: 0.02em; color: rgba(255,255,255,0.78); text-decoration: none;
           transition: color 300ms var(--wwt-ease); width: fit-content;
         }
-        .wwt2-foot-link:hover, .wwt2-foot-contact-link:hover, .wwt2-foot-social-link:hover { color: var(--wwt-on-night); }
-        .wwt2-foot-contact { display: flex; flex-direction: column; gap: 0.85rem; }
-        .wwt2-foot-contact-link { font-size: 0.95rem; }
-        .wwt2-foot-social { display: flex; gap: 1.4rem; margin-top: 0.6rem; }
-        .wwt2-foot-social-link { text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.7rem; font-weight: 500; }
+        .wwt2-foot-link:hover { color: var(--wwt-on-night); }
 
         .wwt2-foot-base {
           display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
@@ -173,8 +195,11 @@ export function WWT2Footer({
           color: rgba(255,255,255,0.45);
         }
 
-        @media (max-width: 760px) {
+        @media (max-width: 899px) {
           .wwt2-foot-grid { grid-template-columns: 1fr; gap: 2.4rem; }
+        }
+        @media (max-width: 480px) {
+          .wwt2-foot-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2.2rem; }
         }
       `}</style>
     </footer>
