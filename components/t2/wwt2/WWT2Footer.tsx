@@ -123,7 +123,15 @@ export function WWT2Footer({
         </div>
 
         <div className="wwt-shell wwt2-foot-base">
-          <span>© {year} {agencyName}</span>
+          <div className="wwt2-foot-base-legal">
+            <span>© {year} {agencyName}</span>
+            <Link href={`${base}/terms-of-service`} className="wwt2-foot-base-link">
+              Terms of Service
+            </Link>
+            <Link href={`${base}/privacy-policy`} className="wwt2-foot-base-link">
+              Privacy Policy
+            </Link>
+          </div>
           <span className="wwt2-foot-base-meta">Custom-built on Elite Advisor Hub</span>
         </div>
       </div>
@@ -194,6 +202,9 @@ export function WWT2Footer({
           font-family: var(--wwt-sans); font-size: 0.72rem; letter-spacing: 0.04em;
           color: rgba(255,255,255,0.45);
         }
+        .wwt2-foot-base-legal { display: flex; flex-wrap: wrap; gap: 0.6rem 1.6rem; }
+        .wwt2-foot-base-link { color: inherit; text-decoration: none; transition: color 300ms var(--wwt-ease); }
+        .wwt2-foot-base-link:hover { color: var(--wwt-on-night); }
 
         @media (max-width: 899px) {
           .wwt2-foot-grid { grid-template-columns: 1fr; gap: 2.4rem; }
