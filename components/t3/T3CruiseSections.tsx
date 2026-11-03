@@ -1,9 +1,12 @@
+import Link from 'next/link'
 import type {
   CruiseDestination,
   CruiseExperience,
   CruiseSuite,
   CruiseJourney,
 } from '@/lib/cruise-lines'
+import type { CollectionItinerary, CruiseCollection } from '@/lib/cruise-itineraries'
+import { cruiseCollectionPath } from '@/lib/tenant-paths'
 
 // Meridian (T3) cruise detail sections. Editorial, restrained — the T3 design
 // system. Template isolation: these never import from t2/*.
@@ -97,6 +100,60 @@ export function T3CruiseSuites({ suites, vesselNote }: { suites: CruiseSuite[]; 
 }
 
 // ── Sample journeys ──────────────────────────────────────────────────────────
+function JourneyImage({ src, alt }: { src?: string; alt: string }) {
+  if (!src) return null
+  return (
+    <div style={{ position: 'relative', aspectRatio: '16 / 10', overflow: 'hidden', marginBottom: 22, background: 'var(--t3-bg-alt)' }}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={src} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
+    </div>
+  )
+}
+
+export function T3CollectionItineraries({ itineraries, base }: { itineraries: CollectionItinerary[]; base: string }) {
+  return (
+    <section className="t3-section">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--t3-gap)' }} className="t3-collection-grid">
+        {itineraries.map((j) => (
+          <article key={j.id} style={{ display: 'flex', flexDirection: 'column' }}>
+            <JourneyImage src={j.image_url} alt={j.name} />
+            <div style={{ fontFamily: 'var(--t3-font-display)', fontSize: 'clamp(13px, 1vw, 14px)', letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--t3-accent)', marginBottom: 14 }}>
+              {j.line_name} · {j.nights}
+            </div>
+            <h3 className="t3-headline-md" style={{ marginBottom: 14, fontSize: 'clamp(18px, 1.6vw, 22px)' }}>{j.name}</h3>
+            <p className="t3-body" style={{ fontSize: 'clamp(13px, 1vw, 14px)', fontWeight: 500, color: 'var(--t3-text)', marginBottom: 14 }}>{j.route}</p>
+            <p className="t3-body" style={{ fontSize: 'clamp(13px, 1vw, 14px)', color: 'var(--t3-text-muted)', margin: '0 0 18px' }}>{j.blurb}</p>
+            <Link href={`${base}/find-cruise/${j.line_slug}`} style={{ marginTop: 'auto', fontSize: 13, color: 'var(--t3-text)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
+              View {j.line_name}
+            </Link>
+          </article>
+        ))}
+      </div>
+      <style>{`
+        @media (max-width: 1024px) { .t3-collection-grid { grid-template-columns: 1fr 1fr !important; } }
+        @media (max-width: 768px) { .t3-collection-grid { grid-template-columns: 1fr !important; gap: var(--t3-gap-tight) !important; } }
+      `}</style>
+    </section>
+  )
+}
+
+export function T3CruiseCollectionLinks({ collections, agentId }: { collections: CruiseCollection[]; agentId: string }) {
+  if (!collections.length) return null
+  return (
+    <section className="t3-section" style={{ paddingBottom: 0 }}>
+      <div style={{ maxWidth: 'var(--t3-content-prose)', margin: '0 auto', borderTop: '1px solid var(--t3-divider)' }}>
+        {collections.map((c) => (
+          <Link key={c.id} href={cruiseCollectionPath('t3', agentId, c.slug)} style={{ display: 'block', padding: '28px 0', borderBottom: '1px solid var(--t3-divider)', color: 'inherit', textDecoration: 'none' }}>
+            <span className="t3-headline-md" style={{ display: 'block', marginBottom: 8 }}>{c.name}</span>
+            {c.intro && <span className="t3-body" style={{ display: 'block', marginBottom: 10 }}>{c.intro}</span>}
+            <span style={{ fontSize: 13, color: 'var(--t3-text)', textDecoration: 'underline', textUnderlineOffset: 4 }}>View itineraries</span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 export function T3CruiseJourneys({ journeys }: { journeys: CruiseJourney[] }) {
   if (!journeys?.length) return null
   return (
@@ -105,6 +162,7 @@ export function T3CruiseJourneys({ journeys }: { journeys: CruiseJourney[] }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--t3-gap)', borderTop: '1px solid var(--t3-divider)', paddingTop: 'var(--t3-gap)' }} className="t3-cruise-3col">
         {journeys.map((j) => (
           <article key={j.name}>
+            <JourneyImage src={j.image_url} alt={j.name} />
             <div style={{ fontFamily: 'var(--t3-font-display)', fontSize: 'clamp(13px, 1vw, 14px)', letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--t3-accent)', marginBottom: 14 }}>
               {j.nights}
             </div>

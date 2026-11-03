@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { getCruiseLines } from '@/lib/cruise-lines'
+import { getCruiseCollections } from '@/lib/cruise-itineraries'
+import { T3CruiseCollectionLinks } from '@/components/t3/T3CruiseSections'
 import { T3PageHero } from '@/components/t3/T3PageHero'
 import { T3CruiseCardImage } from '@/components/t3/T3CruiseCardImage'
 
@@ -16,7 +18,7 @@ export const metadata = {
 
 export default async function T3FindCruisePage({ params }: PageProps) {
   const { agentId } = await params
-  const lines = await getCruiseLines()
+  const [lines, collections] = await Promise.all([getCruiseLines(), getCruiseCollections(agentId)])
   const base = `/t3/${agentId}`
 
   return (
@@ -29,6 +31,8 @@ export default async function T3FindCruisePage({ params }: PageProps) {
         body="The cruise lines we trust, the ones we have sailed personally, and the only way to see their ports with the access that comes from two decades of advisor relationships."
         imageCaption="Regent Seven Seas · Tahiti"
       />
+
+      <T3CruiseCollectionLinks collections={collections} agentId={agentId} />
 
       {/* Intro */}
       <section className="t3-section">

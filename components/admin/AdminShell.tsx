@@ -58,6 +58,7 @@ export function AdminShell({ admin, counts, children }: AdminShellProps) {
       items: [
         { href: '/admin/hotel-programs', label: 'Hotel Programs', icon: Icons.building },
         { href: '/admin/cruise-lines', label: 'Cruise Lines', icon: Icons.ship },
+        { href: '/admin/cruise-itineraries', label: 'Cruise Itineraries', icon: Icons.ship },
         { href: '/admin/promos', label: 'Promo Banners', icon: Icons.megaphone },
       ],
     },

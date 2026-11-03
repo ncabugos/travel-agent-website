@@ -118,7 +118,7 @@ export default async function YachtsPage({ params }: PageProps) {
   // Editorial surface over the global catalogue, linking to the already-public
   // /find-cruise detail pages — no tier gate of its own.
   const base = `/t2/${agentId}`
-  const [all, agent] = await Promise.all([getCruiseLines(), getAgentProfile(agentId)])
+  const [all, agent] = await Promise.all([getCruiseLines(undefined, agentId), getAgentProfile(agentId)])
   const yachts = all
     .filter((c) => FEATURED_ORDER.includes(c.slug))
     .sort((a, b) => FEATURED_ORDER.indexOf(a.slug) - FEATURED_ORDER.indexOf(b.slug))

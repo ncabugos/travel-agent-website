@@ -1,9 +1,12 @@
+import Link from 'next/link'
 import type {
   CruiseDestination,
   CruiseExperience,
   CruiseSuite,
   CruiseJourney,
 } from '@/lib/cruise-lines'
+import type { CollectionItinerary, CruiseCollection } from '@/lib/cruise-itineraries'
+import { cruiseCollectionPath } from '@/lib/tenant-paths'
 
 // Casa Solis (T4) cruise detail sections — quiet luxury, the T4 design system.
 // Template isolation: these never import from t2/* or t3/*.
@@ -112,6 +115,7 @@ export function T4CruiseJourneys({ journeys }: { journeys: CruiseJourney[] }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32, rowGap: 48, borderTop: '1px solid var(--t4-divider)', paddingTop: 56 }} className="t4-cruise-3col">
         {journeys.map((j) => (
           <article key={j.name}>
+            <JourneyImage src={j.image_url} alt={j.name} />
             <div style={{ fontFamily: 'var(--t4-font-display)', fontSize: 'clamp(13px, 1vw, 14px)', letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--t4-accent)', marginBottom: 16 }}>
               {j.nights}
             </div>
@@ -123,6 +127,57 @@ export function T4CruiseJourneys({ journeys }: { journeys: CruiseJourney[] }) {
       </div>
       <ResponsiveCss />
     </Shell>
+  )
+}
+
+function JourneyImage({ src, alt }: { src?: string; alt: string }) {
+  if (!src) return null
+  return (
+    <div style={{ position: 'relative', aspectRatio: '16 / 10', overflow: 'hidden', background: 'var(--t4-bg-alt)', marginBottom: 22 }}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={src} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
+    </div>
+  )
+}
+
+export function T4CollectionItineraries({ itineraries, base }: { itineraries: CollectionItinerary[]; base: string }) {
+  return (
+    <Shell>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32, rowGap: 48 }} className="t4-cruise-3col">
+        {itineraries.map((j) => (
+          <article key={j.id} style={{ display: 'flex', flexDirection: 'column' }}>
+            <JourneyImage src={j.image_url} alt={j.name} />
+            <div style={{ fontFamily: 'var(--t4-font-display)', fontSize: 'clamp(13px, 1vw, 14px)', letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--t4-accent)', marginBottom: 16 }}>
+              {j.line_name} · {j.nights}
+            </div>
+            <h3 className="t4-headline-md" style={{ marginBottom: 14 }}>{j.name}</h3>
+            <p className="t4-body" style={{ fontWeight: 500, color: 'var(--t4-text)', marginBottom: 14, fontSize: 13.5 }}>{j.route}</p>
+            <p className="t4-body" style={{ margin: '0 0 18px', fontSize: 13.5 }}>{j.blurb}</p>
+            <Link href={`${base}/find-cruise/${j.line_slug}`} style={{ marginTop: 'auto', fontSize: 13, color: 'var(--t4-text)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
+              View {j.line_name}
+            </Link>
+          </article>
+        ))}
+      </div>
+      <ResponsiveCss />
+    </Shell>
+  )
+}
+
+export function T4CruiseCollectionLinks({ collections, agentId }: { collections: CruiseCollection[]; agentId: string }) {
+  if (!collections.length) return null
+  return (
+    <section style={{ padding: 'var(--t4-section-pad) 48px 0' }}>
+      <div style={{ maxWidth: 'var(--t4-content-wide)', margin: '0 auto', borderTop: '1px solid var(--t4-divider)' }}>
+        {collections.map((c) => (
+          <Link key={c.id} href={cruiseCollectionPath('t4', agentId, c.slug)} style={{ display: 'block', padding: '28px 0', borderBottom: '1px solid var(--t4-divider)', color: 'inherit', textDecoration: 'none' }}>
+            <span className="t4-headline-md" style={{ display: 'block', marginBottom: 8 }}>{c.name}</span>
+            {c.intro && <span className="t4-body" style={{ display: 'block', marginBottom: 10 }}>{c.intro}</span>}
+            <span style={{ fontSize: 13, color: 'var(--t4-text)', textDecoration: 'underline', textUnderlineOffset: 4 }}>View itineraries</span>
+          </Link>
+        ))}
+      </div>
+    </section>
   )
 }
 

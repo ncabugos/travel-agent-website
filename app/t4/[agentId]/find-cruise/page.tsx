@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { getCruiseLines } from '@/lib/cruise-lines'
+import { getCruiseCollections } from '@/lib/cruise-itineraries'
+import { T4CruiseCollectionLinks } from '@/components/t4/T4CruiseSections'
 import { T4PageHero } from '@/components/t4/T4PageHero'
 
 interface PageProps {
@@ -15,7 +17,7 @@ export const metadata = {
 
 export default async function T4FindCruiseIndexPage({ params }: PageProps) {
   const { agentId } = await params
-  const lines = await getCruiseLines()
+  const [lines, collections] = await Promise.all([getCruiseLines(), getCruiseCollections(agentId)])
   const base = `/t4/${agentId}`
 
   return (
@@ -28,6 +30,8 @@ export default async function T4FindCruiseIndexPage({ params }: PageProps) {
         body="The cruise lines we have sailed personally, and the ones we book for reasons every client will eventually understand."
         imageCaption="Regent Seven Seas · Tahiti"
       />
+
+      <T4CruiseCollectionLinks collections={collections} agentId={agentId} />
 
       <section
         style={{

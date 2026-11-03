@@ -1,4 +1,5 @@
 import { createServiceClient } from '@/lib/supabase/service'
+import { getJourneysByLine } from '@/lib/cruise-itineraries'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -25,7 +26,7 @@ export interface CruiseLine {
   destinations?: CruiseDestination[]   // where the yacht sails
   experiences?: CruiseExperience[]     // onboard experiences
   suites?: CruiseSuite[]               // the yacht's accommodations
-  sample_journeys?: CruiseJourney[]    // illustrative itineraries
+  sample_journeys?: CruiseJourney[]    // filled from the cruise_itineraries table
 }
 
 export interface CruiseHighlight {
@@ -89,6 +90,8 @@ export interface ProgramFeaturedProperty {
 
 // ─── Mock Data ────────────────────────────────────────────────────────────────
 
+// sample_journeys here are an offline fallback only. Edit itineraries in the
+// cruise_itineraries table.
 const MOCK_CRUISE_LINES: CruiseLine[] = [
   // ── Private Yachts ──────────────────────────────────────────────────────────
   {
@@ -1230,6 +1233,9 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { title: 'Included, In Every Port', blurb: 'A guided excursion comes with every stop, alongside privileged cultural access and enrichment lectures — the destination is the point.', image_url: '/media/cruises/viking/swiss-alps.jpg' },
     ],
     sample_journeys: [
+      { name: 'Danube Christmas Delights', nights: '7 nights', route: 'Budapest · Bratislava · Vienna · Krems · Linz · Passau', blurb: 'Christmas markets in Budapest, Vienna, Linz, and Passau, with a scenic sail through the Wachau Valley.' },
+      { name: 'Christmas on the Rhine', nights: '7 nights', route: 'Amsterdam · Cologne · Koblenz · Rüdesheim · Speyer · Strasbourg · Breisach · Basel', blurb: 'Holiday markets in Cologne, Koblenz, and Breisach, with castles along the Middle Rhine and Alsatian food in Strasbourg.' },
+      { name: 'Christmas on the Rhine & Main', nights: '10 nights', route: 'Nuremberg · Bamberg · Würzburg · Frankfurt · Baden-Baden · Strasbourg · Breisach · Basel', blurb: 'Nuremberg\'s Christkindlesmarkt, the Advent markets in Würzburg, and Frankfurt\'s Römerberg Square on one longer sailing.' },
       { name: 'Rhine Getaway', nights: '7 nights', route: 'Amsterdam · Kinderdijk · Cologne · the Rhine Gorge · Basel', blurb: 'The classic Rhine, castle to castle through four countries.' },
       { name: 'Danube Waltz', nights: '7 nights', route: 'Budapest · Vienna · the Wachau Valley · Passau · Regensburg', blurb: 'The river capitals of Central Europe, with an evening in Vienna.' },
       { name: 'Paris & Normandy', nights: '7 nights', route: 'Paris · Vernon (Giverny) · Rouen · the D-Day beaches', blurb: 'The Seine from the Eiffel Tower to the beaches of Normandy.' },
@@ -1288,6 +1294,9 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { name: 'Spa-Style Baths', blurb: 'Light, modern bathrooms with twin sinks and a tub — among the most generous on Europe\'s rivers.', image_url: '/media/cruises/ama-waterways/amawaterways-amamagna-bath-1500.jpg' },
     ],
     sample_journeys: [
+      { name: 'Christmas Markets on the Danube', nights: '7 nights', route: 'Budapest · Bratislava · Vienna · Weissenkirchen · Linz · Passau · Vilshofen', blurb: 'Markets in Vienna, Dürnstein, and Bratislava, with local choirs and holiday music on board.' },
+      { name: 'Christmas Markets on the Rhine', nights: '7 nights', route: 'Amsterdam · Cologne · Rüdesheim · Ludwigshafen · Strasbourg · Breisach · Basel', blurb: 'Cologne\'s cathedral-side market, Rüdesheim\'s Drosselgasse, and the Christmas markets of Alsace.' },
+      { name: 'Iconic Christmas Markets', nights: '7 nights', route: 'Nuremberg · Regensburg · Passau · Melk · Vienna · Budapest', blurb: 'Nuremberg\'s Christkindlesmarkt and Vienna\'s Rathausplatz in one week, ending in Budapest.' },
       { name: 'The Danube', nights: '7 nights', route: 'Vilshofen · Passau · Vienna · the Wachau Valley · Budapest', blurb: 'The classic Blue Danube, with biking and hiking in every port.' },
       { name: 'The Rhine', nights: '7 nights', route: 'Amsterdam · Cologne · the Rhine Gorge · Strasbourg · Basel', blurb: 'Castles and vineyards from the Netherlands to Switzerland.' },
       { name: 'The Douro', nights: '7 nights', route: 'Porto · the Douro Valley · Salamanca · Pinhão', blurb: 'Portugal\'s wine country, quinta to quinta along the terraced river.' },
@@ -1354,6 +1363,9 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { title: "Club L'Esprit", blurb: 'An indoor pool, spa, and wellness space — the highest staff-to-guest ratio on the rivers tending to every detail.', image_url: '/media/cruises/uniworld/uniworld-club-lesprit.jpg' },
     ],
     sample_journeys: [
+      { name: 'Danube Holiday Markets', nights: '7 nights', route: 'Budapest · Bratislava · Vienna · Krems · Melk · Linz · Passau', blurb: 'Christmas markets in Budapest, Bratislava, and Passau, with an excursion to Salzburg from Linz.' },
+      { name: 'Rhine Holiday Markets', nights: '7 nights', route: 'Basel · Strasbourg · Mannheim · Mainz · Rüdesheim · Koblenz · Cologne', blurb: 'Basel\'s Christmas market and Christmas Street, half-timbered Strasbourg, and a morning sailing the Upper Middle Rhine Valley.' },
+      { name: 'Classic Christmas Markets', nights: '7 nights', route: 'Nuremberg · Bamberg · Rothenburg · Würzburg · Wertheim · Frankfurt', blurb: 'Nuremberg\'s market, four more in Bamberg, and one of Germany\'s oldest in Rothenburg, sailing the Main River.' },
       { name: 'The Danube', nights: '7 nights', route: 'Budapest · Vienna · the Wachau Valley · Passau · Nuremberg', blurb: 'The Blue Danube aboard a one-of-a-kind Super Ship, all-inclusive throughout.' },
       { name: 'The Seine & Paris', nights: '7 nights', route: 'Paris · Vernon (Giverny) · Rouen · Les Andelys', blurb: 'Impressionist France from the heart of Paris to Normandy.' },
       { name: 'The Douro', nights: '7 nights', route: 'Porto · the Douro Valley · Salamanca · Régua', blurb: 'Portugal\'s terraced wine river, in lavish, all-inclusive comfort.' },
@@ -1601,7 +1613,7 @@ const hasSupabase = () =>
 
 // ─── Cruise Lines ─────────────────────────────────────────────────────────────
 
-export async function getCruiseLines(cruiseType?: string): Promise<CruiseLine[]> {
+export async function getCruiseLines(cruiseType?: string, agentId?: string): Promise<CruiseLine[]> {
   if (!hasSupabase()) {
     return cruiseType
       ? MOCK_CRUISE_LINES.filter(c => c.cruise_types.includes(cruiseType))
@@ -1624,6 +1636,7 @@ export async function getCruiseLines(cruiseType?: string): Promise<CruiseLine[]>
         ? MOCK_CRUISE_LINES.filter(c => c.cruise_types.includes(cruiseType))
         : MOCK_CRUISE_LINES
     }
+    const journeys = await getJourneysByLine({ agentId })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return data.map((r: any) => ({
       ...r,
@@ -1635,12 +1648,12 @@ export async function getCruiseLines(cruiseType?: string): Promise<CruiseLine[]>
       destinations: r.destinations ?? [],
       experiences: r.experiences ?? [],
       suites: r.suites ?? [],
-      sample_journeys: r.sample_journeys ?? [],
+      sample_journeys: journeys ? journeys.get(r.id) ?? [] : r.sample_journeys ?? [],
     }))
   } catch { return MOCK_CRUISE_LINES }
 }
 
-export async function getCruiseLine(slug: string): Promise<CruiseLine | null> {
+export async function getCruiseLine(slug: string, agentId?: string): Promise<CruiseLine | null> {
   if (!hasSupabase()) {
     return MOCK_CRUISE_LINES.find(c => c.slug === slug) ?? null
   }
@@ -1657,6 +1670,7 @@ export async function getCruiseLine(slug: string): Promise<CruiseLine | null> {
     if (error || !data) return MOCK_CRUISE_LINES.find(c => c.slug === slug) ?? null
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const r = data as any
+    const journeys = await getJourneysByLine({ lineId: r.id, agentId })
     return {
       ...r,
       highlights: r.highlights ?? [],
@@ -1667,7 +1681,7 @@ export async function getCruiseLine(slug: string): Promise<CruiseLine | null> {
       destinations: r.destinations ?? [],
       experiences: r.experiences ?? [],
       suites: r.suites ?? [],
-      sample_journeys: r.sample_journeys ?? [],
+      sample_journeys: journeys ? journeys.get(r.id) ?? [] : r.sample_journeys ?? [],
     }
   } catch { return MOCK_CRUISE_LINES.find(c => c.slug === slug) ?? null }
 }

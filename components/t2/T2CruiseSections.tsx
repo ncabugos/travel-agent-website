@@ -1,10 +1,13 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import type {
   CruiseDestination,
   CruiseExperience,
   CruiseSuite,
   CruiseJourney,
 } from '@/lib/cruise-lines'
+import type { CollectionItinerary, CruiseCollection } from '@/lib/cruise-itineraries'
+import { cruiseCollectionPath } from '@/lib/tenant-paths'
 
 // ── Shared section header ──────────────────────────────────────────────────────
 function SectionHeader({ eyebrow, heading, body }: { eyebrow: string; heading: string; body?: string }) {
@@ -113,6 +116,69 @@ export function T2CruiseSuites({ suites, vesselNote }: { suites: CruiseSuite[]; 
   )
 }
 
+// ── Itinerary card image ───────────────────────────────────────────────────────
+function JourneyImage({ src, alt }: { src?: string; alt: string }) {
+  if (!src) return null
+  return (
+    <div style={{ position: 'relative', aspectRatio: '16/10', overflow: 'hidden', background: 'var(--t2-bg-alt)' }}>
+      <Image src={src} alt={alt} fill style={{ objectFit: 'cover' }} sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 33vw" unoptimized />
+    </div>
+  )
+}
+
+// ── Collection cards (span cruise lines) ───────────────────────────────────────
+export function T2CollectionItineraries({ itineraries, base }: { itineraries: CollectionItinerary[]; base: string }) {
+  return (
+    <section className="t2-section" style={{ background: 'var(--t2-bg-alt)', maxWidth: 'none' }}>
+      <div style={{ maxWidth: 1180, margin: '0 auto', padding: '0 48px' }} className="t2-cr-collection-wrap">
+        <div className="t2-cr-journey-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28 }}>
+          {itineraries.map((j) => (
+            <article key={j.id} style={{
+              background: '#fff', borderRadius: 'var(--t2-radius-lg)', border: '1px solid var(--t2-divider)',
+              overflow: 'hidden', display: 'flex', flexDirection: 'column',
+            }}>
+              <JourneyImage src={j.image_url} alt={j.name} />
+              <div style={{ padding: '30px 30px 34px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                <span style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 12, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--t2-primary)', opacity: 0.6, marginBottom: 14 }}>
+                  {j.line_name} · {j.nights}
+                </span>
+                <h3 style={{ fontFamily: 'var(--t2-font-serif)', fontSize: 22, fontWeight: 500, marginBottom: 14, lineHeight: 1.25 }}>{j.name}</h3>
+                <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 13, lineHeight: 1.7, color: 'var(--t2-primary)', opacity: 0.85, marginBottom: 16, fontWeight: 500 }}>{j.route}</p>
+                <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 14, lineHeight: 1.75, color: 'var(--t2-text-muted)', margin: '0 0 22px' }}>{j.blurb}</p>
+                <Link href={`${base}/find-cruise/${j.line_slug}`} style={{ marginTop: 'auto', fontFamily: 'var(--t2-font-sans)', fontSize: 13, color: 'var(--t2-primary)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
+                  View {j.line_name}
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+      <style>{`
+        @media (max-width: 980px){ .t2-cr-journey-grid{ grid-template-columns: 1fr 1fr !important; } }
+        @media (max-width: 640px){ .t2-cr-journey-grid{ grid-template-columns: 1fr !important; } .t2-cr-collection-wrap{ padding: 0 24px !important; } }
+      `}</style>
+    </section>
+  )
+}
+
+// ── Links from the cruise index to collections ─────────────────────────────────
+export function T2CruiseCollectionLinks({ collections, agentId }: { collections: CruiseCollection[]; agentId: string }) {
+  if (!collections.length) return null
+  return (
+    <section className="t2-section" style={{ paddingBottom: 0 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 900, margin: '0 auto' }}>
+        {collections.map((c) => (
+          <Link key={c.id} href={cruiseCollectionPath('t2', agentId, c.slug)} style={{ display: 'block', padding: '26px 30px', border: '1px solid var(--t2-divider)', borderRadius: 'var(--t2-radius-lg)', background: '#fff', color: 'inherit', textDecoration: 'none' }}>
+            <span style={{ display: 'block', fontFamily: 'var(--t2-font-serif)', fontSize: 24, fontWeight: 500, marginBottom: 8 }}>{c.name}</span>
+            {c.intro && <span style={{ display: 'block', fontFamily: 'var(--t2-font-sans)', fontSize: 14, lineHeight: 1.7, color: 'var(--t2-text-muted)', marginBottom: 12 }}>{c.intro}</span>}
+            <span style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 13, color: 'var(--t2-primary)', textDecoration: 'underline', textUnderlineOffset: 4 }}>View itineraries</span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 // ── Sample journeys ────────────────────────────────────────────────────────────
 export function T2CruiseJourneys({ journeys }: { journeys: CruiseJourney[] }) {
   if (!journeys?.length) return null
@@ -124,14 +190,17 @@ export function T2CruiseJourneys({ journeys }: { journeys: CruiseJourney[] }) {
           {journeys.map((j) => (
             <article key={j.name} style={{
               background: '#fff', borderRadius: 'var(--t2-radius-lg)', border: '1px solid var(--t2-divider)',
-              padding: '34px 30px', display: 'flex', flexDirection: 'column',
+              overflow: 'hidden', display: 'flex', flexDirection: 'column',
             }}>
-              <span style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 12, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--t2-primary)', opacity: 0.6, marginBottom: 14 }}>
-                {j.nights}
-              </span>
-              <h3 style={{ fontFamily: 'var(--t2-font-serif)', fontSize: 22, fontWeight: 500, marginBottom: 14, lineHeight: 1.25 }}>{j.name}</h3>
-              <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 13, lineHeight: 1.7, color: 'var(--t2-primary)', opacity: 0.85, marginBottom: 16, fontWeight: 500 }}>{j.route}</p>
-              <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 14, lineHeight: 1.75, color: 'var(--t2-text-muted)', margin: 0 }}>{j.blurb}</p>
+              <JourneyImage src={j.image_url} alt={j.name} />
+              <div style={{ padding: '30px 30px 34px' }}>
+                <span style={{ display: 'block', fontFamily: 'var(--t2-font-sans)', fontSize: 12, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--t2-primary)', opacity: 0.6, marginBottom: 14 }}>
+                  {j.nights}
+                </span>
+                <h3 style={{ fontFamily: 'var(--t2-font-serif)', fontSize: 22, fontWeight: 500, marginBottom: 14, lineHeight: 1.25 }}>{j.name}</h3>
+                <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 13, lineHeight: 1.7, color: 'var(--t2-primary)', opacity: 0.85, marginBottom: 16, fontWeight: 500 }}>{j.route}</p>
+                <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 14, lineHeight: 1.75, color: 'var(--t2-text-muted)', margin: 0 }}>{j.blurb}</p>
+              </div>
             </article>
           ))}
         </div>
