@@ -8,7 +8,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ImageUpload } from '@/components/admin/ImageUpload'
-import type { CruiseCollection, CruiseItinerary } from '@/lib/cruise-itineraries'
+import type { AdminDeparture, CruiseCollection, CruiseDay, CruiseItinerary } from '@/lib/cruise-itineraries'
+import type { CruiseIncludedGroup } from '@/lib/cruise-lines'
 
 const labelStyle: React.CSSProperties = {
   display: 'block', fontSize: 12, fontWeight: 600, letterSpacing: '0.04em',
@@ -181,6 +182,160 @@ function ItineraryForm({ lineId, itinerary, collections }: {
   )
 }
 
+const lines = (text: string) => text.split('\n').map((s) => s.trim()).filter(Boolean)
+
+/** The full page's content: facts, highlights and days. Saving days publishes the page. */
+function ItineraryPageForm({ itinerary }: { itinerary: CruiseItinerary }) {
+  const [overview, setOverview] = useState(itinerary.overview ?? '')
+  const [highlights, setHighlights] = useState(itinerary.highlights.join('\n'))
+  const [region, setRegion] = useState(itinerary.region ?? '')
+  const [countries, setCountries] = useState(itinerary.countries ?? '')
+  const [direction, setDirection] = useState(itinerary.days_direction ?? '')
+  const [days, setDays] = useState(itinerary.days)
+  const { save, saving, status, error } = useSave(`/api/admin/cruise-itineraries/${itinerary.id}`, 'PUT')
+
+  const setDay = (index: number, patch: Partial<CruiseDay>) =>
+    setDays((all) => all.map((day, i) => (i === index ? { ...day, ...patch } : day)))
+  const moveDay = (index: number, by: number) =>
+    setDays((all) => {
+      const next = [...all]
+      const target = index + by
+      if (target < 0 || target >= next.length) return all
+      ;[next[index], next[target]] = [next[target], next[index]]
+      return next
+    })
+
+  return (
+    <div style={{ display: 'grid', gap: 14 }}>
+      <div>
+        <label style={labelStyle}>Overview (2 sentences)</label>
+        <textarea style={{ ...inputStyle, minHeight: 60, resize: 'vertical' }} value={overview} onChange={(e) => setOverview(e.target.value)} />
+      </div>
+      <div>
+        <label style={labelStyle}>Highlights (one per line, up to 3)</label>
+        <textarea style={{ ...inputStyle, minHeight: 60, resize: 'vertical' }} value={highlights} onChange={(e) => setHighlights(e.target.value)} />
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: 14 }}>
+        <div>
+          <label style={labelStyle}>Region</label>
+          <input style={inputStyle} value={region} onChange={(e) => setRegion(e.target.value)} />
+        </div>
+        <div>
+          <label style={labelStyle}>Countries</label>
+          <input style={inputStyle} value={countries} onChange={(e) => setCountries(e.target.value)} />
+        </div>
+        <div>
+          <label style={labelStyle}>Days written from</label>
+          <input style={inputStyle} value={direction} onChange={(e) => setDirection(e.target.value)} placeholder="Budapest to Passau" />
+        </div>
+      </div>
+      <div style={{ display: 'grid', gap: 10 }}>
+        <label style={{ ...labelStyle, marginBottom: 0 }}>Day by day</label>
+        {days.map((day, index) => (
+          <div key={index} style={{ display: 'grid', gap: 8, padding: 12, border: '1px solid #f3f4f6', borderRadius: 8 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '60px 1fr 1fr auto', gap: 8, alignItems: 'center' }}>
+              <span style={{ fontSize: 13, fontWeight: 600, color: '#111' }}>Day {index + 1}</span>
+              <input style={inputStyle} value={day.place} onChange={(e) => setDay(index, { place: e.target.value })} placeholder="Place" />
+              <input style={inputStyle} value={day.title ?? ''} onChange={(e) => setDay(index, { title: e.target.value })} placeholder="Title" />
+              <div style={{ display: 'flex', gap: 4 }}>
+                <button type="button" onClick={() => moveDay(index, -1)} aria-label={`Move day ${index + 1} up`}>↑</button>
+                <button type="button" onClick={() => moveDay(index, 1)} aria-label={`Move day ${index + 1} down`}>↓</button>
+                <button type="button" onClick={() => setDays((all) => all.filter((_, i) => i !== index))} aria-label={`Remove day ${index + 1}`}>×</button>
+              </div>
+            </div>
+            <textarea style={{ ...inputStyle, minHeight: 50, resize: 'vertical' }} value={day.summary ?? ''} onChange={(e) => setDay(index, { summary: e.target.value })} placeholder="1 to 2 sentences" />
+            <input
+              style={inputStyle}
+              value={(day.excursions ?? []).join(', ')}
+              onChange={(e) => setDay(index, { excursions: e.target.value.split(',').map((s) => s.trimStart()) })}
+              placeholder="Tours, separated by commas"
+            />
+          </div>
+        ))}
+        <div>
+          <button type="button" onClick={() => setDays((all) => [...all, { place: '', title: '', summary: '', excursions: [] }])} style={{ fontSize: 13 }}>
+            Add a day
+          </button>
+        </div>
+      </div>
+      <SaveRow
+        label="Save page content"
+        saving={saving}
+        status={status}
+        error={error}
+        onClick={() => save({ overview, highlights: lines(highlights), region, countries, days_direction: direction, days })}
+      />
+    </div>
+  )
+}
+
+const departureLine = (d: AdminDeparture) => [d.departs_on, d.embark, d.disembark, d.ship ?? ''].join(' | ').replace(/ \| $/, '')
+
+/** Sailing dates, one row per line, so a season can be pasted in. */
+function DeparturesForm({ itinerary, departures }: { itinerary: CruiseItinerary; departures: AdminDeparture[] }) {
+  const [text, setText] = useState(departures.map(departureLine).join('\n'))
+  const [note, setNote] = useState(itinerary.departures_note ?? '')
+  const dates = useSave(`/api/admin/cruise-itineraries/${itinerary.id}/departures`, 'PUT')
+  const noteSave = useSave(`/api/admin/cruise-itineraries/${itinerary.id}`, 'PUT')
+
+  return (
+    <div style={{ display: 'grid', gap: 10 }}>
+      <label style={{ ...labelStyle, marginBottom: 0 }}>Dates (one per line: YYYY-MM-DD | from | to | ship)</label>
+      <textarea style={{ ...inputStyle, minHeight: 120, resize: 'vertical', fontFamily: 'monospace', fontSize: 13 }} value={text} onChange={(e) => setText(e.target.value)} />
+      <SaveRow
+        label="Save dates"
+        saving={dates.saving}
+        status={dates.status}
+        error={dates.error}
+        onClick={() => dates.save({
+          departures: lines(text).map((line) => {
+            const [departs_on, embark, disembark, ship] = line.split('|').map((part) => part.trim())
+            return { departs_on, embark, disembark, ship }
+          }),
+        })}
+      />
+      <label style={{ ...labelStyle, marginBottom: 0 }}>Dates note</label>
+      <input style={inputStyle} value={note} onChange={(e) => setNote(e.target.value)} placeholder="For example: More sailings may be available." />
+      <SaveRow label="Save note" saving={noteSave.saving} status={noteSave.status} error={noteSave.error} onClick={() => noteSave.save({ departures_note: note })} />
+    </div>
+  )
+}
+
+const GROUPS = ['Stay', 'Dining', 'Excursions', 'Also included']
+
+/** What the line's fare includes, shown on all its itinerary pages. */
+function IncludedForm({ line }: { line: { id: string; included: CruiseIncludedGroup[] } }) {
+  const [groups, setGroups] = useState(() =>
+    GROUPS.map((title) => ({ title, text: (line.included ?? []).find((g) => g.title === title)?.items.join('\n') ?? '' })),
+  )
+  const { save, saving, status, error } = useSave(`/api/admin/cruise-lines/${line.id}/included`, 'PUT')
+
+  return (
+    <div style={{ display: 'grid', gap: 10 }}>
+      <h3 style={headingStyle}>What&apos;s included</h3>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 14 }}>
+        {groups.map((group, index) => (
+          <div key={group.title}>
+            <label style={labelStyle}>{group.title} (one per line)</label>
+            <textarea
+              style={{ ...inputStyle, minHeight: 110, resize: 'vertical' }}
+              value={group.text}
+              onChange={(e) => setGroups((all) => all.map((g, i) => (i === index ? { ...g, text: e.target.value } : g)))}
+            />
+          </div>
+        ))}
+      </div>
+      <SaveRow
+        label="Save what's included"
+        saving={saving}
+        status={status}
+        error={error}
+        onClick={() => save({ included: groups.map((g) => ({ title: g.title, items: lines(g.text) })) })}
+      />
+    </div>
+  )
+}
+
 function CollectionForm({ collection }: { collection?: CruiseCollection }) {
   const [name, setName] = useState(collection?.name ?? '')
   const [intro, setIntro] = useState(collection?.intro ?? '')
@@ -226,10 +381,11 @@ function CollectionForm({ collection }: { collection?: CruiseCollection }) {
   )
 }
 
-export function CruiseItineraryManager({ lines, collections, itineraries }: {
-  lines: { id: string; name: string; slug: string }[]
+export function CruiseItineraryManager({ lines: cruiseLines, collections, itineraries, departures }: {
+  lines: { id: string; name: string; slug: string; included: CruiseIncludedGroup[] }[]
   collections: CruiseCollection[]
   itineraries: CruiseItinerary[]
+  departures: AdminDeparture[]
 }) {
   return (
     <div style={{ display: 'grid', gap: 32 }}>
@@ -244,7 +400,7 @@ export function CruiseItineraryManager({ lines, collections, itineraries }: {
       <section>
         <h2 style={headingStyle}>Itineraries by cruise line</h2>
         <div style={{ display: 'grid', gap: 12 }}>
-          {lines.map((line) => {
+          {cruiseLines.map((line) => {
             const rows = itineraries.filter((i) => i.cruise_line_id === line.id)
             return (
               <details key={line.id} style={cardStyle}>
@@ -252,9 +408,19 @@ export function CruiseItineraryManager({ lines, collections, itineraries }: {
                   {line.name} <span style={{ color: '#6b7280', fontWeight: 400 }}>({rows.length})</span>
                 </summary>
                 <div style={{ display: 'grid', gap: 24, marginTop: 20 }}>
+                  <IncludedForm line={line} />
                   {rows.map((row) => (
                     <div key={row.id} style={{ paddingBottom: 24, borderBottom: '1px solid #f3f4f6' }}>
                       <ItineraryForm lineId={line.id} itinerary={row} collections={collections} />
+                      <details style={{ marginTop: 16 }}>
+                        <summary style={{ cursor: 'pointer', fontSize: 14, fontWeight: 600, color: '#111' }}>
+                          Full page {row.days.length > 0 ? `(${row.days.length} days)` : '(not published)'}
+                        </summary>
+                        <div style={{ display: 'grid', gap: 20, marginTop: 14 }}>
+                          <ItineraryPageForm itinerary={row} />
+                          <DeparturesForm itinerary={row} departures={departures.filter((d) => d.itinerary_id === row.id)} />
+                        </div>
+                      </details>
                     </div>
                   ))}
                   <div>

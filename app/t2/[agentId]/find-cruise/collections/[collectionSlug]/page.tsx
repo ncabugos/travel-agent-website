@@ -68,7 +68,7 @@ export default async function T2CruiseCollectionPage({ params }: PageProps) {
         </div>
       </section>
 
-      <T2CollectionItineraries itineraries={itineraries} base={templatePath('t2', agentId)} />
+      <T2CollectionItineraries itineraries={itineraries} base={templatePath('t2', agentId)} agentId={agentId} />
 
       <T2LeadForm
         agentId={agentId}

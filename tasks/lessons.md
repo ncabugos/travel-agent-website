@@ -16,3 +16,13 @@ name the brand, use the number. A heading that could appear in a poem is the wro
 
 **Related:** the same file also bans "atelier", "dream vacation", "trip of a lifetime",
 "quietly extraordinary", and dense literary verbs.
+
+## 2026-11-04: Cruise sailing dates
+
+**What happened:** I proposed the itinerary template with no dates, sending all date questions to the advisor. Nick corrected this: cruises book years in advance, so sailings must be shown through 2028.
+
+**Why it was wrong:** I treated live availability (deferred) and published sailing dates (stable, and what a client plans around) as the same thing.
+
+**Rule for next time:** Before cutting content from a travel page, ask how far ahead clients plan and book. Leave out what changes daily, such as prices and availability, not what they need in order to plan.
+
+**Related:** when a user refers to "this", and no link or file came through, ask for it before designing around a guess.

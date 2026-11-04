@@ -6,7 +6,7 @@ import type {
   CruiseJourney,
 } from '@/lib/cruise-lines'
 import type { CollectionItinerary, CruiseCollection } from '@/lib/cruise-itineraries'
-import { cruiseCollectionPath } from '@/lib/tenant-paths'
+import { cruiseCollectionPath, cruiseItineraryPath } from '@/lib/tenant-paths'
 
 // Meridian (T3) cruise detail sections. Editorial, restrained — the T3 design
 // system. Template isolation: these never import from t2/*.
@@ -110,7 +110,7 @@ function JourneyImage({ src, alt }: { src?: string; alt: string }) {
   )
 }
 
-export function T3CollectionItineraries({ itineraries, base }: { itineraries: CollectionItinerary[]; base: string }) {
+export function T3CollectionItineraries({ itineraries, base, agentId }: { itineraries: CollectionItinerary[]; base: string; agentId: string }) {
   return (
     <section className="t3-section">
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--t3-gap)' }} className="t3-collection-grid">
@@ -123,8 +123,8 @@ export function T3CollectionItineraries({ itineraries, base }: { itineraries: Co
             <h3 className="t3-headline-md" style={{ marginBottom: 14, fontSize: 'clamp(18px, 1.6vw, 22px)' }}>{j.name}</h3>
             <p className="t3-body" style={{ fontSize: 'clamp(13px, 1vw, 14px)', fontWeight: 500, color: 'var(--t3-text)', marginBottom: 14 }}>{j.route}</p>
             <p className="t3-body" style={{ fontSize: 'clamp(13px, 1vw, 14px)', color: 'var(--t3-text-muted)', margin: '0 0 18px' }}>{j.blurb}</p>
-            <Link href={`${base}/find-cruise/${j.line_slug}`} style={{ marginTop: 'auto', fontSize: 13, color: 'var(--t3-text)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
-              View {j.line_name}
+            <Link href={j.has_details && j.slug ? cruiseItineraryPath('t3', agentId, j.line_slug, j.slug) : `${base}/find-cruise/${j.line_slug}`} style={{ marginTop: 'auto', fontSize: 13, color: 'var(--t3-text)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
+              {j.has_details ? 'View full itinerary' : `View ${j.line_name}`}
             </Link>
           </article>
         ))}
@@ -154,7 +154,7 @@ export function T3CruiseCollectionLinks({ collections, agentId }: { collections:
   )
 }
 
-export function T3CruiseJourneys({ journeys }: { journeys: CruiseJourney[] }) {
+export function T3CruiseJourneys({ journeys, agentId, lineSlug }: { journeys: CruiseJourney[]; agentId: string; lineSlug: string }) {
   if (!journeys?.length) return null
   return (
     <section className="t3-section">
@@ -169,6 +169,11 @@ export function T3CruiseJourneys({ journeys }: { journeys: CruiseJourney[] }) {
             <h3 className="t3-headline-md" style={{ marginBottom: 14, fontSize: 'clamp(18px, 1.6vw, 22px)' }}>{j.name}</h3>
             <p className="t3-body" style={{ fontSize: 'clamp(13px, 1vw, 14px)', fontWeight: 500, color: 'var(--t3-text)', marginBottom: 14 }}>{j.route}</p>
             <p className="t3-body" style={{ fontSize: 'clamp(13px, 1vw, 14px)', color: 'var(--t3-text-muted)', margin: 0 }}>{j.blurb}</p>
+            {j.has_details && j.slug && (
+              <Link href={cruiseItineraryPath('t3', agentId, lineSlug, j.slug)} style={{ display: 'inline-block', marginTop: 18, fontSize: 13, color: 'var(--t3-text)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
+                View full itinerary
+              </Link>
+            )}
           </article>
         ))}
       </div>

@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic'
  * itineraries a site has opted out of.
  */
 export default async function AdminCruiseItinerariesPage() {
-  const { lines, collections, itineraries } = await getAdminCruiseCatalog()
+  const { lines, collections, itineraries, departures } = await getAdminCruiseCatalog()
 
   return (
     <>
@@ -20,7 +20,7 @@ export default async function AdminCruiseItinerariesPage() {
         subtitle={`${itineraries.length} itineraries across ${lines.length} cruise lines. Changes appear on every advisor site with cruise pages.`}
       />
       <PageContent>
-        <CruiseItineraryManager lines={lines} collections={collections} itineraries={itineraries} />
+        <CruiseItineraryManager lines={lines} collections={collections} itineraries={itineraries} departures={departures} />
       </PageContent>
     </>
   )

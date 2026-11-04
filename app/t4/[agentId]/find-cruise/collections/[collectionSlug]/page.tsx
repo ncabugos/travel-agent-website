@@ -38,7 +38,7 @@ export default async function T4CruiseCollectionPage({ params }: PageProps) {
         body={collection.intro ?? undefined}
       />
 
-      <T4CollectionItineraries itineraries={itineraries} base={base} />
+      <T4CollectionItineraries itineraries={itineraries} base={base} agentId={agentId} />
 
       <section style={{ padding: '0 48px var(--t4-section-pad)', textAlign: 'center' }}>
         <div style={{ maxWidth: 720, margin: '0 auto' }}>

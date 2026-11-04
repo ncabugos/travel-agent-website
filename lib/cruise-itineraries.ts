@@ -1,5 +1,5 @@
 import { createServiceClient } from '@/lib/supabase/service'
-import type { CruiseJourney } from '@/lib/cruise-lines'
+import type { CruiseIncludedGroup, CruiseJourney, CruiseShip } from '@/lib/cruise-lines'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -26,6 +26,29 @@ export interface CruiseItinerary {
   source_url: string | null
   sort_order: number
   is_active: boolean
+  overview: string | null
+  highlights: string[]
+  region: string | null
+  countries: string | null
+  days_direction: string | null
+  days: CruiseDay[]
+  departures_note: string | null
+}
+
+/** One day of an itinerary. Its position in the list is the day number. */
+export interface CruiseDay {
+  place: string
+  title?: string
+  summary?: string
+  excursions?: string[]
+}
+
+export interface CruiseDeparture {
+  id: string
+  departs_on: string
+  embark: string
+  disembark: string
+  ship: string | null
 }
 
 /** One card on a collection page, which spans cruise lines. */
@@ -121,6 +144,95 @@ export async function getItineraryChecklist(agentId: string) {
 
 // ─── Public reads ─────────────────────────────────────────────────────────────
 
+function hasDays(days: unknown): boolean {
+  return Array.isArray(days) && days.length > 0
+}
+
+/**
+ * One itinerary for its full page, with its future sailings. Null when it has no
+ * day-by-day content yet or this site opted out, so the page returns a 404.
+ */
+export async function getCruiseItinerary(
+  lineId: string,
+  slug: string,
+  agentId?: string,
+): Promise<{ itinerary: CruiseItinerary; departures: CruiseDeparture[] } | null> {
+  try {
+    const sb = createServiceClient()
+    const { data: itinerary, error } = await sb
+      .from('cruise_itineraries')
+      .select('*')
+      .eq('cruise_line_id', lineId)
+      .eq('slug', slug)
+      .eq('is_active', true)
+      .maybeSingle()
+    if (error || !itinerary || !hasDays(itinerary.days)) return null
+
+    const excluded = await getExcludedItineraryIds(agentId)
+    if (excluded.has(itinerary.id)) return null
+
+    const today = new Date().toISOString().slice(0, 10)
+    const { data: departures } = await sb
+      .from('cruise_itinerary_departures')
+      .select('id, departs_on, embark, disembark, ship')
+      .eq('itinerary_id', itinerary.id)
+      .gte('departs_on', today)
+      .order('departs_on', { ascending: true })
+      .order('embark', { ascending: true })
+
+    return { itinerary, departures: departures ?? [] }
+  } catch {
+    return null
+  }
+}
+
+/** Route params for every itinerary that has a full page. */
+export async function getItineraryPageParams(): Promise<{ cruiseSlug: string; itinerarySlug: string }[]> {
+  try {
+    const { data, error } = await createServiceClient()
+      .from('cruise_itineraries')
+      .select('slug, days, cruise_lines!inner(slug, is_active)')
+      .eq('is_active', true)
+      .eq('cruise_lines.is_active', true)
+    if (error || !data) return []
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (data as any[])
+      .filter((row) => hasDays(row.days))
+      .map((row) => ({ cruiseSlug: row.cruise_lines.slug, itinerarySlug: row.slug }))
+  } catch {
+    return []
+  }
+}
+
+/** Sailings by calendar year, in date order. */
+export function groupDeparturesByYear(departures: CruiseDeparture[]) {
+  const years = new Map<string, CruiseDeparture[]>()
+  for (const departure of departures) {
+    const year = departure.departs_on.slice(0, 4)
+    years.set(year, [...(years.get(year) ?? []), departure])
+  }
+  return [...years.entries()].map(([year, rows]) => ({ year, rows }))
+}
+
+export function formatDepartureDate(isoDate: string): string {
+  return new Date(`${isoDate}T00:00:00Z`).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  })
+}
+
+const shipKey = (name: string) => name.toLowerCase().replace(/[^a-z0-9]/g, '')
+
+/** Each ship named in the sailings, with its card from the line's fleet when there is one. */
+export function getSailingShips(fleet: CruiseShip[], departures: CruiseDeparture[]): CruiseShip[] {
+  const names = [...new Set(departures.map((d) => d.ship).filter((s): s is string => Boolean(s)))]
+  return names.map((name) => {
+    const key = shipKey(name)
+    return fleet.find((ship) => shipKey(ship.name).includes(key)) ?? { name }
+  })
+}
+
 /**
  * Active itineraries grouped by cruise line id, minus the site's opt-outs when
  * an agentId is given. Returns null if the catalog can't be read, so the caller
@@ -132,7 +244,7 @@ export async function getJourneysByLine(
   try {
     let query = createServiceClient()
       .from('cruise_itineraries')
-      .select('id, cruise_line_id, name, nights, route, blurb, image_url')
+      .select('id, cruise_line_id, slug, name, nights, route, blurb, image_url, days')
       .eq('is_active', true)
       .order('sort_order', { ascending: true })
 
@@ -155,6 +267,8 @@ export async function getJourneysByLine(
         route: row.route,
         blurb: row.blurb ?? '',
         image_url: row.image_url ?? undefined,
+        slug: row.slug,
+        has_details: hasDays(row.days),
       })
       byLine.set(row.cruise_line_id, journeys)
     }
@@ -204,7 +318,7 @@ export async function getCruiseCollection(
     const [rows, excluded] = await Promise.all([
       sb
         .from('cruise_itineraries')
-        .select('id, name, nights, route, blurb, image_url, sort_order, cruise_lines!inner(name, slug, sort_order, is_active)')
+        .select('id, slug, name, nights, route, blurb, image_url, days, sort_order, cruise_lines!inner(name, slug, sort_order, is_active)')
         .eq('collection_id', collection.id)
         .eq('is_active', true)
         .eq('cruise_lines.is_active', true),
@@ -223,6 +337,8 @@ export async function getCruiseCollection(
         route: row.route,
         blurb: row.blurb ?? '',
         image_url: row.image_url ?? undefined,
+        slug: row.slug,
+        has_details: hasDays(row.days),
         line_name: row.cruise_lines.name,
         line_slug: row.cruise_lines.slug,
       }))
@@ -235,6 +351,8 @@ export async function getCruiseCollection(
 
 // ─── Admin ────────────────────────────────────────────────────────────────────
 
+export type AdminDeparture = Omit<CruiseDeparture, 'id'> & { itinerary_id: string }
+
 export function slugify(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
 }
@@ -242,14 +360,16 @@ export function slugify(name: string): string {
 /** The whole catalog, inactive rows included. Admin pages only. */
 export async function getAdminCruiseCatalog() {
   const sb = createServiceClient()
-  const [lines, collections, itineraries] = await Promise.all([
-    sb.from('cruise_lines').select('id, name, slug').eq('is_active', true).order('sort_order', { ascending: true }),
+  const [lines, collections, itineraries, departures] = await Promise.all([
+    sb.from('cruise_lines').select('id, name, slug, included').eq('is_active', true).order('sort_order', { ascending: true }),
     sb.from('cruise_collections').select('*').order('sort_order', { ascending: true }),
     sb.from('cruise_itineraries').select('*').order('sort_order', { ascending: true }),
+    sb.from('cruise_itinerary_departures').select('itinerary_id, departs_on, embark, disembark, ship').order('departs_on', { ascending: true }),
   ])
   return {
-    lines: (lines.data ?? []) as { id: string; name: string; slug: string }[],
+    lines: (lines.data ?? []) as { id: string; name: string; slug: string; included: CruiseIncludedGroup[] }[],
     collections: (collections.data ?? []) as CruiseCollection[],
     itineraries: (itineraries.data ?? []) as CruiseItinerary[],
+    departures: (departures.data ?? []) as AdminDeparture[],
   }
 }
