@@ -7,7 +7,7 @@ import type {
   CruiseJourney,
 } from '@/lib/cruise-lines'
 import type { CollectionItinerary, CruiseCollection } from '@/lib/cruise-itineraries'
-import { cruiseCollectionPath } from '@/lib/tenant-paths'
+import { cruiseCollectionPath, cruiseItineraryPath } from '@/lib/tenant-paths'
 
 // ── Shared section header ──────────────────────────────────────────────────────
 function SectionHeader({ eyebrow, heading, body }: { eyebrow: string; heading: string; body?: string }) {
@@ -127,7 +127,7 @@ function JourneyImage({ src, alt }: { src?: string; alt: string }) {
 }
 
 // ── Collection cards (span cruise lines) ───────────────────────────────────────
-export function T2CollectionItineraries({ itineraries, base }: { itineraries: CollectionItinerary[]; base: string }) {
+export function T2CollectionItineraries({ itineraries, base, agentId }: { itineraries: CollectionItinerary[]; base: string; agentId: string }) {
   return (
     <section className="t2-section" style={{ background: 'var(--t2-bg-alt)', maxWidth: 'none' }}>
       <div style={{ maxWidth: 1180, margin: '0 auto', padding: '0 48px' }} className="t2-cr-collection-wrap">
@@ -145,8 +145,8 @@ export function T2CollectionItineraries({ itineraries, base }: { itineraries: Co
                 <h3 style={{ fontFamily: 'var(--t2-font-serif)', fontSize: 22, fontWeight: 500, marginBottom: 14, lineHeight: 1.25 }}>{j.name}</h3>
                 <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 13, lineHeight: 1.7, color: 'var(--t2-primary)', opacity: 0.85, marginBottom: 16, fontWeight: 500 }}>{j.route}</p>
                 <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 14, lineHeight: 1.75, color: 'var(--t2-text-muted)', margin: '0 0 22px' }}>{j.blurb}</p>
-                <Link href={`${base}/find-cruise/${j.line_slug}`} style={{ marginTop: 'auto', fontFamily: 'var(--t2-font-sans)', fontSize: 13, color: 'var(--t2-primary)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
-                  View {j.line_name}
+                <Link href={j.has_details && j.slug ? cruiseItineraryPath('t2', agentId, j.line_slug, j.slug) : `${base}/find-cruise/${j.line_slug}`} style={{ marginTop: 'auto', fontFamily: 'var(--t2-font-sans)', fontSize: 13, color: 'var(--t2-primary)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
+                  {j.has_details ? 'View full itinerary' : `View ${j.line_name}`}
                 </Link>
               </div>
             </article>
@@ -180,7 +180,7 @@ export function T2CruiseCollectionLinks({ collections, agentId }: { collections:
 }
 
 // ── Sample journeys ────────────────────────────────────────────────────────────
-export function T2CruiseJourneys({ journeys }: { journeys: CruiseJourney[] }) {
+export function T2CruiseJourneys({ journeys, agentId, lineSlug }: { journeys: CruiseJourney[]; agentId: string; lineSlug: string }) {
   if (!journeys?.length) return null
   return (
     <section className="t2-section" style={{ background: 'var(--t2-bg-alt)', maxWidth: 'none' }}>
@@ -200,6 +200,11 @@ export function T2CruiseJourneys({ journeys }: { journeys: CruiseJourney[] }) {
                 <h3 style={{ fontFamily: 'var(--t2-font-serif)', fontSize: 22, fontWeight: 500, marginBottom: 14, lineHeight: 1.25 }}>{j.name}</h3>
                 <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 13, lineHeight: 1.7, color: 'var(--t2-primary)', opacity: 0.85, marginBottom: 16, fontWeight: 500 }}>{j.route}</p>
                 <p style={{ fontFamily: 'var(--t2-font-sans)', fontSize: 14, lineHeight: 1.75, color: 'var(--t2-text-muted)', margin: 0 }}>{j.blurb}</p>
+                {j.has_details && j.slug && (
+                  <Link href={cruiseItineraryPath('t2', agentId, lineSlug, j.slug)} style={{ display: 'inline-block', marginTop: 18, fontFamily: 'var(--t2-font-sans)', fontSize: 13, color: 'var(--t2-primary)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
+                    View full itinerary
+                  </Link>
+                )}
               </div>
             </article>
           ))}

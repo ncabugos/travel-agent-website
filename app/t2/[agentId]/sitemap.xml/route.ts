@@ -35,7 +35,7 @@ export async function GET(_req: Request, { params }: RouteContext) {
     getAgentProfile(agentId),
     getBlogPosts(agentId),
     getAgentHotelPrograms(agentId),
-    getCruiseLines(),
+    getCruiseLines(undefined, agentId),
     getCruiseCollections(agentId),
     getPrivateJourneys('safari'),
     getPrivateJourneys('jet'),
@@ -89,6 +89,14 @@ export async function GET(_req: Request, { params }: RouteContext) {
       changefreq: 'monthly',
       priority: 0.6,
     })
+    for (const journey of cruise.sample_journeys ?? []) {
+      if (!journey.has_details || !journey.slug) continue
+      urls.push({
+        loc: canonicalUrl(agent, `find-cruise/${cruise.slug}/itineraries/${journey.slug}`),
+        changefreq: 'monthly',
+        priority: 0.6,
+      })
+    }
   }
   for (const collection of collections) {
     urls.push({

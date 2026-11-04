@@ -38,7 +38,7 @@ export default async function T3CruiseCollectionPage({ params }: PageProps) {
         body={collection.intro ?? undefined}
       />
 
-      <T3CollectionItineraries itineraries={itineraries} base={base} />
+      <T3CollectionItineraries itineraries={itineraries} base={base} agentId={agentId} />
 
       <section className="t3-section" style={{ textAlign: 'center' }}>
         <h2 className="t3-headline-xl" style={{ marginBottom: 24 }}>Plan a voyage with us.</h2>

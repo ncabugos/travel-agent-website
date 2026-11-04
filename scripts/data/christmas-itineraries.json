@@ -1,0 +1,2768 @@
+{
+ "included": {
+  "amawaterways": [
+   {
+    "title": "Stay",
+    "items": [
+     "Choice of suites, staterooms and connecting rooms",
+     "Daily housekeeping and turn-down service",
+     "Bathrobe, slippers and bathroom amenities",
+     "Refillable water bottle",
+     "Onboard WiFi"
+    ]
+   },
+   {
+    "title": "Dining",
+    "items": [
+     "All onboard meals",
+     "The Chef's Table specialty restaurant",
+     "Wine, beer and soft drinks with meals",
+     "Specialty coffee and tea",
+     "Daily Sip & Sail cocktail hour"
+    ]
+   },
+   {
+    "title": "Excursions",
+    "items": [
+     "Up to six expert-led experiences each day",
+     "Gentle, regular and active options for most activities",
+     "Onshore experiences"
+    ]
+   },
+   {
+    "title": "Also included",
+    "items": [
+     "Cruise Manager for the whole route",
+     "Regional music and performances",
+     "Experiences for solo travelers",
+     "Wellness Host and daily classes on most sailings",
+     "Port charges"
+    ]
+   }
+  ],
+  "viking": [
+   {
+    "title": "Stay",
+    "items": [
+     "River-view stateroom",
+     "Queen-size bed with a twin-bed option",
+     "Private bathroom with shower and heated floor",
+     "Robes and slippers on request",
+     "Flat-screen TV with movies on demand"
+    ]
+   },
+   {
+    "title": "Dining",
+    "items": [
+     "All onboard meals",
+     "Beer, wine and soft drinks with lunch and dinner",
+     "Specialty coffees, teas and bottled water, 24 hours a day",
+     "Bottled water in the stateroom, replenished daily"
+    ]
+   },
+   {
+    "title": "Excursions",
+    "items": [
+     "One shore excursion in every port of call",
+     "Visits to UNESCO sites",
+     "Destination Performances"
+    ]
+   },
+   {
+    "title": "Also included",
+    "items": [
+     "Free Wi-Fi",
+     "Port taxes and fees",
+     "Enrichment lectures"
+    ]
+   }
+  ],
+  "uniworld": [
+   {
+    "title": "Stay",
+    "items": [
+     "Riverview stateroom",
+     "Savoir beds with cotton sateen sheets and duvets",
+     "Menu of pillow options",
+     "Free Wi-Fi"
+    ]
+   },
+   {
+    "title": "Dining",
+    "items": [
+     "All meals onboard",
+     "Unlimited onboard drinks, including wine, beer and spirits",
+     "Captain's Welcome and Farewell Receptions",
+     "Welcome and Farewell Gala Dinners"
+    ]
+   },
+   {
+    "title": "Excursions",
+    "items": [
+     "Excursions with English-speaking local experts",
+     "Guided Taste of Christmas program",
+     "Quietvox audio headsets on excursions",
+     "Brompton bicycles and Nordic Walking sticks"
+    ]
+   },
+   {
+    "title": "Also included",
+    "items": [
+     "Uniworld Cruise Manager",
+     "Gratuities for onboard personnel",
+     "Onboard local entertainment"
+    ]
+   }
+  ]
+ },
+ "itineraries": [
+  {
+   "line_slug": "amawaterways",
+   "slug": "icons-of-the-danube-christmas-markets",
+   "name": "Icons of the Danube: Christmas Markets",
+   "nights": "7 nights",
+   "route": "Budapest · Bratislava · Vienna · Dürnstein · Linz · Passau · Vilshofen",
+   "blurb": "A Christmas markets cruise on AmaMagna from Budapest to Vilshofen, with a choice of tours at each stop.",
+   "overview": "This AmaMagna sailing runs along the Danube from Budapest to Vilshofen, stopping in Bratislava, Vienna, the Wachau Valley, Linz and Passau. Most days offer a choice of guided tours, with Christmas market visits in Budapest, Bratislava, Vienna, Linz, Salzburg and Passau.",
+   "highlights": [
+    "Schönbrunn Palace and Rathaus Christmas markets in Vienna",
+    "Melk Abbey and a wine tasting in the Wachau Valley",
+    "Full-day choice of Salzburg or Český Krumlov"
+   ],
+   "region": "Danube",
+   "countries": "Hungary, Slovakia, Austria, Germany",
+   "days_direction": "Budapest to Vilshofen",
+   "days": [
+    {
+     "place": "Budapest, Hungary",
+     "title": "Budapest: boarding",
+     "summary": "Board AmaMagna in Budapest. A welcome dinner is held in the evening.",
+     "excursions": []
+    },
+    {
+     "place": "Budapest, Hungary",
+     "title": "Budapest: Christmas market and Danube Bend",
+     "summary": "A city tour covers Buda, Pest, the Great Market Hall and a Christmas market, or you can hike Castle Hill. The ship later cruises the Danube Bend.",
+     "excursions": [
+      "Buda city tour and Christmas Markets"
+     ]
+    },
+    {
+     "place": "Bratislava, Slovakia",
+     "title": "Bratislava: Old Town and Christmas market",
+     "summary": "Old Town walking tour with a Christmas market visit. Other choices are a local food tour or a hike up to Bratislava Castle.",
+     "excursions": [
+      "“Coronation City of Kings” Walking Tour",
+      "Taste of Slovakia",
+      "Bratislava Castle Fitness Hike"
+     ]
+    },
+    {
+     "place": "Vienna, Austria",
+     "title": "Vienna: Christmas markets and Schönbrunn",
+     "summary": "Tour the former Imperial Palace and the Opera House with the Maria Theresa Platz market, or bike along the Danube. The Schönbrunn Palace market follows in the afternoon, and the Rathaus market at night.",
+     "excursions": [
+      "“Imperial Vienna” tour and Christmas Markets",
+      "Vienna City Tour by Bike",
+      "Schönbrunn Christmas Markets",
+      "Rathaus Christmas Markets by Night"
+     ]
+    },
+    {
+     "place": "Dürnstein, Austria",
+     "title": "Wachau Valley: Dürnstein and Melk",
+     "summary": "From Krems, see Dürnstein on foot or by bike, or try its apricot specialties. Afternoon choices are Melk Abbey, a bike ride to Spitz or a hike, followed by an evening wine tasting.",
+     "excursions": [
+      "Dürnstein Walking Tour",
+      "Melk Abbey Visit",
+      "Exclusive Wine Experience",
+      "Dürnstein Apricots and Sweets Tour",
+      "Dürnstein Bike Tour",
+      "Spitz Bike Ride",
+      "Spitz Hike"
+     ]
+    },
+    {
+     "place": "Linz, Austria",
+     "title": "Linz: Salzburg or Český Krumlov",
+     "summary": "Spend the full day in Salzburg, with its Old Town, cathedral and Christmas markets, or in Český Krumlov with its castle. Back in Linz, take a short Old Town walking tour or a bike ride.",
+     "excursions": [
+      "Full Day Salzburg Excursion and Christmas Market",
+      "Full Day Český Krumlov Excursion",
+      "UNESCO city walking tour and Christmas Market",
+      "“Cultural Mile” Bike Tour"
+     ]
+    },
+    {
+     "place": "Passau, Germany",
+     "title": "Passau: Christmas markets",
+     "summary": "Walking tour of Passau with its Christmas markets, or one of two hikes.",
+     "excursions": [
+      "“City of Three Rivers” Walking Tour with Christmas Markets",
+      "Passau Castle Hike to Paulinerkloister Mariahilf",
+      "Passau Fitness Hike"
+     ]
+    },
+    {
+     "place": "Vilshofen, Germany",
+     "title": "Vilshofen: disembark",
+     "summary": "Leave the ship in Vilshofen.",
+     "excursions": []
+    }
+   ],
+   "departures": [
+    {
+     "departs_on": "2026-11-29",
+     "embark": "Budapest",
+     "disembark": "Vilshofen",
+     "ship": "AmaMagna"
+    },
+    {
+     "departs_on": "2026-12-06",
+     "embark": "Vilshofen",
+     "disembark": "Budapest",
+     "ship": "AmaMagna"
+    },
+    {
+     "departs_on": "2026-12-13",
+     "embark": "Budapest",
+     "disembark": "Vilshofen",
+     "ship": "AmaMagna"
+    },
+    {
+     "departs_on": "2027-11-28",
+     "embark": "Vilshofen",
+     "disembark": "Budapest",
+     "ship": "AmaRudi"
+    },
+    {
+     "departs_on": "2027-11-28",
+     "embark": "Budapest",
+     "disembark": "Vilshofen",
+     "ship": "AmaMagna"
+    },
+    {
+     "departs_on": "2027-12-05",
+     "embark": "Vilshofen",
+     "disembark": "Budapest",
+     "ship": "AmaMagna"
+    },
+    {
+     "departs_on": "2027-12-12",
+     "embark": "Vilshofen",
+     "disembark": "Budapest",
+     "ship": "AmaRudi"
+    },
+    {
+     "departs_on": "2027-12-12",
+     "embark": "Budapest",
+     "disembark": "Vilshofen",
+     "ship": "AmaMagna"
+    },
+    {
+     "departs_on": "2028-11-26",
+     "embark": "Budapest",
+     "disembark": "Vilshofen",
+     "ship": "AmaRudi"
+    },
+    {
+     "departs_on": "2028-11-26",
+     "embark": "Vilshofen",
+     "disembark": "Budapest",
+     "ship": "AmaMagna"
+    },
+    {
+     "departs_on": "2028-12-10",
+     "embark": "Vilshofen",
+     "disembark": "Budapest",
+     "ship": "AmaMagna"
+    },
+    {
+     "departs_on": "2028-12-10",
+     "embark": "Budapest",
+     "disembark": "Vilshofen",
+     "ship": "AmaRudi"
+    },
+    {
+     "departs_on": "2028-12-17",
+     "embark": "Budapest",
+     "disembark": "Vilshofen",
+     "ship": "AmaMagna"
+    },
+    {
+     "departs_on": "2028-12-17",
+     "embark": "Vilshofen",
+     "disembark": "Budapest",
+     "ship": "AmaRudi"
+    }
+   ],
+   "departures_note": null
+  },
+  {
+   "line_slug": "amawaterways",
+   "slug": "christmas-markets-on-the-danube",
+   "name": "Christmas Markets on the Danube",
+   "nights": "7 nights",
+   "route": "Budapest · Bratislava · Vienna · Weissenkirchen · Linz · Passau · Vilshofen",
+   "blurb": "A Danube Christmas markets cruise from Budapest to Vilshofen, with stops in Bratislava, Vienna, the Wachau Valley, Linz and Passau.",
+   "overview": "This sailing runs along the Danube from Budapest to Vilshofen through Hungary, Slovakia, Austria and Germany. Christmas market visits are offered in Budapest, Bratislava, Vienna, Linz, Salzburg, Český Krumlov and Passau, with city tours, tastings and bike rides as other choices.",
+   "highlights": [
+    "Christmas markets at Schönbrunn and Rathaus Square in Vienna",
+    "Dürnstein and Melk Abbey in the Wachau Valley",
+    "Full-day choice of Salzburg or Český Krumlov"
+   ],
+   "region": "Danube",
+   "countries": "Hungary, Slovakia, Austria, Germany",
+   "days_direction": "Budapest to Vilshofen",
+   "days": [
+    {
+     "place": "Budapest, Hungary",
+     "title": "Budapest: boarding",
+     "summary": "Board the ship on the Danube in Budapest.",
+     "excursions": []
+    },
+    {
+     "place": "Budapest, Hungary",
+     "title": "Budapest: Buda and Pest",
+     "summary": "Start in Buda's Castle District with Fisherman's Bastion and Matthias Church, then a Christmas market or a Castle Hill hike. The afternoon tour of Pest covers Parliament, Heroes' Square and the Shoes on the Danube Bank memorial.",
+     "excursions": [
+      "Buda City Tour and Christmas Markets",
+      "Castle hike",
+      "Pest city tour"
+     ]
+    },
+    {
+     "place": "Bratislava, Slovakia",
+     "title": "Bratislava: Old Town and Christmas market",
+     "summary": "Choose a walking tour with the Christmas market, a local food tour, or a hike up to Bratislava Castle.",
+     "excursions": [
+      "Coronation City Walking Tour with Christmas Market Visit",
+      "Tastes of Slovakia",
+      "Bratislava Castle Hike"
+     ]
+    },
+    {
+     "place": "Vienna, Austria",
+     "title": "Vienna: Christmas markets and Schönbrunn",
+     "summary": "Tour the former Imperial Palace and the Opera House, ending in the city center, or take a guided bike ride. Christmas markets at Schönbrunn and Rathaus Square follow.",
+     "excursions": [
+      "“Imperial Vienna” Tour with Maria Theresa Platz Christmas Market",
+      "Vienna Bike Tour",
+      "Schönbrunn Christmas Markets",
+      "Rathaus Christmas Market by Night"
+     ]
+    },
+    {
+     "place": "Weissenkirchen, Austria",
+     "title": "Weissenkirchen: Dürnstein and Melk",
+     "summary": "Walking tour of Dürnstein with a wine tasting, or apricot tastings in the village. Later, bike to Melk or sail the Wachau Valley to visit the Benedictine Abbey.",
+     "excursions": [
+      "Dürnstein Walking Tour and Wine Tasting",
+      "Dürnstein Apricots and Sweets Tastings",
+      "Weissenkirchen to Melk Bike Tour",
+      "Benedictine Abbey Visit"
+     ]
+    },
+    {
+     "place": "Linz, Austria",
+     "title": "Linz: Salzburg, Český Krumlov or Old Town",
+     "summary": "Full-day trips go to the Christmas markets of Salzburg or Český Krumlov. In Linz, take an Old Town walk with the Mozart House and market, or a bike ride, with a distillery tour in the afternoon.",
+     "excursions": [
+      "Full Day Salzburg Excursion with Christmas Markets",
+      "Full Day Český Krumlov Excursion with Christmas Markets",
+      "“UNESCO City of Media Arts” Walking Tour and Christmas Market",
+      "“Cultural Mile” Bike Tour",
+      "Distillery Tour"
+     ]
+    },
+    {
+     "place": "Passau, Germany",
+     "title": "Passau and Vilshofen",
+     "summary": "Walking tour of Passau with the St. Stephen's Square Christmas market, or a fitness hike. The ship then sails to Vilshofen.",
+     "excursions": [
+      "“City of Three Rivers” Walking Tour and Christmas Markets",
+      "Passau Fitness Hike"
+     ]
+    },
+    {
+     "place": "Vilshofen, Germany",
+     "title": "Vilshofen: disembark",
+     "summary": "Leave the ship in Vilshofen.",
+     "excursions": []
+    }
+   ],
+   "departures": [
+    {
+     "departs_on": "2026-11-23",
+     "embark": "Budapest",
+     "disembark": "Vilshofen",
+     "ship": "AmaBella"
+    },
+    {
+     "departs_on": "2026-11-29",
+     "embark": "Vilshofen",
+     "disembark": "Budapest",
+     "ship": "AmaSofia"
+    },
+    {
+     "departs_on": "2026-11-30",
+     "embark": "Vilshofen",
+     "disembark": "Budapest",
+     "ship": "AmaBella"
+    },
+    {
+     "departs_on": "2026-12-06",
+     "embark": "Budapest",
+     "disembark": "Vilshofen",
+     "ship": "AmaSofia"
+    },
+    {
+     "departs_on": "2026-12-13",
+     "embark": "Vilshofen",
+     "disembark": "Budapest",
+     "ship": "AmaSofia"
+    }
+   ],
+   "departures_note": null
+  },
+  {
+   "line_slug": "amawaterways",
+   "slug": "christmas-markets-on-the-rhine",
+   "name": "Christmas Markets on the Rhine",
+   "nights": "7 nights",
+   "route": "Amsterdam · Cologne · Rüdesheim · Ludwigshafen · Strasbourg · Breisach · Basel",
+   "blurb": "A Rhine Christmas markets cruise from Amsterdam to Basel, with stops in Germany and France.",
+   "overview": "This sailing runs along the Rhine from Amsterdam to Basel, through the Netherlands, Germany, France and Switzerland. Christmas market tours are offered in Cologne, Düsseldorf, Rüdesheim, Heidelberg, Speyer, Strasbourg and Colmar.",
+   "highlights": [
+    "Cologne Christmas market beside the Gothic cathedral",
+    "Scenic cruising through the Rhine Gorge",
+    "Choice of Heidelberg or Speyer"
+   ],
+   "region": "Rhine",
+   "countries": "Netherlands, Germany, France, Switzerland",
+   "days_direction": "Amsterdam to Basel",
+   "days": [
+    {
+     "place": "Amsterdam, Netherlands",
+     "title": "Amsterdam: boarding",
+     "summary": "Arrive in Amsterdam and board the ship.",
+     "excursions": []
+    },
+    {
+     "place": "Amsterdam, Netherlands",
+     "title": "Amsterdam: canal cruise",
+     "summary": "Canal cruise in Amsterdam, followed by scenic cruising out of the city.",
+     "excursions": [
+      "Canal Cruise Tour"
+     ]
+    },
+    {
+     "place": "Cologne, Germany",
+     "title": "Cologne and Düsseldorf: Christmas markets",
+     "summary": "Choose a walking tour with Christmas markets in Cologne or Düsseldorf, or a guided bike tour in Düsseldorf. Cologne's market sits beside its Gothic cathedral.",
+     "excursions": [
+      "Cologne Walking Tour and Christmas Markets",
+      "Düsseldorf Walking Tour and Christmas Markets",
+      "Düsseldorf Guided Bike Tour"
+     ]
+    },
+    {
+     "place": "Rüdesheim, Germany",
+     "title": "Rhine Gorge and Rüdesheim",
+     "summary": "Scenic cruising past the castles and vineyards of the Rhine Gorge. Rüdesheim options include a wine tasting, a gondola ride, a vineyard hike and the Christmas market.",
+     "excursions": [
+      "Wine Tasting and Christmas Markets",
+      "Gondola Ride and Christmas Market",
+      "Vineyards Hike",
+      "Siegfried’s Mechanical Instrument Cabinet",
+      "Rüdesheimer Coffee"
+     ]
+    },
+    {
+     "place": "Ludwigshafen, Germany",
+     "title": "Ludwigshafen: Heidelberg or Speyer",
+     "summary": "Visit Heidelberg, with its hilltop castle and Christmas market, or Speyer, with its cathedral and town square. A Philosopher's Path hike is also offered in Heidelberg.",
+     "excursions": [
+      "Heidelberg Tour and Christmas Markets",
+      "Medieval Speyer and Christmas Markets",
+      "Heidelberg Philosopher’s Path Hike and Christmas Markets"
+     ]
+    },
+    {
+     "place": "Strasbourg, France",
+     "title": "Strasbourg: city tour and Christmas markets",
+     "summary": "City tour or bike tour of Strasbourg, or a walking tour and Christmas markets in Baden-Baden.",
+     "excursions": [
+      "Strasbourg City Tour and Christmas Markets",
+      "Strasbourg Bike Tour",
+      "Baden-Baden Walking Tour and Christmas Markets"
+     ]
+    },
+    {
+     "place": "Breisach, Germany",
+     "title": "Breisach: Colmar and Freiburg",
+     "summary": "Visit Colmar and its Christmas market, or the medieval town of Freiburg and its market.",
+     "excursions": [
+      "Colmar Excursion and Christmas Markets"
+     ]
+    },
+    {
+     "place": "Basel, Switzerland",
+     "title": "Basel: disembark",
+     "summary": "Leave the ship in Basel.",
+     "excursions": []
+    }
+   ],
+   "departures": [
+    {
+     "departs_on": "2026-11-25",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaCerto"
+    },
+    {
+     "departs_on": "2026-11-25",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaPrima"
+    },
+    {
+     "departs_on": "2026-11-26",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaSiena"
+    },
+    {
+     "departs_on": "2026-11-26",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaLucia"
+    },
+    {
+     "departs_on": "2026-11-28",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaViola"
+    },
+    {
+     "departs_on": "2026-11-28",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaStella"
+    },
+    {
+     "departs_on": "2026-12-02",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaCerto"
+    },
+    {
+     "departs_on": "2026-12-02",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaPrima"
+    },
+    {
+     "departs_on": "2026-12-03",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaSiena"
+    },
+    {
+     "departs_on": "2026-12-03",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaLucia"
+    },
+    {
+     "departs_on": "2026-12-05",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaStella"
+    },
+    {
+     "departs_on": "2026-12-05",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaViola"
+    },
+    {
+     "departs_on": "2026-12-09",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaCerto"
+    },
+    {
+     "departs_on": "2026-12-10",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaSiena"
+    },
+    {
+     "departs_on": "2026-12-10",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaLucia"
+    },
+    {
+     "departs_on": "2026-12-12",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaViola"
+    },
+    {
+     "departs_on": "2026-12-16",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaCerto"
+    },
+    {
+     "departs_on": "2026-12-16",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaPrima"
+    },
+    {
+     "departs_on": "2026-12-17",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaSiena"
+    },
+    {
+     "departs_on": "2026-12-24",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaLucia"
+    },
+    {
+     "departs_on": "2027-11-24",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaPrima"
+    },
+    {
+     "departs_on": "2027-11-25",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaLucia"
+    },
+    {
+     "departs_on": "2027-11-25",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaSiena"
+    },
+    {
+     "departs_on": "2027-11-27",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaSofia"
+    },
+    {
+     "departs_on": "2027-11-28",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaViola"
+    },
+    {
+     "departs_on": "2027-11-28",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaStella"
+    },
+    {
+     "departs_on": "2027-12-01",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaPrima"
+    },
+    {
+     "departs_on": "2027-12-02",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaLucia"
+    },
+    {
+     "departs_on": "2027-12-04",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaSofia"
+    },
+    {
+     "departs_on": "2027-12-04",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaFiora"
+    },
+    {
+     "departs_on": "2027-12-05",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaViola"
+    },
+    {
+     "departs_on": "2027-12-05",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaStella"
+    },
+    {
+     "departs_on": "2027-12-08",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaPrima"
+    },
+    {
+     "departs_on": "2027-12-11",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaSofia"
+    },
+    {
+     "departs_on": "2027-12-11",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaFiora"
+    },
+    {
+     "departs_on": "2027-12-12",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaStella"
+    },
+    {
+     "departs_on": "2027-12-12",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaViola"
+    },
+    {
+     "departs_on": "2027-12-15",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaPrima"
+    },
+    {
+     "departs_on": "2027-12-16",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaLucia"
+    },
+    {
+     "departs_on": "2027-12-16",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaSiena"
+    },
+    {
+     "departs_on": "2027-12-18",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaSofia"
+    },
+    {
+     "departs_on": "2027-12-18",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaFiora"
+    },
+    {
+     "departs_on": "2027-12-19",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaViola"
+    },
+    {
+     "departs_on": "2027-12-23",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaLucia"
+    },
+    {
+     "departs_on": "2028-11-23",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaSiena"
+    },
+    {
+     "departs_on": "2028-11-23",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaLucia"
+    },
+    {
+     "departs_on": "2028-11-25",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaSofia"
+    },
+    {
+     "departs_on": "2028-11-26",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaStella"
+    },
+    {
+     "departs_on": "2028-11-26",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaViola"
+    },
+    {
+     "departs_on": "2028-11-29",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaMaria"
+    },
+    {
+     "departs_on": "2028-11-30",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaLucia"
+    },
+    {
+     "departs_on": "2028-11-30",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaSiena"
+    },
+    {
+     "departs_on": "2028-12-02",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaFiora"
+    },
+    {
+     "departs_on": "2028-12-03",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaStella"
+    },
+    {
+     "departs_on": "2028-12-03",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaViola"
+    },
+    {
+     "departs_on": "2028-12-06",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaMaria"
+    },
+    {
+     "departs_on": "2028-12-07",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaLucia"
+    },
+    {
+     "departs_on": "2028-12-09",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaFiora"
+    },
+    {
+     "departs_on": "2028-12-09",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaSofia"
+    },
+    {
+     "departs_on": "2028-12-10",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaStella"
+    },
+    {
+     "departs_on": "2028-12-10",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaViola"
+    },
+    {
+     "departs_on": "2028-12-13",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaMaria"
+    },
+    {
+     "departs_on": "2028-12-14",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaSiena"
+    },
+    {
+     "departs_on": "2028-12-14",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaLucia"
+    },
+    {
+     "departs_on": "2028-12-16",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaFiora"
+    },
+    {
+     "departs_on": "2028-12-16",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaSofia"
+    },
+    {
+     "departs_on": "2028-12-17",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaViola"
+    },
+    {
+     "departs_on": "2028-12-17",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": "AmaStella"
+    },
+    {
+     "departs_on": "2028-12-21",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": "AmaLucia"
+    }
+   ],
+   "departures_note": null
+  },
+  {
+   "line_slug": "amawaterways",
+   "slug": "iconic-christmas-markets",
+   "name": "Iconic Christmas Markets",
+   "nights": "7 nights",
+   "route": "Nuremberg · Regensburg · Passau · Melk · Vienna · Budapest",
+   "blurb": "A Christmas markets cruise from Nuremberg to Budapest, by way of Regensburg, Passau, Melk and Vienna.",
+   "overview": "This sailing runs from Nuremberg to Budapest by the Main-Danube Canal and the Danube, through Germany, Austria and Hungary. Christmas market visits are offered in Nuremberg, Regensburg, Passau, Salzburg, Vienna and Budapest.",
+   "highlights": [
+    "Nuremberg's Christkindlesmarkt",
+    "Melk Abbey museum and library",
+    "Schönbrunn Palace Christmas market in Vienna"
+   ],
+   "region": "Danube",
+   "countries": "Germany, Austria, Hungary",
+   "days_direction": "Nuremberg to Budapest",
+   "days": [
+    {
+     "place": "Nuremberg, Germany",
+     "title": "Nuremberg: boarding",
+     "summary": "Arrive in Nuremberg and board the ship.",
+     "excursions": []
+    },
+    {
+     "place": "Nuremberg, Germany",
+     "title": "Nuremberg: Christkindlesmarkt",
+     "summary": "A city tour covers World War II sites, the Imperial Castle and the city ramparts, or spend the morning at the Christkindlesmarkt. A food tour samples sausages, beer and lebkuchen, and the ship later uses the Main-Danube Canal to cross the Continental Divide.",
+     "excursions": [
+      "Nuremberg Christmas Market Visit",
+      "City Tour and Christmas Markets",
+      "Tastes of Franconia"
+     ]
+    },
+    {
+     "place": "Regensburg, Germany",
+     "title": "Regensburg: Old Town and Christmas markets",
+     "summary": "Walking tour with the Porta Praetoria and Old Town Hall, plus the Old Town Christmas market. Other options are a Bavarian food tour, a bike ride to Walhalla and the Thurn and Taxis Christmas market.",
+     "excursions": [
+      "UNESCO City Tour and Christmas Market",
+      "Tastes of Bavaria",
+      "Walhalla Bike Tour",
+      "Thurn and Taxis Christmas Markets"
+     ]
+    },
+    {
+     "place": "Passau, Germany",
+     "title": "Passau: Christmas market or Salzburg",
+     "summary": "Walking tour of Passau with its Christmas market, a fitness hike, or a full-day trip to Salzburg's Old Town, cathedral and markets.",
+     "excursions": [
+      "Full Day Salzburg Excursion with Christmas Markets",
+      "“City of Three Rivers” Walking Tour and Christmas Market",
+      "Passau Fitness Hike"
+     ]
+    },
+    {
+     "place": "Melk, Austria",
+     "title": "Melk: abbey",
+     "summary": "Visit Melk Abbey with its museum and library, or take a bike ride around the town. A Rathaus Christmas market outing by night is also listed for this day.",
+     "excursions": [
+      "Melk Abbey Visit",
+      "Melk Wellness Bike Ride",
+      "Rathaus Christmas Market by Night"
+     ]
+    },
+    {
+     "place": "Vienna, Austria",
+     "title": "Vienna: Christmas markets and Schönbrunn",
+     "summary": "Tour the former Imperial Palace and the Opera House with Christmas markets, or take a Danube bike ride followed by the Schönbrunn Palace market.",
+     "excursions": [
+      "“Imperial Vienna” Tour with Christmas Markets",
+      "Vienna Wellness Bike Ride",
+      "Schönbrunn Christmas Markets"
+     ]
+    },
+    {
+     "place": "Budapest, Hungary",
+     "title": "Budapest: Buda and Pest",
+     "summary": "Castle District tour with Fisherman's Bastion, Matthias Church and a Christmas market, or a hill hike. The afternoon tour of Pest covers Parliament, Heroes' Square and the Shoes on the Danube Bank memorial.",
+     "excursions": [
+      "Buda City Tour and Christmas Markets",
+      "City Tour Late Starter",
+      "Gellert Hill Hike"
+     ]
+    },
+    {
+     "place": "Budapest, Hungary",
+     "title": "Budapest: disembark",
+     "summary": "Leave the ship in Budapest.",
+     "excursions": []
+    }
+   ],
+   "departures": [
+    {
+     "departs_on": "2026-11-25",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaReina"
+    },
+    {
+     "departs_on": "2026-11-25",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaSonata"
+    },
+    {
+     "departs_on": "2026-11-28",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaLea"
+    },
+    {
+     "departs_on": "2026-11-28",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaMora"
+    },
+    {
+     "departs_on": "2026-12-02",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaSonata"
+    },
+    {
+     "departs_on": "2026-12-05",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaMora"
+    },
+    {
+     "departs_on": "2026-12-05",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaLea"
+    },
+    {
+     "departs_on": "2026-12-07",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaVerde"
+    },
+    {
+     "departs_on": "2026-12-09",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaSonata"
+    },
+    {
+     "departs_on": "2026-12-09",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaReina"
+    },
+    {
+     "departs_on": "2026-12-12",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaLea"
+    },
+    {
+     "departs_on": "2026-12-12",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaMora"
+    },
+    {
+     "departs_on": "2026-12-14",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaVerde"
+    },
+    {
+     "departs_on": "2026-12-16",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaSonata"
+    },
+    {
+     "departs_on": "2026-12-16",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaReina"
+    },
+    {
+     "departs_on": "2026-12-19",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaLea"
+    },
+    {
+     "departs_on": "2027-11-24",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaReina"
+    },
+    {
+     "departs_on": "2027-11-27",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaLea"
+    },
+    {
+     "departs_on": "2027-11-27",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaMora"
+    },
+    {
+     "departs_on": "2027-11-29",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaBella"
+    },
+    {
+     "departs_on": "2027-12-01",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaReina"
+    },
+    {
+     "departs_on": "2027-12-01",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaSonata"
+    },
+    {
+     "departs_on": "2027-12-04",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaLea"
+    },
+    {
+     "departs_on": "2027-12-04",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaMora"
+    },
+    {
+     "departs_on": "2027-12-08",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaSonata"
+    },
+    {
+     "departs_on": "2027-12-08",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaReina"
+    },
+    {
+     "departs_on": "2027-12-11",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaMora"
+    },
+    {
+     "departs_on": "2027-12-11",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaLea"
+    },
+    {
+     "departs_on": "2027-12-13",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaVerde"
+    },
+    {
+     "departs_on": "2027-12-13",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaBella"
+    },
+    {
+     "departs_on": "2027-12-15",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaReina"
+    },
+    {
+     "departs_on": "2027-12-15",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaSonata"
+    },
+    {
+     "departs_on": "2027-12-20",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaVerde"
+    },
+    {
+     "departs_on": "2027-12-20",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaBella"
+    },
+    {
+     "departs_on": "2028-11-22",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaReina"
+    },
+    {
+     "departs_on": "2028-11-25",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaLea"
+    },
+    {
+     "departs_on": "2028-11-25",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaMora"
+    },
+    {
+     "departs_on": "2028-11-27",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaVerde"
+    },
+    {
+     "departs_on": "2028-11-27",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaBella"
+    },
+    {
+     "departs_on": "2028-11-29",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaSonata"
+    },
+    {
+     "departs_on": "2028-12-02",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaMora"
+    },
+    {
+     "departs_on": "2028-12-02",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaLea"
+    },
+    {
+     "departs_on": "2028-12-04",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaBella"
+    },
+    {
+     "departs_on": "2028-12-06",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaSonata"
+    },
+    {
+     "departs_on": "2028-12-09",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaLea"
+    },
+    {
+     "departs_on": "2028-12-11",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaBella"
+    },
+    {
+     "departs_on": "2028-12-13",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaReina"
+    },
+    {
+     "departs_on": "2028-12-13",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaSonata"
+    },
+    {
+     "departs_on": "2028-12-16",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaLea"
+    },
+    {
+     "departs_on": "2028-12-18",
+     "embark": "Budapest",
+     "disembark": "Nuremberg",
+     "ship": "AmaBella"
+    },
+    {
+     "departs_on": "2028-12-18",
+     "embark": "Nuremberg",
+     "disembark": "Budapest",
+     "ship": "AmaVerde"
+    }
+   ],
+   "departures_note": null
+  },
+  {
+   "line_slug": "viking",
+   "slug": "danube-christmas-delights",
+   "name": "Danube Christmas Delights",
+   "nights": "7 nights",
+   "route": "Budapest · Bratislava · Vienna · Krems · Linz · Passau",
+   "blurb": "An 8-day Danube cruise from Budapest to Passau, with Christmas markets and a sail through the Wachau Valley.",
+   "overview": "This cruise runs from Budapest to Passau, stopping in Bratislava, Vienna, Krems and Linz. It covers four countries, with Christmas markets in Vienna, Linz and Passau.",
+   "highlights": [
+    "Vienna's Christmas markets",
+    "Göttweig Abbey from Krems",
+    "Sailing the UNESCO-listed Wachau Valley"
+   ],
+   "region": "Danube",
+   "countries": "Hungary, Slovakia, Austria, Germany",
+   "days_direction": "Budapest to Passau",
+   "days": [
+    {
+     "place": "Budapest, Hungary",
+     "title": "Budapest: ice rink and seasonal food",
+     "summary": "See the outdoor ice rink and try seasonal food.",
+     "excursions": []
+    },
+    {
+     "place": "Budapest, Hungary",
+     "title": "Budapest: Chain Bridge, museum or spa",
+     "summary": "Options include the Chain Bridge, a museum or a thermal spa.",
+     "excursions": []
+    },
+    {
+     "place": "Bratislava, Slovakia",
+     "title": "Bratislava: castle and Old Town",
+     "summary": "See Bratislava Castle and the Old Town during the Christmas season.",
+     "excursions": []
+    },
+    {
+     "place": "Vienna, Austria",
+     "title": "Vienna: Christmas markets",
+     "summary": "Visit Vienna's markets and shop for gifts.",
+     "excursions": []
+    },
+    {
+     "place": "Krems, Austria",
+     "title": "Krems: Göttweig Abbey and Wachau Valley",
+     "summary": "Tour Göttweig Abbey, including its frescoes and library. The ship also sails the Wachau Valley, a UNESCO site.",
+     "excursions": []
+    },
+    {
+     "place": "Linz, Austria",
+     "title": "Linz: nativity and Main Square market",
+     "summary": "See the nativity at Volksgarten and the stalls on the Main Square.",
+     "excursions": []
+    },
+    {
+     "place": "Passau, Germany",
+     "title": "Passau: Christmas market",
+     "summary": "Visit the market in Passau and try the food on offer.",
+     "excursions": []
+    },
+    {
+     "place": "Passau, Germany",
+     "title": "Passau: departure",
+     "summary": "The cruise ends and guests head home or continue on an extension.",
+     "excursions": []
+    }
+   ],
+   "departures": [
+    {
+     "departs_on": "2026-11-29",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-27",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-27",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-28",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-28",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-29",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-30",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-30",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-01",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-02",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-03",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-04",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-04",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-05",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-05",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-06",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-07",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-07",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-11",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-14",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-15",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-18",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-11-28",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-11-28",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-04",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-05",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-05",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-11",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-12",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-12",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-18",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": null
+    }
+   ],
+   "departures_note": "More sailings may be available."
+  },
+  {
+   "line_slug": "viking",
+   "slug": "christmas-on-the-rhine",
+   "name": "Christmas on the Rhine",
+   "nights": "7 nights",
+   "route": "Amsterdam · Dordrecht · Cologne · Koblenz · Rüdesheim · Mannheim · Speyer · Strasbourg · Breisach · Basel",
+   "blurb": "An 8-day Rhine cruise from Amsterdam to Basel, with Christmas markets in Germany and France.",
+   "overview": "This cruise runs from Amsterdam to Basel through the Netherlands, Germany, France and Switzerland. Stops include Cologne, Koblenz, Rüdesheim, Speyer and Strasbourg, and the ship sails the UNESCO-listed Middle Rhine.",
+   "highlights": [
+    "Cologne's holiday markets",
+    "Sailing the Middle Rhine past Lorelei Rock",
+    "The Drosselgasse in Rüdesheim"
+   ],
+   "region": "Rhine",
+   "countries": "Netherlands, Germany, France, Switzerland",
+   "days_direction": "Amsterdam to Basel",
+   "days": [
+    {
+     "place": "Amsterdam, Netherlands",
+     "title": "Amsterdam: canals and museums",
+     "summary": "Options include a canal trip or a museum.",
+     "excursions": []
+    },
+    {
+     "place": "Dordrecht, Netherlands",
+     "title": "Waal and Merwede sailing, Dordrecht",
+     "summary": "The ship sails the Waal and Merwede. In Dordrecht, see the Grote Kerk and its 67-bell carillon.",
+     "excursions": []
+    },
+    {
+     "place": "Cologne, Germany",
+     "title": "Cologne: Christmas markets",
+     "summary": "Browse the holiday markets for gifts and crafts.",
+     "excursions": []
+    },
+    {
+     "place": "Koblenz and Rüdesheim, Germany",
+     "title": "Koblenz, Middle Rhine and Rüdesheim",
+     "summary": "Christmas market in Koblenz, then a sail along the UNESCO-listed Middle Rhine past castles and Lorelei Rock. In Rüdesheim, try Weihnachtsbier and walk the Drosselgasse.",
+     "excursions": []
+    },
+    {
+     "place": "Mannheim and Speyer, Germany",
+     "title": "Mannheim and Speyer: Christmas markets",
+     "summary": "Mannheim's market sells goods from around the world. Speyer offers regional food and local Christmas customs.",
+     "excursions": []
+    },
+    {
+     "place": "Strasbourg, France",
+     "title": "Strasbourg: Alsatian food",
+     "summary": "Try Alsatian dishes from local producers.",
+     "excursions": []
+    },
+    {
+     "place": "Breisach, Germany",
+     "title": "Breisach: Christmas market",
+     "summary": "Browse the Weihnachtsmarkt stalls for food and handicrafts.",
+     "excursions": []
+    },
+    {
+     "place": "Basel, Switzerland",
+     "title": "Basel: departure",
+     "summary": "The cruise ends and guests head home or continue on an extension.",
+     "excursions": []
+    }
+   ],
+   "departures": [
+    {
+     "departs_on": "2027-11-25",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-27",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-27",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-28",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-28",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-29",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-29",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-30",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-01",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-01",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-02",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-03",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-03",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-04",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-04",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-06",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-07",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-09",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-13",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-15",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-16",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-11-26",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-11-26",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-11-27",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-11-27",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-11-28",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-11-28",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-11-29",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-11-29",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-02",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-02",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-03",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-03",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-04",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-04",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-05",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-05",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-06",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-11",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-13",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-16",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-17",
+     "embark": "Basel",
+     "disembark": "Amsterdam",
+     "ship": null
+    },
+    {
+     "departs_on": "2028-12-18",
+     "embark": "Amsterdam",
+     "disembark": "Basel",
+     "ship": null
+    }
+   ],
+   "departures_note": "More sailings may be available."
+  },
+  {
+   "line_slug": "viking",
+   "slug": "christmas-on-the-rhine-main",
+   "name": "Christmas on the Rhine & Main",
+   "nights": "10 nights",
+   "route": "Nuremberg · Bamberg · Würzburg · Marktheidenfeld · Frankfurt · Baden-Baden · Strasbourg · Breisach · Basel",
+   "blurb": "An 11-day cruise from Nuremberg to Basel on the Main and Rhine, with a Christmas market at most stops.",
+   "overview": "This cruise runs from Nuremberg to Basel through Germany, France and Switzerland. Stops include Bamberg, Würzburg, Frankfurt, Baden-Baden and Strasbourg, with two days in Nuremberg and two in Basel.",
+   "highlights": [
+    "Nuremberg's Christkindlesmarkt",
+    "Nativity scene in Bamberg's Maximiliansplatz",
+    "Sailing the Main River through the Spessart"
+   ],
+   "region": "Rhine & Main",
+   "countries": "Germany, France, Switzerland",
+   "days_direction": "Nuremberg to Basel",
+   "days": [
+    {
+     "place": "Nuremberg, Germany",
+     "title": "Nuremberg: Old Town and market",
+     "summary": "Walk the medieval streets and visit the holiday market.",
+     "excursions": []
+    },
+    {
+     "place": "Nuremberg, Germany",
+     "title": "Nuremberg: city sights and history",
+     "summary": "See the main sites, with history from the Middle Ages through World War II.",
+     "excursions": []
+    },
+    {
+     "place": "Bamberg, Germany",
+     "title": "Bamberg: Christmas markets",
+     "summary": "Visit the markets and see the big nativity scene at Maximiliansplatz.",
+     "excursions": []
+    },
+    {
+     "place": "Würzburg, Germany",
+     "title": "Würzburg: Advent markets",
+     "summary": "Tour the Old Town Advent markets and see work by local artisans.",
+     "excursions": []
+    },
+    {
+     "place": "Marktheidenfeld, Germany",
+     "title": "Marktheidenfeld and Main River sailing",
+     "summary": "Holiday market with live music and performances. The ship also sails the Main River through the Spessart area.",
+     "excursions": []
+    },
+    {
+     "place": "Frankfurt, Germany",
+     "title": "Frankfurt: Christmas market",
+     "summary": "Visit the market for carols and seasonal food.",
+     "excursions": []
+    },
+    {
+     "place": "Baden-Baden, Germany",
+     "title": "Baden-Baden: Christmas market",
+     "summary": "Explore Baden-Baden and its Christmas market.",
+     "excursions": []
+    },
+    {
+     "place": "Strasbourg, France",
+     "title": "Strasbourg: Alsatian food",
+     "summary": "Try Alsatian dishes from local producers.",
+     "excursions": []
+    },
+    {
+     "place": "Breisach, Germany",
+     "title": "Breisach: Christmas market",
+     "summary": "Browse the Weihnachtsmarkt stalls for food and handicrafts.",
+     "excursions": []
+    },
+    {
+     "place": "Basel, Switzerland",
+     "title": "Basel: city sights and Christmas market",
+     "summary": "See the main sights and shop for gifts at the market.",
+     "excursions": []
+    },
+    {
+     "place": "Basel, Switzerland",
+     "title": "Basel: departure",
+     "summary": "The cruise ends and guests head home or continue on an extension.",
+     "excursions": []
+    }
+   ],
+   "departures": [
+    {
+     "departs_on": "2026-11-27",
+     "embark": "Nuremberg",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-27",
+     "embark": "Nuremberg",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-28",
+     "embark": "Nuremberg",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-11-30",
+     "embark": "Nuremberg",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-07",
+     "embark": "Basel",
+     "disembark": "Nuremberg",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-08",
+     "embark": "Basel",
+     "disembark": "Nuremberg",
+     "ship": null
+    },
+    {
+     "departs_on": "2027-12-10",
+     "embark": "Nuremberg",
+     "disembark": "Basel",
+     "ship": null
+    }
+   ],
+   "departures_note": null
+  },
+  {
+   "line_slug": "uniworld",
+   "slug": "danube-holiday-markets",
+   "name": "Danube Holiday Markets",
+   "nights": "7 nights",
+   "route": "Budapest · Bratislava · Vienna · Krems · Melk · Linz · Passau",
+   "blurb": "A Danube Christmas markets cruise on the S.S. Maria Theresa from Budapest to Passau.",
+   "overview": "This cruise on the S.S. Maria Theresa runs from Budapest to Passau through Hungary, Slovakia, Austria and Germany. Most days offer a choice of tours, with Christmas markets in Budapest, Bratislava, Vienna, Krems, Salzburg, Linz and Passau.",
+   "highlights": [
+    "Vienna Art History Museum visit with Christmas markets",
+    "Full-day trip from Linz to Salzburg",
+    "Passau Christmas market in front of the cathedral"
+   ],
+   "region": "Danube",
+   "countries": "Hungary, Slovakia, Austria, Germany",
+   "days_direction": "Budapest to Passau",
+   "days": [
+    {
+     "place": "Budapest, Hungary",
+     "title": "Budapest: embark",
+     "summary": "Arrive at Budapest airport and board the ship. A transfer is provided if arranged with Uniworld.",
+     "excursions": []
+    },
+    {
+     "place": "Budapest, Hungary",
+     "title": "Budapest: city tours and Christmas market",
+     "summary": "Choose a panoramic city tour or a walk with local treats, each with a visit to the Vörösmarty Square market. A welcome reception and dinner are held in the evening.",
+     "excursions": [
+      "Budapest City Tour with Christmas Market",
+      "Budapest Walk with Local Treats and Christmas Market"
+     ]
+    },
+    {
+     "place": "Bratislava, Slovakia",
+     "title": "Danube sailing and Bratislava",
+     "summary": "The ship cruises the Danube to Bratislava. Choose a walking tour with the Christmas market or a walk about life under Communism, with an evening return to the market also offered.",
+     "excursions": [
+      "Nights Out: Bratislava Christmas Market",
+      "Bratislava Walking Tour with Christmas Market",
+      "Life beyond the Iron Curtain"
+     ]
+    },
+    {
+     "place": "Vienna, Austria",
+     "title": "Vienna: art, Christmas markets and Schönbrunn",
+     "summary": "Options are an early visit to the Art History Museum, a food walk through the historic center, Schönbrunn Palace with its market, and a visit to a Strauss music hall.",
+     "excursions": [
+      "“Morning with the Masters” at the Vienna Art History Museum & Christmas Markets",
+      "“Taste of Christmas” Vienna Walking Tour",
+      "Schönbrunn Palace with Christmas Market",
+      "House of Strauss"
+     ]
+    },
+    {
+     "place": "Krems and Melk, Austria",
+     "title": "Krems and Melk",
+     "summary": "Choose a Krems town visit with its Christkindlmarkt, a Dürnstein walk with spiced wine and an organ concert, or a walk around Melk.",
+     "excursions": [
+      "Melk Village Stroll",
+      "Dürnstein Village Stroll with Spiced Wine Tasting and Organ Concert in a Monastery",
+      "Krems Town Visit"
+     ]
+    },
+    {
+     "place": "Linz, Austria",
+     "title": "Linz: Salzburg or cider farm",
+     "summary": "Full-day trip to Salzburg's Old Town and Christmas market, or a Linz Old Town walk with a cider farm visit and Christmas markets.",
+     "excursions": [
+      "Full-Day Salzburg Walking Tour with Christmas Market",
+      "Linz Town & Country: Cider Farm Visit and Christmas Markets"
+     ]
+    },
+    {
+     "place": "Passau, Germany",
+     "title": "Passau: Christmas market",
+     "summary": "Walking tour of the town with the market by the cathedral, or a winter walk on a forest path along the Ilz River.",
+     "excursions": [
+      "Passau Walking Tour with Christmas Market",
+      "Bavarian Winter Walk"
+     ]
+    },
+    {
+     "place": "Passau, Germany",
+     "title": "Passau: disembark",
+     "summary": "Leave the ship in Passau. A transfer to Munich Airport is provided if arranged with Uniworld.",
+     "excursions": []
+    }
+   ],
+   "departures": [
+    {
+     "departs_on": "2026-11-25",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": "S.S. Maria Theresa"
+    },
+    {
+     "departs_on": "2026-12-02",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": "S.S. Maria Theresa"
+    },
+    {
+     "departs_on": "2026-12-09",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": "S.S. Maria Theresa"
+    },
+    {
+     "departs_on": "2027-11-25",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": "S.S. Marlene"
+    },
+    {
+     "departs_on": "2027-11-25",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": "S.S. Maria Theresa"
+    },
+    {
+     "departs_on": "2027-12-02",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": "S.S. Maria Theresa"
+    },
+    {
+     "departs_on": "2027-12-02",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": "S.S. Marlene"
+    },
+    {
+     "departs_on": "2027-12-09",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": "S.S. Marlene"
+    },
+    {
+     "departs_on": "2027-12-09",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": "S.S. Maria Theresa"
+    },
+    {
+     "departs_on": "2027-12-16",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": "S.S. Maria Theresa"
+    },
+    {
+     "departs_on": "2027-12-16",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": "S.S. Marlene"
+    },
+    {
+     "departs_on": "2028-11-25",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": "S.S. Marlene"
+    },
+    {
+     "departs_on": "2028-11-25",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": "S.S. Maria Theresa"
+    },
+    {
+     "departs_on": "2028-12-02",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": "S.S. Maria Theresa"
+    },
+    {
+     "departs_on": "2028-12-02",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": "S.S. Marlene"
+    },
+    {
+     "departs_on": "2028-12-09",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": "S.S. Marlene"
+    },
+    {
+     "departs_on": "2028-12-09",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": "S.S. Maria Theresa"
+    },
+    {
+     "departs_on": "2028-12-16",
+     "embark": "Budapest",
+     "disembark": "Passau",
+     "ship": "S.S. Maria Theresa"
+    },
+    {
+     "departs_on": "2028-12-16",
+     "embark": "Passau",
+     "disembark": "Budapest",
+     "ship": "S.S. Marlene"
+    }
+   ],
+   "departures_note": null
+  },
+  {
+   "line_slug": "uniworld",
+   "slug": "rhine-holiday-markets",
+   "name": "Rhine Holiday Markets",
+   "nights": "7 nights",
+   "route": "Basel · Strasbourg · Mannheim · Mainz · Rüdesheim · Koblenz · Cologne",
+   "blurb": "A Rhine Christmas markets cruise on the S.S. Antoinette from Basel to Cologne.",
+   "overview": "This cruise on the S.S. Antoinette runs from Basel to Cologne through Switzerland, France and Germany. Christmas market tours are offered in Basel, Strasbourg, Baden-Baden, Wiesbaden, Rüdesheim, Koblenz and Cologne.",
+   "highlights": [
+    "Wish Book and Christmas market in Basel",
+    "Sailing the Upper Middle Rhine Valley to Koblenz",
+    "Day and evening market visits in Cologne"
+   ],
+   "region": "Rhine",
+   "countries": "Switzerland, France, Germany",
+   "days_direction": "Basel to Cologne",
+   "days": [
+    {
+     "place": "Basel, Switzerland",
+     "title": "Basel: embark",
+     "summary": "Arrive at EuroAirport Basel-Mulhouse-Freiburg and board the ship. A transfer is provided if arranged with Uniworld.",
+     "excursions": []
+    },
+    {
+     "place": "Basel, Switzerland",
+     "title": "Basel: Christmas market",
+     "summary": "Walking tour with the Town Hall, the Münster and the Christmas market. A welcome reception and dinner are held in the evening.",
+     "excursions": [
+      "Basel Walking Tour with Christmas Market"
+     ]
+    },
+    {
+     "place": "Strasbourg, France",
+     "title": "Strasbourg: Christmas market",
+     "summary": "Choose a walking tour with the Christmas market or a food walk through Petite France. An evening trip to the market is also offered.",
+     "excursions": [
+      "Nights Out: The Strasbourg Christmas Market",
+      "Strasbourg Walking Tour with Christmas Market",
+      "“Taste of Christmas” Strasbourg Walking Tour"
+     ]
+    },
+    {
+     "place": "Mannheim, Germany",
+     "title": "Mannheim: Baden-Baden or vinegar estate",
+     "summary": "Walking tour and Christmas market in Baden-Baden, or a tasting at the Doktorenhof vinegar estate.",
+     "excursions": [
+      "Baden-Baden Walking Tour with Christmas Market",
+      "Private Doktorenhof Vinegar Estate Visit and Tasting"
+     ]
+    },
+    {
+     "place": "Mainz and Rüdesheim, Germany",
+     "title": "Mainz and Rüdesheim",
+     "summary": "Time in Mainz's Old Town or a trip to the Wiesbaden Christmas market. The ship then sails to Rüdesheim for a walk with local treats or a self-guided wine tasting.",
+     "excursions": [
+      "Wiesbaden Twinkling Star Christmas Market",
+      "Rüdesheim Walk with Local Treats and Christmas Market",
+      "Rheinweinwelten Visit - The Best Rhine Rieslings"
+     ]
+    },
+    {
+     "place": "Koblenz, Germany",
+     "title": "Upper Middle Rhine and Koblenz",
+     "summary": "Morning sail through the UNESCO-listed Upper Middle Rhine Valley. In Koblenz, a walking tour starts at German Corner, where the Moselle meets the Rhine, and includes the Christmas market.",
+     "excursions": [
+      "Koblenz Walking Tour with Christmas Market"
+     ]
+    },
+    {
+     "place": "Cologne, Germany",
+     "title": "Cologne: Old Town and Christmas markets",
+     "summary": "Walking tour of the Old Town, ending at the cathedral square, with Christmas markets. An evening trip to the markets is also offered.",
+     "excursions": [
+      "Cologne Walking Tour with Old Town Visit and Christmas Markets",
+      "Nights Out: Cologne Christmas Markets"
+     ]
+    },
+    {
+     "place": "Cologne, Germany",
+     "title": "Cologne: disembark",
+     "summary": "Leave the ship in Cologne. A transfer to Cologne Bonn Airport is provided if arranged with Uniworld.",
+     "excursions": []
+    }
+   ],
+   "departures": [
+    {
+     "departs_on": "2026-11-25",
+     "embark": "Cologne",
+     "disembark": "Basel",
+     "ship": "S.S. Antoinette"
+    },
+    {
+     "departs_on": "2026-12-02",
+     "embark": "Basel",
+     "disembark": "Cologne",
+     "ship": "S.S. Antoinette"
+    },
+    {
+     "departs_on": "2026-12-02",
+     "embark": "Cologne",
+     "disembark": "Basel",
+     "ship": null
+    },
+    {
+     "departs_on": "2026-12-09",
+     "embark": "Cologne",
+     "disembark": "Basel",
+     "ship": "S.S. Antoinette"
+    },
+    {
+     "departs_on": "2026-12-16",
+     "embark": "Basel",
+     "disembark": "Cologne",
+     "ship": "S.S. Antoinette"
+    },
+    {
+     "departs_on": "2026-12-16",
+     "embark": "Cologne",
+     "disembark": "Basel",
+     "ship": "S.S. Antoinette"
+    },
+    {
+     "departs_on": "2027-11-25",
+     "embark": "Basel",
+     "disembark": "Cologne",
+     "ship": "S.S. Victoria"
+    },
+    {
+     "departs_on": "2027-11-25",
+     "embark": "Cologne",
+     "disembark": "Basel",
+     "ship": "S.S. Antoinette"
+    },
+    {
+     "departs_on": "2027-12-09",
+     "embark": "Cologne",
+     "disembark": "Basel",
+     "ship": "S.S. Antoinette"
+    },
+    {
+     "departs_on": "2027-12-16",
+     "embark": "Basel",
+     "disembark": "Cologne",
+     "ship": "S.S. Antoinette"
+    },
+    {
+     "departs_on": "2027-12-16",
+     "embark": "Cologne",
+     "disembark": "Basel",
+     "ship": "S.S. Victoria"
+    },
+    {
+     "departs_on": "2028-11-25",
+     "embark": "Basel",
+     "disembark": "Cologne",
+     "ship": "S.S. Victoria"
+    },
+    {
+     "departs_on": "2028-11-25",
+     "embark": "Cologne",
+     "disembark": "Basel",
+     "ship": "S.S. Antoinette"
+    },
+    {
+     "departs_on": "2028-12-02",
+     "embark": "Basel",
+     "disembark": "Cologne",
+     "ship": "S.S. Antoinette"
+    },
+    {
+     "departs_on": "2028-12-02",
+     "embark": "Cologne",
+     "disembark": "Basel",
+     "ship": "S.S. Victoria"
+    },
+    {
+     "departs_on": "2028-12-09",
+     "embark": "Basel",
+     "disembark": "Cologne",
+     "ship": "S.S. Victoria"
+    },
+    {
+     "departs_on": "2028-12-09",
+     "embark": "Cologne",
+     "disembark": "Basel",
+     "ship": "S.S. Antoinette"
+    },
+    {
+     "departs_on": "2028-12-16",
+     "embark": "Basel",
+     "disembark": "Cologne",
+     "ship": "S.S. Antoinette"
+    },
+    {
+     "departs_on": "2028-12-16",
+     "embark": "Cologne",
+     "disembark": "Basel",
+     "ship": "S.S. Victoria"
+    }
+   ],
+   "departures_note": null
+  },
+  {
+   "line_slug": "uniworld",
+   "slug": "classic-christmas-markets",
+   "name": "Classic Christmas Markets",
+   "nights": "7 nights",
+   "route": "Nuremberg · Bamberg · Kitzingen · Würzburg · Wertheim · Frankfurt",
+   "blurb": "A Christmas markets cruise within Germany, from Nuremberg to Frankfurt.",
+   "overview": "This cruise on the S.S. Elisabeth or S.S. Emilie runs from Nuremberg to Frankfurt, all within Germany. Christmas market visits are offered in Nuremberg, Bamberg, Rothenburg, Würzburg, Frankfurt and Wiesbaden, along with a village day in Franconia.",
+   "highlights": [
+    "Nuremberg Christmas market by day and by night",
+    "Full-day trip to Rothenburg",
+    "Würzburg Residence visit"
+   ],
+   "region": "Main",
+   "countries": "Germany",
+   "days_direction": "Nuremberg to Frankfurt",
+   "days": [
+    {
+     "place": "Nuremberg, Germany",
+     "title": "Nuremberg: embark",
+     "summary": "Arrive at Nuremberg airport and board the ship. A transfer is provided if arranged with Uniworld.",
+     "excursions": []
+    },
+    {
+     "place": "Nuremberg, Germany",
+     "title": "Nuremberg: Christmas market",
+     "summary": "City tour through the castle gardens and Old Town to the market on Market Square, or a World War II history tour. An evening market visit is also offered, and a welcome reception and dinner are held.",
+     "excursions": [
+      "Nuremberg City Tour with Christmas Market",
+      "Nights Out: Christmas Market Illuminations",
+      "Nuremberg WWII Historical Tour"
+     ]
+    },
+    {
+     "place": "Bamberg, Germany",
+     "title": "Bamberg: Old Town and Christmas markets",
+     "summary": "Walking tour including the Imperial Cathedral, with free time for four Christmas markets and the nativity trail.",
+     "excursions": [
+      "Bamberg Walking Tour with Christmas Market"
+     ]
+    },
+    {
+     "place": "Kitzingen and Würzburg, Germany",
+     "title": "Rothenburg and Würzburg",
+     "summary": "Full-day trip to Rothenburg with a walking tour and Christmas market. A walk to the Würzburg Christmas market follows just before dinner.",
+     "excursions": [
+      "Full-Day Rothenburg with Walking Tour and Christmas Market",
+      "Würzburg Christmas Market Night Stroll"
+     ]
+    },
+    {
+     "place": "Würzburg, Germany",
+     "title": "Würzburg: Residence and village day",
+     "summary": "Morning visit to the Würzburg Residence. A village day goes to Aschfeld, with a local museum and homemade Christmas food.",
+     "excursions": [
+      "Würzburg Residence Visit",
+      "Village Day: Franconian Christmas"
+     ]
+    },
+    {
+     "place": "Wertheim, Germany",
+     "title": "Wertheim: walking tour",
+     "summary": "Mulled wine and a stollen baking demonstration on board, then a walking tour of the town, past the ruins of Wertheim Castle.",
+     "excursions": [
+      "Wertheim Walking Tour with Mulled Wine and Christmas Stollen Demonstration"
+     ]
+    },
+    {
+     "place": "Frankfurt, Germany",
+     "title": "Frankfurt or Wiesbaden",
+     "summary": "A food walk in Frankfurt's old town, or a trip to the Wiesbaden Christmas market.",
+     "excursions": [
+      "“Taste of Christmas” Frankfurt Walking Tour",
+      "Wiesbaden Twinkling Star Christmas Market"
+     ]
+    },
+    {
+     "place": "Frankfurt, Germany",
+     "title": "Frankfurt: disembark",
+     "summary": "Leave the ship in Frankfurt. A transfer to Frankfurt International Airport is provided if arranged with Uniworld.",
+     "excursions": []
+    }
+   ],
+   "departures": [
+    {
+     "departs_on": "2026-12-02",
+     "embark": "Nuremberg",
+     "disembark": "Frankfurt",
+     "ship": null
+    },
+    {
+     "departs_on": "2026-12-08",
+     "embark": "Nuremberg",
+     "disembark": "Frankfurt",
+     "ship": "S.S. Emilie"
+    },
+    {
+     "departs_on": "2026-12-15",
+     "embark": "Frankfurt",
+     "disembark": "Nuremberg",
+     "ship": "S.S. Emilie"
+    },
+    {
+     "departs_on": "2026-12-16",
+     "embark": "Nuremberg",
+     "disembark": "Frankfurt",
+     "ship": "S.S. Emilie"
+    },
+    {
+     "departs_on": "2027-11-25",
+     "embark": "Frankfurt",
+     "disembark": "Nuremberg",
+     "ship": "S.S. Audrey"
+    },
+    {
+     "departs_on": "2027-12-02",
+     "embark": "Nuremberg",
+     "disembark": "Frankfurt",
+     "ship": "S.S. Audrey"
+    },
+    {
+     "departs_on": "2027-12-09",
+     "embark": "Frankfurt",
+     "disembark": "Nuremberg",
+     "ship": "S.S. Audrey"
+    },
+    {
+     "departs_on": "2027-12-16",
+     "embark": "Nuremberg",
+     "disembark": "Frankfurt",
+     "ship": "S.S. Audrey"
+    },
+    {
+     "departs_on": "2028-11-25",
+     "embark": "Frankfurt",
+     "disembark": "Nuremberg",
+     "ship": "S.S. Audrey"
+    },
+    {
+     "departs_on": "2028-11-25",
+     "embark": "Nuremberg",
+     "disembark": "Frankfurt",
+     "ship": "S.S. Beatrice"
+    },
+    {
+     "departs_on": "2028-12-02",
+     "embark": "Frankfurt",
+     "disembark": "Nuremberg",
+     "ship": "S.S. Beatrice"
+    },
+    {
+     "departs_on": "2028-12-02",
+     "embark": "Nuremberg",
+     "disembark": "Frankfurt",
+     "ship": "S.S. Audrey"
+    },
+    {
+     "departs_on": "2028-12-09",
+     "embark": "Frankfurt",
+     "disembark": "Nuremberg",
+     "ship": "S.S. Audrey"
+    },
+    {
+     "departs_on": "2028-12-09",
+     "embark": "Nuremberg",
+     "disembark": "Frankfurt",
+     "ship": "S.S. Beatrice"
+    },
+    {
+     "departs_on": "2028-12-16",
+     "embark": "Frankfurt",
+     "disembark": "Nuremberg",
+     "ship": "S.S. Beatrice"
+    },
+    {
+     "departs_on": "2028-12-16",
+     "embark": "Nuremberg",
+     "disembark": "Frankfurt",
+     "ship": "S.S. Audrey"
+    }
+   ],
+   "departures_note": null
+  }
+ ],
+ "amawaterways_ships": [
+  {
+   "name": "AmaMagna",
+   "description": "Revolutionary wide-beam river ship.",
+   "image": "/media/cruises/ama-waterways/ships/amamagna.jpg"
+  },
+  {
+   "name": "AmaKristina",
+   "description": "158 guests, European rivers.",
+   "image": "/media/cruises/ama-waterways/ships/amakristina.jpg"
+  },
+  {
+   "name": "AmaSiena",
+   "description": "Rhine, Moselle, and Danube.",
+   "image": "/media/cruises/ama-waterways/ships/amasiena.jpg"
+  },
+  {
+   "name": "AmaLea",
+   "description": "Italy's Po River and beyond.",
+   "image": "/media/cruises/ama-waterways/ships/amalea.jpg"
+  },
+  {
+   "name": "AmaSofia",
+   "description": "New for 2026: European rivers.",
+   "image": "/media/cruises/ama-waterways/ships/amasofia.jpg"
+  },
+  {
+   "name": "AmaKaia",
+   "description": "New for 2026: Mekong River."
+  },
+  {
+   "name": "AmaBella",
+   "image": "/media/cruises/ama-waterways/ships/amabella.jpg"
+  },
+  {
+   "name": "AmaCerto",
+   "image": "/media/cruises/ama-waterways/ships/amacerto.jpg"
+  },
+  {
+   "name": "AmaDahlia",
+   "image": "/media/cruises/ama-waterways/ships/amadahlia.jpg"
+  },
+  {
+   "name": "AmaDante",
+   "image": "/media/cruises/ama-waterways/ships/amadante.jpg"
+  },
+  {
+   "name": "AmaDara",
+   "image": "/media/cruises/ama-waterways/ships/amadara.jpg"
+  },
+  {
+   "name": "AmaDolce",
+   "image": "/media/cruises/ama-waterways/ships/amadolce.jpg"
+  },
+  {
+   "name": "AmaDouro",
+   "image": "/media/cruises/ama-waterways/ships/amadouro.jpg"
+  },
+  {
+   "name": "AmaFiora",
+   "image": "/media/cruises/ama-waterways/ships/amafiora.jpg"
+  },
+  {
+   "name": "AmaLucia",
+   "image": "/media/cruises/ama-waterways/ships/amalucia.jpg"
+  },
+  {
+   "name": "AmaLyra",
+   "image": "/media/cruises/ama-waterways/ships/amalyra.jpg"
+  },
+  {
+   "name": "AmaMagdalena",
+   "image": "/media/cruises/ama-waterways/ships/amamagdalena.jpg"
+  },
+  {
+   "name": "AmaMaria",
+   "image": "/media/cruises/ama-waterways/ships/amamaria.jpg"
+  },
+  {
+   "name": "AmaMora",
+   "image": "/media/cruises/ama-waterways/ships/amamora.jpg"
+  },
+  {
+   "name": "AmaNubia",
+   "image": "/media/cruises/ama-waterways/ships/amanubia.jpg"
+  },
+  {
+   "name": "AmaPrima",
+   "image": "/media/cruises/ama-waterways/ships/amaprima.jpg"
+  },
+  {
+   "name": "AmaReina",
+   "image": "/media/cruises/ama-waterways/ships/amareina.jpg"
+  },
+  {
+   "name": "AmaRudi",
+   "image": "/media/cruises/ama-waterways/ships/amarudi.jpg"
+  },
+  {
+   "name": "AmaSerena",
+   "image": "/media/cruises/ama-waterways/ships/amaserena.jpg"
+  },
+  {
+   "name": "AmaSintra",
+   "image": "/media/cruises/ama-waterways/ships/amasintra.jpg"
+  },
+  {
+   "name": "AmaSonata",
+   "image": "/media/cruises/ama-waterways/ships/amasonata.jpg"
+  },
+  {
+   "name": "AmaStella",
+   "image": "/media/cruises/ama-waterways/ships/amastella.jpg"
+  },
+  {
+   "name": "AmaVerde",
+   "image": "/media/cruises/ama-waterways/ships/amaverde.jpg"
+  },
+  {
+   "name": "AmaVida",
+   "image": "/media/cruises/ama-waterways/ships/amavida.jpg"
+  },
+  {
+   "name": "AmaViola",
+   "image": "/media/cruises/ama-waterways/ships/amaviola.jpg"
+  }
+ ]
+}

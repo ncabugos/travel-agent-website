@@ -44,3 +44,13 @@ export function templatePath(template: TemplateKey, agentId: string): string {
 export function cruiseCollectionPath(template: 't2' | 't3' | 't4', agentId: string, slug: string): string {
   return `${templatePath(template, agentId)}/find-cruise/collections/${slug}`
 }
+
+/** A full itinerary page. Only t2, t3 and t4 have cruise pages. */
+export function cruiseItineraryPath(
+  template: 't2' | 't3' | 't4',
+  agentId: string,
+  lineSlug: string,
+  itinerarySlug: string,
+): string {
+  return `${templatePath(template, agentId)}/find-cruise/${lineSlug}/itineraries/${itinerarySlug}`
+}

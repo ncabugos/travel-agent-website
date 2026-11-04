@@ -1,4 +1,4 @@
-import { getCruiseLine, getAllCruiseLineSlugs } from '@/lib/cruise-lines'
+import { DEFAULT_CRUISE_BENEFITS, getCruiseLine, getAllCruiseLineSlugs } from '@/lib/cruise-lines'
 import { getSupplierPromo } from '@/lib/supplier-promos'
 import { getAgentProfile } from '@/lib/suppliers'
 import { getBlogPostsBySupplier } from '@/lib/blog'
@@ -19,16 +19,6 @@ import {
   T2CruiseSuites,
   T2CruiseJourneys,
 } from '@/components/t2/T2CruiseSections'
-
-// Virtuoso Voyages perks shown when a cruise line has no DB-sourced benefits yet.
-const DEFAULT_CRUISE_BENEFITS = [
-  { title: 'Dedicated Onboard Host', description: 'A personal Virtuoso host sails with your group, present throughout the voyage to answer questions and ensure every detail runs exactly as planned.' },
-  { title: 'Private Welcome Reception', description: 'An exclusive cocktail reception at the start of each sailing, arranged solely for Virtuoso Voyages guests with introductions facilitated by your host.' },
-  { title: 'Shipboard Credit', description: '$100 per stateroom on voyages under 14 nights; $200 per stateroom on voyages of 14 nights or more, to spend freely on dining, spa, or excursions.' },
-  { title: 'Exclusive Shore Experience', description: 'A private shore excursion, VIP tour, or private car and driver whose itinerary is shaped entirely around your interests and pace — never a group schedule.' },
-  { title: 'Specialty Dining', description: 'Complimentary reservations at specialty restaurants on select sailings, including chef\'s tastings and curated wine pairings on participating vessels.' },
-  { title: 'Spa & Wellness Access', description: 'Select spa treatments, wellness credits, and onboard amenities included on participating voyages across our preferred cruise partners.' },
-]
 
 // Editorial imagery for the benefit cards, drawn from the local supplier media
 // library (public/media/cruises). Matched to the benefit by keyword so
@@ -325,7 +315,7 @@ export default async function CruiseDetailPage({ params }: PageProps) {
       <T2CruiseSuites suites={cruise.suites ?? []} vesselNote={cruise.ships?.[0]?.description} />
 
       {/* ── Sample Journeys ── */}
-      <T2CruiseJourneys journeys={cruise.sample_journeys ?? []} />
+      <T2CruiseJourneys journeys={cruise.sample_journeys ?? []} agentId={agentId} lineSlug={cruise.slug} />
 
       {/* ── Promo Banner ── */}
       <section className="t2-section">

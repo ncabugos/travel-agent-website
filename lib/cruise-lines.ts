@@ -27,7 +27,18 @@ export interface CruiseLine {
   experiences?: CruiseExperience[]     // onboard experiences
   suites?: CruiseSuite[]               // the yacht's accommodations
   sample_journeys?: CruiseJourney[]    // filled from the cruise_itineraries table
+  included?: CruiseIncludedGroup[]     // what the fare includes, shown on itinerary pages
 }
+
+// Virtuoso Voyages perks shown when a cruise line has no DB-sourced benefits yet.
+export const DEFAULT_CRUISE_BENEFITS = [
+  { title: 'Dedicated Onboard Host', description: 'A personal Virtuoso host sails with your group, present throughout the voyage to answer questions and ensure every detail runs exactly as planned.' },
+  { title: 'Private Welcome Reception', description: 'An exclusive cocktail reception at the start of each sailing, arranged solely for Virtuoso Voyages guests with introductions facilitated by your host.' },
+  { title: 'Shipboard Credit', description: '$100 per stateroom on voyages under 14 nights; $200 per stateroom on voyages of 14 nights or more, to spend freely on dining, spa, or excursions.' },
+  { title: 'Exclusive Shore Experience', description: 'A private shore excursion, VIP tour, or private car and driver whose itinerary is shaped entirely around your interests and pace — never a group schedule.' },
+  { title: 'Specialty Dining', description: 'Complimentary reservations at specialty restaurants on select sailings, including chef\'s tastings and curated wine pairings on participating vessels.' },
+  { title: 'Spa & Wellness Access', description: 'Select spa treatments, wellness credits, and onboard amenities included on participating voyages across our preferred cruise partners.' },
+]
 
 export interface CruiseHighlight {
   title: string
@@ -75,6 +86,13 @@ export interface CruiseJourney {
   route: string
   blurb: string
   image_url?: string
+  slug?: string
+  has_details?: boolean                // true when the itinerary has a full page
+}
+
+export interface CruiseIncludedGroup {
+  title: string
+  items: string[]
 }
 
 export interface ProgramFeaturedProperty {
@@ -1316,8 +1334,8 @@ const MOCK_CRUISE_LINES: CruiseLine[] = [
       { title: 'Fine Dining', description: 'Multi-course regional dinners paired with local wines nightly.' },
     ],
     ships: [
-      { name: 'AmaMagna', description: 'Revolutionary wide-beam river ship.', image: '/media/cruises/ama-waterways/amawaterways-amamagna-hero-2200.jpg' },
-      { name: 'AmaKristina', image: '/media/cruises/ama-waterways/amakristina.jpg', description: '158 guests, European rivers.' },
+      { name: 'AmaMagna', description: 'Revolutionary wide-beam river ship.', image: '/media/cruises/ama-waterways/ships/amamagna.jpg' },
+      { name: 'AmaKristina', image: '/media/cruises/ama-waterways/ships/amakristina.jpg', description: '158 guests, European rivers.' },
       { name: 'AmaSiena', description: 'Rhine, Moselle, and Danube.' },
       { name: 'AmaLea', description: 'Italy\'s Po River and beyond.' },
       { name: 'AmaSofia', description: 'New for 2026 — European rivers.' /* TODO: add image */ },

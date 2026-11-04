@@ -6,7 +6,7 @@ import type {
   CruiseJourney,
 } from '@/lib/cruise-lines'
 import type { CollectionItinerary, CruiseCollection } from '@/lib/cruise-itineraries'
-import { cruiseCollectionPath } from '@/lib/tenant-paths'
+import { cruiseCollectionPath, cruiseItineraryPath } from '@/lib/tenant-paths'
 
 // Casa Solis (T4) cruise detail sections — quiet luxury, the T4 design system.
 // Template isolation: these never import from t2/* or t3/*.
@@ -107,7 +107,7 @@ export function T4CruiseSuites({ suites, vesselNote }: { suites: CruiseSuite[]; 
 }
 
 // ── Sample journeys ──────────────────────────────────────────────────────────
-export function T4CruiseJourneys({ journeys }: { journeys: CruiseJourney[] }) {
+export function T4CruiseJourneys({ journeys, agentId, lineSlug }: { journeys: CruiseJourney[]; agentId: string; lineSlug: string }) {
   if (!journeys?.length) return null
   return (
     <Shell>
@@ -122,6 +122,11 @@ export function T4CruiseJourneys({ journeys }: { journeys: CruiseJourney[] }) {
             <h3 className="t4-headline-md" style={{ marginBottom: 14 }}>{j.name}</h3>
             <p className="t4-body" style={{ fontWeight: 500, color: 'var(--t4-text)', marginBottom: 14, fontSize: 13.5 }}>{j.route}</p>
             <p className="t4-body" style={{ margin: 0, fontSize: 13.5 }}>{j.blurb}</p>
+            {j.has_details && j.slug && (
+              <Link href={cruiseItineraryPath('t4', agentId, lineSlug, j.slug)} style={{ display: 'inline-block', marginTop: 18, fontSize: 13, color: 'var(--t4-text)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
+                View full itinerary
+              </Link>
+            )}
           </article>
         ))}
       </div>
@@ -140,7 +145,7 @@ function JourneyImage({ src, alt }: { src?: string; alt: string }) {
   )
 }
 
-export function T4CollectionItineraries({ itineraries, base }: { itineraries: CollectionItinerary[]; base: string }) {
+export function T4CollectionItineraries({ itineraries, base, agentId }: { itineraries: CollectionItinerary[]; base: string; agentId: string }) {
   return (
     <Shell>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32, rowGap: 48 }} className="t4-cruise-3col">
@@ -153,8 +158,8 @@ export function T4CollectionItineraries({ itineraries, base }: { itineraries: Co
             <h3 className="t4-headline-md" style={{ marginBottom: 14 }}>{j.name}</h3>
             <p className="t4-body" style={{ fontWeight: 500, color: 'var(--t4-text)', marginBottom: 14, fontSize: 13.5 }}>{j.route}</p>
             <p className="t4-body" style={{ margin: '0 0 18px', fontSize: 13.5 }}>{j.blurb}</p>
-            <Link href={`${base}/find-cruise/${j.line_slug}`} style={{ marginTop: 'auto', fontSize: 13, color: 'var(--t4-text)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
-              View {j.line_name}
+            <Link href={j.has_details && j.slug ? cruiseItineraryPath('t4', agentId, j.line_slug, j.slug) : `${base}/find-cruise/${j.line_slug}`} style={{ marginTop: 'auto', fontSize: 13, color: 'var(--t4-text)', textDecoration: 'underline', textUnderlineOffset: 4 }}>
+              {j.has_details ? 'View full itinerary' : `View ${j.line_name}`}
             </Link>
           </article>
         ))}
