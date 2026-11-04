@@ -1,5 +1,7 @@
 import { getCruiseLines } from '@/lib/cruise-lines'
 import { FindCruiseClient } from '@/components/t2/FindCruiseClient'
+import { getCruiseCollections } from '@/lib/cruise-itineraries'
+import { T2CruiseCollectionLinks } from '@/components/t2/T2CruiseSections'
 import { T2CruisePartnersGrid } from '@/components/t2/T2CruisePartnersGrid'
 import { T2LeadForm } from '@/components/t2/T2LeadForm'
 import { getAgentProfile } from '@/lib/suppliers'
@@ -78,9 +80,10 @@ export default async function FindCruisePage({ params }: PageProps) {
     )
   }
 
-  const [allCruises, agent] = await Promise.all([
+  const [allCruises, agent, collections] = await Promise.all([
     getCruiseLines(),
     getAgentProfile(agentId),
+    getCruiseCollections(agentId),
   ])
 
   // Entitlement-aware split:
@@ -121,6 +124,8 @@ export default async function FindCruisePage({ params }: PageProps) {
             </p>
           </div>
         </section>
+
+        <T2CruiseCollectionLinks collections={collections} agentId={agentId} />
 
         {/* Curated cruise partners */}
         <T2CruisePartnersGrid
@@ -169,6 +174,8 @@ export default async function FindCruisePage({ params }: PageProps) {
           </p>
         </div>
       </section>
+
+      <T2CruiseCollectionLinks collections={collections} agentId={agentId} />
 
       {/* Cruise browser */}
       <section className="t2-section">

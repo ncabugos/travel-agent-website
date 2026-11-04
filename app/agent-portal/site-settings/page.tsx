@@ -3,6 +3,8 @@ import {
   getHotelPrograms,
   getAgentHotelProgramSelections,
 } from '@/lib/hotel-programs'
+import { getItineraryChecklist } from '@/lib/cruise-itineraries'
+import { AgentSelectionPanel } from '@/components/admin/AgentSelectionPanel'
 import { HotelProgramsForm } from './HotelProgramsForm'
 
 export const dynamic = 'force-dynamic'
@@ -20,14 +22,17 @@ export default async function SiteSettingsPage() {
   // unauthed access, but handle the edge case anyway).
   const { data: agentRaw } = await supabase
     .from('agents')
-    .select('id')
+    .select('id, template')
     .eq('email', session?.user.email ?? '')
     .maybeSingle()
-  const agent = agentRaw as { id: string } | null
+  const agent = agentRaw as { id: string; template: string | null } | null
+  // The frontend template has no cruise pages for these to appear on.
+  const hasCruisePages = ['t2', 't3', 't4'].includes(agent?.template ?? '')
 
-  const [allPrograms, selections] = await Promise.all([
+  const [allPrograms, selections, itineraries] = await Promise.all([
     getHotelPrograms(),
     agent?.id ? getAgentHotelProgramSelections(agent.id) : Promise.resolve([]),
+    agent?.id && hasCruisePages ? getItineraryChecklist(agent.id) : Promise.resolve(null),
   ])
 
   const initiallySelected = selections
@@ -80,6 +85,20 @@ export default async function SiteSettingsPage() {
           </p>
         )}
       </section>
+
+      {itineraries && (
+        <section style={{ marginTop: 32, marginBottom: 16 }}>
+          <AgentSelectionPanel
+            title="Cruise itineraries on your site"
+            description="Every itinerary shows on your site by default. Uncheck any you don't want your clients to see, then save."
+            emptyStateHint="No itineraries selected. Your cruise pages will show none."
+            allItems={itineraries.items}
+            initiallySelected={itineraries.enabledIds}
+            saveEndpoint="/api/agent-portal/cruise-itineraries"
+            payloadKey="itineraryIds"
+          />
+        </section>
+      )}
     </div>
   )
 }

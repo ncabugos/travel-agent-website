@@ -2,6 +2,7 @@ import { getAgentProfile } from '@/lib/suppliers'
 import { getBlogPosts } from '@/lib/blog'
 import { getAgentHotelPrograms } from '@/lib/hotel-programs'
 import { getCruiseLines } from '@/lib/cruise-lines'
+import { getCruiseCollections } from '@/lib/cruise-itineraries'
 import { getPrivateJourneys } from '@/lib/private-journeys'
 import { featureAllowed, tierAllows, type Tier } from '@/lib/tier-features'
 import { canonicalUrl } from '@/lib/seo'
@@ -30,11 +31,12 @@ interface RouteContext {
  */
 export async function GET(_req: Request, { params }: RouteContext) {
   const { agentId } = await params
-  const [agent, posts, programs, cruises, safaris, jets] = await Promise.all([
+  const [agent, posts, programs, cruises, collections, safaris, jets] = await Promise.all([
     getAgentProfile(agentId),
     getBlogPosts(agentId),
     getAgentHotelPrograms(agentId),
     getCruiseLines(),
+    getCruiseCollections(agentId),
     getPrivateJourneys('safari'),
     getPrivateJourneys('jet'),
   ])
@@ -84,6 +86,13 @@ export async function GET(_req: Request, { params }: RouteContext) {
   for (const cruise of cruises) {
     urls.push({
       loc: canonicalUrl(agent, `find-cruise/${cruise.slug}`),
+      changefreq: 'monthly',
+      priority: 0.6,
+    })
+  }
+  for (const collection of collections) {
+    urls.push({
+      loc: canonicalUrl(agent, `find-cruise/collections/${collection.slug}`),
       changefreq: 'monthly',
       priority: 0.6,
     })

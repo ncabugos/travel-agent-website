@@ -18,7 +18,7 @@ const arrText = src.slice(start, src.lastIndexOf(']', end) + 1)
 const lines = eval('(' + arrText + ')')
 
 const FIELDS = ['tagline','description','logo_url','hero_image_url','highlights','ships','slider_images',
-  'benefits','video_url','video_poster_url','intro','destinations','experiences','suites','sample_journeys']
+  'benefits','video_url','video_poster_url','intro','destinations','experiences','suites']
 
 ;(async () => {
   const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)

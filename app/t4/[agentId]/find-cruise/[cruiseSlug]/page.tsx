@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: PageProps) {
 export default async function T4CruiseLineDetailPage({ params }: PageProps) {
   const { agentId, cruiseSlug } = await params
   const [line, promo] = await Promise.all([
-    getCruiseLine(cruiseSlug),
+    getCruiseLine(cruiseSlug, agentId),
     getSupplierPromo('cruise_line', cruiseSlug),
   ])
   if (!line) notFound()

@@ -39,3 +39,8 @@ export type TemplateKey = 'frontend' | 't2' | 't3' | 't4'
 export function templatePath(template: TemplateKey, agentId: string): string {
   return `/${template}/${agentId}`
 }
+
+/** A cruise collection page. Only t2, t3 and t4 have cruise pages. */
+export function cruiseCollectionPath(template: 't2' | 't3' | 't4', agentId: string, slug: string): string {
+  return `${templatePath(template, agentId)}/find-cruise/collections/${slug}`
+}

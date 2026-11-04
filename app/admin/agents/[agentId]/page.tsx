@@ -20,6 +20,7 @@ import {
   getAllCategories,
   getAgentCategoryPreferences,
 } from '@/lib/blog-categories'
+import { getItineraryChecklist } from '@/lib/cruise-itineraries'
 
 export const dynamic = 'force-dynamic'
 
@@ -56,6 +57,8 @@ export default async function AdminAgentDetailPage({ params }: PageProps) {
 
   const template = agent.template || 'frontend'
   const siteUrl = `/${template}/${agentId}`
+  // The frontend template has no cruise pages for these to appear on.
+  const itineraries = template === 'frontend' ? null : await getItineraryChecklist(agentId)
 
   const selectedProgramIds = programSelections
     .filter((s) => s.is_enabled)
@@ -263,6 +266,21 @@ export default async function AdminAgentDetailPage({ params }: PageProps) {
             payloadKey="programIds"
           />
         </div>
+
+        {/* Cruise itinerary opt-outs */}
+        {itineraries && (
+          <div style={{ marginBottom: 24 }}>
+            <AgentSelectionPanel
+              title="Cruise itineraries on this agent's site"
+              description="Every itinerary shows on this site by default. Uncheck any this agent doesn't want on their cruise pages. The agent can also change this from their portal."
+              emptyStateHint="No itineraries selected. This site's cruise pages will show none."
+              allItems={itineraries.items}
+              initiallySelected={itineraries.enabledIds}
+              saveEndpoint={`/api/admin/agents/${agentId}/cruise-itineraries`}
+              payloadKey="itineraryIds"
+            />
+          </div>
+        )}
 
         {/* Blog categories curation */}
         <div style={{ marginBottom: 24 }}>

@@ -81,7 +81,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function CruiseDetailPage({ params }: PageProps) {
   const { agentId, cruiseSlug } = await params
   const [cruise, promo, relatedPosts, agent] = await Promise.all([
-    getCruiseLine(cruiseSlug),
+    getCruiseLine(cruiseSlug, agentId),
     getSupplierPromo('cruise_line', cruiseSlug),
     getBlogPostsBySupplier(`cruise:${cruiseSlug}`, agentId),
     getAgentProfile(agentId),
