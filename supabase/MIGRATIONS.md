@@ -75,8 +75,8 @@ npm run db:status      # confirm local and remote now match
 
 ## Step 5 — Going forward (automatic)
 
-`.github/workflows/supabase-migrations.yml` runs `supabase db push` on every push
-to `main` that touches `supabase/migrations/**`. Add these repo secrets first
+`.github/workflows/supabase-migrations.yml` runs `supabase db push --remote --yes`
+(CLI pinned to 3.0.0) on every push to `main` that touches `supabase/migrations/**`. Add these repo secrets first
 (Settings → Secrets → Actions):
 
 - `SUPABASE_ACCESS_TOKEN` — personal access token
