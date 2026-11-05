@@ -5,6 +5,7 @@
  *
  *   node scripts/seed-cruise-itinerary-details.js          content, dates, inclusions
  *   node scripts/seed-cruise-itinerary-details.js --ships  AmaWaterways ship list and photos
+ *   node scripts/seed-cruise-itinerary-details.js --line=viking  one line only, so edits to the others are kept
  *
  * Run --ships only after the photos in public/media/cruises/ama-waterways/ships
  * are deployed, or live pages will point at files that don't exist yet.
@@ -49,12 +50,16 @@ async function main() {
     .single()
   check(collectionError, 'read collection')
 
+  const onlyLine = process.argv.find((arg) => arg.startsWith('--line='))?.split('=')[1]
+
   for (const [slug, included] of Object.entries(data.included)) {
+    if (onlyLine && slug !== onlyLine) continue
     const { error } = await sb.from('cruise_lines').update({ included }).eq('id', lineId[slug])
     check(error, `update included ${slug}`)
   }
 
   for (const item of data.itineraries) {
+    if (onlyLine && item.line_slug !== onlyLine) continue
     const fields = {
       nights: item.nights,
       route: item.route,

@@ -1351,50 +1351,81 @@
    "days": [
     {
      "place": "Budapest, Hungary",
-     "title": "Budapest: ice rink and seasonal food",
-     "summary": "See the outdoor ice rink and try seasonal food.",
-     "excursions": []
+     "title": "Budapest: boarding",
+     "summary": "Board the ship in Budapest. Christmas markets are open at Vörösmarty Square, St. Stephen's Basilica and Fő Square in Buda.",
+     "excursions": [
+      "Budapest by Night"
+     ]
     },
     {
      "place": "Budapest, Hungary",
-     "title": "Budapest: Chain Bridge, museum or spa",
-     "summary": "Options include the Chain Bridge, a museum or a thermal spa.",
-     "excursions": []
+     "title": "Budapest: Castle District",
+     "summary": "See the Castle District, with Matthias Church, Fisherman's Bastion and Buda Castle, which was home to Hungary's kings for almost 700 years.",
+     "excursions": [
+      "Panoramic Budapest at Christmas Time (included)",
+      "Budapest Castle Hill Hike",
+      "Grand Market: Flavors of Hungary",
+      "Dohány Street Synagogue & Jewish Budapest",
+      "Budapest Thermal Bath",
+      "The Royal Palace & Gardens of Gödöllö"
+     ]
     },
     {
      "place": "Bratislava, Slovakia",
-     "title": "Bratislava: castle and Old Town",
-     "summary": "See Bratislava Castle and the Old Town during the Christmas season.",
-     "excursions": []
+     "title": "Bratislava: Old Town and Christmas markets",
+     "summary": "Visit the Old Town markets below Bratislava Castle. Stalls in Hlavné Námestie sell local crafts, and a decorated Christmas tram runs between the fairs.",
+     "excursions": [
+      "Bratislava’s Christmas Market & Organ Concert (included)",
+      "Bratislava Beer Tasting & Dinner"
+     ]
     },
     {
      "place": "Vienna, Austria",
      "title": "Vienna: Christmas markets",
-     "summary": "Visit Vienna's markets and shop for gifts.",
-     "excursions": []
+     "summary": "Vienna holds markets at Schönbrunn Palace, Freyung, Am Hof and Belvedere, with crafts, music and choirs.",
+     "excursions": [
+      "Panoramic Vienna & Christmas Market (included)",
+      "Vienna’s Sights Up Close (included)",
+      "Festive Schönbrunn Palace",
+      "Behind the Scenes at the Lipizzaner Stallions",
+      "Mozart & Strauss Concert",
+      "Heurigen Dinner"
+     ]
     },
     {
      "place": "Krems, Austria",
-     "title": "Krems: Göttweig Abbey and Wachau Valley",
-     "summary": "Tour Göttweig Abbey, including its frescoes and library. The ship also sails the Wachau Valley, a UNESCO site.",
-     "excursions": []
+     "title": "Krems and the Wachau Valley",
+     "summary": "Krems is a university town known for Riesling and Veltliner wines. The ship also sails the Wachau Valley, a UNESCO site.",
+     "excursions": [
+      "Göttweig Abbey at Christmas (included)",
+      "Göttweig Abbey with Apricot Dumpling Demonstration"
+     ]
     },
     {
      "place": "Linz, Austria",
-     "title": "Linz: nativity and Main Square market",
-     "summary": "See the nativity at Volksgarten and the stalls on the Main Square.",
-     "excursions": []
+     "title": "Linz: Christmas markets",
+     "summary": "Visit the market on the main square and the nativity scene at the Volksgarten in the capital of Upper Austria, home of the Linzer Torte.",
+     "excursions": [
+      "Historic Linz at Christmas (included)",
+      "Austrian Countryside",
+      "Mauthausen Memorial Site",
+      "Český Krumlov at Christmas"
+     ]
     },
     {
      "place": "Passau, Germany",
-     "title": "Passau: Christmas market",
-     "summary": "Visit the market in Passau and try the food on offer.",
-     "excursions": []
+     "title": "Passau: Christkindlmarkt",
+     "summary": "The market surrounds St. Stephen's Cathedral, which has Europe's largest pipe organ and hosts Christmas concerts during the season.",
+     "excursions": [
+      "Christmas Traditions in Passau (included)",
+      "Bavarian Farm & Countryside",
+      "Salzburg at Christmas"
+     ]
     },
     {
      "place": "Passau, Germany",
      "title": "Passau: departure",
-     "summary": "The cruise ends and guests head home or continue on an extension.",
+     "summary": "Leave the ship and travel home, or continue on a post-cruise extension.",
      "excursions": []
     }
    ],
@@ -1606,51 +1637,84 @@
    "days_direction": "Amsterdam to Basel",
    "days": [
     {
-     "place": "Amsterdam, Netherlands",
-     "title": "Amsterdam: canals and museums",
-     "summary": "Options include a canal trip or a museum.",
+     "place": "Amsterdam, The Netherlands",
+     "title": "Amsterdam: boarding",
+     "summary": "Board the ship in Amsterdam, a city of about 90 islands linked by 1,500 bridges, and home to the Rijksmuseum.",
      "excursions": []
     },
     {
-     "place": "Dordrecht, Netherlands",
-     "title": "Waal and Merwede sailing, Dordrecht",
-     "summary": "The ship sails the Waal and Merwede. In Dordrecht, see the Grote Kerk and its 67-bell carillon.",
-     "excursions": []
+     "place": "Dordrecht, The Netherlands",
+     "title": "Dordrecht and the Dutch waterways",
+     "summary": "Sail the Waal and Merwede through farmland and past windmills to Dordrecht, the oldest city in Holland.",
+     "excursions": [
+      "Historic Dordrecht (included)",
+      "Historic Gouda & Stroopwafel",
+      "The Highlights of Kinderdijk"
+     ]
     },
     {
      "place": "Cologne, Germany",
      "title": "Cologne: Christmas markets",
-     "summary": "Browse the holiday markets for gifts and crafts.",
-     "excursions": []
+     "summary": "Themed markets run across the city during the season, including one beside Cologne Cathedral and a tented market at the harbor.",
+     "excursions": [
+      "Christmas in Cologne (included)",
+      "Cologne’s Beer Culture & Dinner"
+     ]
     },
     {
      "place": "Koblenz and Rüdesheim, Germany",
-     "title": "Koblenz, Middle Rhine and Rüdesheim",
-     "summary": "Christmas market in Koblenz, then a sail along the UNESCO-listed Middle Rhine past castles and Lorelei Rock. In Rüdesheim, try Weihnachtsbier and walk the Drosselgasse.",
-     "excursions": []
+     "title": "Koblenz and the Middle Rhine",
+     "summary": "Visit the Koblenz market around the Schängel fountain, then sail the Middle Rhine to Rüdesheim and its Christmas Market of Nations.",
+     "excursions": [
+      "Historic Koblenz at Christmas (included)",
+      "Rüdesheim Festive Market (included)",
+      "Dine in Rüdesheim am Rhein",
+      "Ehrenbreitstein Fortress",
+      "Medieval Marksburg Castle",
+      "Wine Tasting & Dinner at Eberbach Monastery",
+      "Wine Tasting & Dinner at Schloss Johannisberg Estate"
+     ]
     },
     {
      "place": "Mannheim and Speyer, Germany",
      "title": "Mannheim and Speyer: Christmas markets",
-     "summary": "Mannheim's market sells goods from around the world. Speyer offers regional food and local Christmas customs.",
-     "excursions": []
+     "summary": "Mannheim's market has more than 160 booths around the water tower. Later, take a walking tour of Speyer and its Christmas market.",
+     "excursions": [
+      "Mannheim & Yuletide Market (included)",
+      "Speyer & Its Christmas Market (included)",
+      "Highlights of Heidelberg at Christmas"
+     ]
     },
     {
      "place": "Strasbourg, France",
-     "title": "Strasbourg: Alsatian food",
-     "summary": "Try Alsatian dishes from local producers.",
-     "excursions": []
+     "title": "Strasbourg: Christkindelsmärik",
+     "summary": "Strasbourg's market in the cathedral square dates to 1570, making it the oldest in France. Stalls sell Alsatian food and mulled wine.",
+     "excursions": [
+      "Strasbourg Highlights (included)",
+      "Christmas Flavors of Alsace",
+      "Panoramic Strasbourg by Land & Water",
+      "Medieval Castle of Haut Koenigsbourg at Christmas Time",
+      "Gengenbach at Christmas",
+      "Strasbourg’s Historic Wine Cellar & Christmas Market"
+     ]
     },
     {
      "place": "Breisach, Germany",
-     "title": "Breisach: Christmas market",
-     "summary": "Browse the Weihnachtsmarkt stalls for food and handicrafts.",
-     "excursions": []
+     "title": "Breisach and the Black Forest area",
+     "summary": "The Weihnachtsmarkt sits in the old town near St. Stephen's Cathedral. The included tour visits the Christmas markets of Freiburg, with an organ concert.",
+     "excursions": [
+      "Freiburg Yuletide Market & Organ Concert (included)",
+      "Festive Colmar & Riquewihr",
+      "Medieval Staufen & Schnapps Distillery",
+      "Medieval Staufen & Wine",
+      "The Colmar Pocket in World War II: Museum & Memorial",
+      "Christmastime in the Black Forest"
+     ]
     },
     {
      "place": "Basel, Switzerland",
      "title": "Basel: departure",
-     "summary": "The cruise ends and guests head home or continue on an extension.",
+     "summary": "Leave the ship and travel home, or continue on a post-cruise extension.",
      "excursions": []
     }
    ],
@@ -1935,68 +1999,102 @@
    "days": [
     {
      "place": "Nuremberg, Germany",
-     "title": "Nuremberg: Old Town and market",
-     "summary": "Walk the medieval streets and visit the holiday market.",
+     "title": "Nuremberg: boarding",
+     "summary": "Board the ship in Nuremberg, home to one of the world's oldest Christmas markets, known for lebkuchen and Nuremberg bratwurst.",
      "excursions": []
     },
     {
      "place": "Nuremberg, Germany",
-     "title": "Nuremberg: city sights and history",
-     "summary": "See the main sites, with history from the Middle Ages through World War II.",
-     "excursions": []
+     "title": "Nuremberg: Old Town",
+     "summary": "See the walled Old Town and the Imperial Castle, once a seat of power for German kings, then visit the Christkindlesmarkt.",
+     "excursions": [
+      "Christmas in Nuremberg (included)",
+      "Nuremberg & World War II"
+     ]
     },
     {
      "place": "Bamberg, Germany",
-     "title": "Bamberg: Christmas markets",
-     "summary": "Visit the markets and see the big nativity scene at Maximiliansplatz.",
-     "excursions": []
+     "title": "Bamberg: Advent market",
+     "summary": "The market fills Maximiliansplatz, with a large Franconian nativity scene. Artisans show their crafts at Elisabeth Church.",
+     "excursions": [
+      "Bamberg Walking Tour & Festive Market (included)",
+      "Franconian Beer Culture"
+     ]
     },
     {
      "place": "Würzburg, Germany",
-     "title": "Würzburg: Advent markets",
-     "summary": "Tour the Old Town Advent markets and see work by local artisans.",
-     "excursions": []
+     "title": "Würzburg: Residenz and Advent market",
+     "summary": "Tour the Bishops' Residenz, then visit the Advent market beside the Falkenhaus and Marienkapelle, with local food and working artisans.",
+     "excursions": [
+      "Würzburg Residence & Christmas Market (included)",
+      "Festive Rothenburg ob der Tauber"
+     ]
     },
     {
      "place": "Marktheidenfeld, Germany",
-     "title": "Marktheidenfeld and Main River sailing",
-     "summary": "Holiday market with live music and performances. The ship also sails the Main River through the Spessart area.",
-     "excursions": []
+     "title": "Marktheidenfeld and the Main River",
+     "summary": "Visit the Marktplatz market, set among half-timbered homes near a medieval bridge over the Main, and see nearby Lohr am Main.",
+     "excursions": [
+      "Marktheidenfeld & Lohr am Main (included)"
+     ]
     },
     {
      "place": "Frankfurt, Germany",
      "title": "Frankfurt: Christmas market",
-     "summary": "Visit the market for carols and seasonal food.",
-     "excursions": []
+     "summary": "One of Germany's oldest and largest markets, dating to 1391, spreads across several squares in the city center.",
+     "excursions": [
+      "Festive Frankfurt by Foot (included)",
+      "Highlights of Heidelberg at Christmas",
+      "Frankfurt on Foot & Jewish Historical Museum"
+     ]
     },
     {
      "place": "Baden-Baden, Germany",
-     "title": "Baden-Baden: Christmas market",
-     "summary": "Explore Baden-Baden and its Christmas market.",
-     "excursions": []
+     "title": "Baden-Baden: spa town",
+     "summary": "Visit this UNESCO-listed spa town, known for its hot springs since Roman times, and its Christmas market.",
+     "excursions": [
+      "The Spa Town of Baden-Baden at Christmas (included)",
+      "Rastatt Favorite Palace"
+     ]
     },
     {
      "place": "Strasbourg, France",
-     "title": "Strasbourg: Alsatian food",
-     "summary": "Try Alsatian dishes from local producers.",
-     "excursions": []
+     "title": "Strasbourg: Christkindelsmärik",
+     "summary": "Strasbourg's market in the cathedral square dates to 1570, making it the oldest in France. The included tour adds a canal cruise through Petite France.",
+     "excursions": [
+      "Festive Strasbourg with Canal Cruise (included)",
+      "Christmas Flavors of Alsace",
+      "Gengenbach at Christmas",
+      "Medieval Castle of Haut Koenigsbourg at Christmas Time"
+     ]
     },
     {
      "place": "Breisach, Germany",
-     "title": "Breisach: Christmas market",
-     "summary": "Browse the Weihnachtsmarkt stalls for food and handicrafts.",
-     "excursions": []
+     "title": "Breisach and the Black Forest",
+     "summary": "The Weihnachtsmarkt sits in the old town near St. Stephen's Cathedral. The included tour goes to the Black Forest.",
+     "excursions": [
+      "German Traditions & the Black Forest (included)",
+      "Festive Colmar & Riquewihr",
+      "Medieval Staufen & Schnapps Distillery",
+      "Medieval Staufen & Wine"
+     ]
     },
     {
      "place": "Basel, Switzerland",
-     "title": "Basel: city sights and Christmas market",
-     "summary": "See the main sights and shop for gifts at the market.",
-     "excursions": []
+     "title": "Basel: Christmas markets",
+     "summary": "Wooden huts line the cobblestone streets of the medieval Old Town, selling carved decorations, ceramics, food and mulled wine.",
+     "excursions": [
+      "Basel Walking Tour & Festive Markets (included)",
+      "Highlights of the Alps",
+      "Novartis’s Campus on Foot",
+      "Cheese Fondue Evening",
+      "Highlights of Basel"
+     ]
     },
     {
      "place": "Basel, Switzerland",
      "title": "Basel: departure",
-     "summary": "The cruise ends and guests head home or continue on an extension.",
+     "summary": "Leave the ship and travel home, or continue on a post-cruise extension.",
      "excursions": []
     }
    ],
