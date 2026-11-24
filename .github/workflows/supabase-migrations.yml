@@ -14,10 +14,13 @@ name: Supabase migrations
 #   SUPABASE_DB_PASSWORD    the project's database password
 #   SUPABASE_PROJECT_REF    the project ref (subdomain in your SUPABASE_URL)
 #
-# IMPORTANT: even with secrets set, this only works AFTER the existing
-# migrations have been baselined with `supabase migration repair`
-# (see supabase/MIGRATIONS.md), otherwise `db push` will try to re-run 001+
-# against a populated DB and fail.
+# IMPORTANT: every row in supabase_migrations.schema_migrations must have a
+# matching file in supabase/migrations, or `db push` aborts. Every file without
+# a row is applied to production when it lands on main.
+#
+# The CLI version is pinned because `latest` moved to v3 on 2026-11-02 and broke
+# this job. In v3, `db push` targets the local stack unless given --remote, and
+# fails unattended unless given --yes. Read the release notes before bumping.
 
 on:
   push:
@@ -50,7 +53,7 @@ jobs:
       - uses: supabase/setup-cli@v1
         if: steps.cfg.outputs.configured == 'true'
         with:
-          version: latest
+          version: 3.0.0
 
       - name: Push pending migrations
         if: steps.cfg.outputs.configured == 'true'
@@ -60,4 +63,4 @@ jobs:
           SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
         run: |
           supabase link --project-ref "$SUPABASE_PROJECT_REF"
-          supabase db push
+          supabase db push --remote --yes
